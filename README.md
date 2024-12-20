@@ -25,3 +25,5 @@ Now that I have explained the main window, lets explain the settings window now:
 In the settings window, you have the option to backup the profiles as well as importing an existing backup.
 This can come in handy if you reset your computer or if you want to move to another computer at some time (or simply because you were a fool and deleted an important profile ;))
 As stated in the window itself the application will restart automatically when importing or exporting a backup.
+
+Icons by icons8
