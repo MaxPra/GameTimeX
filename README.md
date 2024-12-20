@@ -7,13 +7,13 @@ Then this little application will help you for sure :).
 Download the latest stable version here (for windows only)!
 
 ## About this application
-This application is a little holiday hoppy project I got myself into :).
+This application is a little holiday hobby project I got myself into :).
 
 By the time you start this application the first time, you are going to see something like this:
 ![image](https://github.com/user-attachments/assets/ae972165-57b7-4728-98d2-c34362882374)
 Let me explain the different sections in the main window:
 
-1. At the top of the window you have the profile-search-bar - you can search for games her (if the list gets too long and you don't want to scroll through them all).
+1. At the top of the window you have the profile-search-bar - you can search for games here (if the list gets too long and you don't want to scroll through them all).
 2. Next to the search-bar you find three buttons ("create new profile", "Delete Profile", "Settings")
 3. In the right section of the screen you can see the "information section" - this section displays the data of the currently selected profile (also a little profile image is shown)
 4. In this "information section" you can start/stop the time monitoring by simply pressing the button at the bottom of the section (blue indicates no current monitoring, red indicates running monitoring)
