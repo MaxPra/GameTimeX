@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+   
+    
+    <!-- Images -->
+    <BitmapImage x:Key="MyImageSource" UriSource="pack://application:,,,/../images/no_picture.png" />
+    <BitmapImage x:Key="CreateNewImageSource" UriSource="pack://application:,,,/../images/create_new.png" />
+    <BitmapImage x:Key="DeleteImageSource" UriSource="pack://application:,,,/../images/delete.png" />
+    <BitmapImage x:Key="EditImageSource" UriSource="pack://application:,,,/../images/edit.png" />
+    <BitmapImage x:Key="SettingsImageSource" UriSource="pack://application:,,,/../images/settings.png" />
+    <BitmapImage x:Key="GameInfoSource" UriSource="pack://application:,,,/../images/game_time.png" />
+    
+    <!-- Colors -->
+    <Color x:Key="ButtonDefaultColor">#0099ff</Color>
+    <Color x:Key="ButtonHoverColor">#008ae6</Color>
+    <Color x:Key="ButtonDefaultMonitoringColor">#b30000</Color>
+    <Color x:Key="ButtonHoverMonitoringColor">#990000</Color>
+    <Color x:Key="ButtonCancelHoverColor">#990000</Color>
+    <Color x:Key="ButtonCancelDefaultColor">#b30000</Color>
+    
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="ButtonDefaultBrush" Color="{StaticResource ButtonDefaultColor}"/>
+    <SolidColorBrush x:Key="ButtonHoverBrush" Color="{StaticResource ButtonHoverColor}"/>
+    <SolidColorBrush x:Key="ButtonCancelHoverBrush" Color="{StaticResource ButtonCancelHoverColor}"/>
+    <SolidColorBrush x:Key="ButtonCancelBrush" Color="{StaticResource ButtonCancelDefaultColor}"/>
+    
+    <!-- Storyboards -->
+    <!-- Start/Stop-Button Storyboards-->
+
+
+</ResourceDictionary>
