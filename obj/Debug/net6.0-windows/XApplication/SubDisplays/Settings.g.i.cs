@@ -133,7 +133,7 @@ namespace GameTimeX {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GameTimeX;V1.0.0.0;component/xapplication/subdisplays/settings.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GameTimeX;component/xapplication/subdisplays/settings.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\XApplication\SubDisplays\Settings.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

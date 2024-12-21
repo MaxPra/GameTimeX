@@ -66,3 +66,5 @@ C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\n
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\QuestionBox.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\GameTimeX.csproj.Up2Date
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ImageCropper.g.cs
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ImageCropper.baml

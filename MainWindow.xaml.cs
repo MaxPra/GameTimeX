@@ -98,7 +98,6 @@ namespace GameTimeX
             buildDGProfiles();
 
             DisplayHandler.switchToFirstGameInList(this);
-            
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)

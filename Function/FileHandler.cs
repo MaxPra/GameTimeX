@@ -37,7 +37,7 @@ namespace GameTimeX
         /// <param name="outputPath"></param>
         /// <param name="outputFileName"></param>
         /// <returns></returns>
-        public static bool cropImageAndSave(string filePath, int widthIn, int heightIn, string outputPath, string outputFileName)
+        public static bool cropImageAndSave(string filePath, int widthIn, int heightIn, string outputPath, string outputFileName, int startX, int startY)
         {
             // get the image
             using SKImage sKImage = SKImage.FromEncodedData(filePath);
@@ -45,13 +45,13 @@ namespace GameTimeX
             // check if the given sides are not larger than the image size
             if (widthIn < sKImage.Width && heightIn < sKImage.Height)
             {
-                // find the center
-                int centerX = sKImage.Width / 2;
-                int centerY = sKImage.Height / 2;
+                //// find the center
+                //int centerX = sKImage.Width / 2;
+                //int centerY = sKImage.Height / 2;
 
-                // find the start points
-                int startX = centerX - widthIn / 2;
-                int startY = centerY - heightIn / 2;
+                //// find the start points
+                //int startX = centerX - widthIn / 2;
+                //int startY = centerY - heightIn / 2;
 
                 // crop the image
                 SKImage croppedImage = sKImage.Subset(SKRectI.Create(startX, startY, widthIn, heightIn));

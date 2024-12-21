@@ -22,6 +22,11 @@ namespace GameTimeX
         SolidColorBrush normalButtonColor = Brushes.CornflowerBlue;
         SolidColorBrush hoverColor = Brushes.MediumBlue;
 
+        private double cropX;
+        private double cropY;
+        private double cropWidth;
+        private double cropHeight;
+
         string filePath = "";
         public CreateNew()
         {
@@ -92,7 +97,7 @@ namespace GameTimeX
                 DataBaseHandler.save(dbObj);
 
                 // Bild croppen und abspeichern
-                FileHandler.cropImageAndSave(filePath, 300, 300, SysProps.picDestPath, fileNameHash);
+                FileHandler.cropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
 
                 Close();
             }
@@ -114,6 +119,16 @@ namespace GameTimeX
                 // Open document
                 filePath = dialog.FileName;
                 txtPicPath.Text = filePath;
+
+                ImageCropper imageCropper = new ImageCropper(filePath);
+                imageCropper.Owner = this;
+                imageCropper.ShowDialog();
+
+                cropX = imageCropper.CropX;
+                cropY = imageCropper.CropY;
+                cropWidth = imageCropper.CropWidth;
+                cropHeight = imageCropper.CropHeight;
+
             }
         }
     }

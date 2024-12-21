@@ -75,6 +75,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>GameXResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="XApplication\SubDisplays\ImageCropper.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -95,6 +98,9 @@
     </Page>
     <Page Update="XApplication\SubDisplays\Rename.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\ImageCropper.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

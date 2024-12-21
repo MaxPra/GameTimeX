@@ -27,6 +27,9 @@
     <Page Update="XApplication\SubDisplays\CreateNew.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="XApplication\SubDisplays\ImageCropper.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="XApplication\SubDisplays\Settings.xaml">
       <SubType>Designer</SubType>
     </Page>
