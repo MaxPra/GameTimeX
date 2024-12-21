@@ -11,14 +11,23 @@ This application is a little holiday hobby project I got myself into :).
 
 ### The main window
 By the time you start this application the first time, you are going to see something like this:
-![image](https://github.com/user-attachments/assets/ae972165-57b7-4728-98d2-c34362882374)
+![image](https://github.com/user-attachments/assets/9ce55836-10f6-46f4-8492-6eabbfd6c728)
 Let me explain the different sections in the main window:
 
 1. At the top of the window you have the profile-search-bar - you can search for games here (if the list gets too long and you don't want to scroll through them all).
 2. Next to the search-bar you find three buttons ("create new profile", "Delete Profile", "Settings")
 3. In the right section of the screen you can see the "information section" - this section displays the data of the currently selected profile (also a little profile image is shown)
 4. In this "information section" you can start/stop the time monitoring by simply pressing the button at the bottom of the section (blue indicates no current monitoring, red indicates running monitoring)
-5. You can also rename the currently selected game profile by clicking on the pen right next to the profile name (also displayed in the "information window"
+5. You can also rename the currently selected game profile by clicking on the pen right next to the profile name (also displayed in the "information display")
+
+After adding a game profile (you can do that by clicking on the paper and pen icon in the toolbar) it would look something like this:
+![image](https://github.com/user-attachments/assets/79a62035-b65b-4a81-b258-8f9432c2ef1c)
+
+If you are unhappy with the profile name or the picture you chose, no worries - you can adjust them by clicking on the pen icon (name) or clicking on "Change Image".
+
+If you hover over the little clock next to "Game time" you will see the monitored time in minutes (game time is normally shown in hours).
+
+You can also see the first time you played the game and when you last played the game.
 
 ### The settings
 Now that I have explained the main window, lets explain the settings window now:
