@@ -1,19 +1,10 @@
 ﻿using GameTimeX.Function;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GameTimeX
 {
@@ -22,24 +13,31 @@ namespace GameTimeX
     /// </summary>
     public partial class ImageCropper : Window
     {
-
-        public double CropX {  get; set; }
-        public double CropY {  get; set; }
+        // --- Rückgabe an Parent-Programm ---
+        public double CropX { get; set; }
+        public double CropY { get; set; }
 
         public double CropWidth { get; set; }
         public double CropHeight { get; set; }
+        // ------------------------------------
 
+        // Größe des Crop-Bereichs
         private double cropWidthHeightRec = 300;
 
+        // Verhältnis von Original- und Anzeigebild
         private double picRatioScale = 0;
 
+        // CropHandler
         private CropHandler cropHandler = null;
-        private string ImagePath {  get; set; }
+
+        // Bildpfad
+        private string ImagePath { get; set; }
 
         BitmapImage bitProfilePic;
 
         public ImageCropper(string imagePath)
         {
+            // Setzen des Bildpfades
             ImagePath = imagePath;
             InitializeComponent();
 
@@ -94,7 +92,7 @@ namespace GameTimeX
                 info.Owner = this;
                 info.ShowDialog();
             }
-            
+
         }
 
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
@@ -109,7 +107,7 @@ namespace GameTimeX
 
         private void recTransformArea_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -129,12 +127,12 @@ namespace GameTimeX
 
         private void recTransformArea_MouseMove(object sender, MouseEventArgs e)
         {
-            
+
         }
 
         private void recTransformArea_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            
+
         }
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -180,18 +178,24 @@ namespace GameTimeX
             Canvas.SetTop(recTransformArea, cropPosition.Item2);
         }
 
+        /// <summary>
+        /// Scrollevent, um Crop-Bereich zu vergrößern
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imageCropperWindow_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            // Vergrößern
             if (e.Delta > 0)
             {
                 double cropWidthHeightRecTemp = cropWidthHeightRec;
                 cropWidthHeightRecTemp += 20;
-                if(cropWidthHeightRecTemp < 700)
+                if (cropWidthHeightRecTemp < 700)
                 {
                     cropWidthHeightRec = cropWidthHeightRecTemp;
                 }
             }
-
+            // Verkleinern
             else if (e.Delta < 0)
             {
                 double cropWidthHeightRecTemp = cropWidthHeightRec;
@@ -207,7 +211,6 @@ namespace GameTimeX
 
             recTransformArea.Width = cropWidthHeightRec;
             recTransformArea.Height = cropWidthHeightRec;
-
         }
     }
 }

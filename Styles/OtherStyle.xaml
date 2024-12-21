@@ -23,6 +23,18 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ChangeImageStyle" TargetType="{x:Type TextBlock}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Cursor" Value="None"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+           
+
     <BitmapImage x:Key="MyImageSource" UriSource="pack://application:,,,/../images/no_picture.png" />
     <BitmapImage x:Key="CreateNewImageSource" UriSource="pack://application:,,,/../images/create_new.png" />
     <BitmapImage x:Key="DeleteImageSource" UriSource="pack://application:,,,/../images/delete.png" />

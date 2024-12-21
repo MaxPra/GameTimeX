@@ -158,6 +158,11 @@ namespace GameTimeX
             }
 
             DisplayHandler.switchToFirstGameInList(this);
+
+            if(profiles.Count == 0)
+            {
+                DisplayHandler.buildInfoDisplayNoGame(this);
+            }
         }
 
 
@@ -221,17 +226,6 @@ namespace GameTimeX
             DisplayHandler.buildInfoDisplay(SysProps.currentSelectedPID, this);
         }
 
-        private void btnEditProfileName_MouseEnter(object sender, MouseEventArgs e)
-        {
-            Mouse.OverrideCursor = Cursors.Hand;
-        }
-
-        private void btnEditProfileName_MouseLeave(object sender, MouseEventArgs e)
-        {
-            btnEditProfileName.Background= Brushes.Transparent;
-            Mouse.OverrideCursor = Cursors.Arrow;
-        }
-
         private void scrollBar_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             ScrollViewer scv = (ScrollViewer)sender;
@@ -293,6 +287,58 @@ namespace GameTimeX
         private void btnGameTimeInfo_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void lblChangeProfileImage_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // File-Dialog öffnen
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.DefaultExt = ""; // Default file extension
+            dialog.Filter = "Pictures (.txt)|*.png;*.jpg"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dialog.ShowDialog();
+
+            string filePath = string.Empty;
+            double cropX = 0;
+            double cropY = 0;
+            double cropWidth = 0;
+            double cropHeight = 0; 
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                filePath = dialog.FileName;
+
+                ImageCropper imageCropper = new ImageCropper(filePath);
+                imageCropper.Owner = this;
+                imageCropper.ShowDialog();
+
+                cropX = imageCropper.CropX;
+                cropY = imageCropper.CropY;
+                cropWidth = imageCropper.CropWidth;
+                cropHeight = imageCropper.CropHeight;
+
+                // Dateinamen in Hash (4 Zeichen) umwandeln
+                string fileNameHash = FileHandler.getHashFromFilename(filePath);
+
+                if (fileNameHash.StartsWith("-"))
+                {
+                    fileNameHash.TrimStart('-');
+                }
+
+                // Werte in Datenbank speichern
+                DBObject dbObj = DataBaseHandler.readPID(SysProps.currentSelectedPID);
+                dbObj.ProfilePicFileName = fileNameHash;
+                DataBaseHandler.save(dbObj);
+
+                // Bild croppen und abspeichern
+                FileHandler.cropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
+
+                DisplayHandler.buildInfoDisplay(SysProps.currentSelectedPID, this);
+
+            }
         }
     }
 }

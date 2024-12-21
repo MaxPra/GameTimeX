@@ -188,30 +188,42 @@
                     <Grid>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="5*">
+                                <RowDefinition Height="10*">
+                                </RowDefinition>
+                                <RowDefinition Height="60*">
                                 </RowDefinition>
                                 <RowDefinition Height="40*">
-                                </RowDefinition>
-                                <RowDefinition Height="55*">
                                 </RowDefinition>
                             </Grid.RowDefinitions>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
                                 <TextBlock TextTrimming="CharacterEllipsis" Text="N/A" x:Name="lblGameName" HorizontalAlignment="Center" Foreground="White" 
-                                           MaxWidth="300"
+                                           VerticalAlignment="Center" MaxWidth="300"
                                         FontSize = "20">
                                 </TextBlock>
                                 <Button  x:Name="btnEditProfileName" Height="30" Width="30"
                                 BorderBrush="Transparent" Background="Transparent" Margin="5 0 0 0"  Padding="0"
                                 Click="btnEditProfileName_Click" Foreground="White" FontSize="20"
-                                MouseEnter="btnEditProfileName_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
-                                MouseLeave="btnEditProfileName_MouseLeave" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <Image Source="{StaticResource EditImageSource}" Margin="0 0 0 10"/>
+                                Style="{StaticResource EditProfileNameButtonStyle}"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Cursor="None">
+                                    <Image Source="{StaticResource EditImageSource}" Margin="0 0 10 0"/>
                                 </Button>
                             </StackPanel>
-
-                            <Image Stretch="Uniform" Width="Auto" Grid.Row="1" x:Name="currProfileImage" Source="{StaticResource MyImageSource}"/>
-                            <Grid Grid.Row="2" Margin="0 70 0 0">
+                            <StackPanel Grid.Row="1" Orientation="Vertical">
+                                <Image Stretch="Uniform" Width="Auto" x:Name="currProfileImage" 
+                                       Source="{StaticResource MyImageSource}"
+                                       Margin="30 10 30 30"/>
+                                <TextBlock HorizontalAlignment="Center"
+                                           x:Name="lblChangeProfileImage"
+                                           Margin="0 -10 0 0" 
+                                           Foreground="White" 
+                                           Text="Change Image"
+                                           TextDecorations="Underline"
+                                           PreviewMouseDown="lblChangeProfileImage_PreviewMouseDown"
+                                           Style="{StaticResource ChangeImageStyle}"/>
+                            </StackPanel>
+                            
+                            <Grid Grid.Row="2" Margin="0 0 0 0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="15*"/>
                                     <RowDefinition Height="15*"/>

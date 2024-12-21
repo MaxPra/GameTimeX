@@ -94,6 +94,11 @@ namespace GameTimeX.Function
 
         }
 
+        /// <summary>
+        /// Prüft, ob der Crop-Bereich innerhalb des Bildes sitzt
+        /// Ansonsten gibt es dann Probleme beim wirklichen croppen des Bildes (Out-of-Bounds)
+        /// </summary>
+        /// <returns></returns>
         public bool isCropRecOverEdge()
         {
             if (CropX < 0)

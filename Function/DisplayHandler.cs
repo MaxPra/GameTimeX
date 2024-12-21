@@ -74,6 +74,11 @@ namespace GameTimeX
             wnd.lblFirstTimePlayed.Text = formatDatePlayed(obj.FirstPlay);
             wnd.lblLastTimePlayed.Text = formatDatePlayed(obj.LastPlay);
 
+            // Buttons enablen
+            wnd.btnStartStopMonitoring.IsEnabled = true;
+            wnd.btnEditProfileName.IsEnabled = true;
+            wnd.lblChangeProfileImage.IsEnabled = true;
+
             // ToolTip setzen
             wnd.lblToolTipGameTimeText.Text = obj.GameTime.ToString("n0") + " minutes";
 
@@ -138,6 +143,14 @@ namespace GameTimeX
         {
             if(wnd.dgProfiles.Items.Count != 0)
                 wnd.dgProfiles.SelectedIndex = 0;
+        }
+
+        public static void buildInfoDisplayNoGame(MainWindow wnd)
+        {
+            // Buttons Disablen
+            wnd.btnEditProfileName.IsEnabled = false;
+            wnd.btnStartStopMonitoring.IsEnabled = false;
+            wnd.lblChangeProfileImage.IsEnabled = false;
         }
     }
 }
