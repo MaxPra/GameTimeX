@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 namespace GameTimeX
 {
     /// <summary>
-    /// Interaktionslogik für Settings.xaml
+    /// Interaktionslogik für ImageCropper.xaml
     /// </summary>
     public partial class ImageCropper : Window
     {
@@ -119,7 +119,10 @@ namespace GameTimeX
 
             //this.SizeToContent = SizeToContent.WidthAndHeight;
 
-            picRatioScale = bitProfilePic.Width / imgProfilePic.ActualWidth;
+            // Achtung: Hier muss PixelWidth verwendet werden (wir benötigen die Width in Pixeln)
+            // Bei manchen Bildern ist Width & PixelWidth unterschiedlich
+            // => das führt beim Croppen zu Problemen (Crop-Bereich größer als Bild!!)
+            picRatioScale = bitProfilePic.PixelWidth / imgProfilePic.ActualWidth;
 
             cropHandler = new CropHandler(300, 300, cvsCropper.Width, cvsCropper.Height, picRatioScale, picRatioScale);
 

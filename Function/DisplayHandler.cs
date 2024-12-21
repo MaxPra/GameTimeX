@@ -67,9 +67,23 @@ namespace GameTimeX
             wnd.lblGameName.Text = obj.GameName;
 
             BitmapImage bitProfilePic = new BitmapImage();
-            bitProfilePic.BeginInit();
-            bitProfilePic.UriSource = new Uri(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName);
-            bitProfilePic.EndInit();
+            // Kommt es beim Croppen zu einem Fehler (warum auch immer) würde GameTimeX abstürzen, wenn er das Profil lädt
+            // => weil er kein Bild laden kann was es nicht gibt.
+            // => vorher prüfen, ob File auch exisitert, was er hier laden möchte
+            // => wenn ja, dann File laden, ansonsten wird das Default-Image verwendet
+            if (System.IO.File.Exists(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName))
+            {
+                bitProfilePic = new BitmapImage();
+                bitProfilePic.BeginInit();
+                bitProfilePic.UriSource = new Uri(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName);
+                bitProfilePic.EndInit();
+            }
+            else
+            {
+                bitProfilePic = getDefaultProfileImage();
+            }
+
+          
             wnd.currProfileImage.Source = bitProfilePic;
             wnd.lblFirstTimePlayed.Text = formatDatePlayed(obj.FirstPlay);
             wnd.lblLastTimePlayed.Text = formatDatePlayed(obj.LastPlay);
