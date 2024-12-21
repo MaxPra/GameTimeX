@@ -9,6 +9,7 @@ Download the latest stable version here (for windows only)!
 ## About this application
 This application is a little holiday hobby project I got myself into :).
 
+### The main window
 By the time you start this application the first time, you are going to see something like this:
 ![image](https://github.com/user-attachments/assets/ae972165-57b7-4728-98d2-c34362882374)
 Let me explain the different sections in the main window:
@@ -19,11 +20,25 @@ Let me explain the different sections in the main window:
 4. In this "information section" you can start/stop the time monitoring by simply pressing the button at the bottom of the section (blue indicates no current monitoring, red indicates running monitoring)
 5. You can also rename the currently selected game profile by clicking on the pen right next to the profile name (also displayed in the "information window"
 
+### The settings
 Now that I have explained the main window, lets explain the settings window now:
 ![image](https://github.com/user-attachments/assets/aca22cc1-ad9c-4592-aa98-2348aa2483ca)
 
 In the settings window, you have the option to backup the profiles as well as importing an existing backup.
 This can come in handy if you reset your computer or if you want to move to another computer at some time (or simply because you were a fool and deleted an important profile ;))
 As stated in the window itself the application will restart automatically when importing or exporting a backup.
+
+### Image profile cropping
+If you create a new game profile. You have to choose an image that will be displayed in the "info display" later.
+You can choose whatever picture you like. After choosing your picture via the file explorer you are going to see this window:
+![image](https://github.com/user-attachments/assets/396e4d83-66af-454f-bf59-b03509f3d5ff)
+
+Here you can crop your image as you want (select the game text or a section that suits best).
+
+The controls are the following:
+- Change size of cropping section (mousewheel up / mousewheel down)
+- Drag the cropping section by holding the left mousebutton down
+
+If you are happy with the the section you chose, just click on the "X" at the top right corner to save the cropped section of the image.
 
 Icons by icons8
