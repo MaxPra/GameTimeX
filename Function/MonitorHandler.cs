@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameTimeX.Function;
+using System;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace GameTimeX
@@ -12,6 +11,8 @@ namespace GameTimeX
         private static long startTimeMonitoring = 0;
         private static long endTimeMonitoring = 0;
         private static int monitoringPid = 0;
+
+        private static GameSessionThread? gameTimeSessionThread = null;
 
         /// <summary>
         /// Prüft, ob gerade ein Spiel aufgenommen wird
@@ -27,13 +28,22 @@ namespace GameTimeX
         /// </summary>
         /// <param name="btn"></param>
         /// <param name="pid"></param>
-        public static void startMonitoringGameTime(Button btn, int pid)
+        public static void startMonitoringGameTime(MainWindow wnd, int pid)
         {
             // Style ändern
-            VisualHandler.activateMonitoringVisualButton(btn);
+            VisualHandler.activateMonitoringVisualButton(wnd.btnStartStopMonitoring);
 
             // Startzeit setzen
             startTimeMonitoring = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+            // GameSession Text Thread
+            // Nur starten, wenn Option in Settings gesetzt
+            if (SysProps.startUpParms.SessionGameTime)
+            {
+                VisualHandler.activateGameTimeSeesion(wnd.txtGameSession);
+                gameTimeSessionThread = new GameSessionThread(startTimeMonitoring);
+                gameTimeSessionThread.start(wnd);
+            }
 
             monitoringPid = pid;
 
@@ -41,14 +51,41 @@ namespace GameTimeX
             DataBaseHandler.saveFirstTimePlayed(pid);
         }
 
+        private static long GetCurrentGameTimeInMinutes()
+        {
+            long currentGameTime = 0;
+
+            // Derzeitige Zeit berechnen
+            currentGameTime = DateTimeOffset.Now.ToUnixTimeMilliseconds() - startTimeMonitoring;
+            currentGameTime = calcMinutesFromMillis(currentGameTime);
+
+            return currentGameTime;
+        }
+
+        public static long GetCurrentGameTimeInMinutes(long startTime)
+        {
+            long currentGameTime = 0;
+
+            // Derzeitige Zeit berechnen
+            currentGameTime = DateTimeOffset.Now.ToUnixTimeMilliseconds() - startTime;
+            currentGameTime = calcMinutesFromMillis(currentGameTime);
+
+            return currentGameTime;
+        }
+
         /// <summary>
         /// Beendet die Spielzeitaufzeichnung und speichert die Werte in der Datenbank
         /// </summary>
         /// <param name="btn"></param>
-        public static void endMonitoringGameTime(Button btn)
+        public static void endMonitoringGameTime(MainWindow wnd)
         {
+            // Thread beenden
+            if(gameTimeSessionThread != null)
+                gameTimeSessionThread.stop();
+
             // Style ändern
-            VisualHandler.deactivateMonitoringVisualButton(btn);
+            VisualHandler.deactivateMonitoringVisualButton(wnd.btnStartStopMonitoring);
+            VisualHandler.deactivateGameTimeSeesion(wnd.txtGameSession);
 
             // Endzeit setzen
             endTimeMonitoring = DateTimeOffset.Now.ToUnixTimeMilliseconds();

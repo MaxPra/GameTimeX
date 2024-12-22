@@ -18,7 +18,8 @@ namespace GameTimeX.Objects
 
         public BackupTypes BackupType { get; set; }
         public string BackupPath { get; set; } = string.Empty;   
-     
-        public string BackUpImportPath {  get; set; } = string.Empty;  
+        public string BackUpImportPath {  get; set; } = string.Empty;
+
+        public bool SessionGameTime { get; set; } = false;
     }
 }

@@ -8,7 +8,7 @@
         Background="#333333"
         ResizeMode="NoResize"
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" BorderBrush="CornflowerBlue" BorderThickness="2"
-        Title = "Settings" Height = "450" Width="500" MinHeight="450" MinWidth="350" WindowStartupLocation="CenterOwner"
+        Title = "Settings" Height = "500" Width="500" MinHeight="450" MinWidth="350" WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
 
     <WindowChrome.WindowChrome>
@@ -41,10 +41,11 @@
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*"></RowDefinition>
+                <RowDefinition Height="20*"></RowDefinition>
+                <RowDefinition Height="40*"></RowDefinition>
                 <RowDefinition Height="50*"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Margin="10, 10, 0, 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Margin="10, 0, 0, 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Margin="10, 10, 0, 0"  Grid.ColumnSpan="2">
                     <TextBlock Text="Create Backup" FontWeight="Bold" Foreground="White" Margin="0 0 0 5"/>
                     <TextBlock Text="Create a backup of the saved profiles and the saved game time data" Foreground="White" Margin="0 0 0 5"
@@ -60,13 +61,13 @@
                     <Button x:Name="btnChooseGameFolder" Content="Choose Backup Folder" Margin="10 0 0 0" Style="{StaticResource NormalGuiButton}" Width="150"
                             Click="btnChooseGameFolder_Click"/>
                 </StackPanel>
-                <Button x:Name="btnCreateBackup"  Grid.Row ="0" Grid.Column="0" Margin="10 10 0 0" Content="Create Backup" 
+                <Button x:Name="btnCreateBackup" Grid.Column="0" Margin="10 10 0 0" Content="Create Backup" 
                     Width="100" Height="30" HorizontalAlignment="Left"
                     IsEnabled="False" Click="btnCreateBackup_Click"
                     Style="{StaticResource NormalGuiButton}">
                 </Button>
             </StackPanel>
-            <StackPanel Margin="10, 10, 0, 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Margin="10, 10, 0, 0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Margin="10, 10, 0, 0"  Grid.ColumnSpan="2">
                     <TextBlock Text="Import Backup" FontWeight="Bold" Foreground="White" Margin="0 0 0 5"/>
                     <TextBlock Text="Import a backup of the saved profiles and the saved game time data" Foreground="White" Margin="0 0 0 5"
@@ -89,6 +90,22 @@
                         IsEnabled="False" Click="btnImportBackup_Click"
                         Style="{StaticResource NormalGuiButton}">
                 </Button>
+            </StackPanel>
+            <StackPanel Margin="20 10 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
+                <TextBlock Margin="0 0 0 10" Foreground="White" FontWeight="Bold">
+                        Genral Options
+                </TextBlock>
+                <CheckBox Grid.Row="2" Style="{StaticResource CheckBoxDefaultStyle}" 
+                          Content="Show current game time session when monitoring"
+                          x:Name="cbSessionGameTime">
+                    <CheckBox.ToolTip>
+                        <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                            <TextBlock>
+                                 If checked the current session game time is shown below the start/stop monitoring button
+                            </TextBlock>
+                        </ToolTip>
+                    </CheckBox.ToolTip>
+                </CheckBox>
             </StackPanel>
         </Grid>
     </Grid>

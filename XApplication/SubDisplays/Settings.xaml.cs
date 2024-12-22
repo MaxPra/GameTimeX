@@ -50,6 +50,9 @@ namespace GameTimeX
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            // StartUpParms speichern
+            SysProps.startUpParms.SessionGameTime = (bool)cbSessionGameTime.IsChecked;
+            FileHandler.saveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
             Close();
         }
 
@@ -140,6 +143,10 @@ namespace GameTimeX
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            // SessionGameTime laden
+            cbSessionGameTime.IsChecked = SysProps.startUpParms.SessionGameTime;
+
             // Pfade befüllen
             string backUpPath = SysProps.startUpParms.BackupPath;
             if (Directory.Exists(backUpPath))

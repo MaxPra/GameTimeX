@@ -248,7 +248,7 @@
                                              ToolTipService.VerticalOffset="-50"
                                              BorderBrush="Transparent" Background="Transparent" Margin="10 0 0 0"  Padding="0"
                                              Click="btnGameTimeInfo_Click" Foreground="White" FontSize="20"
-       Style="{StaticResource NoMouseOverButtonStyle}"
+                                             Style="{StaticResource NoMouseOverButtonStyle}"
                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                         <Button.ToolTip>
                                             <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
@@ -285,14 +285,23 @@
                                 <TextBlock Text="N/A" Grid.Row="2" Grid.Column="1" x:Name="lblLastTimePlayed"
                                            HorizontalAlignment="Left" Foreground="White" 
                                            FontSize = "15" VerticalAlignment="Center" />
-                                <Button Grid.Row ="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnStartStopMonitoring" Content="Start Monitoring" Width="200" Height="50"
-                                        BorderBrush="black" 
-                                        Click="btnStartStopMonitoring_Click" Foreground="White"
-                                        MouseEnter="btnStartStopMonitoring_MouseEnter"
-                                        MouseLeave="btnStartStopMonitoring_MouseLeave"
-                                        FontSize="20"
-                                        Style="{StaticResource StartStopMonitoringButton}">
-                                </Button>
+                                <StackPanel Grid.Row ="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
+                                    <Button x:Name="btnStartStopMonitoring" Content="Start Monitoring" Width="200" Height="50"
+                                            BorderBrush="black" 
+                                            Click="btnStartStopMonitoring_Click" Foreground="White"
+                                            MouseEnter="btnStartStopMonitoring_MouseEnter"
+                                            MouseLeave="btnStartStopMonitoring_MouseLeave"
+                                            FontSize="20"
+                                            Style="{StaticResource StartStopMonitoringButton}"> 
+                                    </Button>
+                                    <TextBlock x:Name="txtGameSession"
+                                               HorizontalAlignment="Center" Margin="0 10 0 0"
+                                               Foreground="White" Cursor=""
+                                               Visibility="Hidden">
+                                            Session: 0 minutes
+                                    </TextBlock>
+                                </StackPanel>
+                                
                             </Grid>
                         </Grid>
                     </Grid>

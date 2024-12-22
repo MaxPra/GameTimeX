@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\App.xaml
-11-1886405111
+12855072448
 
-23-1324004931
+241714006940
 2141774771773
-MainWindow.xaml;Styles\ButtonStyle.xaml;Styles\OtherStyle.xaml;Styles\Resources.xaml;Styles\ScrollPaneStyle.xaml;XApplication\SubDisplays\CreateNew.xaml;XApplication\SubDisplays\ImageCropper.xaml;XApplication\SubDisplays\InfoBox.xaml;XApplication\SubDisplays\QuestionBox.xaml;XApplication\SubDisplays\Rename.xaml;XApplication\SubDisplays\Settings.xaml;
+MainWindow.xaml;Styles\ButtonStyle.xaml;Styles\CheckBoxStyle.xaml;Styles\OtherStyle.xaml;Styles\Resources.xaml;Styles\ScrollPaneStyle.xaml;XApplication\SubDisplays\CreateNew.xaml;XApplication\SubDisplays\ImageCropper.xaml;XApplication\SubDisplays\InfoBox.xaml;XApplication\SubDisplays\QuestionBox.xaml;XApplication\SubDisplays\Rename.xaml;XApplication\SubDisplays\Settings.xaml;
 
 True
 

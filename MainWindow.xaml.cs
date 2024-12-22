@@ -175,7 +175,7 @@ namespace GameTimeX
             {
                 // Wird das Profil während der Zeitaufnahme gewechselt, so muss das Monitoring beendet u. gespeichert werden
                 if (profile.PID != SysProps.currentSelectedPID && MonitorHandler.currentlyMonitoringGameTime())
-                    MonitorHandler.endMonitoringGameTime(btnStartStopMonitoring);
+                    MonitorHandler.endMonitoringGameTime(this);
 
                 // Derzeit aktive PID wählen
                 SysProps.currentSelectedPID = profile.PID;
@@ -189,7 +189,7 @@ namespace GameTimeX
         {
             if (MonitorHandler.currentlyMonitoringGameTime())
             {
-                MonitorHandler.endMonitoringGameTime(btnStartStopMonitoring);
+                MonitorHandler.endMonitoringGameTime(this);
                 buildDGProfiles();
                 DisplayHandler.buildInfoDisplay(SysProps.currentSelectedPID, this);
 
@@ -198,7 +198,7 @@ namespace GameTimeX
             }
             else
             {
-                MonitorHandler.startMonitoringGameTime(btnStartStopMonitoring, SysProps.currentSelectedPID);
+                MonitorHandler.startMonitoringGameTime(this, SysProps.currentSelectedPID);
 
                 btnStartStopMonitoring.Background = new SolidColorBrush((Color)this.FindResource("ButtonDefaultMonitoringColor"));
                 VisualHandler.startStopMonitoringBtnActive = true;
@@ -212,7 +212,7 @@ namespace GameTimeX
 
         private void Window_Closed(object sender, System.EventArgs e)
         {
-            MonitorHandler.endMonitoringGameTime(btnStartStopMonitoring);
+            MonitorHandler.endMonitoringGameTime(this);
         }
 
         private void btnEditProfileName_Click(object sender, RoutedEventArgs e)
@@ -235,8 +235,8 @@ namespace GameTimeX
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-
-            MonitorHandler.endMonitoringGameTime(btnStartStopMonitoring);
+            if(MonitorHandler.currentlyMonitoringGameTime())
+                MonitorHandler.endMonitoringGameTime(this);
 
             // Settings öffnen
             Settings settings = new Settings();

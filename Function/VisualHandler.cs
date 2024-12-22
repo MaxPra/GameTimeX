@@ -110,6 +110,17 @@ namespace GameTimeX
             btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultColor"));
             VisualHandler.startStopMonitoringBtnActive = false;
         }
+
+        public static void deactivateGameTimeSeesion(TextBlock txtBlock)
+        {
+            txtBlock.Visibility = Visibility.Hidden;
+        }
+
+        public static void activateGameTimeSeesion(TextBlock txtBlock)
+        {
+            txtBlock.Visibility = Visibility.Visible;
+            txtBlock.Text = "Session: 0 minute(s)";
+        }
     }
 
    
