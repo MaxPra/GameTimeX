@@ -33,7 +33,8 @@ You can also see the first time you played the game and when you last played the
 Now that I have explained the main window, lets explain the settings window now:
 ![image](https://github.com/user-attachments/assets/f0dd601b-fbfb-4e9d-8d8c-5ef61d1e0dd8)
 
-In the settings window, you have the option to backup the profiles as well as importing an existing backup.
+In the settings window, you have the option to turn on the current session game time (if checked the current session game time will appear under the start/stop monitoring button - when currently monitoring game time).
+You can also backup the profiles as well as importing an existing backup.
 This can come in handy if you reset your computer or if you want to move to another computer at some time (or simply because you were a fool and deleted an important profile ;))
 As stated in the window itself the application will restart automatically when importing or exporting a backup.
 
