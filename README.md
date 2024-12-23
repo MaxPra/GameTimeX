@@ -37,7 +37,7 @@ Hovering over the small clock next to "Game Time" will show the tracked time in 
 ### Settings
 
 Now that the main window has been explained, let's review the settings window:  
-![image](https://github.com/user-attachments/assets/f7d7d47a-3c1d-43bf-be8d-665e4f9d3efd)
+![image](https://github.com/user-attachments/assets/eb5a9dad-d267-484d-a014-54c0593dc5e6)
 
 In the settings window, you can enable or disable the tracking of the current session's game time. When enabled, the game time for the current session will appear under the start/stop monitoring button while the monitoring is active.
 
@@ -47,6 +47,8 @@ By clicking on "Monitor Key," you can assign your desired key for the action (al
 
 Additionally, you can back up your profiles or import an existing backup. This feature is particularly useful if you need to reset your computer, transfer profiles to another device, or recover profiles that may have been accidentally deleted.  
 As noted in the settings window, the application will automatically restart after importing or exporting a backup.
+
+The auto-backup feature can also be activated via the checkbox to automatically create a backup upon each program startup (provided that a valid path is specified in the backup path field).
 
 ### Profile Image Cropping
 
