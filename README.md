@@ -37,7 +37,7 @@ Hovering over the small clock next to "Game Time" will show the tracked time in 
 ### Settings
 
 Now that the main window has been explained, let's review the settings window:  
-![image](https://github.com/user-attachments/assets/0ba93df1-dcb4-4f27-a280-e8ed69078fe1)
+![image](https://github.com/user-attachments/assets/f7d7d47a-3c1d-43bf-be8d-665e4f9d3efd)
 
 In the settings window, you can enable or disable the tracking of the current session's game time. When enabled, the game time for the current session will appear under the start/stop monitoring button while the monitoring is active.
 
