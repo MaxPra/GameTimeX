@@ -61,6 +61,7 @@ namespace GameTimeX.Function
             {
                 // Thread starten
                 th.Start(objParm);
+                th.IsBackground = true;
             }
             catch (Exception ex)
             {

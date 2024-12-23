@@ -89,7 +89,11 @@ namespace GameTimeX
             window.Focus();
 
             if (txtBackupPath.Text.Length > 0)
+            {
                 btnCreateBackup.IsEnabled = true;
+                cbAutoBackup.IsEnabled = true;
+            }
+                
         }
 
         private void btnCreateBackup_Click(object sender, RoutedEventArgs e)
@@ -149,7 +153,6 @@ namespace GameTimeX
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
             // SessionGameTime laden
             cbSessionGameTime.IsChecked = SysProps.startUpParms.SessionGameTime;
 
@@ -175,12 +178,15 @@ namespace GameTimeX
             if(txtBackupPath.Text != string.Empty)
             {
                 btnCreateBackup.IsEnabled = true;
+                cbAutoBackup.IsEnabled = true;
+                cbAutoBackup.IsChecked = SysProps.startUpParms.AutoBackup;
             }
 
             if(txtBackupPathImport.Text != string.Empty)
             {
                 btnImportBackup.IsEnabled=true;
                 lblBackUpDate.Text = "Backup date of file: " + File.GetCreationTime(txtBackupPathImport.Text).ToString("f");
+               
             }
         }
 
@@ -219,6 +225,21 @@ namespace GameTimeX
                 SysProps.startUpParms.MonitorShortcutActive = false;
             }
 
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+        }
+
+        private void cbAutoBackup_Click(object sender, RoutedEventArgs e)
+        {
+            if(cbAutoBackup.IsChecked == true)
+            {
+                SysProps.startUpParms.AutoBackup = true;
+            }
+            else
+            {
+                SysProps.startUpParms.AutoBackup = false;
+            }
+
+            SysProps.startUpParms.BackupPath = txtBackupPath.Text;
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
         }
     }

@@ -61,11 +61,27 @@
                     <Button x:Name="btnChooseGameFolder" Content="Choose Backup Folder" Margin="10 0 0 0" Style="{StaticResource NormalGuiButton}" Width="150"
                             Click="btnChooseGameFolder_Click"/>
                 </StackPanel>
-                <Button x:Name="btnCreateBackup" Grid.Column="0" Margin="10 10 0 0" Content="Create Backup" 
-                    Width="100" Height="30" HorizontalAlignment="Left"
-                    IsEnabled="False" Click="btnCreateBackup_Click"
-                    Style="{StaticResource NormalGuiButton}">
-                </Button>
+                <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
+                    <Button x:Name="btnCreateBackup" Grid.Column="0" Margin="0 0 0 0" Content="Create Backup" 
+                            Width="100" Height="30" HorizontalAlignment="Left"
+                            IsEnabled="False" Click="btnCreateBackup_Click"
+                            Style="{StaticResource NormalGuiButton}">
+                    </Button>
+                    <CheckBox Style="{StaticResource CheckBoxDefaultStyle}"
+                              Content="Auto Backup" Margin="15 0 0 0"
+                              x:Name="cbAutoBackup"
+                              IsEnabled="False"
+                              Click="cbAutoBackup_Click">
+                        <CheckBox.ToolTip>
+                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                <TextBlock>
+                                    If checked GameTimeX will create a backap automatically every time the application is started.
+                                </TextBlock>
+                            </ToolTip>
+                        </CheckBox.ToolTip>
+                    </CheckBox>
+                </StackPanel>
+                
             </StackPanel>
             <StackPanel Margin="10, 10, 0, 0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Margin="10, 10, 0, 0"  Grid.ColumnSpan="2">

@@ -17,6 +17,8 @@ namespace GameTimeX.Objects
         }
 
         public BackupTypes BackupType { get; set; }
+        public bool AutoBackup { get; set; }
+
         public string BackupPath { get; set; } = string.Empty;   
         public string BackUpImportPath {  get; set; } = string.Empty;
 

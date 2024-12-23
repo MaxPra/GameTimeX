@@ -57,17 +57,20 @@ namespace GameTimeX
             SysProps.startUpParms = FileHandler.ReadStartParms(startUpParmsPath);
             
             // Auf Backup Prüfen
-            if(startUpParms.BackupType != StartUpParms.BackupTypes.NO_BACKUP)
+            if(startUpParms.BackupType != StartUpParms.BackupTypes.NO_BACKUP || startUpParms.AutoBackup)
             {
                 // Muss ein Backup erstellt werden?
-                if(startUpParms.BackupType == StartUpParms.BackupTypes.CREATE_BACKUP)
+                if(startUpParms.BackupType == StartUpParms.BackupTypes.CREATE_BACKUP || (startUpParms.AutoBackup && startUpParms.BackupType != StartUpParms.BackupTypes.IMPORT_BACKUP))
                 {
                     // Backup erstellen
                     FileHandler.CreateBackup();
 
-                    InfoBox info = new InfoBox("Backup was created successfully!");
-                    info.Owner = Application.Current.MainWindow;
-                    info.ShowDialog();
+                    if (!startUpParms.AutoBackup)
+                    {
+                        InfoBox info = new InfoBox("Backup was created successfully!");
+                        info.Owner = Application.Current.MainWindow;
+                        info.ShowDialog();
+                    }
                 }
 
                 // Muss ein Backup importiert werden?

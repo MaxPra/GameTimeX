@@ -162,6 +162,9 @@ namespace GameTimeX
 
             // Zip-File extrahieren
             ZipFile.ExtractToDirectory(backImportPath, SysProps.programPathFolder);
+
+            SysProps.startUpParms.BackupType = StartUpParms.BackupTypes.NO_BACKUP;
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
         }
 
         public static StartUpParms ReadStartParms(string startParmsPath)
