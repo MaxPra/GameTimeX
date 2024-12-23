@@ -22,7 +22,7 @@ namespace GameTimeX
         SolidColorBrush normalButtonColor = Brushes.CornflowerBlue;
         SolidColorBrush hoverColor = Brushes.MediumBlue;
 
-        public int pid { get; set; }
+        public int Pid { get; set; }
 
         public DBObject CurrObject { get; set; }   
 
@@ -77,13 +77,13 @@ namespace GameTimeX
         private void btnRenameProfile_Click(object sender, RoutedEventArgs e)
         {
 
-            if (DisplayHandler.checkDisplay(false, txtProfileName))
+            if (DisplayHandler.CheckDisplay(false, txtProfileName))
 
             {
                 // Werte in Datenbank speichern
-                DBObject dbObject = DataBaseHandler.readPID(CurrObject.ProfileID);
+                DBObject dbObject = DataBaseHandler.ReadPID(CurrObject.ProfileID);
                 dbObject.GameName = txtProfileName.Text;
-                DataBaseHandler.save(dbObject);
+                DataBaseHandler.Save(dbObject);
                 Close();
             }
         }

@@ -22,7 +22,7 @@ namespace GameTimeX
         SolidColorBrush normalButtonColor = Brushes.CornflowerBlue;
         SolidColorBrush hoverColor = Brushes.MediumBlue;
 
-        public int pid { get; set; }
+        public int Pid { get; set; }
 
         private string infoText =""; 
 
@@ -42,8 +42,6 @@ namespace GameTimeX
         {
             DragMove();
         }
-
-
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {

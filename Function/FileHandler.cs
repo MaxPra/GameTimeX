@@ -21,7 +21,7 @@ namespace GameTimeX
         /// </summary>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        public static string getHashFromFilename(string filepath)
+        public static string GetHashFromFilename(string filepath)
         {
             string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
             int hash = filename.GetHashCode() % 10000;
@@ -37,7 +37,7 @@ namespace GameTimeX
         /// <param name="outputPath"></param>
         /// <param name="outputFileName"></param>
         /// <returns></returns>
-        public static bool cropImageAndSave(string filePath, int widthIn, int heightIn, string outputPath, string outputFileName, int startX, int startY)
+        public static bool CropImageAndSave(string filePath, int widthIn, int heightIn, string outputPath, string outputFileName, int startX, int startY)
         {
             // get the image
             using SKImage sKImage = SKImage.FromEncodedData(filePath);
@@ -49,7 +49,7 @@ namespace GameTimeX
                 //int centerX = sKImage.Width / 2;
                 //int centerY = sKImage.Height / 2;
 
-                //// find the start points
+                //// find the Start points
                 //int startX = centerX - widthIn / 2;
                 //int startY = centerY - heightIn / 2;
 
@@ -59,7 +59,7 @@ namespace GameTimeX
 
                 using (var stream = File.OpenWrite(Path.Combine(outputPath, outputFileName)))
                 {
-                    // save the data to a stream
+                    // Save the data to a stream
                     sKData.SaveTo(stream);
                 }
 
@@ -71,7 +71,7 @@ namespace GameTimeX
         /// <summary>
         /// Erstellt alle nötigen Ordner für das Programm
         /// </summary>
-        public static void createProgramFoldersAndFiles()
+        public static void CreateProgramFoldersAndFiles()
         {
             if (!Directory.Exists(SysProps.programPathFolder))
             {
@@ -92,9 +92,9 @@ namespace GameTimeX
             }
         }
 
-        public static void deleteUnusedImages()
+        public static void DeleteUnusedImages()
         {
-            List<DBObject> profiles = DataBaseHandler.readAll();
+            List<DBObject> profiles = DataBaseHandler.ReadAll();
 
             string[] files =  Directory.GetFiles(SysProps.picDestPath);
 
@@ -114,7 +114,7 @@ namespace GameTimeX
             }
         }
 
-        private static void deleteAllProgramFolders()
+        private static void DeleteAllProgramFolders()
         {
             // Alle Ordner werden gelöscht
             Directory.Delete(SysProps.programPathFolder, true);
@@ -124,7 +124,7 @@ namespace GameTimeX
         /// Erstellt ein Backup der DB und Bilder
         /// </summary>
         /// <param name="backPath"></param>
-        public static void createBackup()
+        public static void CreateBackup()
         {
             // Backup-Pfad
             string backPath = SysProps.startUpParms.BackupPath;
@@ -133,7 +133,7 @@ namespace GameTimeX
             // Ansonsten würden wir hier in eine Endlosschleife geraten, da GameTimeX immer versuchen würde
             // ein Backup zu ziehen
             SysProps.startUpParms.BackupType = StartUpParms.BackupTypes.NO_BACKUP;
-            saveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+            SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
             // Pfad vorhanden?
             if (!Directory.Exists(backPath))
@@ -147,7 +147,7 @@ namespace GameTimeX
             ZipFile.CreateFromDirectory(SysProps.programPathFolder, backPath + SysProps.separator + zipName);
         }
 
-        public static void importBackup()
+        public static void ImportBackup()
         {
             //Backup Pfad --> Pfad + name.zip
             string backImportPath = SysProps.startUpParms.BackUpImportPath;
@@ -158,13 +158,13 @@ namespace GameTimeX
 
             // -- BACKUP IMPORTIEREN --
             // Vorher gesamten Programmordner löschen
-            deleteAllProgramFolders();
+            DeleteAllProgramFolders();
 
             // Zip-File extrahieren
             ZipFile.ExtractToDirectory(backImportPath, SysProps.programPathFolder);
         }
 
-        public static StartUpParms readStartParms(string startParmsPath)
+        public static StartUpParms ReadStartParms(string startParmsPath)
         {
             // Prüfen ob startParmsPath Wert enthält
             if (startParmsPath.Equals(string.Empty))
@@ -183,7 +183,7 @@ namespace GameTimeX
             return null;
         }
 
-        public static void saveStartParms(string startParmsPath, StartUpParms startUpParms)
+        public static void SaveStartParms(string startParmsPath, StartUpParms startUpParms)
         {
             // Prüfen ob startParmsPath Wert enthält
             if (startParmsPath.Equals(string.Empty))
@@ -196,6 +196,4 @@ namespace GameTimeX
             File.WriteAllText(startParmsPath, startParmsJSON);
         }
     }
-
-    
 }

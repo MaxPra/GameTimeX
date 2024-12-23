@@ -11,32 +11,7 @@ namespace GameTimeX
 {
     internal class DisplayHandler
     {
-        
-        public bool markEmptyFieldsAndShowMessage(params Control[] controls)
-        {
-
-            bool emptyFields = false;
-
-            foreach (var control in controls)
-            {
-                // Übergebenes Control ist Textbox
-                if(control is TextBox)
-                {
-                    TextBox txtBox = (TextBox)control;
-                    if (String.IsNullOrEmpty(txtBox.Text))
-                    {
-                        txtBox.BorderBrush = SysProps.emptyFieldsColor;
-                        emptyFields = true;
-                    }
-                }
-
-                // Weitere folgen....
-            }
-
-            return emptyFields;
-        }
-
-        public static bool checkDisplay(bool showMessageAfterCheck, params Control[] controls)
+        public static bool CheckDisplay(bool showMessageAfterCheck, params Control[] controls)
         {
             bool emptyFields = false;
 
@@ -59,10 +34,10 @@ namespace GameTimeX
             return !emptyFields;
         }
 
-        public static void buildInfoDisplay(int pid, MainWindow wnd)
+        public static void BuildInfoDisplay(int pid, MainWindow wnd)
         {
             // Objekt nochmal frisch aus der DB holen
-            DBObject obj = DataBaseHandler.readPID(pid);
+            DBObject obj = DataBaseHandler.ReadPID(pid);
 
             wnd.lblGameName.Text = obj.GameName;
 
@@ -80,13 +55,13 @@ namespace GameTimeX
             }
             else
             {
-                bitProfilePic = getDefaultProfileImage();
+                bitProfilePic = GetDefaultProfileImage();
             }
 
           
             wnd.currProfileImage.Source = bitProfilePic;
-            wnd.lblFirstTimePlayed.Text = formatDatePlayed(obj.FirstPlay);
-            wnd.lblLastTimePlayed.Text = formatDatePlayed(obj.LastPlay);
+            wnd.lblFirstTimePlayed.Text = FormatDatePlayed(obj.FirstPlay);
+            wnd.lblLastTimePlayed.Text = FormatDatePlayed(obj.LastPlay);
 
             // Buttons enablen
             wnd.btnStartStopMonitoring.IsEnabled = true;
@@ -97,7 +72,7 @@ namespace GameTimeX
             wnd.lblToolTipGameTimeText.Text = obj.GameTime.ToString("n0") + " minutes";
 
             // Formatieren des Spielzeittextes 
-            double hours = MonitorHandler.calcGameTime(obj.GameTime);
+            double hours = MonitorHandler.CalcGameTime(obj.GameTime);
 
             string gameTimeText = "";
 
@@ -131,7 +106,7 @@ namespace GameTimeX
             return child;
         }
 
-        public static BitmapImage getDefaultProfileImage()
+        public static BitmapImage GetDefaultProfileImage()
         {
             BitmapImage bitProfilePic = new BitmapImage();
             bitProfilePic.BeginInit();
@@ -141,7 +116,7 @@ namespace GameTimeX
             return bitProfilePic;
         }
 
-        private static string formatDatePlayed(DateTime date)
+        private static string FormatDatePlayed(DateTime date)
         {
             if(date == DateTime.MinValue)
             {
@@ -153,13 +128,13 @@ namespace GameTimeX
             }
         }
 
-        public static void switchToFirstGameInList(MainWindow wnd)
+        public static void SwitchToFirstGameInList(MainWindow wnd)
         {
             if(wnd.dgProfiles.Items.Count != 0)
                 wnd.dgProfiles.SelectedIndex = 0;
         }
 
-        public static void buildInfoDisplayNoGame(MainWindow wnd)
+        public static void BuildInfoDisplayNoGame(MainWindow wnd)
         {
             // Buttons Disablen
             wnd.btnEditProfileName.IsEnabled = false;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using GameTimeX.Function;
+using GameTimeX.Objects;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -52,6 +54,10 @@ namespace GameTimeX
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+
+            // KeyInputHandler stoppen
+            SysProps.StopKeyInputHandler();
+
             Close();
         }
 
@@ -67,7 +73,7 @@ namespace GameTimeX
 
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
         {
-            btnClose.Background = VisualHandler.convertHexToBrush(SysProps.hexValCloseWindow); 
+            btnClose.Background = VisualHandler.ConvertHexToBrush(SysProps.hexValCloseWindow); 
         }
 
         private void btnClose_MouseLeave(object sender, MouseEventArgs e)
@@ -89,15 +95,15 @@ namespace GameTimeX
         {
 
             // Bei Programmstart / Fensterstart System initialisieren
-            SysProps.initializeSystem(this);
+            SysProps.InitializeSystem(this);
 
             // Bei jedem Start unbenutze Bilder löschen (ACHTUNG: Bevor diese verwendet werden!!)
-            FileHandler.deleteUnusedImages();
+            FileHandler.DeleteUnusedImages();
 
             // DataGrid aufbauen (Gameprofile laden)
-            buildDGProfiles();
+            BuildDGProfiles();
 
-            DisplayHandler.switchToFirstGameInList(this);
+            DisplayHandler.SwitchToFirstGameInList(this);
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -106,7 +112,7 @@ namespace GameTimeX
             cnWin.Owner = this;
             cnWin.ShowDialog();
             
-            buildDGProfiles();
+            BuildDGProfiles();
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -114,35 +120,35 @@ namespace GameTimeX
 
             if(profile != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to delete '" + profile.ProfileName + "'?", "Delete", "Cancel");
+                QuestionBox quest = new QuestionBox("Do you really want to Delete '" + profile.ProfileName + "'?", "Delete", "Cancel");
                 quest.Owner = this;
                 quest.ShowDialog();
 
                 // User hat "Delete" geklickt
-                if (quest.returnType == QuestionBox.ReturnType.YES)
+                if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
                 {
                     if (profile != null)
                     {
-                        DataBaseHandler.delete(profile.PID);
-                        buildDGProfiles();
-                        DisplayHandler.switchToFirstGameInList(this);
+                        DataBaseHandler.Delete(profile.PID);
+                        BuildDGProfiles();
+                        DisplayHandler.SwitchToFirstGameInList(this);
                     }
                 }
             }
         }
 
-        private void buildDGProfiles()
+        private void BuildDGProfiles()
         {
 
             List<DBObject> profiles = null;
 
             if (txtSearchBar.Text == "")
             {
-                profiles = DataBaseHandler.readAll();
+                profiles = DataBaseHandler.ReadAll();
             }
             else
             {
-                profiles = DataBaseHandler.readGameName(txtSearchBar.Text);
+                profiles = DataBaseHandler.ReadGameName(txtSearchBar.Text);
             }
 
             dgProfiles.Items.Clear();
@@ -157,11 +163,11 @@ namespace GameTimeX
                 dgProfiles.Items.Add(profile);
             }
 
-            DisplayHandler.switchToFirstGameInList(this);
+            DisplayHandler.SwitchToFirstGameInList(this);
 
             if(profiles.Count == 0)
             {
-                DisplayHandler.buildInfoDisplayNoGame(this);
+                DisplayHandler.BuildInfoDisplayNoGame(this);
             }
         }
 
@@ -174,31 +180,31 @@ namespace GameTimeX
             if(profile != null)
             {
                 // Wird das Profil während der Zeitaufnahme gewechselt, so muss das Monitoring beendet u. gespeichert werden
-                if (profile.PID != SysProps.currentSelectedPID && MonitorHandler.currentlyMonitoringGameTime())
-                    MonitorHandler.endMonitoringGameTime(this);
+                if (profile.PID != SysProps.currentSelectedPID && MonitorHandler.CurrentlyMonitoringGameTime())
+                    MonitorHandler.EndMonitoringGameTime(this);
 
                 // Derzeit aktive PID wählen
                 SysProps.currentSelectedPID = profile.PID;
 
                 // Info-Display befüllen / aufbauen
-                DisplayHandler.buildInfoDisplay(profile.PID, this);
+                DisplayHandler.BuildInfoDisplay(profile.PID, this);
             }            
         }
 
         private void btnStartStopMonitoring_Click(object sender, RoutedEventArgs e)
         {
-            if (MonitorHandler.currentlyMonitoringGameTime())
+            if (MonitorHandler.CurrentlyMonitoringGameTime())
             {
-                MonitorHandler.endMonitoringGameTime(this);
-                buildDGProfiles();
-                DisplayHandler.buildInfoDisplay(SysProps.currentSelectedPID, this);
+                MonitorHandler.EndMonitoringGameTime(this);
+                BuildDGProfiles();
+                DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, this);
 
                 btnStartStopMonitoring.Background = new SolidColorBrush((Color)this.FindResource("ButtonDefaultColor"));
                 VisualHandler.startStopMonitoringBtnActive = false;
             }
             else
             {
-                MonitorHandler.startMonitoringGameTime(this, SysProps.currentSelectedPID);
+                MonitorHandler.StartMonitoringGameTime(this, SysProps.currentSelectedPID);
 
                 btnStartStopMonitoring.Background = new SolidColorBrush((Color)this.FindResource("ButtonDefaultMonitoringColor"));
                 VisualHandler.startStopMonitoringBtnActive = true;
@@ -207,23 +213,23 @@ namespace GameTimeX
 
         private void txtSearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            buildDGProfiles();
+            BuildDGProfiles();
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
         {
-            MonitorHandler.endMonitoringGameTime(this);
+            MonitorHandler.EndMonitoringGameTime(this);
         }
 
         private void btnEditProfileName_Click(object sender, RoutedEventArgs e)
         {
             Rename rename = new Rename();
-            rename.CurrObject = DataBaseHandler.readPID(SysProps.currentSelectedPID);
+            rename.CurrObject = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
             rename.Owner = this;
             rename.ShowDialog();
 
-            buildDGProfiles();
-            DisplayHandler.buildInfoDisplay(SysProps.currentSelectedPID, this);
+            BuildDGProfiles();
+            DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, this);
         }
 
         private void scrollBar_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -235,13 +241,34 @@ namespace GameTimeX
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            if(MonitorHandler.currentlyMonitoringGameTime())
-                MonitorHandler.endMonitoringGameTime(this);
+            // Wenn derzeit die Spielzeit aufgenommen wird --> beenden
+            if(MonitorHandler.CurrentlyMonitoringGameTime())
+                MonitorHandler.EndMonitoringGameTime(this);
+
+            // Vor öffnen den InputHandler beenden!
+            if (SysProps.keyInputHandler != null)
+                SysProps.keyInputHandler.StopListening();
 
             // Settings öffnen
             Settings settings = new Settings();
             settings.Owner = this;
             settings.ShowDialog();
+
+            // Nach Schließen des Settings-Windows keyInputHanlder entweder starten oder beenden!
+            if(SysProps.keyInputHandler != null)
+            {
+                // Wenn Monitor Key aktiv und als Key nicht (kein Key) ausgewühlt wurde --> KeyInputHandler starten
+                if (SysProps.startUpParms.MonitorShortcutActive && SysProps.startUpParms.MonitorShortcut != Objects.KeyInput.VirtualKey.VK_NONE)
+                {
+                    SysProps.keyInputHandler = new Function.KeyInputHandler(SysProps.startUpParms.MonitorShortcut, this);
+                    SysProps.keyInputHandler.StartListening();
+                }
+                // Wenn Monitor Key nicht aktiv oder Monitor Key = (kein Key) --> Stoppen
+                else if (!SysProps.startUpParms.MonitorShortcutActive || SysProps.startUpParms.MonitorShortcut == KeyInput.VirtualKey.VK_NONE)
+                {
+                    SysProps.keyInputHandler.StopListening();
+                }
+            }
         }
 
         private void btnStartStopMonitoring_MouseEnter(object sender, MouseEventArgs e)
@@ -277,11 +304,6 @@ namespace GameTimeX
                 Storyboard sb = this.FindResource("StartStopButtonNoHoverNotMonitoring") as Storyboard;
                 sb.Begin();
             }
-        }
-
-        private void btnGameTimeQuestion_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void btnGameTimeInfo_Click(object sender, RoutedEventArgs e)
@@ -321,7 +343,7 @@ namespace GameTimeX
                 cropHeight = imageCropper.CropHeight;
 
                 // Dateinamen in Hash (4 Zeichen) umwandeln
-                string fileNameHash = FileHandler.getHashFromFilename(filePath);
+                string fileNameHash = FileHandler.GetHashFromFilename(filePath);
 
                 if (fileNameHash.StartsWith("-"))
                 {
@@ -329,14 +351,14 @@ namespace GameTimeX
                 }
 
                 // Werte in Datenbank speichern
-                DBObject dbObj = DataBaseHandler.readPID(SysProps.currentSelectedPID);
+                DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
                 dbObj.ProfilePicFileName = fileNameHash;
-                DataBaseHandler.save(dbObj);
+                DataBaseHandler.Save(dbObj);
 
                 // Bild croppen und abspeichern
-                FileHandler.cropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
+                FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
 
-                DisplayHandler.buildInfoDisplay(SysProps.currentSelectedPID, this);
+                DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, this);
 
             }
         }

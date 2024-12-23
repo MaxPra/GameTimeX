@@ -20,21 +20,21 @@ namespace GameTimeX.Function
         public double CropHeight {  get; set; }   
 
         // Mauspos. X bei Klick
-        public double mouseXBeginning { get; set; }
+        public double MouseXBeginning { get; set; }
         // Mauspos. X bei Loslassen
-        public double mouseXEnd {  get; set; }
+        public double MouseXEnd {  get; set; }
         // Mauspos. Y bei Klick
-        public double mouseYBeginning { get; set; }
+        public double MouseYBeginning { get; set; }
         // Mausepos. Y bei Loslassen
-        public double mouseYEnd {  get; set; }
+        public double MouseYEnd {  get; set; }
         
-        public double canvasHeight { get; set; }
-        public double canvasWidth { get; set; }
+        public double CanvasHeight { get; set; }
+        public double CanvasWidth { get; set; }
 
-        public double pictureRatioWidth { get; set; }
-        public double pictureRatioHeight { get; set; }
+        public double PictureRatioWidth { get; set; }
+        public double PictureRatioHeight { get; set; }
 
-        public MouseState mouseState { get; set; }
+        public MouseState CurrMouseState { get; set; }
 
 
         public enum MouseState
@@ -48,11 +48,11 @@ namespace GameTimeX.Function
         {
             this.CropWidth = cropWidth;
             this.CropHeight = cropHeight;
-            this.canvasWidth = canvasWidth;
-            this.canvasHeight = canvasHeight;
-            this.pictureRatioWidth = pictureRatioWidth;
-            this.pictureRatioHeight = pictureRatioHeight;
-            this.mouseState = MouseState.MOUSE_NONE;
+            this.CanvasWidth = canvasWidth;
+            this.CanvasHeight = canvasHeight;
+            this.PictureRatioWidth = pictureRatioWidth;
+            this.PictureRatioHeight = pictureRatioHeight;
+            this.CurrMouseState = MouseState.MOUSE_NONE;
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace GameTimeX.Function
             double newCropX = 0;
             double newCropY = 0;
 
-            double mouseMovedPixelsX = mouseXBeginning - xMouseCurrent;
-            double mouseMovedPixelsY = mouseYBeginning - yMouseCurrent;
+            double mouseMovedPixelsX = MouseXBeginning - xMouseCurrent;
+            double mouseMovedPixelsY = MouseYBeginning - yMouseCurrent;
 
             newCropX = CropX + -mouseMovedPixelsX;
             newCropY = CropY + -mouseMovedPixelsY;
@@ -78,17 +78,17 @@ namespace GameTimeX.Function
             if(newCropY < 0)
                 newCropY = CropY;
 
-            if (newCropX + CropWidth > canvasWidth && mouseMovedPixelsX < 0)
+            if (newCropX + CropWidth > CanvasWidth && mouseMovedPixelsX < 0)
                 newCropX = CropX;
 
-            if (newCropY + CropHeight> canvasHeight && mouseMovedPixelsY < 0)
+            if (newCropY + CropHeight> CanvasHeight && mouseMovedPixelsY < 0)
                 newCropY = CropY;
 
             CropX = newCropX;
             CropY = newCropY;
 
-            mouseXBeginning = xMouseCurrent;
-            mouseYBeginning = yMouseCurrent;
+            MouseXBeginning = xMouseCurrent;
+            MouseYBeginning = yMouseCurrent;
 
             return (newCropX, newCropY);
 
@@ -107,10 +107,10 @@ namespace GameTimeX.Function
             if (CropY < 0)
                 return true;
 
-            if (CropX + CropWidth > canvasWidth)
+            if (CropX + CropWidth > CanvasWidth)
                 return true;
 
-            if (CropY + CropHeight > canvasHeight)
+            if (CropY + CropHeight > CanvasHeight)
                 return true;
 
             return false;

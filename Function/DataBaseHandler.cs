@@ -15,7 +15,7 @@ namespace GameTimeX
         private static SQLiteConnection connection = null;
 
 
-        public static bool createDB()
+        public static bool CreateDB()
         {
             if (System.IO.File.Exists(SysProps.dbFilePath))
             {
@@ -32,7 +32,7 @@ namespace GameTimeX
         /// <summary>
         /// Erstellt, wenn nötig die SQLite-Datenbank
         /// </summary>
-        public static void createTable()
+        public static void CreateTable()
         {
             if(connection == null)
             {
@@ -44,7 +44,7 @@ namespace GameTimeX
             cmd.ExecuteNonQuery();
         }
 
-        public static bool connectToSQLite()
+        public static bool ConnectToSQLite()
         {
 
             string connectionString = "";
@@ -75,7 +75,7 @@ namespace GameTimeX
             return newDB;
         }
 
-        private static String buildSQLUpdate(DBObject dbObj)
+        private static String BuildSQLUpdate(DBObject dbObj)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -91,7 +91,7 @@ namespace GameTimeX
             return sb.ToString();
         }
 
-        private static String buildSQLCreateNew(DBObject dbObj)
+        private static String BuildSQLCreateNew(DBObject dbObj)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -116,19 +116,19 @@ namespace GameTimeX
             return sb.ToString();
         }
 
-        private static String buildSQL(DBObject dbObj)
+        private static String BuildSQL(DBObject dbObj)
         {
-            if (existsInDatabse(dbObj.ProfileID))
+            if (ExistsInDatabse(dbObj.ProfileID))
             {
-                return buildSQLUpdate(dbObj);
+                return BuildSQLUpdate(dbObj);
             }
             else
             {
-                return buildSQLCreateNew(dbObj);
+                return BuildSQLCreateNew(dbObj);
             }
         }
 
-        private static bool existsInDatabse(int profileID)
+        private static bool ExistsInDatabse(int profileID)
         {
             if(profileID == 0)
             {
@@ -140,16 +140,16 @@ namespace GameTimeX
             }
         }
 
-        public static void save(DBObject obj)
+        public static void Save(DBObject obj)
         {
-            string sql = buildSQL(obj);
+            string sql = BuildSQL(obj);
             SQLiteCommand cmd = new SQLiteCommand(sql, connection);
             cmd.ExecuteNonQuery();
         }
 
-        public static void delete(int pid)
+        public static void Delete(int pid)
         {
-            DBObject obj = DataBaseHandler.readPID(pid);
+            DBObject obj = DataBaseHandler.ReadPID(pid);
 
             string sql = "DELETE from tblGameProfiles where ProfileID = " + pid;
             SQLiteCommand cmd = new SQLiteCommand(sql, connection);
@@ -161,7 +161,7 @@ namespace GameTimeX
         /// </summary>
         /// <param name="gameName"></param>
         /// <returns></returns>
-        public static List<DBObject> readGameName(string gameName)
+        public static List<DBObject> ReadGameName(string gameName)
         {
             SQLiteDataReader reader = null;
             List<DBObject> list = new List<DBObject>();
@@ -189,7 +189,7 @@ namespace GameTimeX
             return list;
         }
 
-        public static List<DBObject> readAll()
+        public static List<DBObject> ReadAll()
         {
             SQLiteDataReader reader = null;
             List<DBObject> list = new List<DBObject>();
@@ -222,7 +222,7 @@ namespace GameTimeX
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public static DBObject readPID(int pid)
+        public static DBObject ReadPID(int pid)
         {
             SQLiteDataReader reader = null;
             DBObject dbObj = null;
@@ -248,7 +248,7 @@ namespace GameTimeX
             return dbObj;
         }
 
-        public static DBObject createNew()
+        public static DBObject CreateNew()
         {
             DBObject dbObj = new DBObject();
             dbObj.GameName = "";
@@ -262,20 +262,20 @@ namespace GameTimeX
             return dbObj;
         }
 
-        public static void saveMonitoredTime(long minutes, int pid)
+        public static void SaveMonitoredTime(long minutes, int pid)
         {
-            DBObject obj = DataBaseHandler.readPID(pid);
+            DBObject obj = DataBaseHandler.ReadPID(pid);
 
             if(obj != null)
             {
                 obj.GameTime += minutes;
-                DataBaseHandler.save(obj);
+                DataBaseHandler.Save(obj);
             }
         }
 
-        public static void saveFirstTimePlayed(int pid)
+        public static void SaveFirstTimePlayed(int pid)
         {
-            DBObject obj = DataBaseHandler.readPID(pid);
+            DBObject obj = DataBaseHandler.ReadPID(pid);
 
             if(obj == null || obj.FirstPlay != DateTime.MinValue)
             {
@@ -283,22 +283,18 @@ namespace GameTimeX
             }
 
             obj.FirstPlay = DateTime.Now;
-            DataBaseHandler.save(obj);
+            DataBaseHandler.Save(obj);
         }
 
-        public static void saveLastTimePlayed(int pid)
+        public static void SaveLastTimePlayed(int pid)
         {
-            DBObject obj = DataBaseHandler.readPID(pid);
+            DBObject obj = DataBaseHandler.ReadPID(pid);
 
             if(obj != null)
             {
                 obj.LastPlay = DateTime.Now;
-                DataBaseHandler.save(obj);
+                DataBaseHandler.Save(obj);
             }
         }
-
-
-
-
     }
 }

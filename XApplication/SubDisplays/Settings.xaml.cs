@@ -1,4 +1,6 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using GameTimeX.Function;
+using GameTimeX.Objects;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static GameTimeX.Objects.KeyInput;
 
 namespace GameTimeX
 {
@@ -21,6 +24,7 @@ namespace GameTimeX
     /// </summary>
     public partial class Settings : Window
     {
+
         public Settings()
         {
             InitializeComponent();
@@ -52,13 +56,15 @@ namespace GameTimeX
         {
             // StartUpParms speichern
             SysProps.startUpParms.SessionGameTime = (bool)cbSessionGameTime.IsChecked;
-            FileHandler.saveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+            
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+
             Close();
         }
 
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
         {
-            btnClose.Background = VisualHandler.convertHexToBrush(SysProps.hexValCloseWindow);
+            btnClose.Background = VisualHandler.ConvertHexToBrush(SysProps.hexValCloseWindow);
         }
 
         private void btnClose_MouseLeave(object sender, MouseEventArgs e)
@@ -92,14 +98,14 @@ namespace GameTimeX
             // Danach speichern
             SysProps.startUpParms.BackupType = Objects.StartUpParms.BackupTypes.CREATE_BACKUP;
             SysProps.startUpParms.BackupPath = txtBackupPath.Text;
-            FileHandler.saveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
             // Zeige Info Meldung bezüglich automatisches Neustarten der Applikation
             InfoBox info = new InfoBox("GameTimeX will be restarted automatically now!");
             info.Owner = this;
             info.ShowDialog();
 
-            SysProps.restartApplication();
+            SysProps.RestartApplication();
         }
 
         private void btnChooseBackUpFile_Click(object sender, RoutedEventArgs e)
@@ -131,14 +137,14 @@ namespace GameTimeX
             // Danach speichern
             SysProps.startUpParms.BackupType = Objects.StartUpParms.BackupTypes.IMPORT_BACKUP;
             SysProps.startUpParms.BackUpImportPath = txtBackupPathImport.Text;
-            FileHandler.saveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
             // Zeige Info Meldung bezüglich automatisches Neustarten der Applikation
             InfoBox info = new InfoBox("GameTimeX will be restarted automatically now!");
             info.Owner = this;
             info.ShowDialog();
 
-            SysProps.restartApplication();
+            SysProps.RestartApplication();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -146,6 +152,11 @@ namespace GameTimeX
 
             // SessionGameTime laden
             cbSessionGameTime.IsChecked = SysProps.startUpParms.SessionGameTime;
+
+            // Monitor Key
+            cbMonitoringKeyActive.IsChecked = SysProps.startUpParms.MonitorShortcutActive;
+            lblCurrentKey.Text = "Current key: " + KeyInput.virtualKeyMap[SysProps.startUpParms.MonitorShortcut];
+            btnMonitoringKey.IsEnabled = SysProps.startUpParms.MonitorShortcutActive;
 
             // Pfade befüllen
             string backUpPath = SysProps.startUpParms.BackupPath;
@@ -171,6 +182,44 @@ namespace GameTimeX
                 btnImportBackup.IsEnabled=true;
                 lblBackUpDate.Text = "Backup date of file: " + File.GetCreationTime(txtBackupPathImport.Text).ToString("f");
             }
+        }
+
+        private void btnMonitorShortcut_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnMonitoringKey_Click(object sender, RoutedEventArgs e)
+        {
+            MonitorKey monitorKeyWnd = new MonitorKey(this);
+            monitorKeyWnd.Owner = this;
+            monitorKeyWnd.Focus();
+            monitorKeyWnd.ShowDialog();
+            
+            
+
+            KeyInput.VirtualKey key = monitorKeyWnd.key;
+
+            lblCurrentKey.Text = "Current key: " + KeyInput.virtualKeyMap[key];
+
+            SysProps.startUpParms.MonitorShortcut = key;
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+        }
+
+        private void cbMonitoringKeyActive_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbMonitoringKeyActive.IsChecked == true)
+            {
+                btnMonitoringKey.IsEnabled = true;
+                SysProps.startUpParms.MonitorShortcutActive = true;
+            }
+            else
+            {
+                btnMonitoringKey.IsEnabled = false;
+                SysProps.startUpParms.MonitorShortcutActive = false;
+            }
+
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
         }
     }
 }

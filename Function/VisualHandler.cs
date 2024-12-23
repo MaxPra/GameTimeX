@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +14,7 @@ namespace GameTimeX
         public static String defHexVal = "#0099ff";
         public static bool startStopMonitoringBtnActive = false;
 
-        public static Brush convertHexToBrush(string hexVal)
+        public static Brush ConvertHexToBrush(string hexVal)
         {
             // Wird null übergeben, auf default-Wert gestellt
             if (hexVal == null)
@@ -31,7 +29,7 @@ namespace GameTimeX
 
         }
 
-        public static Color convertHexToColor(string hexVal)
+        public static Color ConvertHexToColor(string hexVal)
         {
             // Wird null übergeben, auf default-Wert gestellt
             if (hexVal == null)
@@ -44,7 +42,7 @@ namespace GameTimeX
             return color;
         }
 
-        public static DropShadowBitmapEffect getDropShadowEffect()
+        public static DropShadowBitmapEffect GetDropShadowEffect()
         {
             // Initialize a new DropShadowBitmapEffect that will be applied
             // to the Button.
@@ -72,13 +70,13 @@ namespace GameTimeX
             return myDropShadowEffect;
         }
 
-        public static DropShadowBitmapEffect getDropShadowEffectHover()
+        public static DropShadowBitmapEffect GetDropShadowEffectHover()
         {
             // Initialize a new DropShadowBitmapEffect that will be applied
             // to the Button.
             DropShadowBitmapEffect myDropShadowEffect = new DropShadowBitmapEffect();
             // Set the color of the shadow to Black.
-            Color myShadowColor = convertHexToColor(SysProps.hexValDefHover);
+            Color myShadowColor = ConvertHexToColor(SysProps.hexValDefHover);
 
             myDropShadowEffect.Color = myShadowColor;
 
@@ -97,31 +95,39 @@ namespace GameTimeX
             return myDropShadowEffect;
         }
 
-        public static void activateMonitoringVisualButton(Button btn)
+        public static void ActivateMonitoringVisualButton(Button btn)
         {
             btn.Content = SysProps.stopMonitoringText;
             btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultMonitoringColor"));
             VisualHandler.startStopMonitoringBtnActive = true;
         }
 
-        public static void deactivateMonitoringVisualButton(Button btn)
+        public static void DeactivateMonitoringVisualButton(Button btn)
         {
             btn.Content = SysProps.startMonitoringText;
             btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultColor"));
             VisualHandler.startStopMonitoringBtnActive = false;
         }
 
-        public static void deactivateGameTimeSeesion(TextBlock txtBlock)
+        public static void DeactivateGameTimeSeesion(TextBlock txtBlock)
         {
             txtBlock.Visibility = Visibility.Hidden;
         }
 
-        public static void activateGameTimeSeesion(TextBlock txtBlock)
+        public static void ActivateGameTimeSeesion(TextBlock txtBlock)
         {
             txtBlock.Visibility = Visibility.Visible;
             txtBlock.Text = "Session: 0 minute(s)";
         }
-    }
 
-   
+        public static async void ShowToastNotification(string title, string message, int durationMillis)
+        {
+            ToastMessage toastMessage = new ToastMessage(title, message);
+            toastMessage.Topmost = true;
+            toastMessage.Focusable = false;
+            toastMessage.Show();
+            await Task.Delay(durationMillis);
+            toastMessage.Close();
+        }
+    }
 }

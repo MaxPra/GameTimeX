@@ -22,7 +22,7 @@ namespace GameTimeX
         SolidColorBrush normalButtonColor = Brushes.CornflowerBlue;
         SolidColorBrush hoverColor = Brushes.MediumBlue;
 
-        public int pid { get; set; }
+        public int Pid { get; set; }
 
         private string infoText ="";
         private string yesText = "";
@@ -34,7 +34,7 @@ namespace GameTimeX
             NONE
         }
 
-        public ReturnType returnType { get; set; }
+        public ReturnType UsrReturnType { get; set; }
 
         public QuestionBox(string infoText, string yesText, string noText)
         {
@@ -69,13 +69,13 @@ namespace GameTimeX
 
         private void btnNo_Click(object sender, RoutedEventArgs e)
         {
-            returnType = ReturnType.NO;
+            UsrReturnType = ReturnType.NO;
             Close();
         }
 
         private void btnYes_Click(object sender, RoutedEventArgs e)
         {
-            returnType=ReturnType.YES;
+            UsrReturnType=ReturnType.YES;
             Close();
         }
     }

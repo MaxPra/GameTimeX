@@ -8,7 +8,7 @@
         Background="#333333"
         ResizeMode="NoResize"
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" BorderBrush="CornflowerBlue" BorderThickness="2"
-        Title = "Settings" Height = "500" Width="500" MinHeight="450" MinWidth="350" WindowStartupLocation="CenterOwner"
+        Title = "Settings" Height = "580" Width="500" MinHeight="450" MinWidth="350" WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
 
     <WindowChrome.WindowChrome>
@@ -41,9 +41,9 @@
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="20*"></RowDefinition>
+                <RowDefinition Height="35*"></RowDefinition>
+                <RowDefinition Height="30*"></RowDefinition>
                 <RowDefinition Height="40*"></RowDefinition>
-                <RowDefinition Height="50*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Margin="10, 0, 0, 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Margin="10, 10, 0, 0"  Grid.ColumnSpan="2">
@@ -93,7 +93,7 @@
             </StackPanel>
             <StackPanel Margin="20 10 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
                 <TextBlock Margin="0 0 0 10" Foreground="White" FontWeight="Bold">
-                        Genral Options
+                        General Options
                 </TextBlock>
                 <CheckBox Grid.Row="2" Style="{StaticResource CheckBoxDefaultStyle}" 
                           Content="Show current game time session when monitoring"
@@ -106,6 +106,22 @@
                         </ToolTip>
                     </CheckBox.ToolTip>
                 </CheckBox>
+                <TextBlock Margin="0 20 0 10" Foreground="White" FontWeight="Bold">
+                           Key for game monitoring
+                </TextBlock>
+                <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" 
+                          Content="Key active"
+                          x:Name="cbMonitoringKeyActive"
+                          Click="cbMonitoringKeyActive_Click">
+                </CheckBox>
+                <TextBlock Margin="0 5 0 0" Foreground="White" x:Name="lblCurrentKey">
+                           Current key: (no key)
+                </TextBlock>
+                <Button x:Name="btnMonitoringKey" Grid.Column="0" Margin="0 10 0 0" Content="Monitor key" 
+                        Width="100" Height="30" HorizontalAlignment="Left"
+                        IsEnabled="False" Click="btnMonitoringKey_Click"
+                        Style="{StaticResource NormalGuiButton}">
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>

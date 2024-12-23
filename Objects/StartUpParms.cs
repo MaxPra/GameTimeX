@@ -21,5 +21,7 @@ namespace GameTimeX.Objects
         public string BackUpImportPath {  get; set; } = string.Empty;
 
         public bool SessionGameTime { get; set; } = false;
+        public KeyInput.VirtualKey MonitorShortcut { get; set; }
+        public bool MonitorShortcutActive { get; set; }
     }
 }

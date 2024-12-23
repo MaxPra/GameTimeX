@@ -75,7 +75,7 @@ namespace GameTimeX {
         /// </summary>
         internal static byte[] delete {
             get {
-                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                object obj = ResourceManager.GetObject("Delete", resourceCulture);
                 return ((byte[])(obj));
             }
         }

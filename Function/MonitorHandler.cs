@@ -18,7 +18,7 @@ namespace GameTimeX
         /// Prüft, ob gerade ein Spiel aufgenommen wird
         /// </summary>
         /// <returns></returns>
-        public static bool currentlyMonitoringGameTime()
+        public static bool CurrentlyMonitoringGameTime()
         {
             return !(monitoringPid == 0);
         }
@@ -28,10 +28,10 @@ namespace GameTimeX
         /// </summary>
         /// <param name="btn"></param>
         /// <param name="pid"></param>
-        public static void startMonitoringGameTime(MainWindow wnd, int pid)
+        public static void StartMonitoringGameTime(MainWindow wnd, int pid)
         {
             // Style ändern
-            VisualHandler.activateMonitoringVisualButton(wnd.btnStartStopMonitoring);
+            VisualHandler.ActivateMonitoringVisualButton(wnd.btnStartStopMonitoring);
 
             // Startzeit setzen
             startTimeMonitoring = DateTimeOffset.Now.ToUnixTimeMilliseconds();
@@ -40,15 +40,15 @@ namespace GameTimeX
             // Nur starten, wenn Option in Settings gesetzt
             if (SysProps.startUpParms.SessionGameTime)
             {
-                VisualHandler.activateGameTimeSeesion(wnd.txtGameSession);
+                VisualHandler.ActivateGameTimeSeesion(wnd.txtGameSession);
                 gameTimeSessionThread = new GameSessionThread(startTimeMonitoring);
-                gameTimeSessionThread.start(wnd);
+                gameTimeSessionThread.Start(wnd);
             }
 
             monitoringPid = pid;
 
             // Erste Spielzeit speichern
-            DataBaseHandler.saveFirstTimePlayed(pid);
+            DataBaseHandler.SaveFirstTimePlayed(pid);
         }
 
         private static long GetCurrentGameTimeInMinutes()
@@ -57,7 +57,7 @@ namespace GameTimeX
 
             // Derzeitige Zeit berechnen
             currentGameTime = DateTimeOffset.Now.ToUnixTimeMilliseconds() - startTimeMonitoring;
-            currentGameTime = calcMinutesFromMillis(currentGameTime);
+            currentGameTime = CalcMinutesFromMillis(currentGameTime);
 
             return currentGameTime;
         }
@@ -68,7 +68,7 @@ namespace GameTimeX
 
             // Derzeitige Zeit berechnen
             currentGameTime = DateTimeOffset.Now.ToUnixTimeMilliseconds() - startTime;
-            currentGameTime = calcMinutesFromMillis(currentGameTime);
+            currentGameTime = CalcMinutesFromMillis(currentGameTime);
 
             return currentGameTime;
         }
@@ -77,15 +77,15 @@ namespace GameTimeX
         /// Beendet die Spielzeitaufzeichnung und speichert die Werte in der Datenbank
         /// </summary>
         /// <param name="btn"></param>
-        public static void endMonitoringGameTime(MainWindow wnd)
+        public static void EndMonitoringGameTime(MainWindow wnd)
         {
             // Thread beenden
             if(gameTimeSessionThread != null)
-                gameTimeSessionThread.stop();
+                gameTimeSessionThread.Stop();
 
             // Style ändern
-            VisualHandler.deactivateMonitoringVisualButton(wnd.btnStartStopMonitoring);
-            VisualHandler.deactivateGameTimeSeesion(wnd.txtGameSession);
+            VisualHandler.DeactivateMonitoringVisualButton(wnd.btnStartStopMonitoring);
+            VisualHandler.DeactivateGameTimeSeesion(wnd.txtGameSession);
 
             // Endzeit setzen
             endTimeMonitoring = DateTimeOffset.Now.ToUnixTimeMilliseconds();
@@ -94,12 +94,12 @@ namespace GameTimeX
             long playtime = endTimeMonitoring - startTimeMonitoring;
 
             // In Datenbank abspeichern
-            DataBaseHandler.saveMonitoredTime(calcMinutesFromMillis(playtime), monitoringPid);
+            DataBaseHandler.SaveMonitoredTime(CalcMinutesFromMillis(playtime), monitoringPid);
 
-            DataBaseHandler.saveLastTimePlayed(monitoringPid);
+            DataBaseHandler.SaveLastTimePlayed(monitoringPid);
 
             // Werte zurücksetzen
-            resetMonitoringValues();
+            ResetMonitoringValues();
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace GameTimeX
         /// </summary>
         /// <param name="millis"></param>
         /// <returns></returns>
-        private static long calcMinutesFromMillis(long millis)
+        private static long CalcMinutesFromMillis(long millis)
         {
             return millis / 60000;
         }
@@ -115,7 +115,7 @@ namespace GameTimeX
         /// <summary>
         /// Setzt die Variablen der Klasse zurück auf 0
         /// </summary>
-        private static void resetMonitoringValues()
+        private static void ResetMonitoringValues()
         {
             startTimeMonitoring = 0;
             endTimeMonitoring = 0;
@@ -127,7 +127,7 @@ namespace GameTimeX
         /// </summary>
         /// <param name="minutes"></param>
         /// <returns></returns>
-        public static double calcGameTime(long minutes)
+        public static double CalcGameTime(long minutes)
         {
             if(minutes == 0)
             {

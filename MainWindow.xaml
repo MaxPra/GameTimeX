@@ -205,7 +205,7 @@
                                 BorderBrush="Transparent" Background="Transparent" Margin="5 0 0 0"  Padding="0"
                                 Click="btnEditProfileName_Click" Foreground="White" FontSize="20"
                                 Style="{StaticResource EditProfileNameButtonStyle}"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Cursor="None">
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <Image Source="{StaticResource EditImageSource}" Margin="0 0 10 0"/>
                                 </Button>
                             </StackPanel>

@@ -18,6 +18,12 @@
     <Page Update="Styles\CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="XApplication\SubDisplays\ToastMessage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\MonitoreKey.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="XApplication\SubDisplays\QuestionBox.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -7,6 +7,8 @@ using System.Windows.Media;
 using System.IO;
 using System.Windows;
 using GameTimeX.Objects;
+using GameTimeX.Function;
+using System.Threading;
 
 namespace GameTimeX
 {
@@ -26,11 +28,10 @@ namespace GameTimeX
         public static string hexValMonitoringActive = "#06d14d";
 
         // ---- Brushs ----
-        public static Brush defButtonColor = VisualHandler.convertHexToBrush("#0099ff");
-        public static Brush defButtonHoverColor = VisualHandler.convertHexToBrush("#008ae6");
+        public static Brush defButtonColor = VisualHandler.ConvertHexToBrush("#0099ff");
+        public static Brush defButtonHoverColor = VisualHandler.ConvertHexToBrush("#008ae6");
         public static Brush emptyFieldsColor = Brushes.Red;
-        public static Brush monitoringRunningColor = VisualHandler.convertHexToBrush(hexValMonitoringActive);
-
+        public static Brush monitoringRunningColor = VisualHandler.ConvertHexToBrush(hexValMonitoringActive);
 
         // ---- Database ----
         public static string dbFilePath = programPathFolder + Path.DirectorySeparatorChar + "GameTimeXDB.db";
@@ -43,15 +44,17 @@ namespace GameTimeX
 
         // ---- Start-Up-Params ----
         public static StartUpParms startUpParms = null;
+
+        public static KeyInputHandler? keyInputHandler;
         
 
-        public static void initializeSystem(MainWindow wnd)
+        public static void InitializeSystem(MainWindow wnd)
         {
             // Alle nötigen Ordner erstellen
-            FileHandler.createProgramFoldersAndFiles();
+            FileHandler.CreateProgramFoldersAndFiles();
 
             // Start-Parameter lesen
-            SysProps.startUpParms = FileHandler.readStartParms(startUpParmsPath);
+            SysProps.startUpParms = FileHandler.ReadStartParms(startUpParmsPath);
             
             // Auf Backup Prüfen
             if(startUpParms.BackupType != StartUpParms.BackupTypes.NO_BACKUP)
@@ -60,7 +63,7 @@ namespace GameTimeX
                 if(startUpParms.BackupType == StartUpParms.BackupTypes.CREATE_BACKUP)
                 {
                     // Backup erstellen
-                    FileHandler.createBackup();
+                    FileHandler.CreateBackup();
 
                     InfoBox info = new InfoBox("Backup was created successfully!");
                     info.Owner = Application.Current.MainWindow;
@@ -71,7 +74,7 @@ namespace GameTimeX
                 if(startUpParms.BackupType == StartUpParms.BackupTypes.IMPORT_BACKUP)
                 {
                     // Backup importieren
-                    FileHandler.importBackup();
+                    FileHandler.ImportBackup();
 
                     InfoBox info = new InfoBox("Backup was imported successfully!");
                     info.Owner = Application.Current.MainWindow;
@@ -79,27 +82,40 @@ namespace GameTimeX
                 }
             }                
 
-            bool db_created = DataBaseHandler.connectToSQLite();
+            bool db_created = DataBaseHandler.ConnectToSQLite();
 
             // Tabelle muss nur erzeugt werden, wenn es die Datenbank noch nicht gegeben hat
             if (db_created)
             {
-                DataBaseHandler.createTable();
+                DataBaseHandler.CreateTable();
             }
 
-            wnd.currProfileImage.BitmapEffect = VisualHandler.getDropShadowEffect();
-            //wnd.btnStartStopMonitoring.BitmapEffect = VisualHandler.getDropShadowEffect();
-            wnd.currProfileImage.Source = DisplayHandler.getDefaultProfileImage();
+            wnd.currProfileImage.BitmapEffect = VisualHandler.GetDropShadowEffect();
+            //wnd.btnStartStopMonitoring.BitmapEffect = VisualHandler.GetDropShadowEffect();
+            wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
+
+            if (startUpParms.MonitorShortcutActive)
+            {
+                // Starte KeyInputHandler
+                keyInputHandler = new KeyInputHandler(startUpParms.MonitorShortcut, wnd);
+                keyInputHandler.StartListening();
+            }
+            
         }
 
-        public static void restartApplication()
+        public static void StopKeyInputHandler()
         {
+            if(keyInputHandler != null)
+                keyInputHandler.StopListening();
+        }
+        
+        public static void RestartApplication()
+        {
+            if (keyInputHandler != null)
+                keyInputHandler.StopListening();
+
             System.Diagnostics.Process.Start(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
             App.Current.Shutdown();
         }
-
-        
-
-        
     }
 }

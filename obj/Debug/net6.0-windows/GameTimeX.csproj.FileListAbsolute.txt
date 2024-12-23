@@ -69,3 +69,8 @@ C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\n
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ImageCropper.g.cs
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ImageCropper.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\Styles\CheckBoxStyle.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\GameTimeX_Content.g.cs
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\MonitoreKey.g.cs
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\MonitoreKey.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ToastMessage.g.cs
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ToastMessage.baml

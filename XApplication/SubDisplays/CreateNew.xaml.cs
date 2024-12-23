@@ -79,11 +79,11 @@ namespace GameTimeX
         private void btnCreateNewProfile_Click(object sender, RoutedEventArgs e)
         {
 
-            if (DisplayHandler.checkDisplay(false, txtProfileName, txtPicPath))
+            if (DisplayHandler.CheckDisplay(false, txtProfileName, txtPicPath))
 
             {
                 // Dateinamen in Hash (4 Zeichen) umwandeln
-                string fileNameHash = FileHandler.getHashFromFilename(txtPicPath.Text);
+                string fileNameHash = FileHandler.GetHashFromFilename(txtPicPath.Text);
 
                 if (fileNameHash.StartsWith("-"))
                 {
@@ -91,13 +91,13 @@ namespace GameTimeX
                 }
 
                 // Werte in Datenbank speichern
-                DBObject dbObj = DataBaseHandler.createNew();
+                DBObject dbObj = DataBaseHandler.CreateNew();
                 dbObj.GameName = txtProfileName.Text;
                 dbObj.ProfilePicFileName = fileNameHash;
-                DataBaseHandler.save(dbObj);
+                DataBaseHandler.Save(dbObj);
 
                 // Bild croppen und abspeichern
-                FileHandler.cropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
+                FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
 
                 Close();
             }

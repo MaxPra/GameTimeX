@@ -16,7 +16,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="15">
+                            CornerRadius="8">
                         <ContentPresenter Margin="2"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -60,7 +60,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="15">
+                            CornerRadius="8">
                         <ContentPresenter Margin="2"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"

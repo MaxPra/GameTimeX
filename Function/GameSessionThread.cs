@@ -52,9 +52,8 @@ namespace GameTimeX.Function
         /// Startet den GameSession-Thread
         /// </summary>
         /// <param name="objParm">Main Window</param>
-        public void start(Object objParm)
+        public void Start(Object objParm)
         {
-
             if (th == null)
                 return;
 
@@ -74,7 +73,7 @@ namespace GameTimeX.Function
         /// <summary>
         /// Stoppt den GameSessionThread
         /// </summary>
-        public void stop()
+        public void Stop()
         {
             stopThread = true;
             th = null;

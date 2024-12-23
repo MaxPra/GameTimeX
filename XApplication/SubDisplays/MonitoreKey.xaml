@@ -1,0 +1,43 @@
+﻿<Window x:Class="GameTimeX.MonitorKey"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameTimeX"
+        mc:Ignorable="d"
+        Title="Info" Height="150" Width="300" Background="#333333"
+        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="CenterOwner" BorderBrush="CornflowerBlue" BorderThickness="2"
+        Closing="Window_Closing" Loaded="Window_Loaded">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+    </WindowChrome.WindowChrome>
+    <!--Main Content -->
+    <Grid>
+        <!-- Custom Title Bar -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30">
+            </RowDefinition>
+            <RowDefinition Height="*">
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Fill="Black" x:Name="titleBar"></Rectangle>
+        <TextBlock Grid.Row="0" Text="Monitor key" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white">
+        </TextBlock>
+
+        <!--Window Content -->
+        <Grid Grid.Row="1" x:Name="grdContent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock TextWrapping="WrapWithOverflow" Text="Press your key now!" 
+                       Foreground="White" HorizontalAlignment="Center" 
+                       FontSize="20"
+                       x:Name="lblInfoText" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

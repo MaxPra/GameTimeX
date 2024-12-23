@@ -27,7 +27,7 @@ namespace GameTimeX
         // Verhältnis von Original- und Anzeigebild
         private double picRatioScale = 0;
 
-        // CropHandler
+        // cropHandler
         private CropHandler cropHandler = null;
 
         // Bildpfad
@@ -97,7 +97,7 @@ namespace GameTimeX
 
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
         {
-            btnClose.Background = VisualHandler.convertHexToBrush(SysProps.hexValCloseWindow);
+            btnClose.Background = VisualHandler.ConvertHexToBrush(SysProps.hexValCloseWindow);
         }
 
         private void btnClose_MouseLeave(object sender, MouseEventArgs e)
@@ -152,23 +152,23 @@ namespace GameTimeX
             cropHandler.CropY = recY;
 
             // Mousekoordinaten bei Click mitgeben
-            cropHandler.mouseXBeginning = pos.X;
-            cropHandler.mouseYBeginning = pos.Y;
+            cropHandler.MouseXBeginning = pos.X;
+            cropHandler.MouseYBeginning = pos.Y;
 
-            // MouseState setzen
-            cropHandler.mouseState = CropHandler.MouseState.MOUSE_DOWN;
+            // CurrMouseState setzen
+            cropHandler.CurrMouseState = CropHandler.MouseState.MOUSE_DOWN;
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            // MouseState setzen
-            cropHandler.mouseState = CropHandler.MouseState.MOUSE_UP;
+            // CurrMouseState setzen
+            cropHandler.CurrMouseState = CropHandler.MouseState.MOUSE_UP;
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             // Wenn MouseButton nicht gedrückt --> Ausstieg!
-            if (cropHandler.mouseState != CropHandler.MouseState.MOUSE_DOWN)
+            if (cropHandler.CurrMouseState != CropHandler.MouseState.MOUSE_DOWN)
                 return;
 
             // Koordinaten (X & Y) der Maus holen
