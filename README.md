@@ -57,6 +57,7 @@ Additionally, you can back up your profiles or import an existing backup. This f
 As noted in the settings window, the application will automatically restart after importing or exporting a backup.
 
 The auto-backup feature can also be activated via the checkbox to automatically create a backup upon each program startup (provided that a valid path is specified in the backup path field).
+It is recommended to organize the backup folder at your discretion when auto-backup is enabled. This is not done automatically by GameTimeX as a security measure
 
 ### Profile Image Cropping
 
