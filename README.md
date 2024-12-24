@@ -12,23 +12,29 @@ GameTimeX is a personal project I developed as a hobby during my free time.
 ### Main Window Overview
 
 Upon launching the application for the first time, you will be greeted with a window that looks like this:  
-![image](https://github.com/user-attachments/assets/9ce55836-10f6-46f4-8492-6eabbfd6c728)
+![image](https://github.com/user-attachments/assets/2ac7f61d-241d-40e2-9e84-05ff4a640838)
 
 Below is an overview of the various sections within the main window:
 
 1. **Profile Search Bar**: Located at the top of the window, this search bar allows you to easily find games if the list becomes too long and scrolling is inconvenient.
-2. **Profile Management Buttons**: Next to the search bar, you will find three buttons:  
+2. **Profile Overview Mode**: Here, the view mode can be changed (list or tile view).
+3. **Profile Management Buttons**: Next to the search bar, you will find three buttons:  
    - "Create New Profile"  
    - "Delete Profile"  
    - "Settings"
-3. **Information Section**: On the right side of the screen, this section displays the details of the currently selected profile, including a small profile image.
-4. **Start/Stop Monitoring**: In the "Information Section", you can start or stop the game time tracking by simply pressing the button at the bottom.  
+4. **Information Section**: On the right side of the screen, this section displays the details of the currently selected profile, including a small profile image.
+5. **Start/Stop Monitoring**: In the "Information Section", you can start or stop the game time tracking by simply pressing the button at the bottom.  
    - A **blue** button indicates no active monitoring.  
    - A **red** button signals that monitoring is in progress.
-5. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
+6. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
 
 After adding a game profile (using the "Create New Profile" button), it will look something like this:  
-![image](https://github.com/user-attachments/assets/79a62035-b65b-4a81-b258-8f9432c2ef1c)
+![image](https://github.com/user-attachments/assets/472ce7d4-c283-4283-a5bc-bf554e37a08e)
+
+Or it will look something like this (depending on the mode you chose):
+![image](https://github.com/user-attachments/assets/1c540a14-f998-4de3-bc38-c2f36634d1bb)
+
+
 
 If you are dissatisfied with the profile name or the image selected, you can easily modify them by clicking the pencil icon next to the profile name or by selecting "Change Image."
 
