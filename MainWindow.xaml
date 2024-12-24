@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameTimeX" Background="#333333"
         mc:Ignorable="d" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        Title = "GameTimeX" Height = "800" Width="1200"
+        Title = "GameTimeX" Height = "800" Width="1200" ResizeMode="NoResize"
         Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
 
@@ -50,11 +50,11 @@
                     Click="btnMinimize_Click" Foreground="White"
                     MouseEnter="btnMinimize_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
                     MouseLeave="btnMinimize_MouseLeave"/>
-            <Button x:Name="btnMaximize" Content="🗖" Width="40" Height="30"
+            <!--<Button x:Name="btnMaximize" Content="🗖" Width="40" Height="30"
                     BorderBrush="Transparent" Background="Transparent"
                     Click="btnMaximize_Click" Foreground="White" 
                     MouseEnter="btnMaximize_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
-                    MouseLeave="btnMaximize_MouseLeave"/>
+                    MouseLeave="btnMaximize_MouseLeave"/>-->
             <Button x:Name="btnClose" Content="X" Width="40" Height="30"
                     BorderBrush="Transparent" Background="Transparent" 
                     Click="btnClose_Click" Foreground="White"
@@ -238,6 +238,11 @@
                                 <TextBlock TextTrimming="CharacterEllipsis" Text="N/A" x:Name="lblGameName" HorizontalAlignment="Center" Foreground="White" 
                                            VerticalAlignment="Center" MaxWidth="300"
                                         FontSize = "20">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                            <TextBlock Name="lblToolTipGameName" Text="N/A"/>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
                                 </TextBlock>
                                 <Button  x:Name="btnEditProfileName" Height="30" Width="30"
                                 BorderBrush="Transparent" Background="Transparent" Margin="5 0 0 0"  Padding="0"
@@ -248,9 +253,16 @@
                                 </Button>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Orientation="Vertical">
-                                <Image Stretch="Uniform" Width="Auto" x:Name="currProfileImage" 
-                                       Source="{StaticResource MyImageSource}"
-                                       Margin="30 10 30 30"/>
+                                <Border Margin="30 10 30 30">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Black" Direction="315" BlurRadius="10" ShadowDepth="5"/>
+                                    </Border.Effect>
+
+                                    <Image Stretch="Uniform" Width="Auto" x:Name="currProfileImage" 
+                                           Source="{StaticResource MyImageSource}">
+                                    </Image>
+                                </Border>
+                                
                                 <TextBlock HorizontalAlignment="Center"
                                            x:Name="lblChangeProfileImage"
                                            Margin="0 -10 0 0" 

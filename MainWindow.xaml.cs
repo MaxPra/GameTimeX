@@ -66,10 +66,10 @@ namespace GameTimeX
             btnMinimize.Background = Brushes.CornflowerBlue;
         }
 
-        private void btnMaximize_MouseEnter(object sender, MouseEventArgs e)
+        /*private void btnMaximize_MouseEnter(object sender, MouseEventArgs e)
         {
             btnMaximize.Background = Brushes.CornflowerBlue;
-        }
+        }*/
 
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -81,10 +81,10 @@ namespace GameTimeX
             btnClose.Background = Brushes.Transparent;
         }
 
-        private void btnMaximize_MouseLeave(object sender, MouseEventArgs e)
+        /*private void btnMaximize_MouseLeave(object sender, MouseEventArgs e)
         {
             btnMaximize.Background = Brushes.Transparent;
-        }
+        }*/
 
         private void btnMinimize_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -114,7 +114,10 @@ namespace GameTimeX
             {
                 imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.LIST);
             }
-            
+
+            // Corner Radius für Image setzen
+            this.currProfileImage.Effect = VisualHandler.GetDropShadowEffect();
+            VisualHandler.SetCornerRadiusImage(this.currProfileImage, 5, 5);
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)

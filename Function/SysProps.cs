@@ -95,9 +95,9 @@ namespace GameTimeX
                 DataBaseHandler.CreateTable();
             }
 
-            wnd.currProfileImage.BitmapEffect = VisualHandler.GetDropShadowEffect();
             //wnd.btnStartStopMonitoring.BitmapEffect = VisualHandler.GetDropShadowEffect();
             wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
+
 
             if (startUpParms.MonitorShortcutActive)
             {
@@ -122,5 +122,7 @@ namespace GameTimeX
             System.Diagnostics.Process.Start(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
             App.Current.Shutdown();
         }
+
+
     }
 }

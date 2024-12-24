@@ -24,7 +24,7 @@
             </RowDefinition>
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="0" Fill="Black" x:Name="titleBar"></Rectangle>
-        <TextBlock Grid.Row="0" Text="Settings (GameTimeX V1.7)" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white">
+        <TextBlock Grid.Row="0" Text="Settings" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white">
         </TextBlock>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -139,6 +139,13 @@
                         Style="{StaticResource NormalGuiButton}">
                 </Button>
             </StackPanel>
+            <TextBlock Grid.Row="2" Grid.Column="2" 
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Bottom" 
+                       Foreground="Gray"
+                       Margin="0, 0, 0, 10">
+                Version 1.7.1
+            </TextBlock>
         </Grid>
     </Grid>
 </Window>

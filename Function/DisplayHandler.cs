@@ -50,6 +50,9 @@ namespace GameTimeX
 
             wnd.lblGameName.Text = obj.GameName;
 
+            // Tooltip für Game Namen befüllen
+            wnd.lblToolTipGameName.Text = obj.GameName;
+
             BitmapImage bitProfilePic = new BitmapImage();
             // Kommt es beim Croppen zu einem Fehler (warum auch immer) würde GameTimeX abstürzen, wenn er das Profil lädt
             // => weil er kein Bild laden kann was es nicht gibt.
@@ -151,14 +154,14 @@ namespace GameTimeX
                 if (wnd.grdGameProfiles.Children.Count != 0)
                 {
                     StackPanel stackpanel = (StackPanel)wnd.grdGameProfiles.Children[0];
-
-                    GTXImage image = (GTXImage) stackpanel.Children[0];
+                    Border border = (Border)stackpanel.Children[0];
+                    GTXImage image = (GTXImage)border.Child;
 
                     if (image != null)
                     {
                         image.Selected = true;
                         SysProps.currentSelectedPID = image.PID;
-                        AnimateBorderWidth((Border)stackpanel.Children[1], image.Width, true);
+                        AnimateBorderWidth((Border)stackpanel.Children[2], image.Width, true);
                         image.DoBorderEffect = false;
                     }
                 }
@@ -184,7 +187,7 @@ namespace GameTimeX
             wnd.grdGameProfiles.ColumnDefinitions.Clear();
             wnd.grdGameProfiles.Children.Clear();
 
-            wnd.grdGameProfiles.Margin = new Thickness(-4, 0, 0, 0);
+            wnd.grdGameProfiles.Margin = new Thickness(-10, 0, 0, 0);
 
             if (wnd.txtSearchBar.Text.Length > 0)
             {
@@ -346,10 +349,12 @@ namespace GameTimeX
                         DBObject obj = gameProfiles[gameProfilesIndex];
 
                         StackPanel stackPanel = new StackPanel();
+                        Border imageBorder = new Border();
+                        imageBorder.Effect = VisualHandler.GetDropShadowEffect();
 
                         if (j == 0)
                         {
-                            stackPanel.Margin = new Thickness(0, 10, 10, 10);
+                            stackPanel.Margin = new Thickness(0, 10, 0, 0);
                         }
                         else
                         {
@@ -365,7 +370,8 @@ namespace GameTimeX
                             Width = 0, // Anfangsbreite der Border
                             VerticalAlignment = VerticalAlignment.Bottom,
                             HorizontalAlignment = HorizontalAlignment.Stretch,
-                            Margin = new Thickness(0)
+                            Margin = new Thickness(0),
+                            CornerRadius = new CornerRadius(2)
                         };
 
                         GTXImage profileImage = new GTXImage();
@@ -382,13 +388,33 @@ namespace GameTimeX
                         profileImage.Height = GetWidthForImage(grid);
                         profileImage.Margin = new Thickness(0);
 
-                        profileImage.BitmapEffect = VisualHandler.GetDropShadowEffect();
+                        // Cornor-Radius setzen
+                        profileImage.Clip = new RectangleGeometry
+                        {
+                            RadiusX = 5,
+                            RadiusY = 5,
+                            Rect = new Rect(0, 0, profileImage.Width, profileImage.Height)
+                        };
+
+                        profileImage.Effect = VisualHandler.GetDropShadowEffect();
+
+                        TextBlock profileTitle = new TextBlock();
+                        profileTitle.Text = obj.GameName;
+                        profileTitle.MaxWidth = profileImage.Width;
+                        profileTitle.FontSize = 16;
+                        profileTitle.Margin = new Thickness(0, 5, 0, 0);
+                        profileTitle.Foreground = System.Windows.Media.Brushes.White;
+                        profileTitle.TextTrimming = TextTrimming.CharacterEllipsis;
+                        profileTitle.HorizontalAlignment = HorizontalAlignment.Center;
 
                         stackPanel.MouseEnter += ProfileImage_MouseEnter;
                         stackPanel.MouseLeave += ProfileImage_MouseLeave;
                         stackPanel.MouseDown += ProfileImage_MouseDown;
 
-                        stackPanel.Children.Add(profileImage);
+                        imageBorder.Child = profileImage;
+
+                        stackPanel.Children.Add(imageBorder);
+                        stackPanel.Children.Add(profileTitle);
                         stackPanel.Children.Add(bottomBorder);
 
                         Grid.SetRow(stackPanel, i);
@@ -406,13 +432,14 @@ namespace GameTimeX
         {
             foreach(StackPanel stackPanel in SysProps.mainWindow.grdGameProfiles.Children)
             {
-                GTXImage img = (GTXImage)stackPanel.Children[0];
+                Border border = (Border)stackPanel.Children[0];
+                GTXImage img = (GTXImage)border.Child;
                 // Bilder durchsuchen
                 if(img.PID != currentPID && img.Selected)
                 {
                     img.Selected = false;
                     img.DoBorderEffect = true;
-                    AnimateBorderWidth((Border)stackPanel.Children[1], img.ActualWidth, false);
+                    AnimateBorderWidth((Border)stackPanel.Children[2], img.ActualWidth, false);
                 }
             }
         }
@@ -420,7 +447,9 @@ namespace GameTimeX
         private static void ProfileImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             StackPanel stackPanel = (StackPanel)sender;
-            GTXImage image = (GTXImage)stackPanel.Children[0];
+
+            Border border = (Border)stackPanel.Children[0];
+            GTXImage image = (GTXImage)border.Child;
 
             if(image != null)
             {
@@ -440,11 +469,14 @@ namespace GameTimeX
         {
 
             StackPanel stackPanel = (StackPanel)sender;
-            GTXImage image = (GTXImage)stackPanel.Children[0];
+            Border border = (Border)stackPanel.Children[0];
+            GTXImage image = (GTXImage)border.Child;
 
-            if (image != null && image.DoBorderEffect)
+            if (image != null)
             {
-                AnimateBorderWidth((Border)stackPanel.Children[1], image.ActualWidth, false);
+                if(image.DoBorderEffect)
+                    AnimateBorderWidth((Border)stackPanel.Children[2], image.ActualWidth, false);
+
                 image.MainWnd.Cursor = Cursors.Arrow;
             }
         }
@@ -452,13 +484,17 @@ namespace GameTimeX
         private static void ProfileImage_MouseEnter(object sender, MouseEventArgs e)
         {
             StackPanel stackPanel = (StackPanel)sender;
-            GTXImage image = (GTXImage)stackPanel.Children[0];
+            Border border = (Border)stackPanel.Children[0];
+            GTXImage image = (GTXImage)border.Child;
 
-            if (image != null && image.DoBorderEffect)
+            if (image != null)
             {
-                AnimateBorderWidth((Border)stackPanel.Children[1], image.ActualWidth, true);
-                image.MainWnd.Cursor = Cursors.Hand;
-            }
+                if (image.DoBorderEffect)
+                {
+                    AnimateBorderWidth((Border)stackPanel.Children[2], image.ActualWidth, true);
+                    image.MainWnd.Cursor = Cursors.Hand;
+                } 
+            }  
         }
 
         private static double GetWidthForImage(Grid grid)

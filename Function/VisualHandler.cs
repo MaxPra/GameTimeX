@@ -44,11 +44,11 @@ namespace GameTimeX
             return color;
         }
 
-        public static DropShadowBitmapEffect GetDropShadowEffect()
+        public static DropShadowEffect GetDropShadowEffect()
         {
             // Initialize a new DropShadowBitmapEffect that will be applied
             // to the Button.
-            DropShadowBitmapEffect myDropShadowEffect = new DropShadowBitmapEffect();
+            DropShadowEffect myDropShadowEffect = new DropShadowEffect();
             // Set the color of the shadow to Black.
             Color myShadowColor = new Color();
             myShadowColor.ScA = 1;
@@ -58,16 +58,18 @@ namespace GameTimeX
             myDropShadowEffect.Color = myShadowColor;
 
             // Set the direction of where the shadow is cast to 320 degrees.
-            myDropShadowEffect.Direction = 320;
+            myDropShadowEffect.Direction = 315;
 
             // Set the depth of the shadow being cast.
-            myDropShadowEffect.ShadowDepth = 25;
+            myDropShadowEffect.ShadowDepth = 5;
+
+            myDropShadowEffect.BlurRadius = 10;
 
             // Set the shadow softness to the maximum (range of 0-1).
-            myDropShadowEffect.Softness = 1;
+            //myDropShadowEffect. = 1;
             // Set the shadow opacity to half opaque or in other words - half transparent.
             // The range is 0-1.
-            myDropShadowEffect.Opacity = 0.5;
+            myDropShadowEffect.Opacity = 1;
 
             return myDropShadowEffect;
         }
@@ -152,6 +154,25 @@ namespace GameTimeX
 
             return bitModePic;
 
+        }
+
+        /// <summary>
+        /// Setzt für das übergebene Image einen Corner-Radius
+        /// Die Höhe und Breite wird hier von Actual-Height bzw. -Width des Image gezogen.
+        /// </summary>
+        /// <param name="image">Image Element</param>
+        /// <param name="radiusX">Radius für X</param>
+        /// <param name="radiusY">Radius für Y</param>
+        public static void SetCornerRadiusImage(Image image, int radiusX, int radiusY)
+        {
+            RectangleGeometry clipGeometry = new RectangleGeometry
+            {
+                RadiusX = radiusX,
+                RadiusY = radiusY,
+                Rect = new Rect(0, 0, image.ActualWidth, image.ActualHeight)
+            };
+
+            image.Clip = clipGeometry;
         }
     }
 }
