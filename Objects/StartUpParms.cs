@@ -15,6 +15,12 @@ namespace GameTimeX.Objects
             CREATE_BACKUP = 1,
             IMPORT_BACKUP = 2
         }
+        
+        public enum ViewModes
+        {
+            LIST,
+            TILES
+        }
 
         public BackupTypes BackupType { get; set; }
         public bool AutoBackup { get; set; }
@@ -25,5 +31,7 @@ namespace GameTimeX.Objects
         public bool SessionGameTime { get; set; } = false;
         public KeyInput.VirtualKey MonitorShortcut { get; set; }
         public bool MonitorShortcutActive { get; set; }
+
+        public ViewModes ViewMode { get; set; } = ViewModes.TILES;
     }
 }

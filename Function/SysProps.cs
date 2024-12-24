@@ -46,6 +46,8 @@ namespace GameTimeX
         public static StartUpParms startUpParms = null;
 
         public static KeyInputHandler? keyInputHandler;
+
+        public static MainWindow? mainWindow = null;
         
 
         public static void InitializeSystem(MainWindow wnd)

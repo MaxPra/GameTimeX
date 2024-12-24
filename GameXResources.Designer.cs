@@ -75,7 +75,7 @@ namespace GameTimeX {
         /// </summary>
         internal static byte[] delete {
             get {
-                object obj = ResourceManager.GetObject("Delete", resourceCulture);
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -97,6 +97,16 @@ namespace GameTimeX {
             get {
                 object obj = ResourceManager.GetObject("game_time", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] list {
+            get {
+                object obj = ResourceManager.GetObject("list", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -126,6 +136,16 @@ namespace GameTimeX {
         internal static byte[] settings {
             get {
                 object obj = ResourceManager.GetObject("settings", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] tiles {
+            get {
+                object obj = ResourceManager.GetObject("tiles", resourceCulture);
                 return ((byte[])(obj));
             }
         }

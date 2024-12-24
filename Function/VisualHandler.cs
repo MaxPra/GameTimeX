@@ -1,10 +1,12 @@
-﻿using System;
+﻿using GameTimeX.Objects;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.Windows.Media.Imaging;
 
 namespace GameTimeX
 {
@@ -128,6 +130,28 @@ namespace GameTimeX
             toastMessage.Show();
             await Task.Delay(durationMillis);
             toastMessage.Close();
+        }
+
+        public static BitmapImage GetModePic(StartUpParms.ViewModes mode)
+        {
+            BitmapImage bitModePic = new BitmapImage();
+
+            if (mode == StartUpParms.ViewModes.LIST)
+            {
+                
+                bitModePic.BeginInit();
+                bitModePic.UriSource = new Uri("pack://application:,,,/images/list.png");
+                bitModePic.EndInit();
+            }
+            else
+            {
+                bitModePic.BeginInit();
+                bitModePic.UriSource = new Uri("pack://application:,,,/images/tiles.png");
+                bitModePic.EndInit();
+            }
+
+            return bitModePic;
+
         }
     }
 }

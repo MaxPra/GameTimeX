@@ -100,10 +100,21 @@ namespace GameTimeX
             // Bei jedem Start unbenutze Bilder löschen (ACHTUNG: Bevor diese verwendet werden!!)
             FileHandler.DeleteUnusedImages();
 
-            // DataGrid aufbauen (Gameprofile laden)
-            BuildDGProfiles();
+            SysProps.mainWindow = this;
 
-            DisplayHandler.SwitchToFirstGameInList(this);
+            // View Mode unterscheiden und je nachdem auswählen
+            DisplayHandler.BuildGameProfileView(this);
+
+            // Mode Icon richtig wählen
+            if(SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
+            {
+                imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.TILES);
+            }
+            else
+            {
+                imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.LIST);
+            }
+            
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -111,66 +122,31 @@ namespace GameTimeX
             CreateNew cnWin = new CreateNew();
             cnWin.Owner = this;
             cnWin.ShowDialog();
-            
-            BuildDGProfiles();
+
+
+            DisplayHandler.BuildGameProfileView(this);
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            Profile profile = dgProfiles.SelectedItem as Profile;
+            DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
 
-            if(profile != null)
+            if(dbObj != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to Delete '" + profile.ProfileName + "'?", "Delete", "Cancel");
+                QuestionBox quest = new QuestionBox("Do you really want to Delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
                 quest.Owner = this;
                 quest.ShowDialog();
 
                 // User hat "Delete" geklickt
                 if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
                 {
-                    if (profile != null)
+                    if (dbObj != null)
                     {
-                        DataBaseHandler.Delete(profile.PID);
-                        BuildDGProfiles();
-                        DisplayHandler.SwitchToFirstGameInList(this);
+                        DataBaseHandler.Delete(dbObj.ProfileID);
+                        DisplayHandler.BuildGameProfileView(this);
                     }
                 }
             }
         }
-
-        private void BuildDGProfiles()
-        {
-
-            List<DBObject> profiles = null;
-
-            if (txtSearchBar.Text == "")
-            {
-                profiles = DataBaseHandler.ReadAll();
-            }
-            else
-            {
-                profiles = DataBaseHandler.ReadGameName(txtSearchBar.Text);
-            }
-
-            dgProfiles.Items.Clear();
-
-            foreach (DBObject dbprofile in profiles)
-            {
-                Profile profile = new Profile();
-                profile.ProfileName = dbprofile.GameName;
-                profile.GameTime = dbprofile.GameTime;
-                profile.PID = dbprofile.ProfileID;
-
-                dgProfiles.Items.Add(profile);
-            }
-
-            DisplayHandler.SwitchToFirstGameInList(this);
-
-            if(profiles.Count == 0)
-            {
-                DisplayHandler.BuildInfoDisplayNoGame(this);
-            }
-        }
-
 
         private void dgProfiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -196,7 +172,7 @@ namespace GameTimeX
             if (MonitorHandler.CurrentlyMonitoringGameTime())
             {
                 MonitorHandler.EndMonitoringGameTime(this);
-                BuildDGProfiles();
+                DisplayHandler.BuildGameProfileView(this);
                 DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, this);
 
                 btnStartStopMonitoring.Background = new SolidColorBrush((Color)this.FindResource("ButtonDefaultColor"));
@@ -213,7 +189,7 @@ namespace GameTimeX
 
         private void txtSearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BuildDGProfiles();
+            DisplayHandler.BuildGameProfileView(this);
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
@@ -228,7 +204,7 @@ namespace GameTimeX
             rename.Owner = this;
             rename.ShowDialog();
 
-            BuildDGProfiles();
+            DisplayHandler.BuildGameProfileView(this);
             DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, this);
         }
 
@@ -361,6 +337,25 @@ namespace GameTimeX
                 DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, this);
 
             }
+        }
+
+        private void btnMode_Click(object sender, RoutedEventArgs e)
+        {
+            if(SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
+            {
+                // Künftigen Mode setzen
+                SysProps.startUpParms.ViewMode = StartUpParms.ViewModes.TILES;
+                imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.LIST);
+            }
+            else
+            {
+                // Künftigen Mode setzen
+                SysProps.startUpParms.ViewMode = StartUpParms.ViewModes.LIST;
+                imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.TILES);
+            }
+
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+            DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
         }
     }
 }

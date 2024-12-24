@@ -79,7 +79,8 @@
                     <RowDefinition Height="30"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                    <ColumnDefinition Width="60*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
@@ -101,7 +102,14 @@
                     </TextBlock.Style>
                 </TextBlock>
 
-                <Button Grid.Row="0" Grid.Column="1" x:Name="btnNew" Height="30" Width="30"
+                <Button Grid.Row="0" Grid.Column="1" x:Name="btnMode" Height="30" Width="30"
+                        BorderBrush="Transparent" Background="Transparent" FontSize="20"
+                        Click="btnMode_Click" Foreground="White" 
+                        Style="{StaticResource MenuBarButton}">
+                    <Image x:Name="imgMode" Source="{StaticResource ModeTiles}" />
+                </Button>
+
+                <Button Grid.Row="0" Grid.Column="2" x:Name="btnNew" Height="30" Width="30"
                     BorderBrush="Transparent" Background="Transparent" Margin="0" Padding="0"
                     Click="btnNew_Click" Foreground="White" FontSize="20"
                     Style="{StaticResource MenuBarButton}"
@@ -109,14 +117,14 @@
                     <Image Source="{StaticResource CreateNewImageSource}"/>
                 </Button>
 
-                <Button Grid.Row="0" Grid.Column="2" x:Name="btnDelete" Height="30" Width="30"
+                <Button Grid.Row="0" Grid.Column="3" x:Name="btnDelete" Height="30" Width="30"
                     BorderBrush="Transparent" Background="Transparent" FontSize="20"
                     Click="btnDelete_Click" Foreground="White" 
                     Style="{StaticResource MenuBarButton}">
                     <Image Source="{StaticResource DeleteImageSource}" />
                 </Button>
 
-                <Button Grid.Row="0" Grid.Column="3" x:Name="btnSettings" Height="30" Width="30"
+                <Button Grid.Row="0" Grid.Column="4" x:Name="btnSettings" Height="30" Width="30"
                     BorderBrush="Transparent" Background="Transparent" FontSize="20"
                     Click="btnSettings_Click" Foreground="White" 
                     Style="{StaticResource MenuBarButton}">
@@ -180,6 +188,36 @@
                         <DataGridTextColumn Header="Name" Width="*" Binding="{Binding ProfileName}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+            </ScrollViewer>
+            <ScrollViewer x:Name="scrollBarTiles" Margin="10 0 0 0" Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
+                <Grid x:Name="grdGameProfiles">
+                    <!--<Grid.RowDefinitions>
+                        <RowDefinition Height="*">
+                        </RowDefinition>
+                        <RowDefinition Height="*">
+                        </RowDefinition>
+                        <RowDefinition Height="*">
+                        </RowDefinition>
+                        <RowDefinition Height="*">
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="1*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="1*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="1*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Row="0" Grid.Column="0" Source="C:\GameTimeX\images\2143.jpg" >
+                    </Image>
+                    <Image Grid.Row="0" Grid.Column="1" Source="C:\GameTimeX\images\2143.jpg" >
+                    </Image>
+                    <Image Grid.Row="0" Grid.Column="2" Source="C:\GameTimeX\images\2143.jpg">
+                    </Image>-->
+                </Grid>
             </ScrollViewer>
 
             <!-- Game Info Grid -->

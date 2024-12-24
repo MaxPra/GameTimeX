@@ -9,6 +9,9 @@
     <BitmapImage x:Key="EditImageSource" UriSource="pack://application:,,,/../images/edit.png" />
     <BitmapImage x:Key="SettingsImageSource" UriSource="pack://application:,,,/../images/settings.png" />
     <BitmapImage x:Key="GameInfoSource" UriSource="pack://application:,,,/../images/game_time.png" />
+    <BitmapImage x:Key="ModeTiles" UriSource="pack://application:,,,/../images/tiles.png" />
+    <BitmapImage x:Key="ModeList" UriSource="pack://application:,,,/../images/list.png" />
+    
     
     <!-- Colors -->
     <Color x:Key="ButtonDefaultColor">#0099ff</Color>
