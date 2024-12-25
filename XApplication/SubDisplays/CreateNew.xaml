@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
         Style="{StaticResource DefaultWindowStyle}"
-        Title="Create New Profile" Height="150" Width="300" Background="#333333"
+        Title="Create New Profile" Height="195" Width="300" Background="#333333"
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="CenterOwner" BorderBrush="CornflowerBlue" BorderThickness="2">
 
     <WindowChrome.WindowChrome>
@@ -40,8 +40,10 @@
                 <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*"></RowDefinition>
-                <RowDefinition Height="50*"></RowDefinition>
+                <RowDefinition Height="33*"></RowDefinition>
+                <RowDefinition Height="33*"></RowDefinition>
+                <RowDefinition Height="33*"></RowDefinition>
+                <RowDefinition Height="33*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtProfileName" Background="#5c5c5c"
@@ -60,7 +62,7 @@
                 </TextBlock.Style>
             </TextBlock>
 
-            <Button Grid.Row ="0" Grid.Column="1" x:Name="btnCreateNewProfile" Content="save" Width="70" Height="30"
+            <Button Grid.Row ="3" Grid.Column="1" x:Name="btnCreateNewProfile" Content="save" Width="70" Height="30"
                     BorderBrush="black" Background="#0099ff" 
                     Click="btnCreateNewProfile_Click" Foreground="White"
                     Style="{StaticResource NormalGuiButton}">
@@ -89,7 +91,52 @@
                 </Button.Resources>
 
             </Button>
+            <TextBox Grid.Row="2" Grid.Column="0" x:Name="txtGameFolderPath" Background="#5c5c5c"
+                     Height="30" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" Margin="10, 0, 0, 0">
+                <TextBox.ToolTip>
+                    <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                        <TextBlock>
+                            If specified, GameTimeX will automatically get the exe and switch between profiles (this feature has to be acivated in the settings)
+                        </TextBlock>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
+            <TextBlock Grid.Row="2" Grid.Column="0" IsHitTestVisible="False" Text="Game folder (opt)" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="19,0,0,0" Foreground="white">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=txtGameFolderPath}" Value="">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" IsHitTestVisible="False" Text="Gamefolder (opt.)" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="19,0,0,0" Foreground="white">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=txtExeName}" Value="">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Button Grid.Row ="2" Grid.Column="1" x:Name="btnShowFileDialogExe" Content="Choose Folder" Width="70" Height="30"
+                    BorderBrush="black" Background="#0099ff" 
+                    Click="btnShowFileDialogExe_Click" Foreground="White"
+                    FontSize="10"
+                    Style="{StaticResource NormalGuiButton}">
 
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Grid>
 </Window>

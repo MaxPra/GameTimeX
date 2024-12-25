@@ -16,6 +16,7 @@ namespace GameTimeX
         private DateTime createdAt;
         private DateTime changedAt;
         private int profileID;
+        private string extGameFolder;
 
         public string GameName { get => gameName; set => gameName = value; }
         public long GameTime { get => gameTime; set => gameTime = value; }
@@ -25,6 +26,6 @@ namespace GameTimeX
         public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         public DateTime ChangedAt { get => changedAt; set => changedAt = value; }
         public int ProfileID { get => profileID; set => profileID = value; }
-
+        public string ExtGameFolder { get => extGameFolder; set => extGameFolder = value; }
     }
 }

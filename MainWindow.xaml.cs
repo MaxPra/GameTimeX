@@ -57,7 +57,7 @@ namespace GameTimeX
 
             // KeyInputHandler stoppen
             SysProps.StopKeyInputHandler();
-
+            SysProps.StopGameSwicherHandler();
             Close();
         }
 
@@ -146,6 +146,9 @@ namespace GameTimeX
                     {
                         DataBaseHandler.Delete(dbObj.ProfileID);
                         DisplayHandler.BuildGameProfileView(this);
+
+                        if(SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
+                            SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
                     }
                 }
             }
@@ -247,6 +250,29 @@ namespace GameTimeX
                 {
                     SysProps.keyInputHandler.StopListening();
                 }
+            }
+
+            // Nach Schließen des Settings-Windows GameSwitcherHandler starten oder beenden!
+            if (SysProps.startUpParms.AutoProfileSwitching)
+            {
+                if(SysProps.gameSwitcherHandler == null)
+                {
+                    SysProps.gameSwitcherHandler = new GameSwitcherHandler(this);
+                    SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
+                    SysProps.gameSwitcherHandler.Start();
+                }
+                else
+                {
+                    if (!SysProps.gameSwitcherHandler.IsRunning())
+                    {
+                        SysProps.gameSwitcherHandler.Start();
+                    }                    
+                }
+            }
+            else
+            {
+                if(SysProps.gameSwitcherHandler != null)
+                    SysProps.gameSwitcherHandler.Stop();
             }
         }
 
@@ -359,6 +385,15 @@ namespace GameTimeX
 
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
             DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+        }
+
+        private void btnProperties_Click(object sender, RoutedEventArgs e)
+        {
+            Properties properties = new Properties(SysProps.currentSelectedPID);
+            properties.Owner = this;
+            properties.ShowDialog();
+
+            DisplayHandler.BuildGameProfileView(this);
         }
     }
 }

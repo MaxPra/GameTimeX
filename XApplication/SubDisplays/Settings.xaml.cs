@@ -56,6 +56,7 @@ namespace GameTimeX
         {
             // StartUpParms speichern
             SysProps.startUpParms.SessionGameTime = (bool)cbSessionGameTime.IsChecked;
+            SysProps.startUpParms.AutoProfileSwitching = (bool)cbGameSwitcher.IsChecked;
             
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
@@ -160,6 +161,7 @@ namespace GameTimeX
             cbMonitoringKeyActive.IsChecked = SysProps.startUpParms.MonitorShortcutActive;
             lblCurrentKey.Text = "Current key: " + KeyInput.virtualKeyMap[SysProps.startUpParms.MonitorShortcut];
             btnMonitoringKey.IsEnabled = SysProps.startUpParms.MonitorShortcutActive;
+            cbGameSwitcher.IsChecked = SysProps.startUpParms.AutoProfileSwitching;
 
             // Pfade befüllen
             string backUpPath = SysProps.startUpParms.BackupPath;

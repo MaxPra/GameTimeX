@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Threading;
+using Microsoft.VisualBasic;
 
 namespace GameTimeX
 {
@@ -39,7 +40,7 @@ namespace GameTimeX
                 return;
             }
 
-            string sql = "CREATE TABLE tblGameProfiles (ProfileID INTEGER PRIMARY KEY, GameName VARCHAR(200), GameTime BIGINT, FirstPlay DATETIME, LastPlay DATETIME, ProfilePicFileName varchar(10000), CreatedAt DATETIME, ChangedAt DATETIME)";
+            string sql = "CREATE TABLE tblGameProfiles (ProfileID INTEGER PRIMARY KEY, GameName VARCHAR(200), GameTime BIGINT, FirstPlay DATETIME, LastPlay DATETIME, ProfilePicFileName varchar(10000), ExtGameFolder varchar(1000), CreatedAt DATETIME, ChangedAt DATETIME)";
             SQLiteCommand cmd = new SQLiteCommand(sql, connection);
             cmd.ExecuteNonQuery();
         }
@@ -85,6 +86,7 @@ namespace GameTimeX
             sb.Append("FirstPlay = '" + dbObj.FirstPlay + "', ");
             sb.Append("LastPlay = '" + dbObj.LastPlay + "', ");
             sb.Append("ProfilePicFileName = '" + dbObj.ProfilePicFileName + "', ");
+            sb.Append("ExtGameFolder = '" + dbObj.ExtGameFolder + "', ");
             sb.Append("ChangedAt = '" + DateTime.Now + "' ");
             sb.Append("where ProfileID = " + dbObj.ProfileID);
 
@@ -95,7 +97,7 @@ namespace GameTimeX
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("INSERT INTO tblGameProfiles (ProfileID, GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, CreatedAt, ChangedAt) values (");
+            sb.Append("INSERT INTO tblGameProfiles (ProfileID, GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, CreatedAt, ChangedAt) values (");
             sb.Append("NULL");
             sb.Append(", ");
             sb.Append(SysProps.apos + dbObj.GameName + SysProps.apos);
@@ -107,6 +109,8 @@ namespace GameTimeX
             sb.Append("'" + dbObj.LastPlay + "'");
             sb.Append(", ");
             sb.Append(SysProps.apos + dbObj.ProfilePicFileName + SysProps.apos);
+            sb.Append(", ");
+            sb.Append(SysProps.apos + dbObj.ExtGameFolder + SysProps.apos);
             sb.Append(", ");
             sb.Append("'" + DateTime.Now + "'");
             sb.Append(", ");
@@ -145,6 +149,20 @@ namespace GameTimeX
             string sql = BuildSQL(obj);
             SQLiteCommand cmd = new SQLiteCommand(sql, connection);
             cmd.ExecuteNonQuery();
+
+            obj.ProfileID = getLastInsertedPID();
+        }
+
+        private static int getLastInsertedPID()
+        {
+            string sql = "Select last_insert_rowid();";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                // Den Primärschlüssel abholen
+                var lastInsertedId = cmd.ExecuteScalar();
+                return Convert.ToInt32(lastInsertedId);
+            }
+
         }
 
         public static void Delete(int pid)
@@ -180,8 +198,9 @@ namespace GameTimeX
                 dbObj.FirstPlay = DateTime.Parse(reader.GetString(3));
                 dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
                 dbObj.ProfilePicFileName = reader.GetString(5);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(6));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(7));
+                dbObj.ExtGameFolder = reader.GetString(6);
+                dbObj.CreatedAt = DateTime.Parse(reader.GetString(7));
+                dbObj.ChangedAt = DateTime.Parse(reader.GetString(8));
 
                 list.Add(dbObj);
             }
@@ -208,8 +227,9 @@ namespace GameTimeX
                 dbObj.FirstPlay = DateTime.Parse(reader.GetString(3));
                 dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
                 dbObj.ProfilePicFileName = reader.GetString(5);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(6));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(7));
+                dbObj.ExtGameFolder = reader.GetString(6);
+                dbObj.CreatedAt = DateTime.Parse(reader.GetString(7));
+                dbObj.ChangedAt = DateTime.Parse(reader.GetString(8));
 
                 list.Add(dbObj);
             }
@@ -241,8 +261,9 @@ namespace GameTimeX
                 dbObj.FirstPlay = DateTime.Parse(reader.GetString(3));
                 dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
                 dbObj.ProfilePicFileName = reader.GetString(5);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(6));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(7));
+                dbObj.ExtGameFolder = reader.GetString(6);
+                dbObj.CreatedAt = DateTime.Parse(reader.GetString(7));
+                dbObj.ChangedAt = DateTime.Parse(reader.GetString(8));
             }
 
             return dbObj;
@@ -256,6 +277,7 @@ namespace GameTimeX
             dbObj.FirstPlay = DateTime.MinValue;
             dbObj.LastPlay = DateTime.MinValue;
             dbObj.ProfilePicFileName = "";
+            dbObj.ExtGameFolder = "";
             dbObj.CreatedAt = DateTime.Now;
             dbObj.ChangedAt = DateTime.MinValue;
 

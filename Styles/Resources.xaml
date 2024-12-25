@@ -11,6 +11,8 @@
     <BitmapImage x:Key="GameInfoSource" UriSource="pack://application:,,,/../images/game_time.png" />
     <BitmapImage x:Key="ModeTiles" UriSource="pack://application:,,,/../images/tiles.png" />
     <BitmapImage x:Key="ModeList" UriSource="pack://application:,,,/../images/list.png" />
+    <BitmapImage x:Key="BannerSource" UriSource="pack://application:,,,/../images/GameTimeX_Banner.png" />
+    <BitmapImage x:Key="PropertiesSource" UriSource="pack://application:,,,/../images/properties.png" />
     
     
     <!-- Colors -->

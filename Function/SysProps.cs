@@ -9,6 +9,7 @@ using System.Windows;
 using GameTimeX.Objects;
 using GameTimeX.Function;
 using System.Threading;
+using GameTimeX.XApplication.SubDisplays;
 
 namespace GameTimeX
 {
@@ -46,12 +47,21 @@ namespace GameTimeX
         public static StartUpParms startUpParms = null;
 
         public static KeyInputHandler? keyInputHandler;
+        public static GameSwitcherHandler? gameSwitcherHandler = null;
 
         public static MainWindow? mainWindow = null;
+
+        public static bool contextShown = false;
         
 
         public static void InitializeSystem(MainWindow wnd)
         {
+
+            // Loadingscreen zeigen
+            LoadingApplication loadingApp = new LoadingApplication();
+            loadingApp.Owner = wnd;
+            loadingApp.Show();
+
             // Alle nötigen Ordner erstellen
             FileHandler.CreateProgramFoldersAndFiles();
 
@@ -105,7 +115,17 @@ namespace GameTimeX
                 keyInputHandler = new KeyInputHandler(startUpParms.MonitorShortcut, wnd);
                 keyInputHandler.StartListening();
             }
-            
+
+            // Wenn das autom. wechseln der Spielprofile aktiviert ist => GameSwitcherHandler starten (Überwachung der Prozesse)
+            if (startUpParms.AutoProfileSwitching)
+            {
+                // GameSwitcher starten
+                gameSwitcherHandler = new GameSwitcherHandler(wnd);
+                gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
+                gameSwitcherHandler.Start();
+            }
+
+            loadingApp.Close();
         }
 
         public static void StopKeyInputHandler()
@@ -113,16 +133,23 @@ namespace GameTimeX
             if(keyInputHandler != null)
                 keyInputHandler.StopListening();
         }
+
+        public static void StopGameSwicherHandler()
+        {
+            if (gameSwitcherHandler != null)
+                gameSwitcherHandler.Stop();
+        }
         
         public static void RestartApplication()
         {
             if (keyInputHandler != null)
                 keyInputHandler.StopListening();
 
+            if (gameSwitcherHandler != null)
+                gameSwitcherHandler.Stop();
+
             System.Diagnostics.Process.Start(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
             App.Current.Shutdown();
         }
-
-
     }
 }

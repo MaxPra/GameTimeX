@@ -176,6 +176,119 @@ namespace GameTimeX
             BuildInfoDisplay(SysProps.currentSelectedPID, wnd);
         }
 
+        public static void SwitchToSpecificGame(MainWindow wnd, StartUpParms.ViewModes viewMode, int pid)
+        {
+            // Liste
+            if (viewMode == StartUpParms.ViewModes.LIST)
+            {
+                if (wnd.dgProfiles.Items.Count != 0)
+                    SelectRowByValue(wnd.dgProfiles, pid);
+            }
+            // Kacheln
+            else
+            {
+                if (wnd.grdGameProfiles.Children.Count != 0)
+                {
+                    SelectTileByValue(wnd.grdGameProfiles, wnd.scrollBarTiles, pid);
+                }
+                else
+                {
+                    SysProps.currentSelectedPID = 0;
+                }
+            }
+
+            BuildInfoDisplay(SysProps.currentSelectedPID, wnd);
+        }
+
+        public static void SelectRowByValue(DataGrid dataGrid, int valueToFind)
+        {
+            foreach (var item in dataGrid.Items)
+            {
+                var profile = item as Profile;
+                if (profile != null && profile.PID == valueToFind)
+                {
+                    dataGrid.SelectedItem = item;
+                    SysProps.currentSelectedPID = profile.PID;
+
+                    int rowIndex = GetRowIndexForItem(dataGrid, profile);
+                    ScrollToDataGridRow(dataGrid, rowIndex);
+                    break;
+                }
+            }
+        }
+
+        private static DataGridRow GetDataGridRowForItem(DataGrid dataGrid, object item)
+        {
+            var container = dataGrid.ItemContainerGenerator.ContainerFromItem(item);
+            return container as DataGridRow;
+        }
+
+        public static void SelectTileByValue(Grid grid, ScrollViewer scrollViewer, int valueToFind)
+        {
+            foreach (StackPanel stackPanel in SysProps.mainWindow.grdGameProfiles.Children)
+            {
+                Border border = (Border)stackPanel.Children[0];
+                GTXImage img = (GTXImage)border.Child;
+                TextBlock txtBlock = (TextBlock)stackPanel.Children[1];
+
+                int rowIndex = Grid.GetRow(stackPanel);
+              
+                // Tiles durchsuchen
+                if(img.PID == valueToFind)
+                {
+                    DeselectNonCurrentProfiles(img.PID);
+                    img.Selected = true;
+                    img.DoBorderEffect = false;
+
+                    // Zu Zeile scrollen
+                    ScrollToProileTilesGridRow(grid, scrollViewer, rowIndex);
+
+                    txtBlock.FontWeight = FontWeights.Bold;
+                    AnimateBorderWidth((Border)stackPanel.Children[2], img.ActualWidth, true);
+                    SysProps.currentSelectedPID = img.PID;
+                }
+            }
+        }
+
+        public static void ScrollToProileTilesGridRow(Grid grid, ScrollViewer scrollViewer, int rowIndex)
+        {
+            if (rowIndex >= 0 && rowIndex < grid.RowDefinitions.Count)
+            {
+                // Berechne die Höhe bis zur angegebenen Zeile
+                double offset = 0;
+                for (int i = 0; i <= rowIndex; i++)
+                {
+                    offset += grid.RowDefinitions[i].ActualHeight;
+                }
+
+                // Scrollen bis zur berechneten Höhe
+                scrollViewer.ScrollToVerticalOffset(offset);
+            }
+        }
+
+        private static int GetRowIndexForItem(DataGrid grid, Profile item)
+        {
+            var collection = grid.ItemsSource as IList<Profile>;
+            if (collection != null)
+            {
+                return collection.IndexOf(item);
+            }
+            return -1; // Rückgabewert, falls das Element nicht gefunden wird
+        }
+
+        public static void ScrollToDataGridRow(DataGrid myDataGrid, int rowIndex)
+        {
+            if (rowIndex >= 0 && rowIndex < myDataGrid.Items.Count)
+            {
+                var row = myDataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as System.Windows.Controls.DataGridRow;
+                if (row != null)
+                {
+                    // Scrollt die Zeile in den sichtbaren Bereich
+                    row.BringIntoView();
+                }
+            }
+        }
+
         public static void BuildInfoDisplayNoGame(MainWindow wnd)
         {
             // Buttons Disablen
@@ -455,24 +568,30 @@ namespace GameTimeX
 
         private static void ProfileImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
+
             StackPanel stackPanel = (StackPanel)sender;
 
             Border border = (Border)stackPanel.Children[0];
             TextBlock txtBlock = (TextBlock)stackPanel.Children[1];
             GTXImage image = (GTXImage)border.Child;
 
-            if(image != null)
+            if (e.ChangedButton == MouseButton.Left)
             {
-                if (image.PID != SysProps.currentSelectedPID && MonitorHandler.CurrentlyMonitoringGameTime())
-                    MonitorHandler.EndMonitoringGameTime(image.MainWnd);
 
-                image.DoBorderEffect = false;
-                image.Selected = true;
-                txtBlock.FontWeight = FontWeights.Bold;
-                SysProps.currentSelectedPID = image.PID;
-                
-                DeselectNonCurrentProfiles(image.PID);
-                BuildInfoDisplay(image.PID, image.MainWnd);
+
+                if (image != null)
+                {
+                    if (image.PID != SysProps.currentSelectedPID && MonitorHandler.CurrentlyMonitoringGameTime())
+                        MonitorHandler.EndMonitoringGameTime(image.MainWnd);
+
+                    image.DoBorderEffect = false;
+                    image.Selected = true;
+                    txtBlock.FontWeight = FontWeights.Bold;
+                    SysProps.currentSelectedPID = image.PID;
+
+                    DeselectNonCurrentProfiles(image.PID);
+                    BuildInfoDisplay(image.PID, image.MainWnd);
+                }
             }
         }
 

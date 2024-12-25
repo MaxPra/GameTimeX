@@ -10,6 +10,9 @@
     <Compile Update="XApplication\SubDisplays\CreateNew.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="XApplication\SubDisplays\LoadingApplication.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="XApplication\SubDisplays\Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\WindowStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\Properties.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\LoadingApplication.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="XApplication\SubDisplays\ToastMessage.xaml">

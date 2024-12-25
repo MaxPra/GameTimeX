@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameTimeX.Function;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -94,10 +96,21 @@ namespace GameTimeX
                 DBObject dbObj = DataBaseHandler.CreateNew();
                 dbObj.GameName = txtProfileName.Text;
                 dbObj.ProfilePicFileName = fileNameHash;
+                dbObj.ExtGameFolder = txtGameFolderPath.Text;
                 DataBaseHandler.Save(dbObj);
 
                 // Bild croppen und abspeichern
                 FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
+
+                // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
+                if (SysProps.startUpParms.AutoProfileSwitching)
+                {
+                    if(SysProps.gameSwitcherHandler != null)
+                    {
+                        List<string> executables = GameSwitcherHandler.GetAllExecutablesFromDirectory(txtGameFolderPath.Text);
+                        SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
+                    }
+                }
 
                 Close();
             }
@@ -130,6 +143,22 @@ namespace GameTimeX
                 cropHeight = imageCropper.CropHeight;
 
             }
+        }
+
+        private void btnShowFileDialogExe_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
+
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\Users";
+            dialog.IsFolderPicker = true;
+            var result = dialog.ShowDialog();
+            if (result == CommonFileDialogResult.Ok)
+            {
+                txtGameFolderPath.Text = dialog.FileName;
+            }
+
+            window.Focus();
         }
     }
 }

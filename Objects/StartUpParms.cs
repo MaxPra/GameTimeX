@@ -33,5 +33,7 @@ namespace GameTimeX.Objects
         public bool MonitorShortcutActive { get; set; }
 
         public ViewModes ViewMode { get; set; } = ViewModes.TILES;
+
+        public bool AutoProfileSwitching { get; set; } = false;
     }
 }

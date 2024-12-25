@@ -81,7 +81,8 @@
                     <RowDefinition Height="30"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60*"></ColumnDefinition>
+                    <ColumnDefinition Width="50*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
@@ -126,12 +127,21 @@
                     <Image Source="{StaticResource DeleteImageSource}" />
                 </Button>
 
-                <Button Grid.Row="0" Grid.Column="4" x:Name="btnSettings" Height="30" Width="30"
+                <Button Grid.Row="0" Grid.Column="4" x:Name="btnProperties" Height="30" Width="30"
+                        BorderBrush="Transparent" Background="Transparent" FontSize="20"
+                        Click="btnProperties_Click" Foreground="White" 
+                        Style="{StaticResource MenuBarButton}">
+                    <Image Source="{StaticResource PropertiesSource}" />
+                </Button>
+
+                <Button Grid.Row="0" Grid.Column="5" x:Name="btnSettings" Height="30" Width="30"
                     BorderBrush="Transparent" Background="Transparent" FontSize="20"
                     Click="btnSettings_Click" Foreground="White" 
                     Style="{StaticResource MenuBarButton}">
                     <Image Source="{StaticResource SettingsImageSource}" />
                 </Button>
+
+                
             </Grid>
             <!-- Game Display Grid-->
             <ScrollViewer PreviewMouseWheel="scrollBar_PreviewMouseWheel" Margin="10 0 0 0" Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" x:Name="scrollBar">
@@ -264,7 +274,7 @@
                                            Source="{StaticResource MyImageSource}">
                                     </Image>
                                 </Border>
-                                
+
                                 <TextBlock HorizontalAlignment="Center"
                                            x:Name="lblChangeProfileImage"
                                            Margin="0 -10 0 0" 
@@ -274,7 +284,7 @@
                                            PreviewMouseDown="lblChangeProfileImage_PreviewMouseDown"
                                            Style="{StaticResource ChangeImageStyle}"/>
                             </StackPanel>
-                            
+
                             <Grid Grid.Row="2" Margin="0 0 0 0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="15*"/>
@@ -309,9 +319,9 @@
                                                 </TextBlock>
                                             </ToolTip>
                                         </Button.ToolTip>
-                                        
+
                                         <Image Source="{StaticResource GameInfoSource}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        
+
                                     </Button>
                                     <!-- Pop Up -->
                                     <Popup x:Name="gameTimeInfoButton" PlacementTarget="{Binding ElementName=btnGameTimeQuestion}" StaysOpen="False">
@@ -324,7 +334,7 @@
                                         </Border>
                                     </Popup>
                                 </StackPanel>
-                                
+
                                 <TextBlock Text="First time played:" Grid.Row="1" Grid.Column="0"
                                            HorizontalAlignment="Left" Foreground="White" 
                                            FontSize = "15" VerticalAlignment="Center" Margin="30 0 0 0"/>
@@ -344,7 +354,7 @@
                                             MouseEnter="btnStartStopMonitoring_MouseEnter"
                                             MouseLeave="btnStartStopMonitoring_MouseLeave"
                                             FontSize="20"
-                                            Style="{StaticResource StartStopMonitoringButton}"> 
+                                            Style="{StaticResource StartStopMonitoringButton}">
                                     </Button>
                                     <TextBlock x:Name="txtGameSession"
                                                HorizontalAlignment="Center" Margin="0 10 0 0"
@@ -353,7 +363,7 @@
                                             Session: 0 minutes
                                     </TextBlock>
                                 </StackPanel>
-                                
+
                             </Grid>
                         </Grid>
                     </Grid>
