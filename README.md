@@ -3,9 +3,9 @@
 GameTimeX is an application that enables you to accurately monitor your gaming time.  
 If you are frustrated with Steam's inaccurate tracking (e.g., when a game is left idle while you are away from your keyboard), this tool will provide the solution you need.
 
-**Version 1.7.2 is now available!**
+**Version 1.8.0 is now available!**
 
-Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version1.7.2/GameTimeXSetup_Latest.msi).
+Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version1.8.0/GameTimeXSetup_Latest.msi).
 
 ## About This Application
 
@@ -20,15 +20,17 @@ Below is an overview of the various sections within the main window:
 
 1. **Profile Search Bar**: Located at the top of the window, this search bar allows you to easily find games if the list becomes too long and scrolling is inconvenient.
 2. **Profile Overview Mode**: Here, the view mode can be changed (list or tile view).
-3. **Profile Management Buttons**: Next to the search bar, you will find three buttons:  
+3. **Profile Management Buttons**: Next to the search bar, you will find three buttons:
+   - "Switch View"
    - "Create New Profile"  
-   - "Delete Profile"  
+   - "Delete Profile"
+   - "Properties"  
    - "Settings"
-4. **Information Section**: On the right side of the screen, this section displays the details of the currently selected profile, including a small profile image.
-5. **Start/Stop Monitoring**: In the "Information Section", you can start or stop the game time tracking by simply pressing the button at the bottom.  
+5. **Information Section**: On the right side of the screen, this section displays the details of the currently selected profile, including a small profile image.
+6. **Start/Stop Monitoring**: In the "Information Section", you can start or stop the game time tracking by simply pressing the button at the bottom.  
    - A **blue** button indicates no active monitoring.  
    - A **red** button signals that monitoring is in progress.
-6. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
+7. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
 
 After adding a game profile (using the "Create New Profile" button), it will look something like this:  
 ![image](https://github.com/user-attachments/assets/14e3fceb-d711-47a5-a3ba-7feb99610fa3)
@@ -47,9 +49,17 @@ Hovering over the small clock next to "Game Time" will show the tracked time in 
 ### Settings
 
 Now that the main window has been explained, let's review the settings window:  
-![image](https://github.com/user-attachments/assets/eb5a9dad-d267-484d-a014-54c0593dc5e6)
+![image](https://github.com/user-attachments/assets/f39aeaa4-5cb5-479e-916b-242dd9d19992)
 
 In the settings window, you can enable or disable the tracking of the current session's game time. When enabled, the game time for the current session will appear under the start/stop monitoring button while the monitoring is active.
+
+If the checkbox "Automatic switching between game profiles" is enabled, GameTimeX will automatically switch to the correct profile when launching a game. However, this only works if the game's folder has been specified.
+
+**How to find the game's folder on Steam?**
+
+Right-click on the respective game => Properties => Installed Files => Browse.
+
+This path must then be entered in the corresponding profile – GameTimeX will handle the rest.
 
 Additionally, a shortcut key can be used to start and stop the time tracking, eliminating the need to alt-tab out of the game to begin or end the session.
 
