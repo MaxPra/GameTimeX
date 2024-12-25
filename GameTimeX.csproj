@@ -24,6 +24,8 @@
     <None Remove="Resources\game_time.png" />
     <None Remove="Resources\NO_PICTURE.png" />
     <None Remove="Resources\question_mark.png" />
+    <None Remove="Resources\Roboto-Bold.ttf" />
+    <None Remove="Resources\Roboto-Regular.ttf" />
     <None Remove="Resources\settings.png" />
   </ItemGroup>
 
@@ -32,6 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
     <Resource Include="images\game_time.png" />
     <Resource Include="images\list.png" />
     <Resource Include="images\question_mark.png" />
@@ -67,6 +71,8 @@
     <Resource Include="Resources\list.png" />
     <Resource Include="Resources\NO_PICTURE.png" />
     <Resource Include="Resources\question_mark.png" />
+    <Resource Include="Resources\Roboto-Bold.ttf" />
+    <Resource Include="Resources\Roboto-Regular.ttf" />
     <Resource Include="Resources\settings.png" />
     <Resource Include="Resources\tiles.png" />
   </ItemGroup>

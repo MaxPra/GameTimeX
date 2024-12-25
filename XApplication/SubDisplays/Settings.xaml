@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Background="#333333"
         ResizeMode="NoResize"
+        Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" BorderBrush="CornflowerBlue" BorderThickness="2"
         Title = "Settings" Height = "580" Width="500" MinHeight="450" MinWidth="350" WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
@@ -55,7 +56,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtBackupPath" Background="#5c5c5c"
-                         Height="30" Width="300"  FontFamily="Segoe UI" FontSize="15" Padding="7, 4, 0, 0" Foreground="White"
+                         Height="30" Width="300" FontSize="15" Padding="7, 4, 0, 0" Foreground="White"
                          IsReadOnly="True" Margin="10 0 0 0">
                     </TextBox>
                     <Button x:Name="btnChooseGameFolder" Content="Choose Backup Folder" Margin="10 0 0 0" Style="{StaticResource NormalGuiButton}" Width="150"
@@ -93,7 +94,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtBackupPathImport" Background="#5c5c5c"
-                                    Height="30" Width="300"  FontFamily="Segoe UI" FontSize="15" Padding="7, 4, 0, 0" Foreground="White"
+                                    Height="30" Width="300" FontSize="15" Padding="7, 4, 0, 0" Foreground="White"
                                     IsReadOnly="True" Margin="10 0 0 0">
                     </TextBox>
                     <Button x:Name="btnChooseBackUpFile" Content="Choose Backup File" Margin="10 0 0 0" Style="{StaticResource NormalGuiButton}" Width="150"

@@ -27,8 +27,9 @@
     <SolidColorBrush x:Key="ButtonCancelHoverBrush" Color="{StaticResource ButtonCancelHoverColor}"/>
     <SolidColorBrush x:Key="ButtonCancelBrush" Color="{StaticResource ButtonCancelDefaultColor}"/>
     
-    <!-- Storyboards -->
-    <!-- Start/Stop-Button Storyboards-->
+    <!-- Schriftarten -->
+    <FontFamily x:Key="RobotoRegular">pack://application:,,,/Fonts/Roboto-Regular.ttf</FontFamily>
+    <FontFamily x:Key="RobotoBold">pack://application:,,,/Fonts/Roboto-Bold.ttf</FontFamily>
 
 
 </ResourceDictionary>

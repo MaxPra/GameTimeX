@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:GameTimeX" Background="#333333"
         mc:Ignorable="d" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Title = "GameTimeX" Height = "800" Width="1200" ResizeMode="NoResize"
-        Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+        Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen"
+        Style="{StaticResource DefaultWindowStyle}"
+        >
 
 
     <Window.Resources>
@@ -87,7 +89,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtSearchBar" Background="#5c5c5c"
-                         Height="30"  FontFamily="Segoe UI" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" TextChanged="txtSearchBar_TextChanged">
+                         Height="30" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" TextChanged="txtSearchBar_TextChanged">
                 </TextBox>
                 <TextBlock Grid.Row="0" Grid.Column="0" IsHitTestVisible="False" Text="Search for Games here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="17,1,0,0" Foreground="white">
                     <TextBlock.Style>
@@ -228,14 +230,14 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="10*">
                                 </RowDefinition>
-                                <RowDefinition Height="60*">
+                                <RowDefinition Height="55*">
                                 </RowDefinition>
                                 <RowDefinition Height="40*">
                                 </RowDefinition>
                             </Grid.RowDefinitions>
-
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
                                 <TextBlock TextTrimming="CharacterEllipsis" Text="N/A" x:Name="lblGameName" HorizontalAlignment="Center" Foreground="White" 
+                                           FontWeight="Bold"
                                            VerticalAlignment="Center" MaxWidth="300"
                                         FontSize = "20">
                                     <TextBlock.ToolTip>

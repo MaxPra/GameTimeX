@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
         Title="Info" Height="150" Width="300" Background="#333333"
+        Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="CenterOwner" BorderBrush="CornflowerBlue" BorderThickness="2"
         Closing="Window_Closing" Loaded="Window_Loaded">
 

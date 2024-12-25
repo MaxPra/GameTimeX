@@ -133,6 +133,26 @@ namespace GameTimeX {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
+        internal static byte[] Roboto {
+            get {
+                object obj = ResourceManager.GetObject("Roboto", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] Roboto_Bold {
+            get {
+                object obj = ResourceManager.GetObject("Roboto-Bold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
         internal static byte[] settings {
             get {
                 object obj = ResourceManager.GetObject("settings", resourceCulture);

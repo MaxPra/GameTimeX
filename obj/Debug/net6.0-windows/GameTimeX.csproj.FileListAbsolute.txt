@@ -74,3 +74,4 @@ C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\n
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\MonitoreKey.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ToastMessage.g.cs
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ToastMessage.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\Styles\WindowStyle.baml

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
         Title="Create New Profile" Height="150" Width="300" Background="#333333"
+        Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="CenterOwner" BorderBrush="CornflowerBlue" BorderThickness="2"
         Loaded="Window_Loaded">
 
@@ -44,7 +45,7 @@
             </Grid.RowDefinitions>
 
             <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtProfileName" Background="#5c5c5c"
-                         Height="30"  FontFamily="Segoe UI" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" Margin="10, 0, 0, 0">
+                         Height="30" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" Margin="10, 0, 0, 0">
             </TextBox>
 
             <Button Grid.Row ="0" Grid.Column="1" x:Name="btnRename" Content="save" Width="70" Height="30"

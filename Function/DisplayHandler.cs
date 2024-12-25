@@ -156,6 +156,7 @@ namespace GameTimeX
                     StackPanel stackpanel = (StackPanel)wnd.grdGameProfiles.Children[0];
                     Border border = (Border)stackpanel.Children[0];
                     GTXImage image = (GTXImage)border.Child;
+                    TextBlock textBlock = (TextBlock)stackpanel.Children[1];
 
                     if (image != null)
                     {
@@ -163,7 +164,12 @@ namespace GameTimeX
                         SysProps.currentSelectedPID = image.PID;
                         AnimateBorderWidth((Border)stackpanel.Children[2], image.Width, true);
                         image.DoBorderEffect = false;
+                        textBlock.FontWeight = FontWeights.Bold;
                     }
+                }
+                else
+                {
+                    SysProps.currentSelectedPID = 0;
                 }
             }
 
@@ -176,6 +182,7 @@ namespace GameTimeX
             wnd.btnEditProfileName.IsEnabled = false;
             wnd.btnStartStopMonitoring.IsEnabled = false;
             wnd.lblChangeProfileImage.IsEnabled = false;
+            wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
         }
 
         public static void BuildGameProfileGrid(MainWindow wnd)
@@ -434,11 +441,13 @@ namespace GameTimeX
             {
                 Border border = (Border)stackPanel.Children[0];
                 GTXImage img = (GTXImage)border.Child;
+                TextBlock txtBlock = (TextBlock)stackPanel.Children[1];
                 // Bilder durchsuchen
                 if(img.PID != currentPID && img.Selected)
                 {
                     img.Selected = false;
                     img.DoBorderEffect = true;
+                    txtBlock.FontWeight = FontWeights.Normal;
                     AnimateBorderWidth((Border)stackPanel.Children[2], img.ActualWidth, false);
                 }
             }
@@ -449,6 +458,7 @@ namespace GameTimeX
             StackPanel stackPanel = (StackPanel)sender;
 
             Border border = (Border)stackPanel.Children[0];
+            TextBlock txtBlock = (TextBlock)stackPanel.Children[1];
             GTXImage image = (GTXImage)border.Child;
 
             if(image != null)
@@ -458,6 +468,7 @@ namespace GameTimeX
 
                 image.DoBorderEffect = false;
                 image.Selected = true;
+                txtBlock.FontWeight = FontWeights.Bold;
                 SysProps.currentSelectedPID = image.PID;
                 
                 DeselectNonCurrentProfiles(image.PID);
