@@ -5,6 +5,8 @@ If you are frustrated with Steam's inaccurate tracking (e.g., when a game is lef
 
 **Version 1.7.2 is now available!**
 
+Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version1.7.2/GameTimeXSetup_Latest.msi).
+
 ## About This Application
 
 GameTimeX is a personal project I developed as a hobby during my free time.
