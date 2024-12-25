@@ -3,7 +3,7 @@
 GameTimeX is an application that enables you to accurately monitor your gaming time.  
 If you are frustrated with Steam's inaccurate tracking (e.g., when a game is left idle while you are away from your keyboard), this tool will provide the solution you need.
 
-Download the latest stable version here (Windows only)!
+**Version 1.7.1 is now available!**
 
 ## About This Application
 
@@ -29,10 +29,12 @@ Below is an overview of the various sections within the main window:
 6. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
 
 After adding a game profile (using the "Create New Profile" button), it will look something like this:  
-![image](https://github.com/user-attachments/assets/472ce7d4-c283-4283-a5bc-bf554e37a08e)
+![image](https://github.com/user-attachments/assets/14e3fceb-d711-47a5-a3ba-7feb99610fa3)
 
 Or it will look something like this (depending on the mode you chose):
-![image](https://github.com/user-attachments/assets/1c540a14-f998-4de3-bc38-c2f36634d1bb)
+![image](https://github.com/user-attachments/assets/be8cb208-4c43-475d-a6be-f09e848572de)
+
+
 
 
 
@@ -55,6 +57,7 @@ Additionally, you can back up your profiles or import an existing backup. This f
 As noted in the settings window, the application will automatically restart after importing or exporting a backup.
 
 The auto-backup feature can also be activated via the checkbox to automatically create a backup upon each program startup (provided that a valid path is specified in the backup path field).
+It is recommended to organize the backup folder at your discretion when auto-backup is enabled. This is not done automatically by GameTimeX as a security measure
 
 ### Profile Image Cropping
 
