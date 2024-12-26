@@ -3,9 +3,9 @@
 GameTimeX is an application that enables you to accurately monitor your gaming time.  
 If you are frustrated with Steam's inaccurate tracking (e.g., when a game is left idle while you are away from your keyboard), this tool will provide the solution you need.
 
-**Version 1.8.1 is now available!**
+**Version 1.9.0 is now available!**
 
-Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version1.8.1/GameTimeXSetup_Latest.msi).
+Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version1.9.0/GameTimeXSetup_Latest.msi).
 
 ## About This Application
 
@@ -26,6 +26,8 @@ Below is an overview of the various sections within the main window:
    - "Delete Profile"
    - "Properties"  
    - "Settings"
+  
+   Note: you can also use the contextmenu to open the properties and delete a game profile.
 5. **Information Section**: On the right side of the screen, this section displays the details of the currently selected profile, including a small profile image.
 6. **Start/Stop Monitoring**: In the "Information Section", you can start or stop the game time tracking by simply pressing the button at the bottom.  
    - A **blue** button indicates no active monitoring.  
