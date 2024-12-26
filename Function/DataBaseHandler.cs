@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Threading;
 using Microsoft.VisualBasic;
+using System.Windows.Documents;
 
 namespace GameTimeX
 {
@@ -29,6 +30,41 @@ namespace GameTimeX
 
             return true;
         }
+
+        public static void MigrateDB()
+        {
+            SQLiteDataReader reader = null;
+
+            string sql = "SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'ExtGameFolder';";
+            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
+
+            reader = cmd.ExecuteReader();
+
+            bool exists = false;
+
+            while (reader.Read())
+            {
+                exists = true;
+            }
+
+            if (!exists)
+            {
+                // Migration notwendig
+                AlterTableExtGameFolder();
+            }
+        }
+
+        private static void AlterTableExtGameFolder()
+        {
+            string sql = "ALTER TABLE tblGameProfiles ADD COLUMN ExtGameFolder varchar(1000);";
+            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
+            cmd.ExecuteNonQuery();
+
+            sql = "Update tblGameProfiles set ExtGameFolder = ''";
+            cmd = new SQLiteCommand(sql, connection);
+            cmd.ExecuteNonQuery();
+        }
+
 
         /// <summary>
         /// Erstellt, wenn nötig die SQLite-Datenbank

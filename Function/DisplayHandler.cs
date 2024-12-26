@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -307,7 +308,7 @@ namespace GameTimeX
             wnd.grdGameProfiles.ColumnDefinitions.Clear();
             wnd.grdGameProfiles.Children.Clear();
 
-            wnd.grdGameProfiles.Margin = new Thickness(-10, 0, 0, 0);
+            //wnd.grdGameProfiles.Margin = new Thickness(-10, 0, 0, 0);
 
             if (wnd.txtSearchBar.Text.Length > 0)
             {
@@ -504,8 +505,8 @@ namespace GameTimeX
                         bitProfilePic.EndInit();
 
                         profileImage.Source = bitProfilePic;
-                        profileImage.Width = GetWidthForImage(grid);
-                        profileImage.Height = GetWidthForImage(grid);
+                        profileImage.Width = GetWidthForImage(grid, wnd);
+                        profileImage.Height = GetWidthForImage(grid, wnd);
                         profileImage.Margin = new Thickness(0);
 
                         // Cornor-Radius setzen
@@ -627,12 +628,13 @@ namespace GameTimeX
             }  
         }
 
-        private static double GetWidthForImage(Grid grid)
+        private static double GetWidthForImage(Grid grid, MainWindow wnd)
         {
             double gridWidth = grid.ActualWidth;
             double margin = 10;
+            double scrollBarWidth = 20;
 
-            double marginWidth = (margin * 2) * 4;
+            double marginWidth = (margin * 2) * 4 + scrollBarWidth + 2;
 
             return (gridWidth - marginWidth) / 4;
         }

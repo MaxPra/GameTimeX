@@ -105,6 +105,9 @@ namespace GameTimeX
                 DataBaseHandler.CreateTable();
             }
 
+            // Aufgrund der neu hinzugefügten Spalte ExtGamePath ist eine Migration notwendig!
+            DataBaseHandler.MigrateDB();
+
             //wnd.btnStartStopMonitoring.BitmapEffect = VisualHandler.GetDropShadowEffect();
             wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
 
