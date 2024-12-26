@@ -66,11 +66,6 @@ namespace GameTimeX
             btnMinimize.Background = Brushes.CornflowerBlue;
         }
 
-        /*private void btnMaximize_MouseEnter(object sender, MouseEventArgs e)
-        {
-            btnMaximize.Background = Brushes.CornflowerBlue;
-        }*/
-
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
         {
             btnClose.Background = VisualHandler.ConvertHexToBrush(SysProps.hexValCloseWindow); 
@@ -80,11 +75,6 @@ namespace GameTimeX
         {
             btnClose.Background = Brushes.Transparent;
         }
-
-        /*private void btnMaximize_MouseLeave(object sender, MouseEventArgs e)
-        {
-            btnMaximize.Background = Brushes.Transparent;
-        }*/
 
         private void btnMinimize_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -135,7 +125,7 @@ namespace GameTimeX
 
             if(dbObj != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to Delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
                 quest.Owner = this;
                 quest.ShowDialog();
 

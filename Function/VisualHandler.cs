@@ -134,6 +134,24 @@ namespace GameTimeX
             toastMessage.Close();
         }
 
+        public static object GetApplicationResource(string resourceName)
+        {
+            if(SysProps.mainWindow != null)
+                return SysProps.mainWindow.FindResource(resourceName);
+
+            return new object();
+        }
+
+        public static BitmapImage GetBitmapImage(string uri)
+        {
+            BitmapImage returnImage = new BitmapImage();
+            returnImage.BeginInit();
+            returnImage.UriSource = new Uri(uri);
+            returnImage.EndInit();
+
+            return returnImage;
+        }
+
         public static BitmapImage GetModePic(StartUpParms.ViewModes mode)
         {
             BitmapImage bitModePic = new BitmapImage();

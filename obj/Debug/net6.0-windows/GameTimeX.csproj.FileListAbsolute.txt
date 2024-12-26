@@ -79,3 +79,4 @@ C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\n
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\LoadingApplication.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Properties.g.cs
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Properties.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\Styles\ContextMenuStyle.baml

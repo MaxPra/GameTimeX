@@ -397,6 +397,8 @@ namespace GameTimeX
                 wnd.grdGameProfiles.IsHitTestVisible = true;
 
                 BuildGameProfileGrid(wnd);
+
+                DisplayHandler.AttachContextMenuToDataGrid(wnd.dgProfiles);
             }
         }
 
@@ -519,6 +521,9 @@ namespace GameTimeX
 
                         profileImage.Effect = VisualHandler.GetDropShadowEffect();
 
+                        // Kontextmenü zu Image hinzufügen
+                        AttachContextMenuToImage(profileImage);
+
                         TextBlock profileTitle = new TextBlock();
                         profileTitle.Text = obj.GameName;
                         profileTitle.MaxWidth = profileImage.Width;
@@ -563,6 +568,167 @@ namespace GameTimeX
                     img.DoBorderEffect = true;
                     txtBlock.FontWeight = FontWeights.Normal;
                     AnimateBorderWidth((Border)stackPanel.Children[2], img.ActualWidth, false);
+                }
+            }
+        }
+
+        private static void AttachContextMenuToImage(GTXImage image)
+        {
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.FontSize = 17;
+
+            System.Windows.Controls.Image imgProperties = new System.Windows.Controls.Image();
+
+            imgProperties.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/properties.png");
+
+            System.Windows.Controls.Image imgDelete = new System.Windows.Controls.Image();
+            imgDelete.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/delete.png");
+
+            // Kontextmenü Einträge
+
+            // Löschen Eintrag
+            GTXMenuItem mIDelete = new GTXMenuItem();
+            mIDelete.Header = "Delete";
+            mIDelete.Icon = imgDelete;
+            mIDelete.PID = image.PID;
+            mIDelete.Click += MIDelete_Clicked;
+
+            // Eigenschaften Eintrag
+            GTXMenuItem mIProperties = new GTXMenuItem();
+            mIProperties.Header = "Properties";
+            mIProperties.Icon = imgProperties;
+            mIProperties.PID = image.PID;
+            mIProperties.Click += MIProperties_Clicked;
+
+            // Zu Kontextmenü hinzufügen
+            contextMenu.Items.Add(mIDelete);
+            contextMenu.Items.Add(mIProperties);
+
+            contextMenu.Style = VisualHandler.GetApplicationResource("contextMenuStyle") as Style;
+
+            image.ContextMenu = contextMenu;
+        }
+
+        public static void AttachContextMenuToDataGrid(DataGrid dataGrid)
+        {
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.FontSize = 17;
+
+            System.Windows.Controls.Image imgProperties = new System.Windows.Controls.Image();
+
+            imgProperties.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/properties.png");
+
+            System.Windows.Controls.Image imgDelete = new System.Windows.Controls.Image();
+            imgDelete.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/delete.png");
+
+            // Kontextmenü Einträge
+
+            // Löschen Eintrag
+            GTXMenuItem mIDelete = new GTXMenuItem();
+            mIDelete.Header = "Delete";
+            mIDelete.Icon = imgDelete;
+            mIDelete.Click += MIDelete_DataGrid_Clicked;
+
+            // Eigenschaften Eintrag
+            GTXMenuItem mIProperties = new GTXMenuItem();
+            mIProperties.Header = "Properties";
+            mIProperties.Icon = imgProperties;
+            mIProperties.Click += MIProperties_DataGrid_Clicked;
+
+            // Zu Kontextmenü hinzufügen
+            contextMenu.Items.Add(mIDelete);
+            contextMenu.Items.Add(mIProperties);
+
+            contextMenu.Style = VisualHandler.GetApplicationResource("contextMenuStyle") as Style;
+
+            dataGrid.ContextMenu = contextMenu;
+        }
+
+        private static void MIProperties_DataGrid_Clicked(object sender, RoutedEventArgs e)
+        {
+
+            var menuItem = (MenuItem)sender;
+
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = (DataGrid)contextMenu.PlacementTarget;
+
+            var profile = (Profile)item.SelectedCells[0].Item;
+
+            Properties properties = new Properties(profile.PID);
+            properties.Owner = SysProps.mainWindow;
+            properties.ShowDialog();
+
+            DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+        }
+
+        private static void MIDelete_DataGrid_Clicked(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = (DataGrid)contextMenu.PlacementTarget;
+
+            var profile = (Profile)item.SelectedCells[0].Item;
+
+            DBObject dbObj = DataBaseHandler.ReadPID(profile.PID);
+
+            if (dbObj != null)
+            {
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
+                quest.Owner = SysProps.mainWindow;
+                quest.ShowDialog();
+
+                // User hat "Delete" geklickt
+                if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
+                {
+                    if (dbObj != null)
+                    {
+                        DataBaseHandler.Delete(dbObj.ProfileID);
+                        DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+
+                        if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
+                            SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                    }
+                }
+            }
+        }
+
+        private static void MIProperties_Clicked(object sender, RoutedEventArgs e)
+        {
+            GTXMenuItem menuItem = sender as GTXMenuItem;
+
+            Properties properties = new Properties(menuItem.PID);
+            properties.Owner = SysProps.mainWindow;
+            properties.ShowDialog();
+
+            DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+        }
+
+        private static void MIDelete_Clicked(object sender, RoutedEventArgs e)
+        {
+            GTXMenuItem menuItem = sender as GTXMenuItem;
+
+            DBObject dbObj = DataBaseHandler.ReadPID(menuItem.PID);
+
+            if (dbObj != null)
+            {
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
+                quest.Owner = SysProps.mainWindow;
+                quest.ShowDialog();
+
+                // User hat "Delete" geklickt
+                if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
+                {
+                    if (dbObj != null)
+                    {
+                        DataBaseHandler.Delete(dbObj.ProfileID);
+                        DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+
+                        if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
+                            SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                    }
                 }
             }
         }
