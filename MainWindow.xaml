@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameTimeX" Background="#333333"
+        xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Title = "GameTimeX" Height = "800" Width="1200" ResizeMode="NoResize"
         Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen"
+        Background="#333333"
         Style="{StaticResource DefaultWindowStyle}"
         >
-
 
     <Window.Resources>
         <Storyboard x:Key="StartStopButtonHoverNotMonitoring"  Duration="00:00:4">
@@ -31,7 +31,7 @@
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
     </WindowChrome.WindowChrome>
-
+    
     <!--Main Content -->
     <Grid>
         <!-- Custom Title Bar -->

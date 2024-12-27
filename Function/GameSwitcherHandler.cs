@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using static GameTimeX.Function.KeyInputHandler;
 
 namespace GameTimeX.Function
 {
@@ -19,6 +15,8 @@ namespace GameTimeX.Function
         private bool running = false;
 
         public Dictionary<int, List<string>> ExecutablesToSearch { get; set; } = new Dictionary<int, List<string>>();
+
+        private CurrentProfileRunning currentProfileRunning = new CurrentProfileRunning();
 
         public GameSwitcherHandler(MainWindow wnd)
         {
@@ -91,10 +89,25 @@ namespace GameTimeX.Function
                         {
                             wnd.Dispatcher.Invoke((Action)(() =>
                             {
-                                if (wnd.txtSearchBar.Text == String.Empty && lastSwitchedPID != profile.ProfileID)
+                                // Prüfen, ob in Suchleiste nichts eingegeben und ob die derzeitige Executable noch nicht aufgenommen wurde
+                                if (wnd.txtSearchBar.Text == String.Empty && !currentProfileRunning.executables.Contains(executable))
                                 {
-                                    DisplayHandler.SwitchToSpecificGame(wnd, SysProps.startUpParms.ViewMode, profile.ProfileID);
-                                    lastSwitchedPID = profile.ProfileID;
+                                    // Nur switchen, wenn noch nicht als aktuelles Profil selektiert!
+                                    // Ansonsten gibt es einen komischen Bug mit der Selektionsanzeige (Border animiert öfter als 1x)
+                                    if(SysProps.currentSelectedPID != currentProfileRunning.pid)
+                                    {
+                                        DisplayHandler.SwitchToSpecificGame(wnd, SysProps.startUpParms.ViewMode, profile.ProfileID);
+                                        // Wenn gerade die Spielzeit aufgenommen wird, muss hier die Aufnahme gestoppt werden!!
+                                        // Ansonsten würde die Aufnahme für ein anderes Spiel weiterlaufen, obwohl das Profil gewechselt wurde
+                                        // Nicht gut!!
+                                        if (MonitorHandler.CurrentlyMonitoringGameTime())
+                                        {
+                                            MonitorHandler.EndMonitoringGameTime(wnd);
+                                        }
+                                    }
+                                        
+                                    currentProfileRunning.pid = profile.ProfileID;
+                                    currentProfileRunning.executables.Add(executable);
                                 }
 
                             }));
@@ -102,11 +115,26 @@ namespace GameTimeX.Function
                         // Wenn Prozess nicht läuft
                         else
                         {
-                            // Prüfen ob es sich um den letzten Prozess handlet, wo geswitched wurde
-                            // dann muss das Switchen wieder "freigegeben werden"
-                            if (profile.ProfileID == lastSwitchedPID)
+                            // Wenn derzeit noch kein Spiel aus den Profilen läuft
+                            // interessiert uns das hier noch nicht (ist nur unnötig hier immer ein neues CurrentProfileRunning zu instanziieren)
+                            if (currentProfileRunning.pid != 0)
                             {
-                                lastSwitchedPID = 0;
+                                // Prüfen, ob alle Exe vom derzeit aktiven Profil nicht mehr laufen
+                                foreach (string exe in currentProfileRunning.executables)
+                                {
+                                    if (exe == executable)
+                                    {
+                                        currentProfileRunning.countNotRunning++;
+                                    }
+                                }
+
+                                if (currentProfileRunning.countNotRunning == currentProfileRunning.executables.Count)
+                                {
+                                    // Keine der vorher aufgenommenen EXE laufen mehr
+                                    // D.h. Spiel muss geschlossen worden sein
+                                    // Also => Clearen
+                                    currentProfileRunning = new CurrentProfileRunning();
+                                }
                             }
                         }
                     }
@@ -214,6 +242,13 @@ namespace GameTimeX.Function
             }
 
             return allExes;
+        }
+
+        private class CurrentProfileRunning
+        {
+            public int pid = 0;
+            public List<string> executables = new List<string>();
+            public int countNotRunning = 0;
         }
     }
 }
