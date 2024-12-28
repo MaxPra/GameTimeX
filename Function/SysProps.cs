@@ -154,5 +154,16 @@ namespace GameTimeX
             System.Diagnostics.Process.Start(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
             App.Current.Shutdown();
         }
+
+        public static void ShutdownApplication()
+        {
+            if (keyInputHandler != null)
+                keyInputHandler.StopListening();
+
+            if (gameSwitcherHandler != null)
+                gameSwitcherHandler.Stop();
+
+            Application.Current.Shutdown();
+        }
     }
 }

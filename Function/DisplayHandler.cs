@@ -532,6 +532,7 @@ namespace GameTimeX
                         profileTitle.Foreground = System.Windows.Media.Brushes.White;
                         profileTitle.TextTrimming = TextTrimming.CharacterEllipsis;
                         profileTitle.HorizontalAlignment = HorizontalAlignment.Center;
+                        profileTitle.IsHitTestVisible = false;
 
                         stackPanel.MouseEnter += ProfileImage_MouseEnter;
                         stackPanel.MouseLeave += ProfileImage_MouseLeave;

@@ -191,6 +191,9 @@ namespace GameTimeX
         private void Window_Closed(object sender, System.EventArgs e)
         {
             MonitorHandler.EndMonitoringGameTime(this);
+
+            // Anwendung beenden --> somit bleibt nichts liegen
+            SysProps.ShutdownApplication();
         }
 
         private void btnEditProfileName_Click(object sender, RoutedEventArgs e)

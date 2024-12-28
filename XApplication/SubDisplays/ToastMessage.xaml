@@ -6,41 +6,55 @@
         xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
         Style="{StaticResource DefaultWindowStyle}"
-        Title="Info" Height="150" Width="300" Background="#333333"
-        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="Manual" BorderBrush="CornflowerBlue" BorderThickness="2"
-        Loaded="Window_Loaded" ResizeMode="NoResize" ShowInTaskbar="False">
+        Title="Info" Height="120" Width="300" Background="Transparent"
+        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="Manual"
+        Loaded="Window_Loaded" ResizeMode="NoResize" ShowInTaskbar="False"
+        Focusable="False" IsHitTestVisible="False"
+        AllowsTransparency="True">
 
     <Window.Effect>
-        <DropShadowEffect Color="Black" BlurRadius="30" Direction="180" RenderingBias="Quality" ShadowDepth="20"/>
+        <DropShadowEffect Color="Black" BlurRadius="50" Direction="180" RenderingBias="Quality" ShadowDepth="30"/>
     </Window.Effect>
+    
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
     </WindowChrome.WindowChrome>
-    <!--Main Content -->
+    
     <Grid>
-        <!-- Custom Title Bar -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30">
-            </RowDefinition>
-            <RowDefinition Height="*">
-            </RowDefinition>
-        </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Fill="Black" x:Name="titleBar"></Rectangle>
-        <TextBlock Grid.Row="0" Text="Info" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white" x:Name="Title">
-        </TextBlock>
+        <Border Background="#333333" CornerRadius="5" BorderBrush="CornflowerBlue" BorderThickness="2">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="5" Opacity="0.5" />
+            </Border.Effect>
+            <Grid>
+                <!-- Custom Title Bar -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30">
+                    </RowDefinition>
+                    <RowDefinition Height="*">
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="Black" x:Name="titleBar"
+                        CornerRadius="5 5 0 0">
+                </Border>
+                <TextBlock Grid.Row="0" Text="Info" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white" x:Name="Title">
+                </TextBlock>
 
-        <!--Window Content -->
-        <Grid Grid.Row="1" x:Name="grdContent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50*" />
-            </Grid.RowDefinitions>
+                <!--Window Content -->
+                <Grid Grid.Row="1" x:Name="grdContent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*" />
+                    </Grid.RowDefinitions>
 
-            <TextBlock TextWrapping="WrapWithOverflow" Text="Text" 
-                       Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"
-                       x:Name="Message"/>
-        </Grid>
+                    <TextBlock TextWrapping="WrapWithOverflow" Text="Text" 
+             Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"
+             x:Name="Message"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <!--Main Content -->
     </Grid>
+   
 </Window>

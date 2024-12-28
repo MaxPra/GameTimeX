@@ -155,8 +155,7 @@
                         <CheckBox.ToolTip>
                             <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
                                 <TextBlock TextWrapping="Wrap">
-                                    When enabled, a small window will appear in the upper-right corner of the screen for 3 seconds, indicating that gameplay recording has started or stopped.<LineBreak />
-                                    Note: If the game is in fullscreen mode, the game window may lose focus. Therefore, it is recommended to use borderless window mode.
+                                    When enabled, a small window will appear in the upper-right corner of the screen for 3 seconds, indicating that gameplay recording has started or stopped.
                                 </TextBlock>
                             </ToolTip>
                         </CheckBox.ToolTip>
