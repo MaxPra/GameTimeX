@@ -139,11 +139,29 @@
                 <TextBlock Margin="0 10 0 10" Foreground="White" FontWeight="Bold">
                            Key for game monitoring
                 </TextBlock>
-                <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" 
-                          Content="Key active"
-                          x:Name="cbMonitoringKeyActive"
-                          Click="cbMonitoringKeyActive_Click">
-                </CheckBox>
+                <StackPanel Orientation="Horizontal">
+
+                    <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" 
+                                Content="Key active"
+                                x:Name="cbMonitoringKeyActive"
+                                Click="cbMonitoringKeyActive_Click">
+                    </CheckBox>
+                    <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" 
+                                Content="Show toast notification"
+                                x:Name="cbShowToastNotification"
+                                Click="cbMonitoringKeyActive_Click"
+                                Margin="10 0 0 0"
+                                IsEnabled="False">
+                        <CheckBox.ToolTip>
+                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                <TextBlock TextWrapping="Wrap">
+                                    When enabled, a small window will appear in the upper-right corner of the screen for 3 seconds, indicating that gameplay recording has started or stopped.<LineBreak />
+                                    Note: If the game is in fullscreen mode, the game window may lose focus. Therefore, it is recommended to use borderless window mode.
+                                </TextBlock>
+                            </ToolTip>
+                        </CheckBox.ToolTip>
+                    </CheckBox>
+                </StackPanel>
                 <TextBlock Margin="0 5 0 0" Foreground="White" x:Name="lblCurrentKey">
                            Current key: (no key)
                 </TextBlock>
@@ -158,7 +176,7 @@
                        VerticalAlignment="Bottom" 
                        Foreground="Gray"
                        Margin="0, 0, 0, 10">
-                Version 1.9.0
+                Version 1.9.1
             </TextBlock>
         </Grid>
     </Grid>

@@ -31,6 +31,7 @@ namespace GameTimeX.Objects
         public bool SessionGameTime { get; set; } = false;
         public KeyInput.VirtualKey MonitorShortcut { get; set; }
         public bool MonitorShortcutActive { get; set; }
+        public bool ShowToastNotification { get; set; } = false;
 
         public ViewModes ViewMode { get; set; } = ViewModes.TILES;
 

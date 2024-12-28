@@ -94,13 +94,15 @@ namespace GameTimeX.Function
                                 if (!MonitorHandler.CurrentlyMonitoringGameTime())
                                 {
                                     MonitorHandler.StartMonitoringGameTime((MainWindow)wnd, SysProps.currentSelectedPID);
-                                    VisualHandler.ShowToastNotification("GameTimeX", "Monitoring startet!", 3000);
+                                    if(SysProps.startUpParms.ShowToastNotification)
+                                        VisualHandler.ShowToastNotification("GameTimeX", "Monitoring startet!", 3000);
                                 }
 
                                 else
                                 {
                                     MonitorHandler.EndMonitoringGameTime((MainWindow)wnd);
-                                    VisualHandler.ShowToastNotification("GameTimeX", "Monitoring stopped!", 3000);
+                                    if (SysProps.startUpParms.ShowToastNotification)
+                                        VisualHandler.ShowToastNotification("GameTimeX", "Monitoring stopped!", 3000);
                                 }
                                     
 

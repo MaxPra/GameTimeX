@@ -57,6 +57,7 @@ namespace GameTimeX
             // StartUpParms speichern
             SysProps.startUpParms.SessionGameTime = (bool)cbSessionGameTime.IsChecked;
             SysProps.startUpParms.AutoProfileSwitching = (bool)cbGameSwitcher.IsChecked;
+            SysProps.startUpParms.ShowToastNotification = (bool)cbShowToastNotification.IsChecked;
             
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
@@ -162,6 +163,12 @@ namespace GameTimeX
             lblCurrentKey.Text = "Current key: " + KeyInput.virtualKeyMap[SysProps.startUpParms.MonitorShortcut];
             btnMonitoringKey.IsEnabled = SysProps.startUpParms.MonitorShortcutActive;
             cbGameSwitcher.IsChecked = SysProps.startUpParms.AutoProfileSwitching;
+            cbShowToastNotification.IsChecked = SysProps.startUpParms.ShowToastNotification;
+
+            if ((bool)cbMonitoringKeyActive.IsChecked)
+            {
+                cbShowToastNotification.IsEnabled = true;
+            }
 
             // Pfade befüllen
             string backUpPath = SysProps.startUpParms.BackupPath;
@@ -220,11 +227,13 @@ namespace GameTimeX
             {
                 btnMonitoringKey.IsEnabled = true;
                 SysProps.startUpParms.MonitorShortcutActive = true;
+                cbShowToastNotification.IsEnabled = true;
             }
             else
             {
                 btnMonitoringKey.IsEnabled = false;
                 SysProps.startUpParms.MonitorShortcutActive = false;
+                cbShowToastNotification.IsEnabled = false;
             }
 
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
