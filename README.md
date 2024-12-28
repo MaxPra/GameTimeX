@@ -14,7 +14,7 @@ GameTimeX is a personal project I developed as a hobby during my free time.
 ### Main Window Overview
 
 Upon launching the application for the first time, you will be greeted with a window that looks like this:  
-![image](https://github.com/user-attachments/assets/2ac7f61d-241d-40e2-9e84-05ff4a640838)
+![image](https://github.com/user-attachments/assets/75cbce6e-db9b-4ef9-b450-1bdf1d23bde4)
 
 Below is an overview of the various sections within the main window:
 
@@ -35,11 +35,10 @@ Below is an overview of the various sections within the main window:
 7. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
 
 After adding a game profile (using the "Create New Profile" button), it will look something like this:  
-![image](https://github.com/user-attachments/assets/14e3fceb-d711-47a5-a3ba-7feb99610fa3)
+![image](https://github.com/user-attachments/assets/53bca098-912e-4b0e-9458-3293fa1313d0)
 
 Or it will look something like this (depending on the mode you chose):
-![image](https://github.com/user-attachments/assets/be8cb208-4c43-475d-a6be-f09e848572de)
-
+![image](https://github.com/user-attachments/assets/976e0e03-9cc9-4b76-b288-a7553736f7ab)
 
 
 
@@ -51,7 +50,7 @@ Hovering over the small clock next to "Game Time" will show the tracked time in 
 ### Settings
 
 Now that the main window has been explained, let's review the settings window:  
-![image](https://github.com/user-attachments/assets/f39aeaa4-5cb5-479e-916b-242dd9d19992)
+![image](https://github.com/user-attachments/assets/8aa9a7ac-b2a8-4bff-90d2-08b2f2574b9c)
 
 In the settings window, you can enable or disable the tracking of the current session's game time. When enabled, the game time for the current session will appear under the start/stop monitoring button while the monitoring is active.
 
