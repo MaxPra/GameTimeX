@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" BorderBrush="CornflowerBlue" BorderThickness="2"
-        Title = "Settings" Height = "580" Width="500" MinHeight="450" MinWidth="350" WindowStartupLocation="CenterOwner"
+        Title = "Settings" Height = "700" Width="500" MinHeight="450" MinWidth="350" WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
 
     <WindowChrome.WindowChrome>
@@ -46,7 +46,7 @@
                 <RowDefinition Height="30*"></RowDefinition>
                 <RowDefinition Height="40*"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Margin="10, 0, 0, 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Margin="10, 20, 0, 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Margin="10, 10, 0, 0"  Grid.ColumnSpan="2">
                     <TextBlock Text="Create Backup" FontWeight="Bold" Foreground="White" Margin="0 0 0 5"/>
                     <TextBlock Text="Create a backup of the saved profiles and the saved game time data" Foreground="White" Margin="0 0 0 5"
@@ -136,6 +136,11 @@
                         </ToolTip>
                     </CheckBox.ToolTip>
                 </CheckBox>
+                <Button x:Name="btnShowDataFolder" Grid.Column="3" Margin="0 10 0 0" Content="Show data folder" 
+                        Width="100" Height="30" HorizontalAlignment="Left"
+                        IsEnabled="True" Click="btnShowDataFolder_Click"
+                        Style="{StaticResource NormalGuiButton}">
+                </Button>
                 <TextBlock Margin="0 10 0 10" Foreground="White" FontWeight="Bold">
                            Key for game monitoring
                 </TextBlock>
@@ -175,7 +180,7 @@
                        VerticalAlignment="Bottom" 
                        Foreground="Gray"
                        Margin="0, 0, 0, 10">
-                Version 1.9.1
+                Version 2.0.0
             </TextBlock>
         </Grid>
     </Grid>

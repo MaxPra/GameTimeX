@@ -52,6 +52,24 @@ namespace GameTimeX
                 // Migration notwendig
                 AlterTableExtGameFolder();
             }
+
+            sql = "SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'StartpointPlaythroughTime';";
+            cmd = new SQLiteCommand(sql, connection);
+
+            reader = cmd.ExecuteReader();
+
+            exists = false;
+
+            while (reader.Read())
+            {
+                exists = true;
+            }
+
+            if (!exists)
+            {
+                // Migration notwendig
+                AlterTableStartpointPlaythroughTime();
+            }
         }
 
         private static void AlterTableExtGameFolder()
@@ -61,6 +79,17 @@ namespace GameTimeX
             cmd.ExecuteNonQuery();
 
             sql = "Update tblGameProfiles set ExtGameFolder = ''";
+            cmd = new SQLiteCommand(sql, connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        private static void AlterTableStartpointPlaythroughTime()
+        {
+            string sql = "ALTER TABLE tblGameProfiles ADD COLUMN StartpointPlaythroughTime INTEGER;";
+            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
+            cmd.ExecuteNonQuery();
+
+            sql = "Update tblGameProfiles set StartpointPlaythroughTime = 0";
             cmd = new SQLiteCommand(sql, connection);
             cmd.ExecuteNonQuery();
         }
@@ -76,7 +105,7 @@ namespace GameTimeX
                 return;
             }
 
-            string sql = "CREATE TABLE tblGameProfiles (ProfileID INTEGER PRIMARY KEY, GameName VARCHAR(200), GameTime BIGINT, FirstPlay DATETIME, LastPlay DATETIME, ProfilePicFileName varchar(10000), ExtGameFolder varchar(1000), CreatedAt DATETIME, ChangedAt DATETIME)";
+            string sql = "CREATE TABLE tblGameProfiles (ProfileID INTEGER PRIMARY KEY, GameName VARCHAR(200), GameTime BIGINT, FirstPlay DATETIME, LastPlay DATETIME, ProfilePicFileName varchar(10000), ExtGameFolder varchar(1000), StartpointPlaythroughTime INTEGER, CreatedAt DATETIME, ChangedAt DATETIME)";
             SQLiteCommand cmd = new SQLiteCommand(sql, connection);
             cmd.ExecuteNonQuery();
         }
@@ -123,6 +152,7 @@ namespace GameTimeX
             sb.Append("LastPlay = '" + dbObj.LastPlay + "', ");
             sb.Append("ProfilePicFileName = '" + dbObj.ProfilePicFileName + "', ");
             sb.Append("ExtGameFolder = '" + dbObj.ExtGameFolder + "', ");
+            sb.Append("StartpointPlaythroughTime = " + dbObj.PlayThroughStartingPoint + ", ");
             sb.Append("ChangedAt = '" + DateTime.Now + "' ");
             sb.Append("where ProfileID = " + dbObj.ProfileID);
 
@@ -133,7 +163,7 @@ namespace GameTimeX
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("INSERT INTO tblGameProfiles (ProfileID, GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, CreatedAt, ChangedAt) values (");
+            sb.Append("INSERT INTO tblGameProfiles (ProfileID, GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, StartpointPlaythroughTime, CreatedAt, ChangedAt) values (");
             sb.Append("NULL");
             sb.Append(", ");
             sb.Append(SysProps.apos + dbObj.GameName + SysProps.apos);
@@ -147,6 +177,8 @@ namespace GameTimeX
             sb.Append(SysProps.apos + dbObj.ProfilePicFileName + SysProps.apos);
             sb.Append(", ");
             sb.Append(SysProps.apos + dbObj.ExtGameFolder + SysProps.apos);
+            sb.Append(", ");
+            sb.Append(dbObj.PlayThroughStartingPoint);
             sb.Append(", ");
             sb.Append("'" + DateTime.Now + "'");
             sb.Append(", ");
@@ -235,8 +267,9 @@ namespace GameTimeX
                 dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
                 dbObj.ProfilePicFileName = reader.GetString(5);
                 dbObj.ExtGameFolder = reader.GetString(6);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(7));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(8));
+                dbObj.PlayThroughStartingPoint = reader.GetInt32(7);
+                dbObj.CreatedAt = DateTime.Parse(reader.GetString(8));
+                dbObj.ChangedAt = DateTime.Parse(reader.GetString(9));
 
                 list.Add(dbObj);
             }
@@ -264,8 +297,9 @@ namespace GameTimeX
                 dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
                 dbObj.ProfilePicFileName = reader.GetString(5);
                 dbObj.ExtGameFolder = reader.GetString(6);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(7));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(8));
+                dbObj.PlayThroughStartingPoint = reader.GetInt32(7);
+                dbObj.CreatedAt = DateTime.Parse(reader.GetString(8));
+                dbObj.ChangedAt = DateTime.Parse(reader.GetString(9));
 
                 list.Add(dbObj);
             }
@@ -298,8 +332,9 @@ namespace GameTimeX
                 dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
                 dbObj.ProfilePicFileName = reader.GetString(5);
                 dbObj.ExtGameFolder = reader.GetString(6);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(7));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(8));
+                dbObj.PlayThroughStartingPoint = reader.GetInt32(7);
+                dbObj.CreatedAt = DateTime.Parse(reader.GetString(8));
+                dbObj.ChangedAt = DateTime.Parse(reader.GetString(9));
             }
 
             return dbObj;
@@ -314,6 +349,7 @@ namespace GameTimeX
             dbObj.LastPlay = DateTime.MinValue;
             dbObj.ProfilePicFileName = "";
             dbObj.ExtGameFolder = "";
+            dbObj.PlayThroughStartingPoint = 0;
             dbObj.CreatedAt = DateTime.Now;
             dbObj.ChangedAt = DateTime.MinValue;
 
@@ -353,6 +389,17 @@ namespace GameTimeX
                 obj.LastPlay = DateTime.Now;
                 DataBaseHandler.Save(obj);
             }
+        }
+
+        public static bool IsPlayTimeGreaterZero(int pid)
+        {
+            DBObject obj = DataBaseHandler.ReadPID(pid);
+            if(obj != null)
+            {
+                return obj.GameTime > 0;
+            }
+
+            return true;
         }
     }
 }

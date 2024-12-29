@@ -3,6 +3,7 @@ using GameTimeX.Objects;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -252,6 +253,12 @@ namespace GameTimeX
 
             SysProps.startUpParms.BackupPath = txtBackupPath.Text;
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+        }
+
+        private void btnShowDataFolder_Click(object sender, RoutedEventArgs e)
+        {
+            // Explorer zum Datenordner öffnen
+            Process.Start("explorer.exe", SysProps.programPathFolder);
         }
     }
 }

@@ -296,6 +296,7 @@
                             <Grid Grid.Row="2" Margin="0 0 0 0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="15*"/>
+                                    <RowDefinition x:Name="rowPlaythrough"  Height="15*"/>
                                     <RowDefinition Height="15*"/>
                                     <RowDefinition Height="15*"/>
                                     <RowDefinition Height="45*"/>
@@ -343,19 +344,57 @@
                                     </Popup>
                                 </StackPanel>
 
-                                <TextBlock Text="First time played:" Grid.Row="1" Grid.Column="0"
+                                <TextBlock Text="Playthrough:" Grid.Row="1" Grid.Column="0"
+                                           HorizontalAlignment="Left" Foreground="White" 
+                                           FontSize = "20" VerticalAlignment="Center" Margin="30 0 0 0"/>
+                                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+                                    <TextBlock Text="N/A" Grid.Row="0" Grid.Column="1" x:Name="lblGameTimeNewPlaythrough"
+                                               HorizontalAlignment="Left" Foreground="White" 
+                                               FontSize = "20" VerticalAlignment="Center"/>     
+                                    <Button  x:Name="btnGameTimeNewPlaythrough" Height="25" Width="20" 
+                                             ToolTipService.InitialShowDelay="0"
+                                             ToolTipService.HorizontalOffset="20"
+                                             ToolTipService.VerticalOffset="-50"
+                                             BorderBrush="Transparent" Background="Transparent" Margin="10 0 0 0"  Padding="0"
+                                             Click="btnGameTimeInfo_Click" Foreground="White" FontSize="20"
+                                             Style="{StaticResource NoMouseOverButtonStyle}"
+                                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                                <TextBlock Name="lblToolTipGameTimeTextNewPlaythrough">
+                                                        0 Minutes
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </Button.ToolTip>
+
+                                        <Image Source="{StaticResource GameInfoSource}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                    </Button>
+                                    <!-- Pop Up -->
+                                    <Popup x:Name="gameTimeInfoButtonStartingpoint" PlacementTarget="{Binding ElementName=btnGameTimeQuestion}" StaysOpen="False">
+                                        <Border BorderBrush="CornflowerBlue" BorderThickness="1">
+                                            <TextBlock Name="popUpTextStartingpoint"
+                                                Background = "#333333"
+                                                Foreground="White"
+                                                FontSize="12" Text="Testtext" Width="200" Height="200">
+                                            </TextBlock>
+                                        </Border>
+                                    </Popup>
+                                </StackPanel>
+
+                                <TextBlock Text="First time played:" Grid.Row="2" Grid.Column="0"
                                            HorizontalAlignment="Left" Foreground="White" 
                                            FontSize = "15" VerticalAlignment="Center" Margin="30 0 0 0"/>
-                                <TextBlock Text="N/A" Grid.Row="1" Grid.Column="1" x:Name="lblFirstTimePlayed"
+                                <TextBlock Text="N/A" Grid.Row="2" Grid.Column="1" x:Name="lblFirstTimePlayed"
                                            HorizontalAlignment="Left" Foreground="White" 
                                            FontSize = "15" VerticalAlignment="Center"/>
-                                <TextBlock Text="Last time played:" Grid.Row="2" Grid.Column="0"
+                                <TextBlock Text="Last time played:" Grid.Row="3" Grid.Column="0"
                                            HorizontalAlignment="Left" Foreground="White" 
                                            FontSize = "15" VerticalAlignment="Center" Margin="30 0 0 0"/>
-                                <TextBlock Text="N/A" Grid.Row="2" Grid.Column="1" x:Name="lblLastTimePlayed"
+                                <TextBlock Text="N/A" Grid.Row="3" Grid.Column="1" x:Name="lblLastTimePlayed"
                                            HorizontalAlignment="Left" Foreground="White" 
                                            FontSize = "15" VerticalAlignment="Center" />
-                                <StackPanel Grid.Row ="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
+                                <StackPanel Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
                                     <Button x:Name="btnStartStopMonitoring" Content="Start Monitoring" Width="200" Height="50"
                                             BorderBrush="black" 
                                             Click="btnStartStopMonitoring_Click" Foreground="White"
