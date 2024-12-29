@@ -47,6 +47,10 @@ If you are dissatisfied with the profile name or the image selected, you can eas
 
 Hovering over the small clock next to "Game Time" will show the tracked time in minutes (though game time is usually displayed in hours). Additionally, you can view the first and last time you played the game.
 
+If playtime has already been recorded for a game and a new playthrough is started (i.e., the game is being played for the second time), the "New Playthrough Startpoint" context function can be used to specify the starting point for the new playtime recording. In the background, the current total playtime is saved, and the difference from the specified start point is calculated.
+
+Note: The total playtime is always accumulated, while the playthrough-specific playtime is always calculated as the difference from the designated start point.
+
 ### Settings
 
 Now that the main window has been explained, let's review the settings window:  
