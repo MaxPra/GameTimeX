@@ -5,7 +5,7 @@ If you are frustrated with Steam's inaccurate tracking (e.g., when a game is lef
 
 **Version 1.9.0 is now available!**
 
-Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version1.9.0/GameTimeXSetup_Latest.msi).
+Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version2.0.0/GameTimeXSetup_Latest.msi).
 
 ## About This Application
 
