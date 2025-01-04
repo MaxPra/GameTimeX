@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ViDNAjSucMI=",
+  "dgSpecHash": "jPPq0rv0q6s=",
   "success": true,
   "projectFilePath": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\GameTimeX.csproj",
   "expectedPackageFiles": [
@@ -80,7 +80,11 @@
     "C:\\Users\\prage\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\prage\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\prage\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
-    "C:\\Users\\prage\\.nuget\\packages\\windowsapicodepack\\8.0.6\\windowsapicodepack.8.0.6.nupkg.sha512"
+    "C:\\Users\\prage\\.nuget\\packages\\windowsapicodepack\\8.0.6\\windowsapicodepack.8.0.6.nupkg.sha512",
+    "C:\\Users\\prage\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.36\\microsoft.windowsdesktop.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\prage\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.36\\microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\prage\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.36\\microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\prage\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.36\\microsoft.netcore.app.host.win-x64.6.0.36.nupkg.sha512"
   ],
   "logs": []
 }

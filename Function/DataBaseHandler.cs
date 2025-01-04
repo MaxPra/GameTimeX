@@ -253,7 +253,7 @@ namespace GameTimeX
             List<DBObject> list = new List<DBObject>();
 
             SQLiteCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * from tblGameProfiles where GameName like '%" + gameName + "%' order by LastPlay desc;";
+            cmd.CommandText = "SELECT * from tblGameProfiles where GameName like '%" + gameName + "%' order by LastPlay asc;";
 
             reader = cmd.ExecuteReader();
 
@@ -283,7 +283,7 @@ namespace GameTimeX
             List<DBObject> list = new List<DBObject>();
 
             SQLiteCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * from tblGameProfiles order by LastPlay desc;";
+            cmd.CommandText = "SELECT * from tblGameProfiles order by LastPlay asc;";
 
             reader = cmd.ExecuteReader();
 

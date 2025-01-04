@@ -180,7 +180,7 @@
                        VerticalAlignment="Bottom" 
                        Foreground="Gray"
                        Margin="0, 0, 0, 10">
-                Version 2.0.0
+                Version 2.0.1
             </TextBlock>
         </Grid>
     </Grid>

@@ -16,6 +16,11 @@
         },
         "runtime": {
           "GameTimeX.dll": {}
+        },
+        "resources": {
+          "de/GameTimeX.resources.dll": {
+            "locale": "de"
+          }
         }
       },
       "EntityFramework/6.4.4": {
