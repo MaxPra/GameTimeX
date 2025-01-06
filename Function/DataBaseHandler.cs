@@ -148,12 +148,12 @@ namespace GameTimeX
             sb.Append("UPDATE tblGameProfiles set ");
             sb.Append("GameName = '" + dbObj.GameName + "', ");
             sb.Append("GameTime = " + dbObj.GameTime + ", ");
-            sb.Append("FirstPlay = '" + dbObj.FirstPlay + "', ");
-            sb.Append("LastPlay = '" + dbObj.LastPlay + "', ");
+            sb.Append("FirstPlay = '" + ToSQLDateFormat(dbObj.FirstPlay) + "', ");
+            sb.Append("LastPlay = '" + ToSQLDateFormat(dbObj.LastPlay) + "', ");
             sb.Append("ProfilePicFileName = '" + dbObj.ProfilePicFileName + "', ");
             sb.Append("ExtGameFolder = '" + dbObj.ExtGameFolder + "', ");
             sb.Append("StartpointPlaythroughTime = " + dbObj.PlayThroughStartingPoint + ", ");
-            sb.Append("ChangedAt = '" + DateTime.Now + "' ");
+            sb.Append("ChangedAt = '" + ToSQLDateFormat(DateTime.Now) + "' ");
             sb.Append("where ProfileID = " + dbObj.ProfileID);
 
             return sb.ToString();
@@ -170,9 +170,9 @@ namespace GameTimeX
             sb.Append(", ");
             sb.Append(SysProps.apos + dbObj.GameTime + SysProps.apos);
             sb.Append(", ");
-            sb.Append("'" + dbObj.FirstPlay + "'");
+            sb.Append("'" + ToSQLDateFormat(dbObj.FirstPlay) + "'");
             sb.Append(", ");
-            sb.Append("'" + dbObj.LastPlay + "'");
+            sb.Append("'" + ToSQLDateFormat(dbObj.LastPlay) + "'");
             sb.Append(", ");
             sb.Append(SysProps.apos + dbObj.ProfilePicFileName + SysProps.apos);
             sb.Append(", ");
@@ -180,9 +180,9 @@ namespace GameTimeX
             sb.Append(", ");
             sb.Append(dbObj.PlayThroughStartingPoint);
             sb.Append(", ");
-            sb.Append("'" + DateTime.Now + "'");
+            sb.Append("'" + ToSQLDateFormat(DateTime.Now) + "'");
             sb.Append(", ");
-            sb.Append("'" + DateTime.Now + "')");
+            sb.Append("'" + ToSQLDateFormat(DateTime.Now) + "')");
 
 
             return sb.ToString();
@@ -253,7 +253,7 @@ namespace GameTimeX
             List<DBObject> list = new List<DBObject>();
 
             SQLiteCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * from tblGameProfiles where GameName like '%" + gameName + "%' order by LastPlay asc;";
+            cmd.CommandText = "SELECT * from tblGameProfiles where GameName like '%" + gameName + "%' order by LastPlay desc;";
 
             reader = cmd.ExecuteReader();
 
@@ -283,7 +283,7 @@ namespace GameTimeX
             List<DBObject> list = new List<DBObject>();
 
             SQLiteCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * from tblGameProfiles order by LastPlay asc;";
+            cmd.CommandText = "SELECT * from tblGameProfiles order by LastPlay desc;";
 
             reader = cmd.ExecuteReader();
 
@@ -353,6 +353,8 @@ namespace GameTimeX
             dbObj.CreatedAt = DateTime.Now;
             dbObj.ChangedAt = DateTime.MinValue;
 
+            
+
             return dbObj;
         }
 
@@ -400,6 +402,11 @@ namespace GameTimeX
             }
 
             return true;
+        }
+
+        private static string ToSQLDateFormat(DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }
