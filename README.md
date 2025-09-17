@@ -14,7 +14,8 @@ GameTimeX is a personal project I developed as a hobby during my free time.
 ### Main Window Overview
 
 Upon launching the application for the first time, you will be greeted with a window that looks like this:  
-![image](https://github.com/user-attachments/assets/75cbce6e-db9b-4ef9-b450-1bdf1d23bde4)
+<img width="1217" height="809" alt="image" src="https://github.com/user-attachments/assets/c3bba32f-0c31-4eb2-bdb2-af8b9b4f6ac0" />
+
 
 Below is an overview of the various sections within the main window:
 
