@@ -22,7 +22,6 @@ Below is an overview of the various sections within the main window:
 1. **Profile Search Bar**: Located at the top of the window, this search bar allows you to easily find games if the list becomes too long and scrolling is inconvenient.
 2. **Profile Overview Mode**: Here, the view mode can be changed (list or tile view).
 3. **Profile Management Buttons**: Next to the search bar, you will find three buttons:
-   - "Switch View"
    - "Create New Profile"  
    - "Delete Profile"
    - "Properties"  
@@ -36,17 +35,14 @@ Below is an overview of the various sections within the main window:
 7. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
 
 After adding a game profile (using the "Create New Profile" button), it will look something like this:  
-![image](https://github.com/user-attachments/assets/53bca098-912e-4b0e-9458-3293fa1313d0)
-
-Or it will look something like this (depending on the mode you chose):
-![image](https://github.com/user-attachments/assets/976e0e03-9cc9-4b76-b288-a7553736f7ab)
+<img width="1208" height="806" alt="image" src="https://github.com/user-attachments/assets/fea9d2e8-609a-48d5-b655-3eda2fdf0187" />
 
 
 
 
 If you are dissatisfied with the profile name or the image selected, you can easily modify them by clicking the pencil icon next to the profile name or by selecting "Change Image."
 
-Hovering over the small clock next to "Game Time" will show the tracked time in minutes (though game time is usually displayed in hours). Additionally, you can view the first and last time you played the game.
+Hovering over the small "i" next to "Game Time" will show the tracked time in minutes (though game time is usually displayed in hours). Additionally, you can view the first and last time you played the game.
 
 If playtime has already been recorded for a game and a new playthrough is started (i.e., the game is being played for the second time), the "New Playthrough Startpoint" context function can be used to specify the starting point for the new playtime recording. In the background, the current total playtime is saved, and the difference from the specified start point is calculated.
 
@@ -55,7 +51,7 @@ Note: The total playtime is always accumulated, while the playthrough-specific p
 ### Settings
 
 Now that the main window has been explained, let's review the settings window:  
-![image](https://github.com/user-attachments/assets/8aa9a7ac-b2a8-4bff-90d2-08b2f2574b9c)
+<img width="533" height="732" alt="image" src="https://github.com/user-attachments/assets/6a25a393-b210-4b83-b2a4-164230bf5c47" />
 
 In the settings window, you can enable or disable the tracking of the current session's game time. When enabled, the game time for the current session will appear under the start/stop monitoring button while the monitoring is active.
 
@@ -81,7 +77,7 @@ It is recommended to organize the backup folder at your discretion when auto-bac
 
 When creating a new game profile, you will need to select an image to be displayed in the "Information Display."  
 Once you’ve selected your image via the file explorer, you will be prompted with this cropping window:  
-![image](https://github.com/user-attachments/assets/396e4d83-66af-454f-bf59-b03509f3d5ff)
+<img width="1206" height="806" alt="image" src="https://github.com/user-attachments/assets/d0738e77-1188-4c4c-bc80-f12a60385153" />
 
 In this window, you can crop the image to suit your preferences (such as selecting the game title or any other section that fits best).
 
