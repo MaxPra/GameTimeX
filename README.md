@@ -4,6 +4,7 @@ GameTimeX is an application that enables you to accurately monitor your gaming t
 If you are frustrated with Steam's inaccurate tracking (e.g., when a game is left idle while you are away from your keyboard), this tool will provide the solution you need.
 
 **Version 2.0.11 / Retouched is now available!**
+Same core, brand-new look
 
 Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version2.0.11/GameTimeXSetup_Latest.msi).
 
@@ -21,7 +22,7 @@ Below is an overview of the various sections within the main window:
 
 1. **Profile Search Bar**: Located at the top of the window, this search bar allows you to easily find games if the list becomes too long and scrolling is inconvenient.
 2. **Profile Overview Mode**: Here, the view mode can be changed (list or tile view).
-3. **Profile Management Buttons**: Next to the search bar, you will find three buttons:
+3. **Profile Management Buttons**: Next to the search bar, you will find four buttons:
    - "Create New Profile"  
    - "Delete Profile"
    - "Properties"  
