@@ -67,6 +67,10 @@ namespace GameTimeX
 
             // Start-Parameter lesen
             SysProps.startUpParms = FileHandler.ReadStartParms(startUpParmsPath);
+
+            // List-View wurde mit 2.0.1 / Retouched entfernt
+            // Hier für alle, die diese aktiviert hatten auf Tile-View ändern
+            SysProps.startUpParms.ViewMode = StartUpParms.ViewModes.TILES;
             
             // Auf Backup Prüfen
             if(startUpParms.BackupType != StartUpParms.BackupTypes.NO_BACKUP || startUpParms.AutoBackup)

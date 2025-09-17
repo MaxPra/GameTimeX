@@ -12,20 +12,27 @@
     <None Remove="images\create_new.png" />
     <None Remove="images\delete.png" />
     <None Remove="images\edit.png" />
+    <None Remove="images\folder.png" />
     <None Remove="images\GameTimeX_Banner.png" />
     <None Remove="images\game_time.png" />
+    <None Remove="images\game_time1.png" />
     <None Remove="images\list.png" />
     <None Remove="images\no_picture.png" />
+    <None Remove="images\picture.png" />
     <None Remove="images\properties.png" />
     <None Remove="images\question_mark.png" />
     <None Remove="images\settings.png" />
+    <None Remove="images\startpoint.png" />
     <None Remove="images\tiles.png" />
     <None Remove="Resources\create_new.png" />
     <None Remove="Resources\delete.png" />
     <None Remove="Resources\edit.png" />
+    <None Remove="Resources\folder.png" />
     <None Remove="Resources\GameTimeX_Banner.png" />
     <None Remove="Resources\game_time.png" />
+    <None Remove="Resources\game_time1.png" />
     <None Remove="Resources\NO_PICTURE.png" />
+    <None Remove="Resources\picture.png" />
     <None Remove="Resources\question_mark.png" />
     <None Remove="Resources\Roboto-Bold.ttf" />
     <None Remove="Resources\Roboto-Regular.ttf" />
@@ -39,9 +46,12 @@
   <ItemGroup>
     <Resource Include="Fonts\Roboto-Bold.ttf" />
     <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="images\folder.png" />
     <Resource Include="images\GameTimeX_Banner.png" />
     <Resource Include="images\game_time.png" />
+    <Resource Include="images\game_time1.png" />
     <Resource Include="images\list.png" />
+    <Resource Include="images\picture.png" />
     <Resource Include="images\properties.png" />
     <Resource Include="images\question_mark.png" />
     <Resource Include="images\settings.png" />
@@ -68,14 +78,20 @@
     <Resource Include="images\delete.png" />
     <Resource Include="images\edit.png" />
     <Resource Include="images\no_picture.png" />
+    <Resource Include="images\startpoint.png" />
     <Resource Include="images\tiles.png" />
     <Resource Include="Resources\create_new.png" />
     <Resource Include="Resources\delete.png" />
     <Resource Include="Resources\edit.png" />
+    <Resource Include="Resources\folder.png" />
     <Resource Include="Resources\GameTimeX_Banner.png" />
-    <Resource Include="Resources\game_time.png" />
+    <Resource Include="Resources\game_time.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\game_time1.png" />
     <Resource Include="Resources\list.png" />
     <Resource Include="Resources\NO_PICTURE.png" />
+    <Resource Include="Resources\picture.png" />
     <Resource Include="Resources\properties.png" />
     <Resource Include="Resources\question_mark.png" />
     <Resource Include="Resources\Roboto-Bold.ttf" />

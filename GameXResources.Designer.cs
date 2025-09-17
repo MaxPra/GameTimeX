@@ -91,12 +91,32 @@ namespace GameTimeX {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] folder {
+            get {
+                object obj = ResourceManager.GetObject("folder", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap game_time {
             get {
                 object obj = ResourceManager.GetObject("game_time", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] game_time1 {
+            get {
+                object obj = ResourceManager.GetObject("game_time1", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -126,6 +146,16 @@ namespace GameTimeX {
         internal static byte[] NO_PICTURE {
             get {
                 object obj = ResourceManager.GetObject("NO_PICTURE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] picture {
+            get {
+                object obj = ResourceManager.GetObject("picture", resourceCulture);
                 return ((byte[])(obj));
             }
         }

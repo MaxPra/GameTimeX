@@ -3,57 +3,112 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
-        Title="Create New Profile" Height="150" Width="300" Background="#333333"
+        Title="Rename Profile"
+        Width="360" Height="190"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        AllowsTransparency="True"
+        Background="Transparent"
         Style="{StaticResource DefaultWindowStyle}"
-        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="CenterOwner" BorderBrush="CornflowerBlue" BorderThickness="2"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Loaded="Window_Loaded">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
-    <!--Main Content -->
-    <Grid>
-        <!-- Custom Title Bar -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30">
-            </RowDefinition>
-            <RowDefinition Height="*">
-            </RowDefinition>
-        </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Fill="Black" x:Name="titleBar"></Rectangle>
-        <TextBlock Grid.Row="0" Text="Rename Profile" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white">
-        </TextBlock>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnClose" Content="X" Width="40" Height="30"
-                    BorderBrush="Transparent" Background="Transparent" 
-                    Click="btnClose_Click" Foreground="White"
-                    MouseEnter="btnClose_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
-                    MouseLeave="btnClose_MouseLeave"/>
-        </StackPanel>
+    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
+            BorderThickness="1"
+            Background="#2F2F2F"
+            CornerRadius="12"
+            SnapsToDevicePixels="True">
 
-        <!--Window Content -->
-        <Grid Grid.Row="1" x:Name="grdContent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70*"  />
-                <ColumnDefinition Width="30*"/>
-            </Grid.ColumnDefinitions>
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*"></RowDefinition>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtProfileName" Background="#5c5c5c"
-                         Height="30" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" Margin="10, 0, 0, 0">
-            </TextBox>
+            <!-- Titlebar -->
+            <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
+            <TextBlock Grid.Row="0" Text="Rename Profile" Margin="10,0,0,0"
+                       VerticalAlignment="Center" Foreground="White"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnClose" Content="X" Width="40" Height="30"
+                        Foreground="White" Background="Transparent" BorderBrush="Transparent"
+                        Click="btnClose_Click" Style="{StaticResource NoMouseOverButtonStyle}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="0,12,0,0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="#CC0000"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
 
-            <Button Grid.Row ="0" Grid.Column="1" x:Name="btnRename" Content="save" Width="70" Height="30"
-                    BorderBrush="black" Background="#0099ff" 
-                    Click="btnRenameProfile_Click" Foreground="White"
-                    Style="{StaticResource NormalGuiButton}">
-            </Button>
+            <!-- Inhalt -->
+            <Grid Grid.Row="1" Margin="22" x:Name="grdContent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
+                <!-- Textfeld mit Placeholder -->
+                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                    <TextBox x:Name="txtProfileName"
+                             Background="#5c5c5c"
+                             Height="30" FontSize="15"
+                             Padding="7,4,0,0"
+                             Foreground="White"/>
+                    <TextBlock IsHitTestVisible="False"
+                               Text="Profile name"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Margin="9,0,0,0" Foreground="White">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=txtProfileName}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+
+                <!-- Save -->
+                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                        x:Name="btnRename"
+                        Content="Save"
+                        Width="200" Height="42"
+                        HorizontalAlignment="Left"
+                        Click="btnRenameProfile_Click"
+                        BorderBrush="Black" Background="#0099ff"
+                        Foreground="White"
+                        Style="{StaticResource NormalGuiButton}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

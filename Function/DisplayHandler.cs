@@ -614,56 +614,69 @@ namespace GameTimeX
 
         private static void AttachContextMenuToImage(GTXImage image)
         {
-            ContextMenu contextMenu = new ContextMenu();
-            contextMenu.FontSize = 17;
+            var contextMenu = new ContextMenu
+            {
+                FontSize = 22 
+            };
 
-            System.Windows.Controls.Image imgProperties = new System.Windows.Controls.Image();
-            imgProperties.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/properties.png");
+            // Icons vorbereiten
+            System.Windows.Controls.Image MakeIcon(string uri)
+            {
+                var img = new System.Windows.Controls.Image
+                {
+                    Source = VisualHandler.GetBitmapImage(uri),
+                    Width = 28,
+                    Height = 28,
+                    SnapsToDevicePixels = true
+                };
+                RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.HighQuality);
+                return img;
+            }
 
-            System.Windows.Controls.Image imgDelete = new System.Windows.Controls.Image();
-            imgDelete.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/delete.png");
+            var imgProperties = MakeIcon(@"pack://application:,,,/images/properties.png");
+            var imgDelete = MakeIcon(@"pack://application:,,,/images/delete.png");
+            var imgPlaythrough = MakeIcon(@"pack://application:,,,/images/startpoint.png");
 
-            System.Windows.Controls.Image imgPlaythrough = new System.Windows.Controls.Image();
-            imgPlaythrough.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/game_time.png");
-
-            // Kontextmenü Einträge
-
-            // Löschen Eintrag
-            GTXMenuItem mIDelete = new GTXMenuItem();
-            mIDelete.Header = "Delete";
-            mIDelete.Icon = imgDelete;
-            mIDelete.PID = image.PID;
+            // MenuItems (keine feste Height setzen!)
+            var mIDelete = new GTXMenuItem
+            {
+                Header = "Delete",
+                Icon = imgDelete,
+                PID = image.PID
+            };
             mIDelete.Click += MIDelete_Clicked;
 
-            // Eigenschaften Eintrag
-            GTXMenuItem mIProperties = new GTXMenuItem();
-            mIProperties.Header = "Properties";
-            mIProperties.Icon = imgProperties;
-            mIProperties.PID = image.PID;
+            var mIProperties = new GTXMenuItem
+            {
+                Header = "Properties",
+                Icon = imgProperties,
+                PID = image.PID
+            };
             mIProperties.Click += MIProperties_Clicked;
 
-            // Neuer Playthrough Eintrag
-            GTXMenuItem mIPlaythrough = new GTXMenuItem();
-            mIPlaythrough.Header = "New playthrough startpoint";
-            mIPlaythrough.Icon = imgPlaythrough;
-            mIPlaythrough.PID = image.PID;
+            var mIPlaythrough = new GTXMenuItem
+            {
+                Header = "New playthrough startpoint",
+                Icon = imgPlaythrough,
+                PID = image.PID
+            };
             mIPlaythrough.Click += MIPlaythrough_Clicked;
 
-            // Zu Kontextmenü hinzufügen
+            // Zusammenbauen
             contextMenu.Items.Add(mIDelete);
-
-            // Kontextfunktion nur hinzufügen, wenn schon Zeit aufgenommen wurde
-            if(DataBaseHandler.IsPlayTimeGreaterZero(image.PID))
+            if (DataBaseHandler.IsPlayTimeGreaterZero(image.PID))
                 contextMenu.Items.Add(mIPlaythrough);
-
             contextMenu.Items.Add(mIProperties);
 
+            // Styles
             contextMenu.Style = VisualHandler.GetApplicationResource("contextMenuStyle") as Style;
+            contextMenu.ItemContainerStyle = Application.Current.FindResource("ContextMenuItemLarge") as Style;
 
             image.ContextMenu = contextMenu;
         }
 
-        
+
+
 
         public static void AttachContextMenuToDataGrid(DataGrid dataGrid)
         {

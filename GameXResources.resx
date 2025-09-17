@@ -127,17 +127,26 @@
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\edit.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\folder.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="GameTimeX_Banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\GameTimeX_Banner.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="game_time" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\game_time.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="game_time1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\game_time1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="list" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\list.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="NO_PICTURE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\no_picture.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\picture.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="properties" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\properties.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

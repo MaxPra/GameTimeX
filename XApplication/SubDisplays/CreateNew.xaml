@@ -3,140 +3,214 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
+        Title="Create New Profile"
+        Width="560" Height="300"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        AllowsTransparency="True"
+        Background="Transparent"
         Style="{StaticResource DefaultWindowStyle}"
-        Title="Create New Profile" Height="195" Width="300" Background="#333333"
-        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="CenterOwner" BorderBrush="CornflowerBlue" BorderThickness="2">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
-    <!--Main Content -->
-    <Grid>
-        <!-- Custom Title Bar -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30">
-            </RowDefinition>
-            <RowDefinition Height="*">
-            </RowDefinition>
-        </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Fill="Black" x:Name="titleBar"></Rectangle>
-        <TextBlock Grid.Row="0" Text="Create new profile" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white">
-        </TextBlock>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnClose" Content="X" Width="40" Height="30"
-                    BorderBrush="Transparent" Background="Transparent" 
-                    Click="btnClose_Click" Foreground="White"
-                    MouseEnter="btnClose_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
-                    MouseLeave="btnClose_MouseLeave"/>
-        </StackPanel>
+    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
+            BorderThickness="1"
+            Background="#2F2F2F"
+            CornerRadius="12"
+            SnapsToDevicePixels="True">
 
-        <!--Window Content -->
-        <Grid Grid.Row="1" x:Name="grdContent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70*"  />
-                <ColumnDefinition Width="30*"/>
-            </Grid.ColumnDefinitions>
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="33*"></RowDefinition>
-                <RowDefinition Height="33*"></RowDefinition>
-                <RowDefinition Height="33*"></RowDefinition>
-                <RowDefinition Height="33*"></RowDefinition>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtProfileName" Background="#5c5c5c"
-                         Height="30" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" Margin="10, 0, 0, 0">
-            </TextBox>
-            <TextBlock Grid.Row="0" Grid.Column="0" IsHitTestVisible="False" Text="Profile Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="19,0,0,0" Foreground="white">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=txtProfileName}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+            <!-- Titlebar -->
+            <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
+            <TextBlock Grid.Row="0" Text="Create new profile" Margin="10,0,0,0"
+                       VerticalAlignment="Center" Foreground="White"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnClose" Content="X" Width="40" Height="30"
+                        Foreground="White" Background="Transparent" BorderBrush="Transparent"
+                        Click="btnClose_Click" Style="{StaticResource NoMouseOverButtonStyle}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="0,12,0,0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="#CC0000"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
 
-            <Button Grid.Row ="3" Grid.Column="1" x:Name="btnCreateNewProfile" Content="save" Width="70" Height="30"
-                    BorderBrush="black" Background="#0099ff" 
-                    Click="btnCreateNewProfile_Click" Foreground="White"
-                    Style="{StaticResource NormalGuiButton}">
+            <!-- Inhalt -->
+            <Grid Grid.Row="1" Margin="22">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="12"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="12"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
+                <!-- Profile name -->
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBox x:Name="txtProfileName"
+                             Background="#5c5c5c"
+                             Height="30" FontSize="15"
+                             Padding="7,4,0,0"
+                             Foreground="White"/>
+                    <TextBlock IsHitTestVisible="False"
+                               Text="Profile name"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Margin="9,0,0,0" Foreground="White">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=txtProfileName}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
 
-            </Button>
+                <!-- Picture path -->
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <TextBox x:Name="txtPicPath"
+                             Background="#5c5c5c"
+                             Height="30" FontSize="15"
+                             Padding="7,4,0,0"
+                             Foreground="White"
+                             IsReadOnly="True"/>
+                    <TextBlock IsHitTestVisible="False"
+                               Text="Picture path"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Margin="9,0,0,0" Foreground="White">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=txtPicPath}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
 
-            <TextBox Grid.Row="1" Grid.Column="0" x:Name="txtPicPath" Background="#5c5c5c"
-                         Height="30" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" Margin="10, 0, 0, 0"
-                         IsReadOnly="True">
-            </TextBox>
-            <Button Grid.Row ="1" Grid.Column="1" x:Name="btnShowFileDialog" Content="Choose Pic" Width="70" Height="30"
-                    BorderBrush="black" Background="#0099ff" 
-                    Click="btnShowFileDialog_Click" Foreground="White"
-                    Style="{StaticResource NormalGuiButton}">
+                <!-- Picture button (Icon aus Ressourcen) -->
+                <Button Grid.Row="2" Grid.Column="1"
+                        x:Name="btnShowFileDialog"
+                        Click="btnShowFileDialog_Click"
+                        HorizontalAlignment="Right"
+                        Width="180" Height="38"
+                        BorderBrush="Black" Background="#0099ff"
+                        Foreground="White"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        ToolTip="Choose pic"
+                        Style="{StaticResource NormalGuiButton}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                    <Image Source="{StaticResource picture}" Width="22" Height="22" Stretch="Uniform"/>
+                </Button>
 
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
+                <!-- Game folder -->
+                <Grid Grid.Row="4" Grid.Column="0">
+                    <TextBox x:Name="txtGameFolderPath"
+                             Background="#5c5c5c"
+                             Height="30" FontSize="15"
+                             Padding="7,4,0,0"
+                             Foreground="White">
+                        <TextBox.ToolTip>
+                            <ToolTip ToolTipService.InitialShowDelay="0"
+                                     Background="#333333" BorderThickness="1"
+                                     BorderBrush="CornflowerBlue" Foreground="White">
+                                <TextBlock>
+                                    If specified, GameTimeX will automatically get the exe and switch between profiles (enable in settings).
+                                </TextBlock>
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    <TextBlock IsHitTestVisible="False"
+                               Text="Game folder (opt.)"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Margin="9,0,0,0" Foreground="White">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=txtGameFolderPath}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
 
-            </Button>
-            <TextBox Grid.Row="2" Grid.Column="0" x:Name="txtGameFolderPath" Background="#5c5c5c"
-                     Height="30" FontSize="15" Padding="7, 4, 0, 0" Foreground="White" Margin="10, 0, 0, 0">
-                <TextBox.ToolTip>
-                    <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                        <TextBlock>
-                            If specified, GameTimeX will automatically get the exe and switch between profiles (this feature has to be acivated in the settings)
-                        </TextBlock>
-                    </ToolTip>
-                </TextBox.ToolTip>
-            </TextBox>
-            <TextBlock Grid.Row="2" Grid.Column="0" IsHitTestVisible="False" Text="Game folder (opt)" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="19,0,0,0" Foreground="white">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=txtGameFolderPath}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="0" IsHitTestVisible="False" Text="Gamefolder (opt.)" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="19,0,0,0" Foreground="white">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=txtExeName}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-            <Button Grid.Row ="2" Grid.Column="1" x:Name="btnShowFileDialogExe" Content="Choose Folder" Width="70" Height="30"
-                    BorderBrush="black" Background="#0099ff" 
-                    Click="btnShowFileDialogExe_Click" Foreground="White"
-                    FontSize="10"
-                    Style="{StaticResource NormalGuiButton}">
+                <!-- Folder button (Icon aus Ressourcen) -->
+                <Button Grid.Row="4" Grid.Column="1"
+                        x:Name="btnShowFileDialogExe"
+                        Click="btnShowFileDialogExe_Click"
+                        HorizontalAlignment="Right"
+                        Width="180" Height="38"
+                        BorderBrush="Black" Background="#0099ff"
+                        Foreground="White"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        ToolTip="Choose folder"
+                        Style="{StaticResource NormalGuiButton}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                    <Image Source="{StaticResource folder}" Width="22" Height="22" Stretch="Uniform"/>
+                </Button>
 
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+                <!-- Save (links bündig mit den Feldern) -->
+                <Button Grid.Row="6" Grid.Column="0"
+                        x:Name="btnCreateNewProfile"
+                        Content="Save"
+                        Width="200" Height="42"
+                        HorizontalAlignment="Left"
+                        Click="btnCreateNewProfile_Click"
+                        BorderBrush="Black" Background="#0099ff"
+                        Foreground="White"
+                        Style="{StaticResource NormalGuiButton}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

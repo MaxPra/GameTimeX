@@ -5,53 +5,94 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
-        Title="Info" Height="150" Width="300" Background="#333333"
+        Title="Info"
+        Width="300" Height="150"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Style="{StaticResource DefaultWindowStyle}"
-        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStartupLocation="CenterOwner" BorderBrush="CornflowerBlue" BorderThickness="2"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        UseLayoutRounding="True">
 
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
     </WindowChrome.WindowChrome>
-    <!--Main Content -->
-    <Grid>
-        <!-- Custom Title Bar -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30">
-            </RowDefinition>
-            <RowDefinition Height="*">
-            </RowDefinition>
-        </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Fill="Black" x:Name="titleBar"></Rectangle>
-        <TextBlock Grid.Row="0" Text="Question" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="white">
-        </TextBlock>
 
-        <!--Window Content -->
-        <Grid Grid.Row="1" x:Name="grdContent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+    <!-- Außenrahmen mit Rundung -->
+    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="12"
+            Background="#2F2F2F"
+            SnapsToDevicePixels="True"
+            Padding="0">
+
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*" />
-                <RowDefinition Height="50*" />
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock TextWrapping="WrapWithOverflow" Text="Text" 
-                       Foreground="White" Margin="10 10 10 10" HorizontalAlignment="Center" 
-                       x:Name="lblInfoText" VerticalAlignment="Center"/>
+            <!-- Titlebar -->
+            <Border Grid.Row="0"
+                    x:Name="titleBar"
+                    Background="Black"
+                    CornerRadius="12,12,0,0"
+                    ClipToBounds="True"/>
+            <TextBlock Grid.Row="0"
+                       Text="Question"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="10,0,0,0"
+                       Foreground="White"/>
 
-            <Button HorizontalAlignment="Right" Grid.Row ="1" Grid.Column="1" x:Name="btnNo" Content="No" Width="70" Height="30"
-                    BorderBrush="black" Background="#0099ff" 
-                    Click="btnNo_Click" Foreground="White"
-                    Margin="0 0 10 0"
-                    Style="{StaticResource NormalGuiButton}">
-            </Button>
-            <Button HorizontalAlignment="Left" Grid.Row ="1" x:Name="btnYes" Content="Yes" Width="70" Height="30"
-                BorderBrush="black" Background="{StaticResource ButtonCancelBrush}" 
-                Click="btnYes_Click" Foreground="White"
-                Margin="141,14,0,14"
-                Style="{StaticResource CancelButton}"/>
 
+            <!-- Inhalt -->
+            <Grid Grid.Row="1" x:Name="grdContent" Margin="22,18,22,18">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="18"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Text -->
+                <TextBlock x:Name="lblInfoText"
+                           Text="Text"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           HorizontalAlignment="Stretch"
+                           TextAlignment="Center"
+                           Margin="0,0,0,0"
+                           VerticalAlignment="Center"/>
+
+                <!-- Buttons -->
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0,0,0,0">
+                    <!-- Ja (rot) -->
+                    <Button x:Name="btnYes"
+                            Content="Yes"
+                            Width="100" Height="36"
+                            Margin="0,0,12,0"
+                            BorderBrush="Black"
+                            Background="{StaticResource ButtonCancelBrush}"
+                            Click="btnYes_Click"
+                            Foreground="White"
+                            Style="{StaticResource CancelButton}"/>
+                    <!-- Nein (blau) -->
+                    <Button x:Name="btnNo"
+                            Content="No"
+                            Width="100" Height="36"
+                            BorderBrush="Black"
+                            Background="{StaticResource ButtonDefaultBrush}"
+                            Click="btnNo_Click"
+                            Foreground="White"
+                            Style="{StaticResource NormalGuiButton}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

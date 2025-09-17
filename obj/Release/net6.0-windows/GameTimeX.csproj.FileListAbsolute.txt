@@ -75,3 +75,12 @@ C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\GameTimeX.pdb
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\GameTimeX.genruntimeconfig.cache
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\ref\GameTimeX.dll
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\bin\Release\net6.0-windows\de\GameTimeX.resources.dll
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\Styles\ContextMenuStyle.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\XApplication\SubDisplays\Properties.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\XApplication\SubDisplays\LoadingApplication.g.cs
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\XApplication\SubDisplays\Properties.g.cs
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\XApplication\SubDisplays\LoadingApplication.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\GameTimeX.LanguageTerms.resources
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\GameTimeX.LanguageTerms.de.resources
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Release\net6.0-windows\de\GameTimeX.resources.dll

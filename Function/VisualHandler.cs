@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace GameTimeX
 {
@@ -103,6 +104,7 @@ namespace GameTimeX
         {
             btn.Content = SysProps.stopMonitoringText;
             btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultMonitoringColor"));
+            ((Path)btn.Template.FindName("Icon", btn)).Data = Geometry.Parse("M2,2 H12 V12 H2 Z");
             VisualHandler.startStopMonitoringBtnActive = true;
         }
 
@@ -110,6 +112,7 @@ namespace GameTimeX
         {
             btn.Content = SysProps.startMonitoringText;
             btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultColor"));
+            ((Path)btn.Template.FindName("Icon", btn)).Data = Geometry.Parse("M 0,0 L 0,12 L 10,6 Z");
             VisualHandler.startStopMonitoringBtnActive = false;
         }
 

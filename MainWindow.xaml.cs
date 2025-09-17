@@ -358,6 +358,9 @@ namespace GameTimeX
 
                 DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, this);
 
+                // Bei aktualisieren des Bildes muss immer die Tile-View Neugeladen werden!
+                DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+
             }
         }
 
