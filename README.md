@@ -3,10 +3,12 @@
 GameTimeX is an application that enables you to accurately monitor your gaming time.  
 If you are frustrated with Steam's inaccurate tracking (e.g., when a game is left idle while you are away from your keyboard), this tool will provide the solution you need.
 
-**Version 2.0.11 / Retouched is now available!**
+**Version 2.0.11 / Retouched is now available!**  
 Same core, brand-new look
 
 Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version2.0.11/GameTimeXSetup_Latest.msi).
+
+---
 
 ## About This Application
 
@@ -14,79 +16,65 @@ GameTimeX is a personal project I developed as a hobby during my free time.
 
 ### Main Window Overview
 
-Upon launching the application for the first time, you will be greeted with a window that looks like this:  
+When you launch the application for the first time, the main window will appear as shown below:  
 <img width="1217" height="809" alt="image" src="https://github.com/user-attachments/assets/c3bba32f-0c31-4eb2-bdb2-af8b9b4f6ac0" />
 
+**Main window sections:**
 
-Below is an overview of the various sections within the main window:
+1. **Profile Search Bar** – Quickly find profiles when the list grows too long.  
+2. **Profile Management Buttons** – Located next to the search bar:  
+   - Create New Profile  
+   - Delete Profile  
+   - Properties  
+   - Settings  
+   *Tip: you can also access properties and delete a profile via the context menu.*  
+3. **Information Section** – Displays details about the selected profile, including a thumbnail image.  
+4. **Start/Stop Monitoring** – Located in the information section:  
+   - A **blue** button means no active monitoring.  
+   - A **red** button means monitoring is active.  
+5. **Rename Profile** – Click the pencil icon next to the profile name to rename it.
 
-1. **Profile Search Bar**: Located at the top of the window, this search bar allows you to easily find games if the list becomes too long and scrolling is inconvenient.
-2. **Profile Overview Mode**: Here, the view mode can be changed (list or tile view).
-3. **Profile Management Buttons**: Next to the search bar, you will find four buttons:
-   - "Create New Profile"  
-   - "Delete Profile"
-   - "Properties"  
-   - "Settings"
-  
-   Note: you can also use the contextmenu to open the properties and delete a game profile.
-5. **Information Section**: On the right side of the screen, this section displays the details of the currently selected profile, including a small profile image.
-6. **Start/Stop Monitoring**: In the "Information Section", you can start or stop the game time tracking by simply pressing the button at the bottom.  
-   - A **blue** button indicates no active monitoring.  
-   - A **red** button signals that monitoring is in progress.
-7. **Rename Profile**: You can rename the selected game profile by clicking the pencil icon next to the profile name, which is also displayed in the "Information Section."
-
-After adding a game profile (using the "Create New Profile" button), it will look something like this:  
+After adding a profile, the view may look like this:  
 <img width="1208" height="806" alt="image" src="https://github.com/user-attachments/assets/fea9d2e8-609a-48d5-b655-3eda2fdf0187" />
 
+Profile names and images can be adjusted at any time. Simply click the pencil icon or select *Change Image*.  
+Hovering over the small “i” next to *Game Time* will show the tracked time in minutes, alongside the recorded first and last play sessions.
 
+If you restart a game after already having recorded playtime, the *New Playthrough Startpoint* function can be used. It saves the current total time and calculates the new playtime as the difference from that point onward.  
+- **Total time** is always cumulative.  
+- **Playthrough-specific time** is calculated as the difference from the designated start point.
 
-
-If you are dissatisfied with the profile name or the image selected, you can easily modify them by clicking the pencil icon next to the profile name or by selecting "Change Image."
-
-Hovering over the small "i" next to "Game Time" will show the tracked time in minutes (though game time is usually displayed in hours). Additionally, you can view the first and last time you played the game.
-
-If playtime has already been recorded for a game and a new playthrough is started (i.e., the game is being played for the second time), the "New Playthrough Startpoint" context function can be used to specify the starting point for the new playtime recording. In the background, the current total playtime is saved, and the difference from the specified start point is calculated.
-
-Note: The total playtime is always accumulated, while the playthrough-specific playtime is always calculated as the difference from the designated start point.
+---
 
 ### Settings
 
-Now that the main window has been explained, let's review the settings window:  
+The settings window gives you fine-grained control over how GameTimeX behaves:  
 <img width="533" height="732" alt="image" src="https://github.com/user-attachments/assets/6a25a393-b210-4b83-b2a4-164230bf5c47" />
 
-In the settings window, you can enable or disable the tracking of the current session's game time. When enabled, the game time for the current session will appear under the start/stop monitoring button while the monitoring is active.
+**Available options:**
 
-If the checkbox "Automatic switching between game profiles" is enabled, GameTimeX will automatically switch to the correct profile when launching a game. However, this only works if the game's folder has been specified.
+- **Session Time Tracking** – Display the duration of the current session directly in the information panel while monitoring is active.  
+- **Automatic Profile Switching** – If enabled, GameTimeX will automatically switch to the correct profile when a game is launched (requires the game’s installation folder to be specified).  
+- **Monitor Key** – Assign a hotkey to start and stop monitoring without leaving the game. Nearly all keyboard keys are supported.  
+- **Backup & Restore** – Export or import your profiles at any time. Useful for PC resets, data migration, or recovery. The application will restart automatically after an import/export. An optional auto-backup feature can also create backups on every startup.  
+- **OLED Care (Blackout Screen)** – When enabled, all screens are completely darkened to protect OLED displays from burn-in while you are AFK. This mode can be toggled at any time with **CTRL + B**.
 
-**How to find the game's folder on Steam?**
+*Tip: If you are looking for your game’s installation folder on Steam, right-click the game → Properties → Installed Files → Browse.*
 
-Right-click on the respective game => Properties => Installed Files => Browse.
-
-This path must then be entered in the corresponding profile – GameTimeX will handle the rest.
-
-Additionally, a shortcut key can be used to start and stop the time tracking, eliminating the need to alt-tab out of the game to begin or end the session.
-
-By clicking on "Monitor Key," you can assign your desired key for the action (almost all keys on the keyboard are supported, with the exception of mouse buttons).
-
-Additionally, you can back up your profiles or import an existing backup. This feature is particularly useful if you need to reset your computer, transfer profiles to another device, or recover profiles that may have been accidentally deleted.  
-As noted in the settings window, the application will automatically restart after importing or exporting a backup.
-
-The auto-backup feature can also be activated via the checkbox to automatically create a backup upon each program startup (provided that a valid path is specified in the backup path field).
-It is recommended to organize the backup folder at your discretion when auto-backup is enabled. This is not done automatically by GameTimeX as a security measure
+---
 
 ### Profile Image Cropping
 
-When creating a new game profile, you will need to select an image to be displayed in the "Information Display."  
-Once you’ve selected your image via the file explorer, you will be prompted with this cropping window:  
+When creating a profile, you will be prompted to select an image.  
+After choosing an image, the cropping window will open:  
 <img width="1206" height="806" alt="image" src="https://github.com/user-attachments/assets/d0738e77-1188-4c4c-bc80-f12a60385153" />
 
-In this window, you can crop the image to suit your preferences (such as selecting the game title or any other section that fits best).
+**Cropping controls:**
+- Resize the cropping area: use the mouse wheel.  
+- Move the cropping area: drag with the left mouse button.  
 
-The controls for cropping are as follows:
-- **Resize the cropping area**: Use the mouse wheel to adjust the size of the cropping area.
-- **Move the cropping area**: Hold the left mouse button and drag to reposition the cropping area.
+Once confirmed, the cropped image is saved and displayed in the profile view.
 
-Once you are satisfied with the selection, click the "X" in the top-right corner to save the cropped image.
+---
 
 Icons by Icons8.
-```
