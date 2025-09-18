@@ -41,6 +41,10 @@ C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\n
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\Styles\Resources.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\Styles\ScrollPaneStyle.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\Styles\WindowStyle.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\CreateNew.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Properties.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Rename.baml
+C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Settings.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\MainWindow.g.cs
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\CreateNew.g.cs
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ImageCropper.g.cs
@@ -58,15 +62,11 @@ C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\n
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\GameTimeX_MarkupCompile.lref
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\App.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\MainWindow.baml
-C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\CreateNew.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ImageCropper.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\InfoBox.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\LoadingApplication.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\MonitoreKey.baml
-C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Properties.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\QuestionBox.baml
-C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Rename.baml
-C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\Settings.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\XApplication\SubDisplays\ToastMessage.baml
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\GameTimeX.g.resources
 C:\Users\prage\OneDrive\Dokumente\Development\C#\GameTimeX\GameTimeX\obj\Debug\net6.0-windows\GameTimeX.GameXResources.resources

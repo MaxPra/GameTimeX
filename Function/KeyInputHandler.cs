@@ -48,6 +48,13 @@ namespace GameTimeX.Function
             th = new Thread(HandleKeyInputEvent);
         }
 
+        public KeyInputHandler(Window wnd, StartType startType)
+        {
+            this.wnd = wnd;
+            this.startType = startType;
+            th = new Thread(HandleKeyInputEvent);
+        }
+
         /// <summary>
         /// Startet das Abhören auf den übergebenen Key
         /// </summary>
@@ -91,18 +98,24 @@ namespace GameTimeX.Function
                         {
                             if(SysProps.currentSelectedPID != 0)
                             {
+                                // Profilnamen lt. aktuell selektiertem Spiel ermitteln
+                                DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
+                                string profileName = dbObj.GameName;
+
+                                string title = "GameTimeX | " + profileName;
+
                                 if (!MonitorHandler.CurrentlyMonitoringGameTime())
                                 {
                                     MonitorHandler.StartMonitoringGameTime((MainWindow)wnd, SysProps.currentSelectedPID);
                                     if(SysProps.startUpParms.ShowToastNotification)
-                                        VisualHandler.ShowToastNotification("GameTimeX", "Monitoring startet!", 3000);
+                                        VisualHandler.ShowToastNotification(title, "Monitoring startet!", 3000);
                                 }
 
                                 else
                                 {
                                     MonitorHandler.EndMonitoringGameTime((MainWindow)wnd);
                                     if (SysProps.startUpParms.ShowToastNotification)
-                                        VisualHandler.ShowToastNotification("GameTimeX", "Monitoring stopped!", 3000);
+                                        VisualHandler.ShowToastNotification(title, "Monitoring stopped!", 3000);
                                 }
                                     
 
@@ -124,6 +137,17 @@ namespace GameTimeX.Function
                         }));
                     }
                     
+                }
+                else if(startType == StartType.BLACKOUT_SCREEN)
+                {
+                    if (CheckForKeyCombination(VirtualKey.VK_CONTROL, VirtualKey.VK_B))
+                    {
+                        this.wnd.Dispatcher.Invoke((Action)(() =>
+                        {
+                            // Schwarz auf allen Bildschirmen darstellen --> OLED-Freundlich
+                            BlackoutHandler.ToggleBlackout((MainWindow)wnd);
+                        }));
+                    }
                 }
 
                 // 20 Millisekunden schlafen legen
@@ -188,6 +212,39 @@ namespace GameTimeX.Function
             return false;
         }
 
+        /// <summary>
+        /// Prüft, ob eine Tastenkombination gedrückt wurde (z. B. STRG + B).
+        /// </summary>
+        private bool CheckForKeyCombination(params VirtualKey[] keys)
+        {
+            bool allPressed = true;
+
+            foreach (var key in keys)
+            {
+                int keystate = SysWin32.GetAsyncKeyState((int)key);
+
+                if ((keystate & 0x8000) == 0)
+                {
+                    allPressed = false;
+                    break;
+                }
+            }
+
+            if (allPressed && !key_was_pressed)
+            {
+                key_was_pressed = true;
+                return true;
+            }
+
+            if (!allPressed && key_was_pressed)
+            {
+                key_was_pressed = false;
+            }
+
+            return false;
+        }
+
+
         private VirtualKey ParseKeyEnum(int keyCode)
         {
             return (VirtualKey)Enum.ToObject(typeof(VirtualKey), keyCode);
@@ -201,7 +258,8 @@ namespace GameTimeX.Function
         public enum StartType
         {
             MONITORE_KEY,
-            GAME_MONITORING
+            GAME_MONITORING,
+            BLACKOUT_SCREEN
         }
     }
 

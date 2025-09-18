@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Style="{StaticResource DefaultWindowStyle}"
         Title="Info"
-        Height="120"
-        Width="300"
+        Height="150"
+        Width="370"
         Background="Transparent"
         WindowStyle="None"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
@@ -50,6 +50,7 @@
                         CornerRadius="10,10,0,0"
                         BorderBrush="#22000000"
                         BorderThickness="0,0,0,1"/>
+                
                 <TextBlock x:Name="Title"
                            Grid.Row="0"
                            Text="Info"
@@ -58,7 +59,11 @@
                            Margin="10,0,0,0"
                            Foreground="White"
                            FontSize="14"
-                           FontWeight="SemiBold"/>
+                           FontWeight="SemiBold"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="NoWrap"
+                           MaxWidth="350"/>
+
 
                 <!-- Content -->
                 <Grid Grid.Row="1" x:Name="grdContent">
@@ -68,7 +73,7 @@
                                Foreground="White"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
-                               FontSize="14"
+                               FontSize="30"
                                Margin="14,8,14,8"/>
                 </Grid>
             </Grid>

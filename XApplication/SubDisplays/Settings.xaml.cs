@@ -159,6 +159,9 @@ namespace GameTimeX
             // SessionGameTime laden
             cbSessionGameTime.IsChecked = SysProps.startUpParms.SessionGameTime;
 
+            // Blackout Key Combi
+            cbBlackoutKeyActive.IsChecked = SysProps.startUpParms.BlackOutShortcutActive;
+
             // Monitor Key
             cbMonitoringKeyActive.IsChecked = SysProps.startUpParms.MonitorShortcutActive;
             lblCurrentKey.Text = "Current key: " + KeyInput.virtualKeyMap[SysProps.startUpParms.MonitorShortcut];
@@ -259,6 +262,20 @@ namespace GameTimeX
         {
             // Explorer zum Datenordner öffnen
             Process.Start("explorer.exe", SysProps.programPathFolder);
+        }
+
+        private void cbBlackoutKeyActive_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbBlackoutKeyActive.IsChecked == true)
+            {
+                SysProps.startUpParms.BlackOutShortcutActive = true;
+            }
+            else
+            {
+                SysProps.startUpParms.BlackOutShortcutActive= false;
+            }
+
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
         }
     }
 }

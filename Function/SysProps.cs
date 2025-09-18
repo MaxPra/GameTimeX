@@ -47,6 +47,7 @@ namespace GameTimeX
         public static StartUpParms startUpParms = null;
 
         public static KeyInputHandler? keyInputHandler;
+        public static KeyInputHandler? keyInputHandlerBlackout;
         public static GameSwitcherHandler? gameSwitcherHandler = null;
 
         public static MainWindow? mainWindow = null;
@@ -132,6 +133,13 @@ namespace GameTimeX
                 gameSwitcherHandler.Start();
             }
 
+            if (startUpParms.BlackOutShortcutActive)
+            {
+                // KeyInputHandler für BlackOut starten
+                keyInputHandlerBlackout = new KeyInputHandler(wnd, KeyInputHandler.StartType.BLACKOUT_SCREEN);
+                keyInputHandlerBlackout.StartListening();
+            }
+
             loadingApp.Close();
         }
 
@@ -152,6 +160,9 @@ namespace GameTimeX
             if (keyInputHandler != null)
                 keyInputHandler.StopListening();
 
+            if(keyInputHandlerBlackout != null)
+                keyInputHandlerBlackout.StopListening();
+
             if (gameSwitcherHandler != null)
                 gameSwitcherHandler.Stop();
 
@@ -163,6 +174,9 @@ namespace GameTimeX
         {
             if (keyInputHandler != null)
                 keyInputHandler.StopListening();
+
+            if (keyInputHandlerBlackout != null)
+                keyInputHandlerBlackout.StopListening();
 
             if (gameSwitcherHandler != null)
                 gameSwitcherHandler.Stop();

@@ -224,6 +224,10 @@ namespace GameTimeX
             if (SysProps.keyInputHandler != null)
                 SysProps.keyInputHandler.StopListening();
 
+            // BlackoutHandler ebenfalls beenden!
+            if (SysProps.keyInputHandlerBlackout != null)
+                SysProps.keyInputHandlerBlackout.StopListening();
+
             // Settings öffnen
             Settings settings = new Settings();
             settings.Owner = this;
@@ -242,6 +246,22 @@ namespace GameTimeX
                 else if (!SysProps.startUpParms.MonitorShortcutActive || SysProps.startUpParms.MonitorShortcut == KeyInput.VirtualKey.VK_NONE)
                 {
                     SysProps.keyInputHandler.StopListening();
+                }
+            }
+
+            // Nach Schließen des Settings-Windows KeyInputHandler für Blackout entweder starten oder beenden!
+            if (SysProps.keyInputHandlerBlackout != null)
+            {
+                // Wenn Blackout-Funktion aktiv ist
+                if (SysProps.startUpParms.BlackOutShortcutActive)
+                {
+                    SysProps.keyInputHandlerBlackout = new Function.KeyInputHandler(this, KeyInputHandler.StartType.BLACKOUT_SCREEN);
+                    SysProps.keyInputHandlerBlackout.StartListening();
+                }
+                // Wenn Blackout-Funktion nicht aktiv ist --> Stoppen des Handlers
+                else if (!SysProps.startUpParms.BlackOutShortcutActive)
+                {
+                    SysProps.keyInputHandlerBlackout.StopListening();
                 }
             }
 

@@ -91,7 +91,7 @@ namespace GameTimeX.Function
                             {
                                 // Prüfen, ob in Suchleiste nichts eingegeben und ob die derzeitige Executable noch nicht aufgenommen wurde
                                 // Weiters muss geprüft werden, ob im Namen der EXE "Unity" vorkommt (z.B. UnityCrashHandler => kann bei mehreren Spielen laufen und ist kein eindeutiger Indikator!)
-                                if (wnd.txtSearchBar.Text == String.Empty && !currentProfileRunning.executables.Contains(executable) && (!executable.Contains("Unity")))
+                                if (wnd.txtSearchBar.Text == String.Empty && !currentProfileRunning.executables.Contains(executable) && (!executable.Contains("Unity")) && (!executable.Contains("EpicWebHelper")))
                                 {
                                     // Nur switchen, wenn noch nicht als aktuelles Profil selektiert!
                                     // Ansonsten gibt es einen komischen Bug mit der Selektionsanzeige (Border animiert öfter als 1x)
