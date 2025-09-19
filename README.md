@@ -10,6 +10,17 @@ Download the latest installer [here](https://github.com/MaxPra/GameTimeX/release
 
 ---
 
+## What’s new in 2.0.11
+
+- Visual redesign of the UI
+- Removed the list view
+- Minor UI-related bug fixes
+- **OLED Care (Blackout Screen)** – toggle at any time with **CTRL + B** to fully darken all screens while you’re AFK
+- **Optional side-screen dimming while tracking** – when enabled in **Settings**, all non-primary displays are dimmed automatically while GameTimeX is actively tracking, and restored once tracking stops
+- **Security: SQL-injection hardening** – database access now uses parameterized SQLite queries
+
+---
+
 ## About This Application
 
 GameTimeX is a personal project I developed as a hobby during my free time.
@@ -56,8 +67,9 @@ The settings window gives you fine-grained control over how GameTimeX behaves:
 - **Session Time Tracking** – Display the duration of the current session directly in the information panel while monitoring is active.  
 - **Automatic Profile Switching** – If enabled, GameTimeX will automatically switch to the correct profile when a game is launched (requires the game’s installation folder to be specified).  
 - **Monitor Key** – Assign a hotkey to start and stop monitoring without leaving the game. Nearly all keyboard keys are supported.  
-- **Backup & Restore** – Export or import your profiles at any time. Useful for PC resets, data migration, or recovery. The application will restart automatically after an import/export. An optional auto-backup feature can also create backups on every startup.  
-- **OLED Care (Blackout Screen)** – When enabled, all screens are completely darkened to protect OLED displays from burn-in while you are AFK. This mode can be toggled at any time with **CTRL + B**.
+- **Backup & Restore** – Export or import your profiles at any time. The app restarts automatically after import/export. Optional auto-backup on every startup.  
+- **OLED Care (Blackout Screen)** – Fully black out all screens while you’re AFK to protect OLED panels. Toggle with **CTRL + B**.  
+- **Side-screen dimming while tracking (optional)** – When enabled, GameTimeX automatically dims all secondary displays **only while monitoring is active** and restores them afterwards.
 
 *Tip: If you are looking for your game’s installation folder on Steam, right-click the game → Properties → Installed Files → Browse.*
 
@@ -74,6 +86,12 @@ After choosing an image, the cropping window will open:
 - Move the cropping area: drag with the left mouse button.  
 
 Once confirmed, the cropped image is saved and displayed in the profile view.
+
+---
+
+### Security
+
+- **SQL-injection protection:** all database operations use parameterized SQLite commands.
 
 ---
 
