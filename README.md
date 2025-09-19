@@ -10,6 +10,21 @@ Download the latest installer [here](https://github.com/MaxPra/GameTimeX/release
 
 ---
 
+## Key Features
+
+- 🎮 **Accurate Time Tracking** – records only when your game is truly running.  
+- 🔄 **Automatic Profile Switching** – instantly switch to the correct game profile when launching a game.  
+  - Includes **per-executable selection** to avoid conflicts if multiple games use the same executables.  
+  - Smart **auto-pre-filtering** deselects common non-game executables (launchers, crash reporters, helpers, etc.) on first profile creation.  
+- 🖼️ **Customizable Profiles** – create, rename, and assign cropped images for each game.  
+- 🌙 **OLED Care (Blackout Screen)** – toggle with **CTRL + B** to black out all displays while AFK.  
+- 🖥️ **Side-Screen Dimming** – optional automatic dimming of secondary displays while tracking is active.  
+- ⌨️ **Hotkey Monitoring** – assign a hotkey to start/stop tracking without leaving your game.  
+- 💾 **Backup & Restore** – export or import all profiles, with optional auto-backup at startup.  
+- 🔒 **Secure Database Access** – parameterized SQLite queries protect against SQL injection.  
+
+---
+
 ## What’s new in 2.0.11
 
 - Visual redesign of the UI
@@ -18,6 +33,8 @@ Download the latest installer [here](https://github.com/MaxPra/GameTimeX/release
 - **OLED Care (Blackout Screen)** – toggle at any time with **CTRL + B** to fully darken all screens while you’re AFK
 - **Optional side-screen dimming while tracking** – when enabled in **Settings**, all non-primary displays are dimmed automatically while GameTimeX is actively tracking, and restored once tracking stops
 - **Security: SQL-injection hardening** – database access now uses parameterized SQLite queries
+- **Executable selection for Automatic Game Switch** – you can now define which executables should be monitored in the background for profile switching. This prevents conflicts when different games share identical executables.
+- **Smart executable pre-filtering** – when adding a game for the first time, GameTimeX automatically deselects common non-game executables (e.g., launchers, crash reporters, helpers, benchmark tools). Only relevant executables remain selected, ensuring more accurate and reliable automatic detection.
 
 ---
 
@@ -66,12 +83,31 @@ The settings window gives you fine-grained control over how GameTimeX behaves:
 
 - **Session Time Tracking** – Display the duration of the current session directly in the information panel while monitoring is active.  
 - **Automatic Profile Switching** – If enabled, GameTimeX will automatically switch to the correct profile when a game is launched (requires the game’s installation folder to be specified).  
+  - With the new update, you can also manage which **executables** should be monitored for automatic switching, and exclude irrelevant ones.  
 - **Monitor Key** – Assign a hotkey to start and stop monitoring without leaving the game. Nearly all keyboard keys are supported.  
 - **Backup & Restore** – Export or import your profiles at any time. The app restarts automatically after import/export. Optional auto-backup on every startup.  
 - **OLED Care (Blackout Screen)** – Fully black out all screens while you’re AFK to protect OLED panels. Toggle with **CTRL + B**.  
 - **Side-screen dimming while tracking (optional)** – When enabled, GameTimeX automatically dims all secondary displays **only while monitoring is active** and restores them afterwards.
 
 *Tip: If you are looking for your game’s installation folder on Steam, right-click the game → Properties → Installed Files → Browse.*
+
+---
+
+### Manage Executables
+
+When using Automatic Profile Switching, GameTimeX now lets you control exactly which executables are tracked.  
+This prevents helper processes, launchers, crash reporters, or engine-related executables from interfering with automatic switching.
+
+<img width="554" height="494" alt="image" src="https://github.com/user-attachments/assets/920efc3b-2073-4004-bc3e-d52988125172" />
+
+**Features:**
+- Lists all executables found in the game’s installation directory  
+- Checkbox list to mark executables as *active* or *inactive*  
+- **Select All** toggle for quick bulk activation/deactivation  
+- Smart default pre-filter: common non-game executables are automatically deselected when a profile is first created  
+- Manual adjustments can be saved at any time via the **Save** button  
+
+This gives you full control and prevents false detections when multiple games share the same background executables.
 
 ---
 
@@ -91,7 +127,8 @@ Once confirmed, the cropped image is saved and displayed in the profile view.
 
 ### Security
 
-- **SQL-injection protection:** all database operations use parameterized SQLite commands.
+- **SQL-injection protection:** all database operations use parameterized SQLite commands.  
+- **Executable filtering:** automatic exclusion of non-game executables on first profile creation ensures more reliable detection while avoiding false positives.
 
 ---
 
