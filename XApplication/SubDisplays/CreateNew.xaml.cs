@@ -1,4 +1,6 @@
 ﻿using GameTimeX.Function;
+using GameTimeX.Objects;
+using GameTimeX.XApplication.SubDisplays;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -97,17 +99,30 @@ namespace GameTimeX
                 dbObj.GameName = txtProfileName.Text;
                 dbObj.ProfilePicFileName = fileNameHash;
                 dbObj.ExtGameFolder = txtGameFolderPath.Text;
+
+                CExecutables cExecutables = new CExecutables();
+                cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
+                dbObj.Executables = cExecutables.Serialize();
+
                 DataBaseHandler.Save(dbObj);
 
                 // Bild croppen und abspeichern
                 FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
 
+                // Executables wählen lassen
+                if(dbObj.ExtGameFolder != string.Empty)
+                {
+                    ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID);
+                    manageExecutables.Owner = this;
+                    manageExecutables.ShowDialog();
+                }
+                
                 // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
                 if (SysProps.startUpParms.AutoProfileSwitching)
                 {
                     if(SysProps.gameSwitcherHandler != null)
                     {
-                        List<string> executables = GameSwitcherHandler.GetAllExecutablesFromDirectory(txtGameFolderPath.Text);
+                        List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dbObj);
                         SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
                     }
                 }

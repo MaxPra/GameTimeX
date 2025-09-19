@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
+using GameTimeX.Objects;
 
 namespace GameTimeX.Function
 {
@@ -29,13 +31,16 @@ namespace GameTimeX.Function
         /// <param name="profiles"></param>
         public void InitializeFirst(List<DBObject> profiles)
         {
+            // Neuinitialisierung
+            ExecutablesToSearch = new Dictionary<int, List<string>>();
+
             foreach (DBObject profile in profiles)
             {
                 if(profile.ExtGameFolder == string.Empty)
                     continue;
 
                 // Für dieses Profil alle Exes holen
-                List<string> exes = GetAllExecutablesFromDirectory(profile.ExtGameFolder);
+                List<string> exes = GetAllActiveExecutablesFromDBObj(profile);
 
                 // Hinzufügen
                 AddExecutables(profile.ProfileID, exes);
@@ -220,6 +225,26 @@ namespace GameTimeX.Function
             ExecutablesToSearch.Remove(pid);
         }
 
+        public static List<string> GetAllActiveExecutablesFromDBObj(DBObject dbObject)
+        {
+            List<string> activeExes = new List<string>();
+
+            if (!Directory.Exists(dbObject.ExtGameFolder))
+                return activeExes;
+
+            CExecutables cExecutables = new CExecutables(dbObject.Executables).Dezerialize();
+
+            foreach (var kvp in cExecutables.KeyValuePairs)
+            {
+                // Nur aktive Exes in die Liste aufnehmen
+                if(kvp.Value)
+                    activeExes.Add(kvp.Key);
+            }
+
+            return activeExes;
+        }
+
+
         /// <summary>
         /// Liefert alle Exes (auch in Unterordnern) zum übergebenen Ordnerpfad
         /// </summary>
@@ -227,7 +252,7 @@ namespace GameTimeX.Function
         /// <returns></returns>
         public static List<string> GetAllExecutablesFromDirectory(string directoryPath)
         {
-            List<string> allExes = new List<string>();
+            var allExes = new List<string>();
 
             if (!Directory.Exists(directoryPath))
                 return allExes;
@@ -235,11 +260,10 @@ namespace GameTimeX.Function
             // Alle .exe-Dateien im angegebenen Verzeichnis und in Unterverzeichnissen abrufen
             string[] exeFiles = Directory.GetFiles(directoryPath, "*.exe", SearchOption.AllDirectories);
 
-            // Alle gefundenen .exe-Dateien ausgeben
+            // Alle gefundenen .exe-Dateien sammeln
             foreach (string exeFile in exeFiles)
             {
-                
-                allExes.Add(Path.GetFileName(exeFile));   
+                allExes.Add(Path.GetFileName(exeFile));
             }
 
             return allExes;

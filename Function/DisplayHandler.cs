@@ -1,8 +1,11 @@
-﻿using GameTimeX.Objects;
+﻿using GameTimeX.Function;
+using GameTimeX.Objects;
+using GameTimeX.XApplication.SubDisplays;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -636,6 +639,7 @@ namespace GameTimeX
             var imgProperties = MakeIcon(@"pack://application:,,,/images/properties.png");
             var imgDelete = MakeIcon(@"pack://application:,,,/images/delete.png");
             var imgPlaythrough = MakeIcon(@"pack://application:,,,/images/startpoint.png");
+            var imgExecutable = MakeIcon(@"pack://application:,,,/images/executable.png");
 
             // MenuItems (keine feste Height setzen!)
             var mIDelete = new GTXMenuItem
@@ -662,11 +666,27 @@ namespace GameTimeX
             };
             mIPlaythrough.Click += MIPlaythrough_Clicked;
 
+            var mIExecutables = new GTXMenuItem
+            {
+                Header = "Change active executables",
+                Icon = imgExecutable,
+                PID = image.PID
+            };
+            mIExecutables.Click += MIExecutables_Clicked;
+
             // Zusammenbauen
             contextMenu.Items.Add(mIDelete);
             if (DataBaseHandler.IsPlayTimeGreaterZero(image.PID))
                 contextMenu.Items.Add(mIPlaythrough);
             contextMenu.Items.Add(mIProperties);
+
+            DBObject dbObj = DataBaseHandler.ReadPID(image.PID);
+
+            // Hier muss zusätzlich auch auf die Anzahl der gefunden Exe abgefragt werden --> wenn ein Spiel bei Steam deinstalliert wird, bleibt scheinbar ein gewisser Ordnerpfad zurück...
+            if(dbObj.ExtGameFolder != string.Empty && Directory.Exists(dbObj.ExtGameFolder) && GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder).Count > 0)
+            {
+                contextMenu.Items.Add(mIExecutables);
+            }
 
             // Styles
             contextMenu.Style = VisualHandler.GetApplicationResource("contextMenuStyle") as Style;
@@ -675,8 +695,52 @@ namespace GameTimeX
             image.ContextMenu = contextMenu;
         }
 
+        private static void MIExecutables_Clicked(object sender, RoutedEventArgs e)
+        {
 
+            GTXMenuItem menuItem = sender as GTXMenuItem;
 
+            // Davor GameSwitcherHandler beenden
+            if (SysProps.gameSwitcherHandler != null)
+                SysProps.gameSwitcherHandler.Stop();
+
+            DBObject dbObj = DataBaseHandler.ReadPID(menuItem.PID);
+
+            // Executables wählen lassen
+            if (dbObj.ExtGameFolder != string.Empty)
+            {
+                CExecutables cExecutables = new CExecutables(dbObj.Executables).Dezerialize();
+                
+
+                if (cExecutables.KeyValuePairs.Count == 0)
+                {
+                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
+                    dbObj.Executables = cExecutables.Serialize();
+                }
+
+                DataBaseHandler.Save(dbObj);
+
+                ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID);
+                manageExecutables.Owner = SysProps.mainWindow;
+                manageExecutables.ShowDialog();
+            }
+
+            // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
+            if (SysProps.startUpParms.AutoProfileSwitching)
+            {
+                if (SysProps.gameSwitcherHandler != null)
+                {
+                    List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dbObj);
+                    SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
+                }
+            }
+
+            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
+            {
+                SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
+                SysProps.gameSwitcherHandler.Start();
+            }
+        }
 
         public static void AttachContextMenuToDataGrid(DataGrid dataGrid)
         {
@@ -810,9 +874,17 @@ namespace GameTimeX
         {
             GTXMenuItem menuItem = sender as GTXMenuItem;
 
+            // Davor GameSwitcherHandler beenden
+            if (SysProps.gameSwitcherHandler != null)
+                SysProps.gameSwitcherHandler.Stop();
+
             Properties properties = new Properties(menuItem.PID);
             properties.Owner = SysProps.mainWindow;
             properties.ShowDialog();
+
+            // Danach wieder starten
+            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
+                SysProps.gameSwitcherHandler.Start();
 
             DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
         }

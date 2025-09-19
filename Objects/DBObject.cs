@@ -18,6 +18,7 @@ namespace GameTimeX
         private int profileID;
         private string extGameFolder;
         private int playThroughStartingPoint;
+        private string executables;
 
         public string GameName { get => gameName; set => gameName = value; }
         public long GameTime { get => gameTime; set => gameTime = value; }
@@ -29,5 +30,7 @@ namespace GameTimeX
         public int ProfileID { get => profileID; set => profileID = value; }
         public string ExtGameFolder { get => extGameFolder; set => extGameFolder = value; }
         public int PlayThroughStartingPoint { get => playThroughStartingPoint; set => playThroughStartingPoint = value; }
+
+        public string Executables { get => executables; set => executables = value; }
     }
 }

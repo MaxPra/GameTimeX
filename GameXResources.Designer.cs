@@ -93,6 +93,16 @@ namespace GameTimeX {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
+        internal static byte[] executable {
+            get {
+                object obj = ResourceManager.GetObject("executable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
         internal static byte[] folder {
             get {
                 object obj = ResourceManager.GetObject("folder", resourceCulture);

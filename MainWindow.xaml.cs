@@ -112,9 +112,21 @@ namespace GameTimeX
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
+
+            // Davor GameSwitcherHandler beenden
+            if (SysProps.gameSwitcherHandler != null)
+                SysProps.gameSwitcherHandler.Stop();
+
             CreateNew cnWin = new CreateNew();
             cnWin.Owner = this;
             cnWin.ShowDialog();
+
+            // Danach wieder starten
+            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
+            {
+                SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
+                SysProps.gameSwitcherHandler.Start();
+            }
 
 
             DisplayHandler.BuildGameProfileView(this);
@@ -278,6 +290,7 @@ namespace GameTimeX
                 {
                     if (!SysProps.gameSwitcherHandler.IsRunning())
                     {
+                        SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
                         SysProps.gameSwitcherHandler.Start();
                     }                    
                 }
@@ -408,9 +421,22 @@ namespace GameTimeX
 
         private void btnProperties_Click(object sender, RoutedEventArgs e)
         {
+
+            // Davor GameSwitcherHandler beenden
+            if (SysProps.gameSwitcherHandler != null)
+                SysProps.gameSwitcherHandler.Stop();
+
             Properties properties = new Properties(SysProps.currentSelectedPID);
             properties.Owner = this;
             properties.ShowDialog();
+
+            // Danach wieder starten
+            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
+            {
+                SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
+                SysProps.gameSwitcherHandler.Start();
+            }
+               
 
             DisplayHandler.BuildGameProfileView(this);
         }

@@ -12,6 +12,7 @@
     <None Remove="images\create_new.png" />
     <None Remove="images\delete.png" />
     <None Remove="images\edit.png" />
+    <None Remove="images\executable.png" />
     <None Remove="images\folder.png" />
     <None Remove="images\GameTimeX_Banner.png" />
     <None Remove="images\game_time.png" />
@@ -46,6 +47,7 @@
   <ItemGroup>
     <Resource Include="Fonts\Roboto-Bold.ttf" />
     <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="images\executable.png" />
     <Resource Include="images\folder.png" />
     <Resource Include="images\GameTimeX_Banner.png" />
     <Resource Include="images\game_time.png" />

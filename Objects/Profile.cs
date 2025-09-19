@@ -11,5 +11,7 @@ namespace GameTimeX
         public int PID { get; set; }
         public string ProfileName { get; set; }
         public long GameTime { get; set; }
+
+        public string Executables { get; set; }
     }
 }

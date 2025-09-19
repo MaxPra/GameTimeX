@@ -35,6 +35,14 @@ namespace GameTimeX
                 if (!reader.Read())
                     AlterTableStartpointPlaythroughTime();
             }
+
+            // Executables (NEU)
+            using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'Executables';", connection))
+            using (var reader = cmd.ExecuteReader())
+            {
+                if (!reader.Read())
+                    AlterTableExecutables();
+            }
         }
 
         private static void AlterTableExtGameFolder()
@@ -55,11 +63,23 @@ namespace GameTimeX
                 cmd.ExecuteNonQuery();
         }
 
+        // NEU: Executables-Spalte migrieren (TEXT = „longstring“ in SQLite)
+        private static void AlterTableExecutables()
+        {
+            using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN Executables TEXT;", connection))
+                cmd.ExecuteNonQuery();
+
+            using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET Executables = '';", connection))
+                cmd.ExecuteNonQuery();
+        }
+
         /// <summary>Erstellt – wenn nötig – die SQLite-Datenbanktabelle.</summary>
         public static void CreateTable()
         {
             if (connection == null) return;
 
+            // WICHTIG: Executables als LETZTE Spalte anlegen,
+            // damit Reihenfolge zu migrierter Tabelle passt.
             using (var cmd = new SQLiteCommand(
                 "CREATE TABLE tblGameProfiles (" +
                 "ProfileID INTEGER PRIMARY KEY, " +
@@ -71,7 +91,8 @@ namespace GameTimeX
                 "ExtGameFolder varchar(1000), " +
                 "StartpointPlaythroughTime INTEGER, " +
                 "CreatedAt DATETIME, " +
-                "ChangedAt DATETIME)", connection))
+                "ChangedAt DATETIME, " +
+                "Executables TEXT)", connection))
             {
                 cmd.ExecuteNonQuery();
             }
@@ -111,7 +132,8 @@ namespace GameTimeX
                 "ProfilePicFileName = @ProfilePicFileName, " +
                 "ExtGameFolder = @ExtGameFolder, " +
                 "StartpointPlaythroughTime = @Startpoint, " +
-                "ChangedAt = @ChangedAt " +
+                "ChangedAt = @ChangedAt, " +
+                "Executables = @Executables " +
                 "WHERE ProfileID = @ProfileID;";
 
             var cmd = new SQLiteCommand(sql, connection);
@@ -123,6 +145,7 @@ namespace GameTimeX
             cmd.Parameters.AddWithValue("@ExtGameFolder", dbObj.ExtGameFolder ?? string.Empty);
             cmd.Parameters.AddWithValue("@Startpoint", dbObj.PlayThroughStartingPoint);
             cmd.Parameters.AddWithValue("@ChangedAt", ToSQLDateFormat(DateTime.Now));
+            cmd.Parameters.AddWithValue("@Executables", dbObj.Executables ?? string.Empty);
             cmd.Parameters.AddWithValue("@ProfileID", dbObj.ProfileID);
             return cmd;
         }
@@ -131,8 +154,8 @@ namespace GameTimeX
         {
             var sql =
                 "INSERT INTO tblGameProfiles " +
-                "(GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, StartpointPlaythroughTime, CreatedAt, ChangedAt) " +
-                "VALUES (@GameName, @GameTime, @FirstPlay, @LastPlay, @ProfilePicFileName, @ExtGameFolder, @Startpoint, @CreatedAt, @ChangedAt);";
+                "(GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, StartpointPlaythroughTime, CreatedAt, ChangedAt, Executables) " +
+                "VALUES (@GameName, @GameTime, @FirstPlay, @LastPlay, @ProfilePicFileName, @ExtGameFolder, @Startpoint, @CreatedAt, @ChangedAt, @Executables);";
 
             var cmd = new SQLiteCommand(sql, connection);
             cmd.Parameters.AddWithValue("@GameName", dbObj.GameName ?? string.Empty);
@@ -144,6 +167,7 @@ namespace GameTimeX
             cmd.Parameters.AddWithValue("@Startpoint", dbObj.PlayThroughStartingPoint);
             cmd.Parameters.AddWithValue("@CreatedAt", ToSQLDateFormat(DateTime.Now));
             cmd.Parameters.AddWithValue("@ChangedAt", ToSQLDateFormat(DateTime.Now));
+            cmd.Parameters.AddWithValue("@Executables", dbObj.Executables ?? string.Empty);
             return cmd;
         }
 
@@ -236,6 +260,18 @@ namespace GameTimeX
 
         private static DBObject Map(SQLiteDataReader reader)
         {
+            // Spaltenreihenfolge:
+            // 0: ProfileID
+            // 1: GameName
+            // 2: GameTime
+            // 3: FirstPlay
+            // 4: LastPlay
+            // 5: ProfilePicFileName
+            // 6: ExtGameFolder
+            // 7: StartpointPlaythroughTime
+            // 8: CreatedAt
+            // 9: ChangedAt
+            // 10: Executables   (NEU – immer LETZTE Spalte)
             var dbObj = new DBObject
             {
                 ProfileID = reader.GetInt32(0),
@@ -247,7 +283,8 @@ namespace GameTimeX
                 ExtGameFolder = reader.GetString(6),
                 PlayThroughStartingPoint = reader.GetInt32(7),
                 CreatedAt = DateTime.Parse(reader.GetString(8)),
-                ChangedAt = DateTime.Parse(reader.GetString(9))
+                ChangedAt = DateTime.Parse(reader.GetString(9)),
+                Executables = reader.IsDBNull(10) ? string.Empty : reader.GetString(10)
             };
             return dbObj;
         }
@@ -264,7 +301,8 @@ namespace GameTimeX
                 ExtGameFolder = "",
                 PlayThroughStartingPoint = 0,
                 CreatedAt = DateTime.Now,
-                ChangedAt = DateTime.MinValue
+                ChangedAt = DateTime.MinValue,
+                Executables = "" // NEU
             };
         }
 
