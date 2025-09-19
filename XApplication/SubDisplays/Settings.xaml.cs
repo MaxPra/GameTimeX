@@ -59,6 +59,7 @@ namespace GameTimeX
             SysProps.startUpParms.SessionGameTime = (bool)cbSessionGameTime.IsChecked;
             SysProps.startUpParms.AutoProfileSwitching = (bool)cbGameSwitcher.IsChecked;
             SysProps.startUpParms.ShowToastNotification = (bool)cbShowToastNotification.IsChecked;
+            SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring = (bool)cbBlackoutSideMonitor.IsChecked;
             
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
@@ -168,10 +169,12 @@ namespace GameTimeX
             btnMonitoringKey.IsEnabled = SysProps.startUpParms.MonitorShortcutActive;
             cbGameSwitcher.IsChecked = SysProps.startUpParms.AutoProfileSwitching;
             cbShowToastNotification.IsChecked = SysProps.startUpParms.ShowToastNotification;
+            cbBlackoutSideMonitor.IsChecked = SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring;
 
             if ((bool)cbMonitoringKeyActive.IsChecked)
             {
                 cbShowToastNotification.IsEnabled = true;
+                cbBlackoutSideMonitor.IsEnabled = true;
             }
 
             // Pfade befüllen
@@ -232,12 +235,14 @@ namespace GameTimeX
                 btnMonitoringKey.IsEnabled = true;
                 SysProps.startUpParms.MonitorShortcutActive = true;
                 cbShowToastNotification.IsEnabled = true;
+                cbBlackoutSideMonitor.IsEnabled = true;
             }
             else
             {
                 btnMonitoringKey.IsEnabled = false;
                 SysProps.startUpParms.MonitorShortcutActive = false;
                 cbShowToastNotification.IsEnabled = false;
+                cbBlackoutSideMonitor.IsEnabled = false;    
             }
 
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
@@ -276,6 +281,11 @@ namespace GameTimeX
             }
 
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+        }
+
+        private void cbBlackoutSideMonitor_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

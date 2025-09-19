@@ -19,7 +19,7 @@ namespace GameTimeX.Function
         private static bool mouseHidden = false;
 
         /// <summary>
-        /// Aktiviert / deaktiviert den Blackout-Modus.
+        /// Aktiviert / deaktiviert den Blackout-Modus (alle Monitore).
         /// </summary>
         public static void ToggleBlackout(Window owner)
         {
@@ -30,13 +30,13 @@ namespace GameTimeX.Function
         }
 
         /// <summary>
-        /// Aktiviert den Blackout: Schwarze Fullscreen-Fenster auf allen Monitoren, Maus unten rechts, Cursor verstecken.
+        /// Aktiviert Blackout auf allen Monitoren.
         /// </summary>
         public static void Enable(Window owner)
         {
             if (isActive) return;
 
-            CreateWindowsForAllScreens(owner);
+            CreateWindowsForScreens(owner, s => true);
             MoveMouseToVirtualBottomRight();
             HideMouseCursorGlobally();
             ClipMouseToVirtualBottomRightPixel();
@@ -45,7 +45,29 @@ namespace GameTimeX.Function
         }
 
         /// <summary>
-        /// Deaktiviert den Blackout: Fenster schließen, Cursor wieder anzeigen, Clip aufheben.
+        /// Aktiviert Blackout NUR auf Neben-Monitoren (alle außer Primary).
+        /// Cursor-Handling ist optional (standardmäßig aus).
+        /// Nutze Disable(...) zum Beenden.
+        /// </summary>
+        public static void EnableOnSecondaryMonitors(Window owner, bool manageCursor = false)
+        {
+            if (isActive) return;
+
+            // nur Screens abdunkeln, die nicht Primary sind
+            CreateWindowsForScreens(owner, s => !s.Primary);
+
+            if (manageCursor)
+            {
+                MoveMouseToVirtualBottomRight();
+                HideMouseCursorGlobally();
+                ClipMouseToVirtualBottomRightPixel();
+            }
+
+            isActive = true;
+        }
+
+        /// <summary>
+        /// Deaktiviert Blackout: Fenster schließen, Cursor wieder anzeigen, Clip aufheben.
         /// </summary>
         public static void Disable(Dispatcher dispatcher)
         {
@@ -62,16 +84,34 @@ namespace GameTimeX.Function
             isActive = false;
         }
 
+        /// <summary>
+        /// Aktiviert/Deaktiviert Blackout nur für Neben-Monitore.
+        /// </summary>
+        public static void ToggleSecondaryBlackout(Window owner, bool manageCursor = false)
+        {
+            if (isActive)
+                Disable(owner.Dispatcher);
+            else
+                EnableOnSecondaryMonitors(owner, manageCursor);
+        }
+
         // -------------------- Fenster-Handling --------------------
 
-        private static void CreateWindowsForAllScreens(Window owner)
+        // NEU: generische Erzeugung basierend auf Prädikat (z. B. alle / nur Neben-Monitore)
+        private static void CreateWindowsForScreens(Window owner, Func<Screen, bool> predicate)
         {
-            foreach (var screen in Screen.AllScreens)
+            foreach (var screen in Screen.AllScreens.Where(predicate))
             {
                 var wnd = BuildBlackoutWindow(owner, screen);
                 blackoutWindows.Add(wnd);
                 wnd.Show();
             }
+        }
+
+        // (bestehend) – backward compatibility
+        private static void CreateWindowsForAllScreens(Window owner)
+        {
+            CreateWindowsForScreens(owner, s => true);
         }
 
         private static void CloseAllWindows()
@@ -102,7 +142,7 @@ namespace GameTimeX.Function
                 ResizeMode = ResizeMode.NoResize,
                 ShowInTaskbar = false,
                 Topmost = true,
-                AllowsTransparency = false, 
+                AllowsTransparency = false,
                 Background = Brushes.Black,
                 Left = leftDip,
                 Top = topDip,
@@ -124,7 +164,7 @@ namespace GameTimeX.Function
         }
 
         /// <summary>
-        /// Liefert die Device DIP-Skalierung des UI-Threads/Owners (für die meisten Setups ausreichend).
+        /// Liefert die Device→DIP-Skalierung des UI-Threads/Owners (für die meisten Setups ausreichend).
         /// </summary>
         private static (double dx, double dy) GetDipScaleForScreen(Window owner)
         {
@@ -143,7 +183,7 @@ namespace GameTimeX.Function
 
         private static void MoveMouseToVirtualBottomRight()
         {
-            var vr = SystemInformation.VirtualScreen; 
+            var vr = SystemInformation.VirtualScreen; // Device-Pixel
             int targetX = vr.Right - 1;
             int targetY = vr.Bottom - 1;
             SetCursorPos(targetX, targetY);

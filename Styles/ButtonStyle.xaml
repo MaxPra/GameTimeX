@@ -57,6 +57,50 @@
         </Setter>
     </Style>
 
+    <SolidColorBrush x:Key="StrokeBrush" Color="#26FFFFFF"/>
+
+    <Style x:Key="EditCircleIconButton" TargetType="Button">
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="ToolTip" Value="Rename"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <!-- runder Hintergrund -->
+                        <Border x:Name="circle"
+                            CornerRadius="16"
+                            Background="#1AFFFFFF"
+                            BorderBrush="{StaticResource StrokeBrush}"
+                            BorderThickness="1"/>
+                        <!-- dicker Pencil aus MDL2 -->
+                        <TextBlock Text="&#xE70F;"                 
+                               FontFamily="Segoe MDL2 Assets"
+                               FontSize="18"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="circle" Property="Background" Value="#28FFFFFF"/>
+                            <Setter TargetName="circle" Property="BorderBrush" Value="{DynamicResource ButtonDefaultBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="circle" Property="Background" Value="#40FFFFFF"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="circle" Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 
 
 
@@ -190,7 +234,7 @@
                             <!-- Text -->
                             <ContentPresenter Grid.Column="2"
                                           VerticalAlignment="Center"
-                                          HorizontalAlignment="Left"
+                                          HorizontalAlignment="Center"
                                           RecognizesAccessKey="True"/>
                         </Grid>
                     </Grid>
@@ -217,13 +261,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="Border"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"   >
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="6">
                         <ContentPresenter Margin="2"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            RecognizesAccessKey="True" />
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      RecognizesAccessKey="True" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -233,20 +278,23 @@
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty ="Background.(SolidColorBrush.Color)" To="{StaticResource ButtonHoverColor}" Duration="0:0:0.2"/>
+                            <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                        To="{StaticResource ButtonHoverColor}" Duration="0:0:0.2"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
                 <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0.2" />
+                            <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                        To="Transparent" Duration="0:0:0.2"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
             </Trigger>
         </Style.Triggers>
     </Style>
+
 
     <Style x:Key="EditProfileNameButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="SnapsToDevicePixels" Value="true" />

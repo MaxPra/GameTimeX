@@ -19,27 +19,25 @@
         Style="{StaticResource DefaultWindowStyle}">
 
     <Window.Resources>
+        <!-- Start/Stop Farb-Animationen -->
         <Storyboard x:Key="StartStopButtonHoverNotMonitoring" Duration="00:00:4">
             <ColorAnimation Storyboard.TargetName="btnStartStopMonitoring"
                             Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
                             To="{StaticResource ButtonHoverColor}"
                             Duration="0:0:0.2"/>
         </Storyboard>
-
         <Storyboard x:Key="StartStopButtonNoHoverNotMonitoring" Duration="00:00:4">
             <ColorAnimation Storyboard.TargetName="btnStartStopMonitoring"
                             Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
                             To="{StaticResource ButtonDefaultColor}"
                             Duration="0:0:0.2"/>
         </Storyboard>
-
         <Storyboard x:Key="StartStopButtonHoverMonitoring" Duration="00:00:4">
             <ColorAnimation Storyboard.TargetName="btnStartStopMonitoring"
                             Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
                             To="{StaticResource ButtonHoverMonitoringColor}"
                             Duration="0:0:0.2"/>
         </Storyboard>
-
         <Storyboard x:Key="StartStopButtonNoHoverMonitoring" Duration="00:00:4">
             <ColorAnimation Storyboard.TargetName="btnStartStopMonitoring"
                             Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
@@ -77,7 +75,9 @@
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Margin="10,0,0,0"
-                       Foreground="White"/>
+                       Foreground="White"
+                       FontFamily="Forte"
+                       FontSize="15"/>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="btnMinimize" Content="🗕" Width="40" Height="30"
@@ -85,14 +85,6 @@
                         Click="btnMinimize_Click" Foreground="White"
                         MouseEnter="btnMinimize_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
                         MouseLeave="btnMinimize_MouseLeave"/>
-
-                <!--<Button x:Name="btnMaximize" Content="🗖" Width="40" Height="30"
-                        BorderBrush="Transparent" Background="Transparent"
-                        Click="btnMaximize_Click" Foreground="White"
-                        MouseEnter="btnMaximize_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
-                        MouseLeave="btnMaximize_MouseLeave"/>-->
-
-                <!-- Close mit Rundung oben rechts -->
                 <Button x:Name="btnClose" Content="X" Width="40" Height="30"
                         BorderBrush="Transparent" Background="Transparent"
                         Click="btnClose_Click" Foreground="White">
@@ -289,12 +281,17 @@
                 <!-- Detailbereich -->
                 <Grid Grid.Row="1" Grid.Column="1" x:Name="grdGameInfo">
                     <Grid.Resources>
+                        <!-- leichte Card-Optik fürs Cover -->
                         <LinearGradientBrush x:Key="CardBg" StartPoint="0,0" EndPoint="0,1">
                             <GradientStop Color="#3A3A3A" Offset="0"/>
                             <GradientStop Color="#2F2F2F" Offset="1"/>
                         </LinearGradientBrush>
                         <SolidColorBrush x:Key="StrokeBrush" Color="#26FFFFFF"/>
                         <SolidColorBrush x:Key="AccentPillBrush" Color="{StaticResource ButtonDefaultColor}" Opacity="0.15"/>
+
+                        <!-- NEU: abgesetzter Bereich -->
+                        <SolidColorBrush x:Key="DetailPanelBackground" Color="#272727"/>
+                        <SolidColorBrush x:Key="DetailPanelStroke" Color="#28FFFFFF"/>
 
                         <!-- Pill-Boxen -->
                         <Style x:Key="PillBox" TargetType="Border">
@@ -317,22 +314,46 @@
                         </Style>
                     </Grid.Resources>
 
-                    <Border BorderBrush="#20FFFFFF" BorderThickness="1,0,0,0" Margin="0,0,0,15">
-                        <Grid Margin="22">
-                            <!-- 0: Titel, 1: Cover, 2: Change Image, 3: Stats -->
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <!-- HINTERGRUNDKARTE für den gesamten Detailbereich -->
+                    <Border Background="{StaticResource DetailPanelBackground}"
+                            BorderBrush="{StaticResource DetailPanelStroke}"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Margin="10"
+                            SnapsToDevicePixels="True"/>
 
-                            <!-- Titel zentriert, Button rechts -->
-                            <Grid Grid.Row="0" Margin="0,0,0,18">
-                                <TextBlock TextTrimming="CharacterEllipsis" Text="N/A" x:Name="lblGameName"
-                                           Foreground="White" FontWeight="Bold" FontSize="22"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           MaxWidth="300">
+                    <!-- dünne Trennlinie links (wie zuvor) -->
+                    <Border BorderBrush="#20FFFFFF" BorderThickness="1,0,0,0" Margin="0,0,0,15"/>
+
+                    <!-- eigentlicher Inhalt -->
+                    <Grid Margin="22">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Titel + Stift: zentriert und mit fester MaxBreite (für Ellipsis) -->
+                        <Grid Grid.Row="0" Margin="0,0,0,18">
+                            <Grid HorizontalAlignment="Center"
+                                  MaxWidth="{Binding ElementName=grdGameInfo, Path=ActualWidth}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                           x:Name="lblGameName"
+                                           Text="N/A"
+                                           TextWrapping="NoWrap"
+                                           TextTrimming="CharacterEllipsis"
+                                           FontSize="22"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,10,0">
                                     <TextBlock.ToolTip>
                                         <ToolTip ToolTipService.InitialShowDelay="0"
                                                  Background="#333333"
@@ -344,157 +365,141 @@
                                     </TextBlock.ToolTip>
                                 </TextBlock>
 
-                                <Button x:Name="btnEditProfileName" Height="28" Width="28"
-                                        HorizontalAlignment="Right" VerticalAlignment="Center"
-                                        BorderBrush="Transparent" Background="Transparent" Padding="0"
-                                        Click="btnEditProfileName_Click" Foreground="White"
-                                        Style="{StaticResource EditProfileNameButtonStyle}">
-                                    <Image Source="{StaticResource EditImageSource}" Margin="0,0,8,0"/>
-                                </Button>
-                            </Grid>
-
-                            <!-- Cover -->
-                            <Border Grid.Row="1" Background="{StaticResource CardBg}" CornerRadius="10"
-                                    BorderBrush="{StaticResource StrokeBrush}" BorderThickness="1" Padding="10" Margin="0,0,0,8">
-                                <Border CornerRadius="8" ClipToBounds="True">
-                                    <Grid>
-                                        <Image Stretch="Uniform"
-                                               Width="Auto"
-                                               x:Name="currProfileImage"
-                                               Source="{StaticResource MyImageSource}">
-                                            <Image.Effect>
-                                                <DropShadowEffect Color="Black" Direction="315" BlurRadius="10" ShadowDepth="5"/>
-                                            </Image.Effect>
-                                        </Image>
-
-                                        <Rectangle VerticalAlignment="Top" Height="48">
-                                            <Rectangle.Fill>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Color="#66FFFFFF" Offset="0"/>
-                                                    <GradientStop Color="#33FFFFFF" Offset="0.35"/>
-                                                    <GradientStop Color="#00FFFFFF" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-
-                                        <Rectangle VerticalAlignment="Top" Height="1" Opacity="0.35" Fill="#FFFFFF"/>
-                                    </Grid>
-                                </Border>
-                            </Border>
-
-                            <!-- Change Image -->
-                            <TextBlock Grid.Row="2"
-                                       HorizontalAlignment="Center"
-                                       Margin="0,0,0,18"
-                                       x:Name="lblChangeProfileImage"
-                                       Foreground="White"
-                                       Text="Change Image"
-                                       TextDecorations="Underline"
-                                       PreviewMouseDown="lblChangeProfileImage_PreviewMouseDown"
-                                       Style="{StaticResource ChangeImageStyle}"/>
-
-                            <!-- Stats -->
-                            <Grid Grid.Row="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="12"/>
-                                    <RowDefinition x:Name="rowPlaythrough" Height="Auto"/>
-                                    <RowDefinition Height="12"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="12"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="24"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.2*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Game time -->
-                                <TextBlock Text="Game time:" Grid.Row="0" Grid.Column="0"
-                                           HorizontalAlignment="Left" Foreground="#DDFFFFFF"
-                                           FontSize="16" VerticalAlignment="Center"/>
-                                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource PillBox}" HorizontalAlignment="Left">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock Text="N/A" x:Name="lblGameTime"
-                                                   Foreground="White" FontSize="16" VerticalAlignment="Center"/>
-                                        <Button x:Name="btnGameTimeInfo" Style="{StaticResource PillIconButton}">
-                                            <Button.ToolTip>
-                                                <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                                    <TextBlock Name="lblToolTipGameTimeText">0 Minutes</TextBlock>
-                                                </ToolTip>
-                                            </Button.ToolTip>
-                                            <Image Source="{StaticResource GameInfoSource}" Width="14" Height="14"
-                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Button>
-                                        <Popup x:Name="gameTimeInfoButton" PlacementTarget="{Binding ElementName=btnGameTimeQuestion}" StaysOpen="False">
-                                            <Border BorderBrush="CornflowerBlue" BorderThickness="1">
-                                                <TextBlock Name="popUpText" Background="#333333" Foreground="White" FontSize="12" Text="Testtext" Width="200" Height="200"/>
-                                            </Border>
-                                        </Popup>
-                                    </StackPanel>
-                                </Border>
-
-                                <!-- Playthrough -->
-                                <TextBlock Text="Playthrough:" Grid.Row="2" Grid.Column="0"
-                                           HorizontalAlignment="Left" Foreground="#DDFFFFFF"
-                                           FontSize="16" VerticalAlignment="Center"/>
-                                <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource PillBox}" HorizontalAlignment="Left">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock Text="N/A" x:Name="lblGameTimeNewPlaythrough"
-                                                   Foreground="White" FontSize="16" VerticalAlignment="Center"/>
-                                        <Button x:Name="btnGameTimeNewPlaythrough" Style="{StaticResource PillIconButton}">
-                                            <Button.ToolTip>
-                                                <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                                    <TextBlock Name="lblToolTipGameTimeTextNewPlaythrough">0 Minutes</TextBlock>
-                                                </ToolTip>
-                                            </Button.ToolTip>
-                                            <Image Source="{StaticResource GameInfoSource}" Width="14" Height="14"
-                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Button>
-                                        <Popup x:Name="gameTimeInfoButtonStartingpoint" PlacementTarget="{Binding ElementName=btnGameTimeQuestion}" StaysOpen="False">
-                                            <Border BorderBrush="CornflowerBlue" BorderThickness="1">
-                                                <TextBlock Name="popUpTextStartingpoint" Background="#333333" Foreground="White" FontSize="12" Text="Testtext" Width="200" Height="200"/>
-                                            </Border>
-                                        </Popup>
-                                    </StackPanel>
-                                </Border>
-
-                                <!-- First time -->
-                                <TextBlock Text="First time played:" Grid.Row="4" Grid.Column="0"
-                                           HorizontalAlignment="Left" Foreground="#DDFFFFFF"
-                                           FontSize="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="N/A" Grid.Row="4" Grid.Column="1" x:Name="lblFirstTimePlayed"
-                                           HorizontalAlignment="Left" Foreground="White"
-                                           FontSize="14" VerticalAlignment="Center"/>
-
-                                <!-- Last time -->
-                                <TextBlock Text="Last time played:" Grid.Row="6" Grid.Column="0"
-                                           HorizontalAlignment="Left" Foreground="#DDFFFFFF"
-                                           FontSize="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="N/A" Grid.Row="6" Grid.Column="1" x:Name="lblLastTimePlayed"
-                                           HorizontalAlignment="Left" Foreground="White"
-                                           FontSize="14" VerticalAlignment="Center"/>
-
-                                <!-- Action -->
-                                <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Vertical" Margin="0,0,0,0">
-                                    <Button x:Name="btnStartStopMonitoring" Content="Start Monitoring" Width="220" Height="50"
-                                            BorderBrush="Black"
-                                            Click="btnStartStopMonitoring_Click" Foreground="White"
-                                            MouseEnter="btnStartStopMonitoring_MouseEnter"
-                                            MouseLeave="btnStartStopMonitoring_MouseLeave"
-                                            FontSize="20"
-                                            Style="{StaticResource StartStopMonitoringButton}"/>
-                                    <TextBlock x:Name="txtGameSession"
-                                               HorizontalAlignment="Center" Margin="0,12,0,0"
-                                               Foreground="White" Visibility="Hidden">
-                                        Session: 0 minutes
-                                    </TextBlock>
-                                </StackPanel>
+                                <Button Grid.Column="1"
+                                        x:Name="btnEditProfileName"
+                                        Click="btnEditProfileName_Click"
+                                        Style="{StaticResource EditCircleIconButton}"
+                                        VerticalAlignment="Center"/>
                             </Grid>
                         </Grid>
-                    </Border>
+
+                        <!-- Coverkarte -->
+                        <Border Grid.Row="1" Background="{StaticResource CardBg}" CornerRadius="10"
+                                BorderBrush="{StaticResource StrokeBrush}" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                            <Border CornerRadius="8" ClipToBounds="True">
+                                <Grid>
+                                    <Image Stretch="Uniform"
+                                           Width="Auto"
+                                           x:Name="currProfileImage"
+                                           Source="{StaticResource MyImageSource}">
+                                        <Image.Effect>
+                                            <DropShadowEffect Color="Black" Direction="315" BlurRadius="10" ShadowDepth="5"/>
+                                        </Image.Effect>
+                                    </Image>
+
+                                    <Rectangle VerticalAlignment="Top" Height="48">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#66FFFFFF" Offset="0"/>
+                                                <GradientStop Color="#33FFFFFF" Offset="0.35"/>
+                                                <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+
+                                    <Rectangle VerticalAlignment="Top" Height="1" Opacity="0.35" Fill="#FFFFFF"/>
+                                </Grid>
+                            </Border>
+                        </Border>
+
+                        <!-- Change Image -->
+                        <TextBlock Grid.Row="2"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,18"
+                                   x:Name="lblChangeProfileImage"
+                                   Foreground="White"
+                                   Text="Change Image"
+                                   TextDecorations="Underline"
+                                   PreviewMouseDown="lblChangeProfileImage_PreviewMouseDown"
+                                   Style="{StaticResource ChangeImageStyle}"/>
+
+                        <!-- Stats, mittig ausgerichtet -->
+                        <Grid Grid.Row="3" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="12"/>
+                                <RowDefinition x:Name="rowPlaythrough" Height="Auto"/>
+                                <RowDefinition Height="12"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="12"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Game time:" Grid.Row="0" Grid.Column="0"
+                                       HorizontalAlignment="Left" Foreground="#DDFFFFFF"
+                                       FontSize="16" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource PillBox}" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="N/A" x:Name="lblGameTime"
+                                               Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                                    <Button x:Name="btnGameTimeInfo" Style="{StaticResource PillIconButton}">
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                                <TextBlock Name="lblToolTipGameTimeText">0 Minutes</TextBlock>
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                        <Image Source="{StaticResource GameInfoSource}" Width="14" Height="14"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="Playthrough:" Grid.Row="2" Grid.Column="0"
+                                       HorizontalAlignment="Left" Foreground="#DDFFFFFF"
+                                       FontSize="16" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                            <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource PillBox}" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="N/A" x:Name="lblGameTimeNewPlaythrough"
+                                               Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                                    <Button x:Name="btnGameTimeNewPlaythrough" Style="{StaticResource PillIconButton}">
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                                <TextBlock Name="lblToolTipGameTimeTextNewPlaythrough">0 Minutes</TextBlock>
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                        <Image Source="{StaticResource GameInfoSource}" Width="14" Height="14"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="First time played:" Grid.Row="4" Grid.Column="0"
+                                       HorizontalAlignment="Left" Foreground="#DDFFFFFF"
+                                       FontSize="14" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                            <TextBlock Text="N/A" Grid.Row="4" Grid.Column="1" x:Name="lblFirstTimePlayed"
+                                       HorizontalAlignment="Left" Foreground="White"
+                                       FontSize="14" VerticalAlignment="Center"/>
+
+                            <TextBlock Text="Last time played:" Grid.Row="6" Grid.Column="0"
+                                       HorizontalAlignment="Left" Foreground="#DDFFFFFF"
+                                       FontSize="14" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                            <TextBlock Text="N/A" Grid.Row="6" Grid.Column="1" x:Name="lblLastTimePlayed"
+                                       HorizontalAlignment="Left" Foreground="White"
+                                       FontSize="14" VerticalAlignment="Center"/>
+
+                            <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Vertical"
+                                        Margin="0,0,0,0" HorizontalAlignment="Center">
+                                <Button x:Name="btnStartStopMonitoring" Content="Start Monitoring" Width="220" Height="50"
+                                        BorderBrush="Black"
+                                        Click="btnStartStopMonitoring_Click" Foreground="White"
+                                        MouseEnter="btnStartStopMonitoring_MouseEnter"
+                                        MouseLeave="btnStartStopMonitoring_MouseLeave"
+                                        FontSize="20"
+                                        Style="{StaticResource StartStopMonitoringButton}"/>
+                                <TextBlock x:Name="txtGameSession"
+                                           HorizontalAlignment="Center" Margin="0,12,0,0"
+                                           Foreground="White" Visibility="Hidden">
+                                    Session: 0 minutes
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

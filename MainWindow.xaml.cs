@@ -381,6 +381,9 @@ namespace GameTimeX
                 // Bei aktualisieren des Bildes muss immer die Tile-View Neugeladen werden!
                 DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
 
+                // Dann das aktuelle Profil wieder wählen
+                DisplayHandler.SwitchToSpecificGame(SysProps.mainWindow, StartUpParms.ViewModes.TILES, SysProps.currentSelectedPID);
+
             }
         }
 

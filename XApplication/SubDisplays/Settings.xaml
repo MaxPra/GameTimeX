@@ -201,6 +201,18 @@
                                 </ToolTip>
                             </CheckBox.ToolTip>
                         </CheckBox>
+                        <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" Content="Blackout side monitors"
+                                  x:Name="cbBlackoutSideMonitor"
+                                  Margin="10 0 0 0"
+                                  IsEnabled="False" Click="cbBlackoutSideMonitor_Click">
+                            <CheckBox.ToolTip>
+                                <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                    <TextBlock TextWrapping="Wrap">
+                                        When enabled, all monitors except the primary one will be blacked out during monitoring (OLED Care)
+                                    </TextBlock>
+                                </ToolTip>
+                            </CheckBox.ToolTip>
+                        </CheckBox>
                     </StackPanel>
                     <TextBlock Margin="0 5 0 0" Foreground="White" x:Name="lblCurrentKey">
                         Current key: (no key)
@@ -215,8 +227,8 @@
                            HorizontalAlignment="Right"
                            VerticalAlignment="Bottom"
                            Foreground="Gray"
-                           Margin="0, 0, 0, 10" Height="14" Width="135">
-                    Version 2.0.1 / Retouched
+                           Margin="0, 0, 0, 10" Height="14" Width="150">
+                    Version 2.0.11 / Retouched
                 </TextBlock>
             </Grid>
         </Grid>

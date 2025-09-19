@@ -38,5 +38,7 @@ namespace GameTimeX.Objects
         public bool AutoProfileSwitching { get; set; } = false;
 
         public bool BlackOutShortcutActive { get; set; } = false;
+
+        public bool BlackOutSideMonitorsWhileMonitoring { get; set; } = false;
     }
 }

@@ -1,412 +1,318 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
-using System.Threading;
-using Microsoft.VisualBasic;
-using System.Windows.Documents;
+using System.Text;
 
 namespace GameTimeX
 {
     internal class DataBaseHandler
     {
-
-
         private static SQLiteConnection connection = null;
-
 
         public static bool CreateDB()
         {
             if (System.IO.File.Exists(SysProps.dbFilePath))
-            {
                 return false;
-            }
 
             System.IO.File.Create(SysProps.dbFilePath);
-
-            Thread.Sleep(000);
-
             return true;
         }
 
         public static void MigrateDB()
         {
-            SQLiteDataReader reader = null;
-
-            string sql = "SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'ExtGameFolder';";
-            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
-
-            reader = cmd.ExecuteReader();
-
-            bool exists = false;
-
-            while (reader.Read())
+            // ExtGameFolder
+            using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'ExtGameFolder';", connection))
+            using (var reader = cmd.ExecuteReader())
             {
-                exists = true;
+                if (!reader.Read())
+                    AlterTableExtGameFolder();
             }
 
-            if (!exists)
+            // StartpointPlaythroughTime
+            using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'StartpointPlaythroughTime';", connection))
+            using (var reader = cmd.ExecuteReader())
             {
-                // Migration notwendig
-                AlterTableExtGameFolder();
-            }
-
-            sql = "SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'StartpointPlaythroughTime';";
-            cmd = new SQLiteCommand(sql, connection);
-
-            reader = cmd.ExecuteReader();
-
-            exists = false;
-
-            while (reader.Read())
-            {
-                exists = true;
-            }
-
-            if (!exists)
-            {
-                // Migration notwendig
-                AlterTableStartpointPlaythroughTime();
+                if (!reader.Read())
+                    AlterTableStartpointPlaythroughTime();
             }
         }
 
         private static void AlterTableExtGameFolder()
         {
-            string sql = "ALTER TABLE tblGameProfiles ADD COLUMN ExtGameFolder varchar(1000);";
-            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
-            cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN ExtGameFolder varchar(1000);", connection))
+                cmd.ExecuteNonQuery();
 
-            sql = "Update tblGameProfiles set ExtGameFolder = ''";
-            cmd = new SQLiteCommand(sql, connection);
-            cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET ExtGameFolder = '';", connection))
+                cmd.ExecuteNonQuery();
         }
 
         private static void AlterTableStartpointPlaythroughTime()
         {
-            string sql = "ALTER TABLE tblGameProfiles ADD COLUMN StartpointPlaythroughTime INTEGER;";
-            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
-            cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN StartpointPlaythroughTime INTEGER;", connection))
+                cmd.ExecuteNonQuery();
 
-            sql = "Update tblGameProfiles set StartpointPlaythroughTime = 0";
-            cmd = new SQLiteCommand(sql, connection);
-            cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET StartpointPlaythroughTime = 0;", connection))
+                cmd.ExecuteNonQuery();
         }
 
-
-        /// <summary>
-        /// Erstellt, wenn nötig die SQLite-Datenbank
-        /// </summary>
+        /// <summary>Erstellt – wenn nötig – die SQLite-Datenbanktabelle.</summary>
         public static void CreateTable()
         {
-            if(connection == null)
-            {
-                return;
-            }
+            if (connection == null) return;
 
-            string sql = "CREATE TABLE tblGameProfiles (ProfileID INTEGER PRIMARY KEY, GameName VARCHAR(200), GameTime BIGINT, FirstPlay DATETIME, LastPlay DATETIME, ProfilePicFileName varchar(10000), ExtGameFolder varchar(1000), StartpointPlaythroughTime INTEGER, CreatedAt DATETIME, ChangedAt DATETIME)";
-            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
-            cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand(
+                "CREATE TABLE tblGameProfiles (" +
+                "ProfileID INTEGER PRIMARY KEY, " +
+                "GameName VARCHAR(200), " +
+                "GameTime BIGINT, " +
+                "FirstPlay DATETIME, " +
+                "LastPlay DATETIME, " +
+                "ProfilePicFileName varchar(10000), " +
+                "ExtGameFolder varchar(1000), " +
+                "StartpointPlaythroughTime INTEGER, " +
+                "CreatedAt DATETIME, " +
+                "ChangedAt DATETIME)", connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public static bool ConnectToSQLite()
         {
-
-            string connectionString = "";
-            bool newDB = false;
+            string connectionString;
+            bool newDB;
 
             if (!System.IO.File.Exists(SysProps.dbFilePath))
             {
-                connectionString = "Data Source=" + SysProps.dbFilePath + ";Version=3;New=True;Compress=True;";
+                connectionString = $"Data Source={SysProps.dbFilePath};Version=3;New=True;Compress=True;";
                 newDB = true;
             }
             else
             {
-                connectionString = "Data Source=" + SysProps.dbFilePath + ";Version=3;Compress=True;";
+                connectionString = $"Data Source={SysProps.dbFilePath};Version=3;Compress=True;";
                 newDB = false;
             }
-           
+
             connection = new SQLiteConnection(connectionString);
-
-            try
-            {
-                connection.Open();
-            }
-            catch (Exception ex)
-            {
-                // Nichts machen
-            }
-
+            try { connection.Open(); } catch { /* ignore */ }
             return newDB;
         }
 
-        private static String BuildSQLUpdate(DBObject dbObj)
+        // ---------- Parameterisierte Commands ----------
+
+        private static SQLiteCommand BuildUpdateCommand(DBObject dbObj)
         {
-            StringBuilder sb = new StringBuilder();
+            var sql =
+                "UPDATE tblGameProfiles SET " +
+                "GameName = @GameName, " +
+                "GameTime = @GameTime, " +
+                "FirstPlay = @FirstPlay, " +
+                "LastPlay = @LastPlay, " +
+                "ProfilePicFileName = @ProfilePicFileName, " +
+                "ExtGameFolder = @ExtGameFolder, " +
+                "StartpointPlaythroughTime = @Startpoint, " +
+                "ChangedAt = @ChangedAt " +
+                "WHERE ProfileID = @ProfileID;";
 
-            sb.Append("UPDATE tblGameProfiles set ");
-            sb.Append("GameName = '" + dbObj.GameName + "', ");
-            sb.Append("GameTime = " + dbObj.GameTime + ", ");
-            sb.Append("FirstPlay = '" + ToSQLDateFormat(dbObj.FirstPlay) + "', ");
-            sb.Append("LastPlay = '" + ToSQLDateFormat(dbObj.LastPlay) + "', ");
-            sb.Append("ProfilePicFileName = '" + dbObj.ProfilePicFileName + "', ");
-            sb.Append("ExtGameFolder = '" + dbObj.ExtGameFolder + "', ");
-            sb.Append("StartpointPlaythroughTime = " + dbObj.PlayThroughStartingPoint + ", ");
-            sb.Append("ChangedAt = '" + ToSQLDateFormat(DateTime.Now) + "' ");
-            sb.Append("where ProfileID = " + dbObj.ProfileID);
-
-            return sb.ToString();
+            var cmd = new SQLiteCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@GameName", dbObj.GameName ?? string.Empty);
+            cmd.Parameters.AddWithValue("@GameTime", dbObj.GameTime);
+            cmd.Parameters.AddWithValue("@FirstPlay", ToSQLDateFormat(dbObj.FirstPlay));
+            cmd.Parameters.AddWithValue("@LastPlay", ToSQLDateFormat(dbObj.LastPlay));
+            cmd.Parameters.AddWithValue("@ProfilePicFileName", dbObj.ProfilePicFileName ?? string.Empty);
+            cmd.Parameters.AddWithValue("@ExtGameFolder", dbObj.ExtGameFolder ?? string.Empty);
+            cmd.Parameters.AddWithValue("@Startpoint", dbObj.PlayThroughStartingPoint);
+            cmd.Parameters.AddWithValue("@ChangedAt", ToSQLDateFormat(DateTime.Now));
+            cmd.Parameters.AddWithValue("@ProfileID", dbObj.ProfileID);
+            return cmd;
         }
 
-        private static String BuildSQLCreateNew(DBObject dbObj)
+        private static SQLiteCommand BuildInsertCommand(DBObject dbObj)
         {
-            StringBuilder sb = new StringBuilder();
+            var sql =
+                "INSERT INTO tblGameProfiles " +
+                "(GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, StartpointPlaythroughTime, CreatedAt, ChangedAt) " +
+                "VALUES (@GameName, @GameTime, @FirstPlay, @LastPlay, @ProfilePicFileName, @ExtGameFolder, @Startpoint, @CreatedAt, @ChangedAt);";
 
-            sb.Append("INSERT INTO tblGameProfiles (ProfileID, GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, StartpointPlaythroughTime, CreatedAt, ChangedAt) values (");
-            sb.Append("NULL");
-            sb.Append(", ");
-            sb.Append(SysProps.apos + dbObj.GameName + SysProps.apos);
-            sb.Append(", ");
-            sb.Append(SysProps.apos + dbObj.GameTime + SysProps.apos);
-            sb.Append(", ");
-            sb.Append("'" + ToSQLDateFormat(dbObj.FirstPlay) + "'");
-            sb.Append(", ");
-            sb.Append("'" + ToSQLDateFormat(dbObj.LastPlay) + "'");
-            sb.Append(", ");
-            sb.Append(SysProps.apos + dbObj.ProfilePicFileName + SysProps.apos);
-            sb.Append(", ");
-            sb.Append(SysProps.apos + dbObj.ExtGameFolder + SysProps.apos);
-            sb.Append(", ");
-            sb.Append(dbObj.PlayThroughStartingPoint);
-            sb.Append(", ");
-            sb.Append("'" + ToSQLDateFormat(DateTime.Now) + "'");
-            sb.Append(", ");
-            sb.Append("'" + ToSQLDateFormat(DateTime.Now) + "')");
-
-
-            return sb.ToString();
+            var cmd = new SQLiteCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@GameName", dbObj.GameName ?? string.Empty);
+            cmd.Parameters.AddWithValue("@GameTime", dbObj.GameTime);
+            cmd.Parameters.AddWithValue("@FirstPlay", ToSQLDateFormat(dbObj.FirstPlay));
+            cmd.Parameters.AddWithValue("@LastPlay", ToSQLDateFormat(dbObj.LastPlay));
+            cmd.Parameters.AddWithValue("@ProfilePicFileName", dbObj.ProfilePicFileName ?? string.Empty);
+            cmd.Parameters.AddWithValue("@ExtGameFolder", dbObj.ExtGameFolder ?? string.Empty);
+            cmd.Parameters.AddWithValue("@Startpoint", dbObj.PlayThroughStartingPoint);
+            cmd.Parameters.AddWithValue("@CreatedAt", ToSQLDateFormat(DateTime.Now));
+            cmd.Parameters.AddWithValue("@ChangedAt", ToSQLDateFormat(DateTime.Now));
+            return cmd;
         }
 
-        private static String BuildSQL(DBObject dbObj)
-        {
-            if (ExistsInDatabse(dbObj.ProfileID))
-            {
-                return BuildSQLUpdate(dbObj);
-            }
-            else
-            {
-                return BuildSQLCreateNew(dbObj);
-            }
-        }
+        private static SQLiteCommand BuildCommand(DBObject dbObj)
+            => ExistsInDatabse(dbObj.ProfileID) ? BuildUpdateCommand(dbObj) : BuildInsertCommand(dbObj);
 
-        private static bool ExistsInDatabse(int profileID)
-        {
-            if(profileID == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+        private static bool ExistsInDatabse(int profileID) => profileID != 0;
 
         public static void Save(DBObject obj)
         {
-            string sql = BuildSQL(obj);
-            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
-            cmd.ExecuteNonQuery();
+            using (var cmd = BuildCommand(obj))
+                cmd.ExecuteNonQuery();
 
-            obj.ProfileID = getLastInsertedPID();
+            // Nur nach Insert überschreiben
+            if (obj.ProfileID == 0)
+                obj.ProfileID = getLastInsertedPID();
         }
 
         private static int getLastInsertedPID()
         {
-            string sql = "Select last_insert_rowid();";
-            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            using (var cmd = new SQLiteCommand("SELECT last_insert_rowid();", connection))
             {
-                // Den Primärschlüssel abholen
                 var lastInsertedId = cmd.ExecuteScalar();
                 return Convert.ToInt32(lastInsertedId);
             }
-
         }
 
         public static void Delete(int pid)
         {
-            DBObject obj = DataBaseHandler.ReadPID(pid);
-
-            string sql = "DELETE from tblGameProfiles where ProfileID = " + pid;
-            SQLiteCommand cmd = new SQLiteCommand(sql, connection);
-            cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("DELETE FROM tblGameProfiles WHERE ProfileID = @pid;", connection))
+            {
+                cmd.Parameters.AddWithValue("@pid", pid);
+                cmd.ExecuteNonQuery();
+            }
         }
 
-        /// <summary>
-        /// Liest das oder mehrere GameObjekte ein, wo der übergebene String im GameName vorkommt
-        /// </summary>
-        /// <param name="gameName"></param>
-        /// <returns></returns>
+        /// <summary>Alle Profile, deren Name den Suchtext enthält (SQL-Injection-sicher, LIKE mit Escape).</summary>
         public static List<DBObject> ReadGameName(string gameName)
         {
-            SQLiteDataReader reader = null;
-            List<DBObject> list = new List<DBObject>();
+            var list = new List<DBObject>();
 
-            SQLiteCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * from tblGameProfiles where GameName like '%" + gameName + "%' order by LastPlay desc;";
-
-            reader = cmd.ExecuteReader();
-
-            while (reader.Read())
+            using (var cmd = connection.CreateCommand())
             {
-                DBObject dbObj = new DBObject();
-                dbObj.ProfileID = reader.GetInt32(0);
-                dbObj.GameName = reader.GetString(1);
-                dbObj.GameTime = reader.GetInt64(2);
-                dbObj.FirstPlay = DateTime.Parse(reader.GetString(3));
-                dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
-                dbObj.ProfilePicFileName = reader.GetString(5);
-                dbObj.ExtGameFolder = reader.GetString(6);
-                dbObj.PlayThroughStartingPoint = reader.GetInt32(7);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(8));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(9));
+                cmd.CommandText =
+                    "SELECT * FROM tblGameProfiles " +
+                    "WHERE GameName LIKE @q ESCAPE '\\' " +
+                    "ORDER BY LastPlay DESC;";
+                cmd.Parameters.AddWithValue("@q", "%" + EscapeLikeValue(gameName ?? string.Empty) + "%");
 
-                list.Add(dbObj);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        list.Add(Map(reader));
+                }
             }
-
             return list;
         }
 
         public static List<DBObject> ReadAll()
         {
-            SQLiteDataReader reader = null;
-            List<DBObject> list = new List<DBObject>();
-
-            SQLiteCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * from tblGameProfiles order by LastPlay desc;";
-
-            reader = cmd.ExecuteReader();
-
-            while (reader.Read())
+            var list = new List<DBObject>();
+            using (var cmd = connection.CreateCommand())
             {
-                DBObject dbObj = new DBObject();
-                dbObj.ProfileID = reader.GetInt32(0);
-                dbObj.GameName = reader.GetString(1);
-                dbObj.GameTime = reader.GetInt64(2);
-                dbObj.FirstPlay = DateTime.Parse(reader.GetString(3));
-                dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
-                dbObj.ProfilePicFileName = reader.GetString(5);
-                dbObj.ExtGameFolder = reader.GetString(6);
-                dbObj.PlayThroughStartingPoint = reader.GetInt32(7);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(8));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(9));
-
-                list.Add(dbObj);
+                cmd.CommandText = "SELECT * FROM tblGameProfiles ORDER BY LastPlay DESC;";
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        list.Add(Map(reader));
+                }
             }
-
             return list;
         }
 
-        /// <summary>
-        /// Liest zur übergebenen PID das Datenbankobjekt ein
-        /// </summary>
-        /// <param name="pid"></param>
-        /// <returns></returns>
+        /// <summary>Liest das Objekt mit der übergebenen PID ein.</summary>
         public static DBObject ReadPID(int pid)
         {
-            SQLiteDataReader reader = null;
-            DBObject dbObj = null;
-
-            SQLiteCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * from tblGameProfiles where ProfileID = " + pid + ";";
-
-            reader = cmd.ExecuteReader();
-
-            while (reader.Read())
+            using (var cmd = connection.CreateCommand())
             {
-                dbObj = new DBObject();
-                dbObj.ProfileID = reader.GetInt32(0);
-                dbObj.GameName = reader.GetString(1);
-                dbObj.GameTime = reader.GetInt64(2);
-                dbObj.FirstPlay = DateTime.Parse(reader.GetString(3));
-                dbObj.LastPlay = DateTime.Parse(reader.GetString(4));
-                dbObj.ProfilePicFileName = reader.GetString(5);
-                dbObj.ExtGameFolder = reader.GetString(6);
-                dbObj.PlayThroughStartingPoint = reader.GetInt32(7);
-                dbObj.CreatedAt = DateTime.Parse(reader.GetString(8));
-                dbObj.ChangedAt = DateTime.Parse(reader.GetString(9));
-            }
+                cmd.CommandText = "SELECT * FROM tblGameProfiles WHERE ProfileID = @pid;";
+                cmd.Parameters.AddWithValue("@pid", pid);
 
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                        return Map(reader);
+                }
+            }
+            return null;
+        }
+
+        private static DBObject Map(SQLiteDataReader reader)
+        {
+            var dbObj = new DBObject
+            {
+                ProfileID = reader.GetInt32(0),
+                GameName = reader.GetString(1),
+                GameTime = reader.GetInt64(2),
+                FirstPlay = DateTime.Parse(reader.GetString(3)),
+                LastPlay = DateTime.Parse(reader.GetString(4)),
+                ProfilePicFileName = reader.GetString(5),
+                ExtGameFolder = reader.GetString(6),
+                PlayThroughStartingPoint = reader.GetInt32(7),
+                CreatedAt = DateTime.Parse(reader.GetString(8)),
+                ChangedAt = DateTime.Parse(reader.GetString(9))
+            };
             return dbObj;
         }
 
         public static DBObject CreateNew()
         {
-            DBObject dbObj = new DBObject();
-            dbObj.GameName = "";
-            dbObj.GameTime = 0;
-            dbObj.FirstPlay = DateTime.MinValue;
-            dbObj.LastPlay = DateTime.MinValue;
-            dbObj.ProfilePicFileName = "";
-            dbObj.ExtGameFolder = "";
-            dbObj.PlayThroughStartingPoint = 0;
-            dbObj.CreatedAt = DateTime.Now;
-            dbObj.ChangedAt = DateTime.MinValue;
-
-            
-
-            return dbObj;
+            return new DBObject
+            {
+                GameName = "",
+                GameTime = 0,
+                FirstPlay = DateTime.MinValue,
+                LastPlay = DateTime.MinValue,
+                ProfilePicFileName = "",
+                ExtGameFolder = "",
+                PlayThroughStartingPoint = 0,
+                CreatedAt = DateTime.Now,
+                ChangedAt = DateTime.MinValue
+            };
         }
 
         public static void SaveMonitoredTime(long minutes, int pid)
         {
-            DBObject obj = DataBaseHandler.ReadPID(pid);
-
-            if(obj != null)
+            var obj = ReadPID(pid);
+            if (obj != null)
             {
                 obj.GameTime += minutes;
-                DataBaseHandler.Save(obj);
+                Save(obj);
             }
         }
 
         public static void SaveFirstTimePlayed(int pid)
         {
-            DBObject obj = DataBaseHandler.ReadPID(pid);
-
-            if(obj == null || obj.FirstPlay != DateTime.MinValue)
-            {
-                return;
-            }
+            var obj = ReadPID(pid);
+            if (obj == null || obj.FirstPlay != DateTime.MinValue) return;
 
             obj.FirstPlay = DateTime.Now;
-            DataBaseHandler.Save(obj);
+            Save(obj);
         }
 
         public static void SaveLastTimePlayed(int pid)
         {
-            DBObject obj = DataBaseHandler.ReadPID(pid);
-
-            if(obj != null)
+            var obj = ReadPID(pid);
+            if (obj != null)
             {
                 obj.LastPlay = DateTime.Now;
-                DataBaseHandler.Save(obj);
+                Save(obj);
             }
         }
 
         public static bool IsPlayTimeGreaterZero(int pid)
         {
-            DBObject obj = DataBaseHandler.ReadPID(pid);
-            if(obj != null)
-            {
-                return obj.GameTime > 0;
-            }
-
-            return true;
+            var obj = ReadPID(pid);
+            return obj == null ? true : obj.GameTime > 0;
         }
 
         private static string ToSQLDateFormat(DateTime date)
+            => date.ToString("yyyy-MM-dd HH:mm:ss");
+
+        // Escaping für LIKE (%, _ und \)
+        private static string EscapeLikeValue(string value)
         {
-            return date.ToString("yyyy-MM-dd HH:mm:ss");
+            return value
+                .Replace(@"\", @"\\")
+                .Replace("%", @"\%")
+                .Replace("_", @"\_");
         }
     }
 }
