@@ -1,0 +1,159 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>images\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="images\create_new.png" />
+    <None Remove="images\delete.png" />
+    <None Remove="images\edit.png" />
+    <None Remove="images\executable.png" />
+    <None Remove="images\folder.png" />
+    <None Remove="images\GameTimeX_Banner.png" />
+    <None Remove="images\game_time.png" />
+    <None Remove="images\game_time1.png" />
+    <None Remove="images\list.png" />
+    <None Remove="images\no_picture.png" />
+    <None Remove="images\picture.png" />
+    <None Remove="images\properties.png" />
+    <None Remove="images\question_mark.png" />
+    <None Remove="images\settings.png" />
+    <None Remove="images\startpoint.png" />
+    <None Remove="images\tiles.png" />
+    <None Remove="Resources\create_new.png" />
+    <None Remove="Resources\delete.png" />
+    <None Remove="Resources\edit.png" />
+    <None Remove="Resources\folder.png" />
+    <None Remove="Resources\GameTimeX_Banner.png" />
+    <None Remove="Resources\game_time.png" />
+    <None Remove="Resources\game_time1.png" />
+    <None Remove="Resources\NO_PICTURE.png" />
+    <None Remove="Resources\picture.png" />
+    <None Remove="Resources\question_mark.png" />
+    <None Remove="Resources\Roboto-Bold.ttf" />
+    <None Remove="Resources\Roboto-Regular.ttf" />
+    <None Remove="Resources\settings.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="images\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="images\executable.png" />
+    <Resource Include="images\folder.png" />
+    <Resource Include="images\GameTimeX_Banner.png" />
+    <Resource Include="images\game_time.png" />
+    <Resource Include="images\game_time1.png" />
+    <Resource Include="images\list.png" />
+    <Resource Include="images\picture.png" />
+    <Resource Include="images\properties.png" />
+    <Resource Include="images\question_mark.png" />
+    <Resource Include="images\settings.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net6.0-windows\images\delete.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net6.0-windows\images\create_new.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SkiaSharp" Version="3.116.1" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+    <PackageReference Include="WindowsAPICodePack" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\create_new.png" />
+    <Resource Include="images\delete.png" />
+    <Resource Include="images\edit.png" />
+    <Resource Include="images\no_picture.png" />
+    <Resource Include="images\startpoint.png" />
+    <Resource Include="images\tiles.png" />
+    <Resource Include="Resources\create_new.png" />
+    <Resource Include="Resources\delete.png" />
+    <Resource Include="Resources\edit.png" />
+    <Resource Include="Resources\folder.png" />
+    <Resource Include="Resources\GameTimeX_Banner.png" />
+    <Resource Include="Resources\game_time.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\game_time1.png" />
+    <Resource Include="Resources\list.png" />
+    <Resource Include="Resources\NO_PICTURE.png" />
+    <Resource Include="Resources\picture.png" />
+    <Resource Include="Resources\properties.png" />
+    <Resource Include="Resources\question_mark.png" />
+    <Resource Include="Resources\Roboto-Bold.ttf" />
+    <Resource Include="Resources\Roboto-Regular.ttf" />
+    <Resource Include="Resources\settings.png" />
+    <Resource Include="Resources\tiles.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="XApplication\SubDisplays\Properties.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\ToastMessage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\MonitoreKey.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\QuestionBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\InfoBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\Rename.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GameXResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GameXResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\ImageCropper.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="GameXResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameXResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="XApplication\SubDisplays\QuestionBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\InfoBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\Rename.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\ImageCropper.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

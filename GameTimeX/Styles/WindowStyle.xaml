@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Für alle Texte in einem Window gilt die Font Roboto! -->
+    <Style x:Key="DefaultWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}"/>
+    </Style>
+    
+</ResourceDictionary>

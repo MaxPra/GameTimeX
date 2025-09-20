@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="XApplication\SubDisplays\CreateNew.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\LoadingApplication.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\ManageExecutables.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="XApplication\SubDisplays\Settings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\CheckBoxStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ContextMenuStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\WindowStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\ManageExecutables.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\Properties.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\LoadingApplication.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\ToastMessage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\MonitoreKey.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\QuestionBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\InfoBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\Rename.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\CreateNew.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\ImageCropper.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\Settings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\OtherStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Resources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ScrollPaneStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

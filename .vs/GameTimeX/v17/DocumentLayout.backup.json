@@ -1,0 +1,694 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\sysprops.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\sysprops.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\keyinputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\keyinputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\settings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\settings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\settings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\settings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\gameswitcherhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\gameswitcherhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\displayhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\displayhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\toastmessage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\toastmessage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\objects\\gtxcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\objects\\gtxcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\styles\\otherstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\styles\\otherstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\styles\\resources.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\styles\\resources.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\createnew.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\createnew.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\styles\\buttonstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\styles\\buttonstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\imagecropper.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\imagecropper.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\infobox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\infobox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\questionbox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\questionbox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\rename.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\rename.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\properties.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\properties.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\createnew.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\createnew.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\properties.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\properties.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\manageexecutables.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\manageexecutables.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\objects\\cexecutables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\objects\\cexecutables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\monitorekey.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\monitorekey.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\manageexecutables.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\manageexecutables.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\objects\\dbobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\objects\\dbobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\objects\\executable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\objects\\executable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\objects\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\objects\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\monitorekey.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\monitorekey.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\styles\\checkboxstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\styles\\checkboxstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\databasehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\databasehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\objects\\startupparms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\objects\\startupparms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\styles\\windowstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\styles\\windowstyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\prage\\AppData\\Local\\Temp\\.vsdbgsrc\\236a0c0a0773e2695e5b5b08094e24b8256701a6f345303a448d58c87ebc39f2\\XamlReader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\blackouthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\blackouthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\visualhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\visualhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\function\\monitorhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\function\\monitorhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\imagecropper.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\imagecropper.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\styles\\contextmenustyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\styles\\contextmenustyle.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|c:\\users\\prage\\onedrive\\dokumente\\development\\c#\\gametimex\\gametimex\\xapplication\\subdisplays\\infobox.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ADBB9925-D135-4EFE-81D2-36610E6EB6BC}|GameTimeX\\GameTimeX.csproj|solutionrelative:gametimex\\xapplication\\subdisplays\\infobox.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.101\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 139,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Settings.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Settings.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\Settings.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Settings.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\Settings.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T18:37:09.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GTXComponent.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\GTXComponent.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Objects\\GTXComponent.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\GTXComponent.cs",
+              "RelativeToolTip": "GameTimeX\\Objects\\GTXComponent.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAcwBsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T12:58:13.139Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\MainWindow.xaml",
+              "RelativeToolTip": "GameTimeX\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T17:44:26.694Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "OtherStyle.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\OtherStyle.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\Styles\\OtherStyle.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\OtherStyle.xaml",
+              "RelativeToolTip": "GameTimeX\\Styles\\OtherStyle.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-19T10:03:01.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CreateNew.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T18:58:40.667Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\MainWindow.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAO8AAAAAAAAAAAAcwPkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T21:05:13.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ToastMessage.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ToastMessage.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\ToastMessage.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ToastMessage.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\ToastMessage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T18:08:16.397Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DisplayHandler.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\DisplayHandler.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\DisplayHandler.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\DisplayHandler.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\DisplayHandler.cs",
+              "ViewState": "AgIAALABAAAAAAAAAAAMwMwBAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T19:04:33.618Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ButtonStyle.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\ButtonStyle.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\Styles\\ButtonStyle.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\ButtonStyle.xaml",
+              "RelativeToolTip": "GameTimeX\\Styles\\ButtonStyle.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T18:06:19.866Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SysProps.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\SysProps.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\SysProps.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\SysProps.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\SysProps.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAewHwAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T21:01:20.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "KeyInputHandler.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\KeyInputHandler.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\KeyInputHandler.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\KeyInputHandler.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\KeyInputHandler.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAwwEgAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T18:19:34.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "CExecutables.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\CExecutables.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Objects\\CExecutables.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\CExecutables.cs",
+              "RelativeToolTip": "GameTimeX\\Objects\\CExecutables.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T13:16:52.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GameSwitcherHandler.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\GameSwitcherHandler.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\GameSwitcherHandler.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\GameSwitcherHandler.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\GameSwitcherHandler.cs",
+              "ViewState": "AgIAANEAAAAAAAAAAAApwOgAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T19:50:14.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "QuestionBox.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\QuestionBox.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\QuestionBox.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\QuestionBox.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\QuestionBox.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T20:52:42.993Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "CreateNew.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\CreateNew.xaml.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAwwC8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T14:30:52.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Settings.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Settings.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\Settings.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Settings.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\Settings.xaml.cs",
+              "ViewState": "AgIAANQAAAAAAAAAAADwv/QAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T19:22:46.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "InfoBox.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T18:08:11.075Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ImageCropper.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T20:57:55.81Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Resources.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\Resources.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\Styles\\Resources.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\Resources.xaml",
+              "RelativeToolTip": "GameTimeX\\Styles\\Resources.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T17:53:09.766Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Rename.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Rename.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\Rename.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Rename.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\Rename.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T20:30:58.563Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Properties.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Properties.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\Properties.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Properties.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\Properties.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T18:59:36.344Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "BlackoutHandler.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\BlackoutHandler.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\BlackoutHandler.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\BlackoutHandler.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\BlackoutHandler.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAA6wFQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T19:08:50.949Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ManageExecutables.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAA1wB8AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T14:02:44.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\App.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\App.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\App.xaml",
+              "RelativeToolTip": "GameTimeX\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-20T08:45:35.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Properties.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Properties.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\Properties.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\Properties.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\Properties.xaml.cs",
+              "ViewState": "AgIAAJ4AAAAAAAAAAAAwwK8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T15:19:15.568Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ManageExecutables.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\ManageExecutables.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-19T13:58:36.053Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "MonitoreKey.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-19T09:19:08.495Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Profile.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\Profile.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Objects\\Profile.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\Profile.cs",
+              "RelativeToolTip": "GameTimeX\\Objects\\Profile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T13:55:07.014Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "DBObject.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\DBObject.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Objects\\DBObject.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\DBObject.cs",
+              "RelativeToolTip": "GameTimeX\\Objects\\DBObject.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T14:06:34.005Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "CheckBoxStyle.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\CheckBoxStyle.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\Styles\\CheckBoxStyle.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\CheckBoxStyle.xaml",
+              "RelativeToolTip": "GameTimeX\\Styles\\CheckBoxStyle.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-19T14:00:09.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Executable.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\Executable.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Objects\\Executable.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\Executable.cs",
+              "RelativeToolTip": "GameTimeX\\Objects\\Executable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T14:17:51.72Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "MonitoreKey.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\MonitoreKey.xaml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T19:23:31.082Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "DataBaseHandler.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\DataBaseHandler.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\DataBaseHandler.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\DataBaseHandler.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\DataBaseHandler.cs",
+              "ViewState": "AgIAADYBAAAAAAAAAAAuwEkBAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T09:56:36.229Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "StartUpParms.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\StartUpParms.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Objects\\StartUpParms.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Objects\\StartUpParms.cs",
+              "RelativeToolTip": "GameTimeX\\Objects\\StartUpParms.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB8AAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T19:16:51.58Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "MonitorHandler.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\MonitorHandler.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\MonitorHandler.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\MonitorHandler.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\MonitorHandler.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T19:42:45.351Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "WindowStyle.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\WindowStyle.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\Styles\\WindowStyle.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\WindowStyle.xaml",
+              "RelativeToolTip": "GameTimeX\\Styles\\WindowStyle.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-19T10:03:06.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "XamlReader.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\AppData\\Local\\Temp\\.vsdbgsrc\\236a0c0a0773e2695e5b5b08094e24b8256701a6f345303a448d58c87ebc39f2\\XamlReader.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\236a0c0a0773e2695e5b5b08094e24b8256701a6f345303a448d58c87ebc39f2\\XamlReader.cs",
+              "ToolTip": "C:\\Users\\prage\\AppData\\Local\\Temp\\.vsdbgsrc\\236a0c0a0773e2695e5b5b08094e24b8256701a6f345303a448d58c87ebc39f2\\XamlReader.cs [Schreibgesch\u00FCtzt]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\236a0c0a0773e2695e5b5b08094e24b8256701a6f345303a448d58c87ebc39f2\\XamlReader.cs [Schreibgesch\u00FCtzt]",
+              "ViewState": "AgIAAMUBAAAAAAAAAAAcwNkBAAACAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T09:29:44.911Z",
+              "EditorCaption": " [Schreibgesch\u00FCtzt]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "ContextMenuStyle.xaml",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\ContextMenuStyle.xaml",
+              "RelativeDocumentMoniker": "GameTimeX\\Styles\\ContextMenuStyle.xaml",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Styles\\ContextMenuStyle.xaml",
+              "RelativeToolTip": "GameTimeX\\Styles\\ContextMenuStyle.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-17T19:20:42.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "VisualHandler.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\VisualHandler.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\Function\\VisualHandler.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\Function\\VisualHandler.cs",
+              "RelativeToolTip": "GameTimeX\\Function\\VisualHandler.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAIAwwJgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T18:03:48.362Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Microsoft.WinFX.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.101\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.101\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
+              "ViewState": "AgIAAKwCAAAAAAAAAAAawMICAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-09-17T17:56:19.788Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "ImageCropper.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\ImageCropper.xaml.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAA1wEsAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T21:03:33.682Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "InfoBox.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml.cs",
+              "RelativeDocumentMoniker": "GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml.cs",
+              "ToolTip": "C:\\Users\\prage\\OneDrive\\Dokumente\\Development\\C#\\GameTimeX\\GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml.cs",
+              "RelativeToolTip": "GameTimeX\\XApplication\\SubDisplays\\InfoBox.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T18:08:10.458Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="automaticProfileSwitching" xml:space="preserve">
+    <value>Automatisches wechseln zwischen den Spielprofilen.</value>
+  </data>
+  <data name="automaticProfileSwitchingToolTip" xml:space="preserve">
+    <value>Wenn aktiviert, wechselt GameTimeX automatisch das Spielprofil.</value>
+  </data>
+  <data name="automaticProfileSwitchingToolTipNote" xml:space="preserve">
+    <value>Hinweis: Der Spielordner muss beim Profil angegeben sein!</value>
+  </data>
+  <data name="automaticRestart" xml:space="preserve">
+    <value>GameTimeX wird nun automatisch neugestartet!</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Abbruch</value>
+  </data>
+  <data name="changeImage" xml:space="preserve">
+    <value>Bild wechseln</value>
+  </data>
+  <data name="chooseBackupFile" xml:space="preserve">
+    <value>Backupdatei wählen</value>
+  </data>
+  <data name="chooseFolder" xml:space="preserve">
+    <value>Ordner wählen</value>
+  </data>
+  <data name="choosePic" xml:space="preserve">
+    <value>Bild wählen</value>
+  </data>
+  <data name="chosseBackupFolder" xml:space="preserve">
+    <value>Backupordner wählen</value>
+  </data>
+  <data name="createBackup" xml:space="preserve">
+    <value>Backup erstellen</value>
+  </data>
+  <data name="createBackupInfo" xml:space="preserve">
+    <value>Erstelle ein Backup der gespeicherten profile und der zugehörigen Daten.</value>
+  </data>
+  <data name="createBackupWarning" xml:space="preserve">
+    <value>GameTimeX wird automatisch neugestartet um das Backup zu erstellen!</value>
+  </data>
+  <data name="createNewProfile" xml:space="preserve">
+    <value>Neues Profil erstellen</value>
+  </data>
+  <data name="currentKey" xml:space="preserve">
+    <value>Aktiver Key:</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="firstTimePlayed" xml:space="preserve">
+    <value>Erstes Mal gespielt:</value>
+  </data>
+  <data name="gameFolderOverlay" xml:space="preserve">
+    <value>Spielordner (opt.)</value>
+  </data>
+  <data name="gameTime" xml:space="preserve">
+    <value>Spielzeit:</value>
+  </data>
+  <data name="generalOptions" xml:space="preserve">
+    <value>Allgemeine Optionen</value>
+  </data>
+  <data name="importBackup" xml:space="preserve">
+    <value>Backup importieren</value>
+  </data>
+  <data name="importBackupInfo" xml:space="preserve">
+    <value>Importiere ein Backup der gespeicherten Profildaten und der zugehörigen Daten</value>
+  </data>
+  <data name="importBackupWarning" xml:space="preserve">
+    <value>GameTimeX wird automatisch neugestartet um das Backup zu importieren!</value>
+  </data>
+  <data name="keyActive" xml:space="preserve">
+    <value>Taste aktiv</value>
+  </data>
+  <data name="keyForGameMonitoring" xml:space="preserve">
+    <value>Taste für Spielzeitaufnahme</value>
+  </data>
+  <data name="lastTimePlayed" xml:space="preserve">
+    <value>Letzes mal gespielt:</value>
+  </data>
+  <data name="minutes" xml:space="preserve">
+    <value>Minuten</value>
+  </data>
+  <data name="monitorKey" xml:space="preserve">
+    <value>Taste aufzeichnen</value>
+  </data>
+  <data name="profileNameOverlay" xml:space="preserve">
+    <value>Profilname</value>
+  </data>
+  <data name="properties" xml:space="preserve">
+    <value>Eigenschaften</value>
+  </data>
+  <data name="question" xml:space="preserve">
+    <value>Frage</value>
+  </data>
+  <data name="reallyDelete" xml:space="preserve">
+    <value>Möchtest du das folgende Profil wirklich löschen</value>
+  </data>
+  <data name="renameProfile" xml:space="preserve">
+    <value>Profil umbenennen</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="searchForGames" xml:space="preserve">
+    <value>Suche hier nach dem Profilnamen</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="showCurrentGameTimeSession" xml:space="preserve">
+    <value>Zeige aktuelle Spielzeitsession während der Aufnahme.</value>
+  </data>
+  <data name="showCurrentGameTimeSessionToolTip" xml:space="preserve">
+    <value>Wenn gewählt, wird die derzeitige Spielzeit der Session unter dem Start-/Stopmonitoringbutton angezeigt.</value>
+  </data>
+  <data name="showToastNotification" xml:space="preserve">
+    <value>Zeige Benachrichtigung</value>
+  </data>
+  <data name="startMonitoring" xml:space="preserve">
+    <value>Starte Aufnahme</value>
+  </data>
+  <data name="stopMonitoring" xml:space="preserve">
+    <value>Stoppe Aufnahme</value>
+  </data>
+</root>
