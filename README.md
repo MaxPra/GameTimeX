@@ -1,140 +1,139 @@
 # GameTimeX
 
-GameTimeX is an application that enables you to accurately monitor your gaming time.  
-If you are frustrated with Steam's inaccurate tracking (e.g., when a game is left idle while you are away from your keyboard), this tool will provide the solution you need.
+GameTimeX is a desktop application for precise tracking of actual gameplay time.  
+Unlike platform counters that may continue running while a title is idle, GameTimeX records playtime only when the game is truly active.
 
-**Version 2.0.11 / Retouched is now available!**  
-Same core, brand-new look
+**Version 2.0.11 — “Retouched”**  
+Same core functionality, redesigned user interface.
 
-Download the latest installer [here](https://github.com/MaxPra/GameTimeX/releases/download/Version2.0.11/GameTimeXSetup_Latest.msi).
+Download the latest installer:  
+[GameTimeXSetup_Latest.msi](https://github.com/MaxPra/GameTimeX/releases/download/Version2.0.11/GameTimeXSetup_Latest.msi)
 
 ---
 
 ## Key Features
 
-- 🎮 **Accurate Time Tracking** – records only when your game is truly running.  
-- 🔄 **Automatic Profile Switching** – instantly switch to the correct game profile when launching a game.  
-  - Includes **per-executable selection** to avoid conflicts if multiple games use the same executables.  
-  - Smart **auto-pre-filtering** deselects common non-game executables (launchers, crash reporters, helpers, etc.) on first profile creation.  
-- 🖼️ **Customizable Profiles** – create, rename, and assign cropped images for each game.  
-- 🌙 **OLED Care (Blackout Screen)** – toggle with **CTRL + B** to black out all displays while AFK.  
-- 🖥️ **Side-Screen Dimming** – optional automatic dimming of secondary displays while tracking is active.  
-- ⌨️ **Hotkey Monitoring** – assign a hotkey to start/stop tracking without leaving your game.  
-- 💾 **Backup & Restore** – export or import all profiles, with optional auto-backup at startup.  
-- 🔒 **Secure Database Access** – parameterized SQLite queries protect against SQL injection.  
+- **Accurate Time Tracking** – records only while the game process is genuinely running.
+- **Installed Games Filter** *(controller + play icon)* – optional toolbar filter that shows only profiles for games that are currently installed (installation folder exists).  
+  *Prerequisite:* the installation folder must be specified in each profile’s **Properties**.
+- **Automatic Profile Switching** – switches to the correct profile when a game launches.  
+  - Per-executable selection to prevent conflicts where different games share executables.  
+  - Smart initial pre-filtering automatically deselects common non-game executables (launchers, crash reporters, helpers, etc.).
+- **Customizable Profiles** – create, rename, and assign cropped images for each game.
+- **OLED Care (Blackout Screen)** – toggle with **CTRL+B** to black out all displays while AFK.
+- **Side-Screen Dimming** – optionally dims secondary displays automatically while tracking is active.
+- **Hotkey Monitoring** – start/stop tracking via a configurable hotkey.
+- **Backup & Restore** – export or import all profiles; optional automatic backup at startup.
+- **Hardened Database Access** – parameterized SQLite queries for protection against SQL injection.
 
 ---
 
-## What’s new in 2.0.11
+## What’s New in 2.0.11
 
-- Visual redesign of the UI
-- Removed the list view
-- Minor UI-related bug fixes
-- **Installed Games Filter** *(controller + play icon)* – new toolbar toggle that shows **only profiles with currently installed games** (installation folder exists).  
-  *Prerequisite:* set each game’s installation folder in the profile **Properties**.
-- **OLED Care (Blackout Screen)** – toggle at any time with **CTRL + B** to fully darken all screens while you’re AFK
-- **Optional side-screen dimming while tracking** – when enabled in **Settings**, all non-primary displays are dimmed automatically while GameTimeX is actively tracking, and restored once tracking stops
-- **Security: SQL-injection hardening** – database access now uses parameterized SQLite queries
-- **Executable selection for Automatic Game Switch** – define which executables should be monitored for profile switching (prevents conflicts when different games share identical executables)
-- **Smart executable pre-filtering** – on first profile creation, common non-game executables (launchers, crash reporters, helpers, benchmark tools) are deselected automatically
+- Complete visual refresh of the UI
+- Removal of the legacy list view
+- Minor UI-related fixes and refinements
+- **Installed Games Filter** *(controller + play icon)* – new toolbar toggle to display **only profiles for installed games** (installation folder exists).  
+  *Prerequisite:* set the game’s installation folder in the profile **Properties**.
+- **OLED Care (Blackout Screen)** – toggle anytime with **CTRL+B** to fully darken all screens while away
+- **Optional side-screen dimming while tracking** – automatically dims all non-primary displays while GameTimeX is actively tracking; restores displays afterwards
+- **Security: SQL-injection hardening** – all database access uses parameterized SQLite queries
+- **Executable selection for Automatic Profile Switching** – define the exact executables to monitor for profile switching; avoids collisions with shared executables
+- **Smart executable pre-filtering** – on first profile creation, non-game executables (launchers, crash reporters, helpers, benchmarks) are deselected automatically
 
 ---
 
-## About This Application
+## Overview
 
-GameTimeX is a personal project I developed as a hobby during my free time.
+GameTimeX is designed for reliability and clarity, with an emphasis on clean interaction and accurate tracking.
 
-### Main Window Overview
+### Main Window
 
-When you launch the application for the first time, the main window will appear as shown below:  
+Initial application view:  
 <img width="1208" height="813" alt="image" src="https://github.com/user-attachments/assets/9866aa9b-2c03-4039-81b8-02dd83b425ae" />
 
-**Main window sections:**
+**Key areas:**
 
-1. **Profile Search Bar** – Quickly find profiles when the list grows too long.  
-2. **Profile Management Buttons** – Located next to the search bar:  
-   - **Installed Games Filter** *(controller icon with a play symbol)* – shows **only profiles where the game is currently installed** (i.e., the installation folder exists).  
-     *Prerequisite:* the game’s installation folder must be set in the profile’s **Properties**.  
+1. **Profile Search** – quickly locate profiles in larger libraries.  
+2. **Toolbar Controls** – next to the search field:  
+   - **Installed Games Filter** *(controller + play icon)* – shows only profiles where the game is currently installed (installation folder exists).  
+     *Prerequisite:* define the installation folder in **Properties**.  
    - Create New Profile  
    - Delete Profile  
    - Properties  
    - Settings  
-   *Tip: you can also access properties and delete a profile via the context menu.*  
-3. **Information Section** – Displays details about the selected profile, including a thumbnail image.  
-4. **Start/Stop Monitoring** – Located in the information section:  
-   - A **blue** button means no active monitoring.  
-   - A **red** button means monitoring is active.  
-5. **Rename Profile** – Click the pencil icon next to the profile name to rename it.
+   (Properties and Delete are also available via the profile context menu.)
+3. **Information Panel** – details for the selected profile, including thumbnail.  
+4. **Start/Stop Monitoring** – status indicated by button color (blue = idle, red = active).  
+5. **Rename Profile** – click the pencil icon next to the profile name.
 
-After adding a profile, the view may look like this:  
+Example with profiles:  
 <img width="1216" height="816" alt="image" src="https://github.com/user-attachments/assets/69a4db40-2477-429b-b863-46894fc5a2a4" />
 
-Profile names and images can be adjusted at any time. Simply click the pencil icon or select *Change Image*.  
-Hovering over the small “i” next to *Game Time* will show the tracked time in minutes, alongside the recorded first and last play sessions.
+Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.
 
-If you restart a game after already having recorded playtime, the *New Playthrough Startpoint* function can be used. It saves the current total time and calculates the new playtime as the difference from that point onward.  
-- **Total time** is always cumulative.  
-- **Playthrough-specific time** is calculated as the difference from the designated start point.
+If a new playthrough begins after time has already been recorded, use **New Playthrough Startpoint**. The application saves the current total time and reports playthrough time as the difference from that point forward.  
+- **Total time** remains cumulative.  
+- **Playthrough time** is calculated relative to the saved start point.
 
 ---
 
-### Settings
+## Settings
 
-The settings window gives you fine-grained control over how GameTimeX behaves:  
+The settings dialog provides granular control:  
 <img width="529" height="730" alt="image" src="https://github.com/user-attachments/assets/f4e36339-03aa-4b14-a7a9-5d5bbab2a9c9" />
 <img width="533" height="729" alt="image" src="https://github.com/user-attachments/assets/a99536a0-5d8a-4dd9-996d-a1e753bba252" />
 
-**Available options:**
+**Options include:**
 
-- **Session Time Tracking** – Display the duration of the current session directly in the information panel while monitoring is active.  
-- **Automatic Profile Switching** – If enabled, GameTimeX will automatically switch to the correct profile when a game is launched (requires the game’s installation folder to be specified).  
-  - Manage which **executables** should be monitored for automatic switching, and exclude irrelevant ones.  
-- **Monitor Key** – Assign a hotkey to start and stop monitoring without leaving the game. Nearly all keyboard keys are supported.  
-- **Backup & Restore** – Export or import your profiles at any time. The app restarts automatically after import/export. Optional auto-backup on every startup.  
-- **OLED Care (Blackout Screen)** – Fully black out all screens while you’re AFK to protect OLED panels. Toggle with **CTRL + B**.  
-- **Side-screen dimming while tracking (optional)** – When enabled, GameTimeX automatically dims all secondary displays **only while monitoring is active** and restores them afterwards.
+- **Session Time Tracking** – display the current session duration in the information panel while tracking.
+- **Automatic Profile Switching** – automatically switches profiles upon game launch (requires the installation folder).  
+  - Manage the set of **executables** to monitor and exclude irrelevant processes.
+- **Monitor Key** – assign a global hotkey to start/stop monitoring without leaving the game.
+- **Backup & Restore** – export or import profiles; the application restarts automatically after import/export. Optional automatic backup on startup.
+- **OLED Care (Blackout Screen)** – fully darkens all screens to protect OLED panels (CTRL+B).
+- **Side-Screen Dimming (optional)** – dims all secondary displays **only while tracking**; automatically restores them afterwards.
 
-*Tip: If you are looking for your game’s installation folder on Steam, right-click the game → Properties → Installed Files → Browse.*
+*Tip:* For Steam titles, locate the installation folder via **Steam → Game → Properties → Installed Files → Browse**.
 
 ---
 
-### Manage Executables
+## Manage Executables
 
-When using Automatic Profile Switching, GameTimeX lets you control exactly which executables are tracked.  
-This prevents helper processes, launchers, crash reporters, or engine-related executables from interfering with automatic switching.
+When Automatic Profile Switching is enabled, GameTimeX allows precise control over which executables are monitored.  
+This prevents launchers, helpers, and engine processes from causing false detections.
 
 <img width="554" height="494" alt="image" src="https://github.com/user-attachments/assets/920efc3b-2073-4004-bc3e-d52988125172" />
 
-**Features:**
-- Lists all executables found in the game’s installation directory  
-- Checkbox list to mark executables as *active* or *inactive*  
-- **Select All** toggle for quick bulk activation/deactivation  
-- Smart default pre-filter: common non-game executables are automatically deselected when a profile is first created  
-- Manual adjustments can be saved at any time via the **Save** button  
+**Capabilities:**
 
-This gives you full control and prevents false detections when multiple games share the same background executables.
+- Enumerates executables in the installation directory  
+- Checkboxes to mark executables as *active* or *inactive*  
+- “Select All” for rapid bulk changes  
+- Smart defaults: common non-game executables are deselected on initial profile creation  
+- Changes can be saved at any time
 
 ---
 
-### Profile Image Cropping
+## Profile Image Cropping
 
-When creating a profile, you will be prompted to select an image.  
-After choosing an image, the cropping window will open:  
+When adding a profile image, a cropping dialog enables quick framing:  
 <img width="1211" height="814" alt="image" src="https://github.com/user-attachments/assets/a94e01b8-0482-459e-9d6a-a213b8a56f8d" />
 
-**Cropping controls:**
-- Resize the cropping area: use the mouse wheel.  
-- Move the cropping area: drag with the left mouse button.  
+**Controls:**
 
-Once confirmed, the cropped image is saved and displayed in the profile view.
+- Resize the crop area with the mouse wheel  
+- Reposition the crop area via drag (left mouse button)
 
----
-
-### Security
-
-- **SQL-injection protection:** all database operations use parameterized SQLite commands.  
-- **Executable filtering:** automatic exclusion of non-game executables on first profile creation ensures more reliable detection while avoiding false positives.
+The cropped image is saved and immediately shown in the profile view.
 
 ---
 
-Icons by Icons8.
+## Security
+
+- All database operations use parameterized SQLite commands to mitigate SQL injection risks.  
+- Initial executable pre-filtering reduces noise from non-game processes, improving detection accuracy.
+
+---
+
+*Icon assets by Icons8.*
