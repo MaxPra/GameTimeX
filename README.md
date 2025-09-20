@@ -116,7 +116,7 @@ This gives you full control and prevents false detections when multiple games sh
 
 When creating a profile, you will be prompted to select an image.  
 After choosing an image, the cropping window will open:  
-<img width="1206" height="806" alt="image" src="https://github.com/user-attachments/assets/d0738e77-1188-4c4c-bc80-f12a60385153" />
+<img width="1211" height="814" alt="image" src="https://github.com/user-attachments/assets/a94e01b8-0482-459e-9d6a-a213b8a56f8d" />
 
 **Cropping controls:**
 - Resize the cropping area: use the mouse wheel.  
