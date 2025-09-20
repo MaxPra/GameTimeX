@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Rename Profile"
         Width="360" Height="190"
@@ -18,6 +19,18 @@
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
 
+    <Window.Resources>
+        <sys:Double x:Key="FormControlHeight">32</sys:Double>
+        <Thickness x:Key="FormRowSpacing">0,3,0,3</Thickness>
+
+        <!-- lokaler TextBox-Style wie in den anderen Fenstern -->
+        <Style x:Key="FormTextBox_Local" TargetType="TextBox" BasedOn="{StaticResource FormTextBox}">
+            <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
+            <Setter Property="Margin" Value="{StaticResource FormRowSpacing}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
     <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
             BorderThickness="1"
             Background="#2F2F2F"
@@ -26,16 +39,17 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <!-- Titlebar -->
             <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
-            <TextBlock Grid.Row="0" Text="Rename Profile" Margin="10,0,0,0"
+            <TextBlock Grid.Row="0" Text="Rename profile" Margin="10,0,0,0"
                        VerticalAlignment="Center" Foreground="White"/>
+
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btnClose" Content="X" Width="40" Height="30"
+                <Button x:Name="btnClose" Content="X" Width="40" Height="28"
                         Foreground="White" Background="Transparent" BorderBrush="Transparent"
                         Click="btnClose_Click" Style="{StaticResource NoMouseOverButtonStyle}">
                     <Button.Template>
@@ -57,57 +71,30 @@
             </StackPanel>
 
             <!-- Inhalt -->
-            <Grid Grid.Row="1" Margin="22" x:Name="grdContent">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Margin="18">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="16"/>
+                    <!-- TextBox -->
+                    <RowDefinition Height="*"/>
+                    <!-- Füller -->
                     <RowDefinition Height="Auto"/>
+                    <!-- Save -->
                 </Grid.RowDefinitions>
 
-                <!-- Textfeld mit Placeholder -->
-                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBox x:Name="txtProfileName"
-                             Background="#5c5c5c"
-                             Height="30" FontSize="15"
-                             Padding="7,4,0,0"
-                             Foreground="White"/>
-                    <TextBlock IsHitTestVisible="False"
-                               Text="Profile name"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               Margin="9,0,0,0" Foreground="White">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=txtProfileName}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
+                <!-- Profile name -->
+                <TextBox Grid.Row="0"
+                         x:Name="txtProfileName"
+                         Style="{StaticResource FormTextBox_Local}"
+                         Tag="Profile name"/>
 
-                <!-- Save -->
-                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                <!-- Save-Button volle Breite -->
+                <Button Grid.Row="2"
                         x:Name="btnRename"
                         Content="Save"
-                        Width="200" Height="42"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,8,0,2"
                         Click="btnRenameProfile_Click"
-                        BorderBrush="Black" Background="#0099ff"
-                        Foreground="White"
-                        Style="{StaticResource NormalGuiButton}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="12"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                        Style="{StaticResource NormalGuiButton}"/>
             </Grid>
         </Grid>
     </Border>

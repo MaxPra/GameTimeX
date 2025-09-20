@@ -246,35 +246,45 @@ namespace GameTimeX
             settings.ShowDialog();
 
             // Nach Schließen des Settings-Windows keyInputHanlder entweder starten oder beenden!
-            if(SysProps.keyInputHandler != null)
+            // Wenn Monitor Key aktiv und als Key nicht (kein Key) ausgewühlt wurde --> KeyInputHandler starten
+            if (SysProps.startUpParms.MonitorShortcutActive && SysProps.startUpParms.MonitorShortcut != Objects.KeyInput.VirtualKey.VK_NONE)
             {
-                // Wenn Monitor Key aktiv und als Key nicht (kein Key) ausgewühlt wurde --> KeyInputHandler starten
-                if (SysProps.startUpParms.MonitorShortcutActive && SysProps.startUpParms.MonitorShortcut != Objects.KeyInput.VirtualKey.VK_NONE)
+                if(SysProps.keyInputHandler == null)
                 {
                     SysProps.keyInputHandler = new Function.KeyInputHandler(SysProps.startUpParms.MonitorShortcut, this);
                     SysProps.keyInputHandler.StartListening();
                 }
-                // Wenn Monitor Key nicht aktiv oder Monitor Key = (kein Key) --> Stoppen
-                else if (!SysProps.startUpParms.MonitorShortcutActive || SysProps.startUpParms.MonitorShortcut == KeyInput.VirtualKey.VK_NONE)
+                else
                 {
-                    SysProps.keyInputHandler.StopListening();
+                    SysProps.keyInputHandler.StartListening();
                 }
+                
+            }
+            // Wenn Monitor Key nicht aktiv oder Monitor Key = (kein Key) --> Stoppen
+            else if (SysProps.keyInputHandler != null && !SysProps.startUpParms.MonitorShortcutActive || SysProps.startUpParms.MonitorShortcut == KeyInput.VirtualKey.VK_NONE)
+            {
+                SysProps.keyInputHandler.StopListening();
             }
 
             // Nach Schließen des Settings-Windows KeyInputHandler für Blackout entweder starten oder beenden!
-            if (SysProps.keyInputHandlerBlackout != null)
+            // Wenn Blackout-Funktion aktiv ist
+            if (SysProps.startUpParms.BlackOutShortcutActive)
             {
-                // Wenn Blackout-Funktion aktiv ist
-                if (SysProps.startUpParms.BlackOutShortcutActive)
+                if(SysProps.keyInputHandlerBlackout == null)
                 {
                     SysProps.keyInputHandlerBlackout = new Function.KeyInputHandler(this, KeyInputHandler.StartType.BLACKOUT_SCREEN);
                     SysProps.keyInputHandlerBlackout.StartListening();
                 }
-                // Wenn Blackout-Funktion nicht aktiv ist --> Stoppen des Handlers
-                else if (!SysProps.startUpParms.BlackOutShortcutActive)
+                else
                 {
-                    SysProps.keyInputHandlerBlackout.StopListening();
+                    SysProps.keyInputHandlerBlackout.StartListening();
                 }
+                
+            }
+            // Wenn Blackout-Funktion nicht aktiv ist --> Stoppen des Handlers
+            else if (SysProps.keyInputHandlerBlackout != null && !SysProps.startUpParms.BlackOutShortcutActive)
+            {
+                SysProps.keyInputHandlerBlackout.StopListening();
             }
 
             // Nach Schließen des Settings-Windows GameSwitcherHandler starten oder beenden!

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Settings"
         Width="520" Height="720"
@@ -22,11 +23,13 @@
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
     </WindowChrome.WindowChrome>
 
+    <!-- Außenrahmen -->
     <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
             BorderThickness="1"
             Background="#2F2F2F"
             CornerRadius="12"
             SnapsToDevicePixels="True">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -34,17 +37,10 @@
             </Grid.RowDefinitions>
 
             <!-- Titlebar -->
-            <Border Grid.Row="0"
-                    x:Name="titleBar"
-                    Background="Black"
-                    CornerRadius="12,12,0,0"
-                    ClipToBounds="True"/>
-            <TextBlock Grid.Row="0"
-                       Text="Settings"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
-                       Margin="10,0,0,0"
-                       Foreground="White"/>
+            <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
+            <TextBlock Grid.Row="0" Text="Settings"
+                       Margin="10,0,0,0" Foreground="White"
+                       VerticalAlignment="Center"/>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="btnClose" Content="X" Width="40" Height="30"
                         BorderBrush="Transparent" Background="Transparent"
@@ -72,164 +68,237 @@
                 </Button>
             </StackPanel>
 
-            <!-- Window Content (unverändert), nur ein Innenabstand, damit nichts am Rand abgeschnitten wird -->
-            <Grid Grid.Row="1" x:Name="grdContent" HorizontalAlignment="Left" Margin="12,8,12,12">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*"/>
-                    <ColumnDefinition Width="50*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="256*"/>
-                    <RowDefinition Height="177*"/>
-                    <RowDefinition Height="235*"/>
-                </Grid.RowDefinitions>
+            <!-- Inhalt -->
+            <Grid Grid.Row="1">
+                <!-- Lokale Maße/Styles -->
+                <Grid.Resources>
+                    <sys:Double x:Key="CtlH">32</sys:Double>
 
-                <StackPanel Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    <StackPanel Margin="10, 10, 0, 0"  Grid.ColumnSpan="2">
-                        <TextBlock Text="Create Backup" FontWeight="Bold" Foreground="White" Margin="0 0 0 5"/>
-                        <TextBlock Text="Create a backup of the saved profiles and the saved game time data" Foreground="White" Margin="0 0 0 5" FontSize="12"/>
-                        <TextBlock Text="GameTimeX will be restarted automatically to create the backup!" Foreground="Red" Margin="0 0 0 5" FontSize="12"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtBackupPath" Background="#5c5c5c"
-                                 Height="30" Width="300" FontSize="15" Padding="7, 4, 0, 0" Foreground="White"
-                                 IsReadOnly="True" Margin="10 0 0 0"/>
-                        <Button x:Name="btnChooseGameFolder" Content="Choose Backup Folder" Margin="10 0 0 0"
-                                Style="{StaticResource NormalGuiButton}" Width="150"
-                                Click="btnChooseGameFolder_Click"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                        <Button x:Name="btnCreateBackup" Grid.Column="0" Margin="0 0 0 0" Content="Create Backup"
-                                Width="100" Height="30" HorizontalAlignment="Left"
-                                IsEnabled="False" Click="btnCreateBackup_Click"
-                                Style="{StaticResource NormalGuiButton}"/>
-                        <CheckBox Style="{StaticResource CheckBoxDefaultStyle}"
-                                  Content="Auto Backup" Margin="15 0 0 0"
-                                  x:Name="cbAutoBackup"
-                                  IsEnabled="False"
-                                  Click="cbAutoBackup_Click">
-                            <CheckBox.ToolTip>
-                                <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                    <TextBlock>
-                                        If checked GameTimeX will create a backap automatically every time the application is started.
-                                    </TextBlock>
-                                </ToolTip>
-                            </CheckBox.ToolTip>
-                        </CheckBox>
-                    </StackPanel>
-                </StackPanel>
+                    <Style x:Key="FormTextBox_Local" TargetType="TextBox" BasedOn="{StaticResource FormTextBox}">
+                        <Setter Property="Height" Value="{StaticResource CtlH}"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
 
-                <StackPanel Margin="10, 10, 0, 0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                    <StackPanel Margin="10, 10, 0, 0"  Grid.ColumnSpan="2">
-                        <TextBlock Text="Import Backup" FontWeight="Bold" Foreground="White" Margin="0 0 0 5"/>
-                        <TextBlock Text="Import a backup of the saved profiles and the saved game time data" Foreground="White" Margin="0 0 0 5" FontSize="12"/>
-                        <TextBlock Text="GameTimeX will be restarted automatically to import the backup!" Foreground="Red" Margin="0 0 0 5" FontSize="12"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Grid.Row="0" Grid.Column="0" x:Name="txtBackupPathImport" Background="#5c5c5c"
-                                 Height="30" Width="300" FontSize="15" Padding="7, 4, 0, 0" Foreground="White"
-                                 IsReadOnly="True" Margin="10 0 0 0"/>
-                        <Button x:Name="btnChooseBackUpFile" Content="Choose Backup File" Margin="10 0 0 0"
-                                Style="{StaticResource NormalGuiButton}" Width="150"
-                                Click="btnChooseBackUpFile_Click"/>
-                    </StackPanel>
-                    <TextBlock  x:Name="lblBackUpDate"  Text="Backup date of file: -" Foreground="White" Margin="10 5 0 0" FontSize="12"/>
-                    <Button x:Name="btnImportBackup"  Grid.Row ="0" Grid.Column="0" Margin="10 10 0 0" Content="Import Backup"
-                            Width="100" Height="30" HorizontalAlignment="Left"
-                            IsEnabled="False" Click="btnImportBackup_Click"
-                            Style="{StaticResource NormalGuiButton}"/>
-                </StackPanel>
+                    <Style x:Key="SectionHeader" TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
 
-                <StackPanel Margin="20 10 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
-                    <TextBlock Margin="0 0 0 10" Foreground="White" FontWeight="Bold">General Options</TextBlock>
-                    <CheckBox Grid.Row="2" Style="{StaticResource CheckBoxDefaultStyle}"
-                              Content="Show current game time session when monitoring"
-                              x:Name="cbSessionGameTime">
-                        <CheckBox.ToolTip>
-                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                <TextBlock>
-                                     If checked the current session game time is shown below the start/stop monitoring button
+                    <Style x:Key="Card" TargetType="Border">
+                        <Setter Property="Background" Value="#333333"/>
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="Padding" Value="14"/>
+                        <Setter Property="BorderBrush" Value="#20FFFFFF"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Margin" Value="12,10,12,0"/>
+                    </Style>
+                </Grid.Resources>
+
+                <!-- Scrollbarer Inhalt mit einheitlichem Innenabstand -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Padding="0,10,0,12">
+                    <StackPanel Orientation="Vertical">
+
+                        <!-- GENERAL OPTIONS -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="General Options"/>
+                                <CheckBox Style="{StaticResource CheckBoxDefaultStyle}"
+                                          Content="Show current game time session when monitoring"
+                                          x:Name="cbSessionGameTime">
+                                    <CheckBox.ToolTip>
+                                        <ToolTip ToolTipService.InitialShowDelay="0"
+                                                 Background="#333333" BorderThickness="1"
+                                                 BorderBrush="CornflowerBlue" Foreground="White">
+                                            <TextBlock TextWrapping="Wrap">
+                                                Shows the current session time below the Start/Stop button while monitoring.
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+
+                                <CheckBox Margin="0,8,0,0"
+                                          Style="{StaticResource CheckBoxDefaultStyle}"
+                                          Content="Automatic switching between game profiles"
+                                          x:Name="cbGameSwitcher">
+                                    <CheckBox.ToolTip>
+                                        <ToolTip ToolTipService.InitialShowDelay="0"
+                                                 Background="#333333" BorderThickness="1"
+                                                 BorderBrush="CornflowerBlue" Foreground="White">
+                                            <TextBlock TextWrapping="Wrap">
+                                                Automatically switches to the matching profile when a game is launched
+                                                (requires the game's folder in the profile).
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+
+                                <CheckBox Margin="0,8,0,0"
+                                          Style="{StaticResource CheckBoxDefaultStyle}"
+                                          Content="Activate blackout key combination (OLED care)"
+                                          x:Name="cbBlackoutKeyActive"
+                                          Click="cbBlackoutKeyActive_Click">
+                                    <CheckBox.ToolTip>
+                                        <ToolTip ToolTipService.InitialShowDelay="0"
+                                                 Background="#333333" BorderThickness="1"
+                                                 BorderBrush="CornflowerBlue" Foreground="White">
+                                            <TextBlock TextWrapping="Wrap">
+                                                Toggle a full-screen blackout on all displays with CTRL + B to protect OLEDs.
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+
+                                <Button Margin="0,12,0,0"
+                                        x:Name="btnShowDataFolder"
+                                        Content="Show data folder"
+                                        MinWidth="160"
+                                        Height="{StaticResource CtlH}"
+                                        HorizontalAlignment="Left"
+                                        Click="btnShowDataFolder_Click"
+                                        Style="{StaticResource PrimaryButton}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- KEY FOR GAME MONITORING -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="Key for game monitoring"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Style="{StaticResource CheckBoxDefaultStyle}"
+                                              Content="Key active"
+                                              x:Name="cbMonitoringKeyActive"
+                                              Click="cbMonitoringKeyActive_Click"/>
+                                    <CheckBox Margin="12,0,0,0"
+                                              Style="{StaticResource CheckBoxDefaultStyle}"
+                                              Content="Show toast notification"
+                                              x:Name="cbShowToastNotification"
+                                              IsEnabled="False"
+                                              Click="cbMonitoringKeyActive_Click"/>
+                                    <CheckBox Margin="12,0,0,0"
+                                              Style="{StaticResource CheckBoxDefaultStyle}"
+                                              Content="Blackout side monitors"
+                                              x:Name="cbBlackoutSideMonitor"
+                                              IsEnabled="False"
+                                              Click="cbBlackoutSideMonitor_Click"/>
+                                </StackPanel>
+
+                                <TextBlock Margin="0,8,0,0" Foreground="White" x:Name="lblCurrentKey">
+                                    Current key: (no key)
                                 </TextBlock>
-                            </ToolTip>
-                        </CheckBox.ToolTip>
-                    </CheckBox>
-                    <CheckBox Grid.Row="2" Style="{StaticResource CheckBoxDefaultStyle}"
-                              Content="Automatic switching between game profiles"
-                              Margin="0 10 0 0"
-                              x:Name="cbGameSwitcher">
-                        <CheckBox.ToolTip>
-                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                <TextBlock TextWrapping="Wrap">
-                                    When enabled, GameTimeX automatically switches the game profile. <LineBreak />
-                                    Note: The game folder path must be specified in the profile!
-                                </TextBlock>
-                            </ToolTip>
-                        </CheckBox.ToolTip>
-                    </CheckBox>
-                    <CheckBox Grid.Row="2" Style="{StaticResource CheckBoxDefaultStyle}"
-                              Content="Activate blackout key combination (OLED care)"
-                              Margin="0 10 0 0"
-                              x:Name="cbBlackoutKeyActive" Click="cbBlackoutKeyActive_Click">
-                        <CheckBox.ToolTip>
-                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                <TextBlock TextWrapping="Wrap">
-                                    When enabled, all screens are completely darkened.
-                                    The feature can be toggled on and off using the "CTRL + B" keyboard shortcut.
-                                </TextBlock>
-                            </ToolTip>
-                        </CheckBox.ToolTip>
-                    </CheckBox>
-                    <Button x:Name="btnShowDataFolder" Grid.Column="3" Margin="0 10 0 0" Content="Show data folder"
-                            Width="100" Height="30" HorizontalAlignment="Left" FontSize="11"
-                            IsEnabled="True" Click="btnShowDataFolder_Click"
-                            Style="{StaticResource NormalGuiButton}"/>
-                    <TextBlock Margin="0 10 0 10" Foreground="White" FontWeight="Bold">Key for game monitoring</TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" Content="Key active"
-                                  x:Name="cbMonitoringKeyActive"
-                                  Click="cbMonitoringKeyActive_Click"/>
-                        <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" Content="Show toast notification"
-                                  x:Name="cbShowToastNotification"
-                                  Click="cbMonitoringKeyActive_Click"
-                                  Margin="10 0 0 0"
-                                  IsEnabled="False">
-                            <CheckBox.ToolTip>
-                                <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                    <TextBlock TextWrapping="Wrap">
-                                        When enabled, a small window will appear in the upper-right corner of the screen for 3 seconds, indicating that gameplay recording has started or stopped.
-                                    </TextBlock>
-                                </ToolTip>
-                            </CheckBox.ToolTip>
-                        </CheckBox>
-                        <CheckBox Style="{StaticResource CheckBoxDefaultStyle}" Content="Blackout side monitors"
-                                  x:Name="cbBlackoutSideMonitor"
-                                  Margin="10 0 0 0"
-                                  IsEnabled="False" Click="cbBlackoutSideMonitor_Click">
-                            <CheckBox.ToolTip>
-                                <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
-                                    <TextBlock TextWrapping="Wrap">
-                                        When enabled, all monitors except the primary one will be blacked out during monitoring (OLED Care)
-                                    </TextBlock>
-                                </ToolTip>
-                            </CheckBox.ToolTip>
-                        </CheckBox>
-                    </StackPanel>
-                    <TextBlock Margin="0 5 0 0" Foreground="White" x:Name="lblCurrentKey">
-                        Current key: (no key)
-                    </TextBlock>
-                    <Button x:Name="btnMonitoringKey" Grid.Column="0" Margin="0 10 0 0" Content="Monitor key"
-                            Width="100" Height="32" HorizontalAlignment="Left"
-                            IsEnabled="False" Click="btnMonitoringKey_Click"
-                            Style="{StaticResource NormalGuiButton}"/>
-                </StackPanel>
 
-                <TextBlock Grid.Row="2" Grid.Column="1"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Bottom"
-                           Foreground="Gray"
-                           Margin="0, 0, 0, 10" Height="14" Width="150">
-                    Version 2.0.11 / Retouched
-                </TextBlock>
+                                <Button Margin="0,12,0,0"
+                                        x:Name="btnMonitoringKey"
+                                        Content="Monitor key"
+                                        MinWidth="160"
+                                        Height="{StaticResource CtlH}"
+                                        HorizontalAlignment="Left"
+                                        IsEnabled="False"
+                                        Click="btnMonitoringKey_Click"
+                                        Style="{StaticResource PrimaryButton}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- CREATE BACKUP -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="Create Backup"/>
+                                <TextBlock Foreground="White" FontSize="12"
+                                           Text="Create a backup of the saved profiles and the saved game time data"/>
+                                <TextBlock Margin="0,2,0,8" Foreground="Red" FontSize="12"
+                                           Text="GameTimeX will be restarted automatically to create the backup!"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Grid.Column="0"
+                                             x:Name="txtBackupPath"
+                                             Style="{StaticResource FormTextBox_Local}"
+                                             IsReadOnly="True"/>
+                                    <Button Grid.Column="2"
+                                            x:Name="btnChooseGameFolder"
+                                            Content="Choose Backup Folder"
+                                            MinWidth="190"
+                                            Height="{StaticResource CtlH}"
+                                            Click="btnChooseGameFolder_Click"
+                                            Style="{StaticResource PrimaryButton}"/>
+                                </Grid>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <Button x:Name="btnCreateBackup"
+                                            Content="Create Backup"
+                                            MinWidth="160"
+                                            Height="{StaticResource CtlH}"
+                                            IsEnabled="False"
+                                            Click="btnCreateBackup_Click"
+                                            Style="{StaticResource PrimaryButton}"/>
+                                    <CheckBox Margin="12,6,0,0"
+                                              Style="{StaticResource CheckBoxDefaultStyle}"
+                                              Content="Auto Backup"
+                                              x:Name="cbAutoBackup"
+                                              IsEnabled="False"
+                                              Click="cbAutoBackup_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- IMPORT BACKUP -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="Import Backup"/>
+                                <TextBlock Foreground="White" FontSize="12"
+                                           Text="Import a backup of the saved profiles and the saved game time data"/>
+                                <TextBlock Margin="0,2,0,8" Foreground="Red" FontSize="12"
+                                           Text="GameTimeX will be restarted automatically to import the backup!"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Grid.Column="0"
+                                             x:Name="txtBackupPathImport"
+                                             Style="{StaticResource FormTextBox_Local}"
+                                             IsReadOnly="True"/>
+                                    <Button Grid.Column="2"
+                                            x:Name="btnChooseBackUpFile"
+                                            Content="Choose Backup File"
+                                            MinWidth="170"
+                                            Height="{StaticResource CtlH}"
+                                            Click="btnChooseBackUpFile_Click"
+                                            Style="{StaticResource PrimaryButton}"/>
+                                </Grid>
+
+                                <TextBlock Margin="0,6,0,0" Foreground="White" FontSize="12"
+                                           x:Name="lblBackUpDate" Text="Backup date of file: -"/>
+
+                                <Button Margin="0,10,0,0"
+                                        x:Name="btnImportBackup"
+                                        Content="Import Backup"
+                                        MinWidth="160"
+                                        Height="{StaticResource CtlH}"
+                                        HorizontalAlignment="Left"
+                                        IsEnabled="False"
+                                        Click="btnImportBackup_Click"
+                                        Style="{StaticResource PrimaryButton}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Footer -->
+                        <TextBlock Margin="12,8,12,0"
+                                   HorizontalAlignment="Right"
+                                   Foreground="Gray"
+                                   Text="Version 2.0.11 / Retouched"/>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Grid>
     </Border>

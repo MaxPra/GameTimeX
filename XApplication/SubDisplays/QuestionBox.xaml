@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameTimeX"
         mc:Ignorable="d"
-        Title="Info"
-        Width="300" Height="150"
+        Title="Question"
+        Width="440" Height="230"
+        MinWidth="420" MinHeight="210"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -17,29 +17,23 @@
         UseLayoutRounding="True">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
 
-    <!-- Außenrahmen mit Rundung -->
     <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
             BorderThickness="1"
             CornerRadius="12"
             Background="#2F2F2F"
-            SnapsToDevicePixels="True"
-            Padding="0">
+            SnapsToDevicePixels="True">
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <!-- Titlebar -->
-            <Border Grid.Row="0"
-                    x:Name="titleBar"
-                    Background="Black"
-                    CornerRadius="12,12,0,0"
-                    ClipToBounds="True"/>
+            <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
             <TextBlock Grid.Row="0"
                        Text="Question"
                        VerticalAlignment="Center"
@@ -47,50 +41,55 @@
                        Margin="10,0,0,0"
                        Foreground="White"/>
 
-
             <!-- Inhalt -->
-            <Grid Grid.Row="1" x:Name="grdContent" Margin="22,18,22,18">
+            <Grid Grid.Row="1" Margin="22">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="18"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Text -->
-                <TextBlock x:Name="lblInfoText"
-                           Text="Text"
-                           TextWrapping="Wrap"
-                           Foreground="White"
-                           HorizontalAlignment="Stretch"
-                           TextAlignment="Center"
-                           Margin="0,0,0,0"
-                           VerticalAlignment="Center"/>
+                <!-- Center-Layout -->
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Width="360">
 
-                <!-- Buttons -->
-                <StackPanel Grid.Row="2"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Margin="0,0,0,0">
-                    <!-- Ja (rot) -->
-                    <Button x:Name="btnYes"
-                            Content="Yes"
-                            Width="100" Height="36"
-                            Margin="0,0,12,0"
-                            BorderBrush="Black"
-                            Background="{StaticResource ButtonCancelBrush}"
-                            Click="btnYes_Click"
-                            Foreground="White"
-                            Style="{StaticResource CancelButton}"/>
-                    <!-- Nein (blau) -->
-                    <Button x:Name="btnNo"
-                            Content="No"
-                            Width="100" Height="36"
-                            BorderBrush="Black"
-                            Background="{StaticResource ButtonDefaultBrush}"
-                            Click="btnNo_Click"
-                            Foreground="White"
-                            Style="{StaticResource NormalGuiButton}"/>
+                    <!-- Nachricht -->
+                    <TextBlock x:Name="lblInfoText"
+                               Text="Text"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               Foreground="White"
+                               FontSize="18"
+                               Margin="0,0,0,16"/>
+
+                    <!-- Actions -->
+                    <Grid Cursor="">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0"
+                                x:Name="btnYes"
+                                Content="Yes"
+                                Height="36"
+                                Background="{StaticResource ButtonCancelBrush}"
+                                BorderBrush="Black"
+                                Foreground="White"
+                                Click="btnYes_Click"
+                                Style="{StaticResource CancelButton}"/>
+
+                        <Button Grid.Column="2"
+                                x:Name="btnNo"
+                                Content="No"
+                                Height="36"
+                                Background="{StaticResource ButtonDefaultBrush}"
+                                BorderBrush="Black"
+                                Foreground="White"
+                                Click="btnNo_Click"
+                                IsCancel="True"
+                                Style="{StaticResource NormalGuiButton}"/>
+                    </Grid>
                 </StackPanel>
             </Grid>
         </Grid>

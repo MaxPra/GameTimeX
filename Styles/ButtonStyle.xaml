@@ -1,61 +1,95 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Normal GUI Button Style -->
-    <Style x:Key="NormalGuiButton" TargetType="{x:Type Button}">
+    <!-- Moderner Primärbutton -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="Padding" Value="10,6"/>
-        <Setter Property="MinHeight" Value="28"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="16,10"/>
+        <Setter Property="MinHeight" Value="38"/>
+        <Setter Property="Background" Value="{StaticResource ButtonDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Arrow"/>
-        <!-- bleibt normal -->
-        <Setter Property="Background" Value="{DynamicResource ButtonDefaultBrush}"/>
-        <Setter Property="BorderBrush" Value="#222222"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <!-- Fokus-Visual komplett abschalten (keine graue Umrandung) -->
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="Root">
-                        <!-- Basisfläche -->
+                    <Grid x:Name="Root" RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                        </Grid.RenderTransform>
+
+                        <!-- weicher Schatten -->
+                        <Border CornerRadius="10" Background="Transparent">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#40000000"
+                                              BlurRadius="10"
+                                              ShadowDepth="1.5"
+                                              Opacity="0.6"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <!-- Grundfläche -->
                         <Border x:Name="Base"
-                            CornerRadius="6"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"/>
+                            CornerRadius="10"
+                            Background="{TemplateBinding Background}"/>
+
+                        <!-- zarte Top-Glanzkante -->
+                        <Border CornerRadius="10" IsHitTestVisible="False" Opacity="0.45">
+                            <Border.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0.00" Color="#66FFFFFF"/>
+                                    <GradientStop Offset="0.10" Color="#22FFFFFF"/>
+                                    <GradientStop Offset="0.25" Color="#00000000"/>
+                                    <GradientStop Offset="1.00" Color="#00000000"/>
+                                </LinearGradientBrush>
+                            </Border.OpacityMask>
+                            <Border.Background>#FF000000</Border.Background>
+                        </Border>
+
+                        <!-- feiner Innen-/Außenrahmen -->
+                        <Border CornerRadius="10" BorderBrush="#22000000" BorderThickness="1" Background="Transparent"/>
+                        <Border CornerRadius="9"  BorderBrush="#22FFFFFF" BorderThickness="1" Background="Transparent" Margin="1"/>
 
                         <!-- Inhalt -->
-                        <ContentPresenter HorizontalAlignment="Center"
+                        <ContentPresenter Margin="10,0"
                                       VerticalAlignment="Center"
-                                      RecognizesAccessKey="True"
-                                      Margin="4,0"/>
+                                      HorizontalAlignment="Center"/>
                     </Grid>
 
-                    <!-- Trigger -->
+                    <!-- Zustände -->
                     <ControlTemplate.Triggers>
-                        <!-- Hover -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Base" Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+                            <Setter TargetName="Base" Property="Background" Value="{StaticResource ButtonHoverBrush}"/>
                         </Trigger>
 
-                        <!-- Pressed -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Base" Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+                            <Setter TargetName="Base" Property="Background" Value="{StaticResource ButtonPressedBrush}"/>
+                            <Setter TargetName="Root" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.985" ScaleY="0.985"/>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
 
-                        <!-- Disabled -->
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Base" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="Base" Property="Opacity" Value="0.55"/>
                             <Setter Property="Foreground" Value="#88FFFFFF"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Für Kompatibilität: alter Schlüssel nutzt jetzt den neuen Look -->
+    <Style x:Key="NormalGuiButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}"/>
 
     <SolidColorBrush x:Key="StrokeBrush" Color="#26FFFFFF"/>
 
@@ -104,49 +138,88 @@
 
 
 
-    <!-- Cancel Button -->
-    <Style x:Key="CancelButton" TargetType="{x:Type Button}">
-        <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="White" />
+    <!-- Danger/Cancel Button (wie PrimaryButton, aber rot) -->
+    <Style x:Key="CancelButton" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="16,10"/>
+        <Setter Property="MinHeight" Value="38"/>
         <Setter Property="Background" Value="{StaticResource ButtonCancelBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Arrow"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Border"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="8">
-                        <ContentPresenter Margin="2"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            RecognizesAccessKey="True" />
-                    </Border>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="Root">
+                        <!-- Schatten -->
+                        <Border CornerRadius="10" Background="Transparent">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#40000000" BlurRadius="10" ShadowDepth="1.5" Opacity="0.6"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <!-- Grundfläche -->
+                        <Border x:Name="Base" CornerRadius="10"
+                            Background="{TemplateBinding Background}"/>
+
+                        <!-- Glanzkante oben -->
+                        <Border CornerRadius="10" IsHitTestVisible="False" Opacity="0.45">
+                            <Border.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0.00" Color="#66FFFFFF"/>
+                                    <GradientStop Offset="0.10" Color="#22FFFFFF"/>
+                                    <GradientStop Offset="0.25" Color="#00000000"/>
+                                    <GradientStop Offset="1.00" Color="#00000000"/>
+                                </LinearGradientBrush>
+                            </Border.OpacityMask>
+                            <Border.Background>#FF000000</Border.Background>
+                        </Border>
+
+                        <!-- feine Rahmen -->
+                        <Border CornerRadius="10" BorderBrush="#22000000" BorderThickness="1" Background="Transparent"/>
+                        <Border CornerRadius="9" BorderBrush="#22FFFFFF" BorderThickness="1" Background="Transparent" Margin="1"/>
+
+                        <!-- Focus-Ring -->
+                        <Border x:Name="FocusRing" CornerRadius="12"
+                            BorderBrush="#66FFFFFF" BorderThickness="2"
+                            Opacity="0" Margin="-2"/>
+
+                        <ContentPresenter Margin="10,0"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Zustände -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Base" Property="Background" Value="{StaticResource ButtonCancelHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Base" Property="Background" Value="{StaticResource ButtonCancelPressedBrush}"/>
+                            <Setter TargetName="Root" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.985" ScaleY="0.985"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Root" Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Base" Property="Opacity" Value="0.55"/>
+                            <Setter Property="Foreground" Value="#88FFFFFF"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Trigger.EnterActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty ="Background.(SolidColorBrush.Color)" To="{StaticResource ButtonCancelHoverColor}" Duration="0:0:0.2"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </Trigger.EnterActions>
-                <Trigger.ExitActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" To="{StaticResource ButtonCancelDefaultColor}" Duration="0:0:0.2" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </Trigger.ExitActions>
-            </Trigger>
-        </Style.Triggers>
     </Style>
+
 
     <!-- Start/Stop Monitoring Button -->
     <Style x:Key="StartStopMonitoringButton" TargetType="Button">

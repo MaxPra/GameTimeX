@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Create New Profile"
-        Width="560" Height="300"
+        Width="560" Height="250"
         WindowStyle="None"
         WindowStartupLocation="CenterOwner"
         AllowsTransparency="True"
@@ -17,6 +18,32 @@
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
 
+    <!-- Lokale Maße/Styles -->
+    <Window.Resources>
+        <!-- einheitliche Höhe und kompakter Reihenabstand -->
+        <sys:Double x:Key="FormControlHeight">32</sys:Double>
+        <Thickness x:Key="FormRowSpacing">0,3,0,3</Thickness>
+
+        <!-- Icon-Only-Button auf TextBox-Höhe -->
+        <Style x:Key="IconOnlyButton" TargetType="Button" BasedOn="{StaticResource NormalGuiButton}">
+            <Setter Property="Width" Value="56"/>
+            <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
+            <Setter Property="Margin" Value="{StaticResource FormRowSpacing}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- TextBox an gleiche Höhe/Abstand binden -->
+        <Style x:Key="FormTextBox_Local" TargetType="TextBox" BasedOn="{StaticResource FormTextBox}">
+            <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
+            <Setter Property="Margin" Value="{StaticResource FormRowSpacing}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <!-- Außenrahmen -->
     <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
             BorderThickness="1"
             Background="#2F2F2F"
@@ -25,7 +52,7 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -33,8 +60,9 @@
             <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
             <TextBlock Grid.Row="0" Text="Create new profile" Margin="10,0,0,0"
                        VerticalAlignment="Center" Foreground="White"/>
+
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btnClose" Content="X" Width="40" Height="30"
+                <Button x:Name="btnClose" Content="X" Width="40" Height="28"
                         Foreground="White" Background="Transparent" BorderBrush="Transparent"
                         Click="btnClose_Click" Style="{StaticResource NoMouseOverButtonStyle}">
                     <Button.Template>
@@ -56,160 +84,83 @@
             </StackPanel>
 
             <!-- Inhalt -->
-            <Grid Grid.Row="1" Margin="22">
+            <Grid Grid.Row="1" Margin="18">
+                <!-- Spalten: Felder | Spacer | Icon-Spalte -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
+                <!-- Kompakte Reihen: nur Auto + Füller + Save -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="12"/>
+                    <!-- Name -->
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="12"/>
+                    <!-- Pic path -->
                     <RowDefinition Height="Auto"/>
+                    <!-- Game folder -->
                     <RowDefinition Height="*"/>
+                    <!-- Füller -->
                     <RowDefinition Height="Auto"/>
+                    <!-- Save -->
                 </Grid.RowDefinitions>
 
                 <!-- Profile name -->
-                <Grid Grid.Row="0" Grid.Column="0">
-                    <TextBox x:Name="txtProfileName"
-                             Background="#5c5c5c"
-                             Height="30" FontSize="15"
-                             Padding="7,4,0,0"
-                             Foreground="White"/>
-                    <TextBlock IsHitTestVisible="False"
-                               Text="Profile name"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               Margin="9,0,0,0" Foreground="White">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=txtProfileName}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
+                <TextBox Grid.Row="0" Grid.Column="0"
+                         x:Name="txtProfileName"
+                         Style="{StaticResource FormTextBox_Local}"
+                         Tag="Profile name"/>
 
                 <!-- Picture path -->
-                <Grid Grid.Row="2" Grid.Column="0">
-                    <TextBox x:Name="txtPicPath"
-                             Background="#5c5c5c"
-                             Height="30" FontSize="15"
-                             Padding="7,4,0,0"
-                             Foreground="White"
-                             IsReadOnly="True"/>
-                    <TextBlock IsHitTestVisible="False"
-                               Text="Picture path"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               Margin="9,0,0,0" Foreground="White">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=txtPicPath}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
+                <TextBox Grid.Row="1" Grid.Column="0"
+                         x:Name="txtPicPath"
+                         Style="{StaticResource FormTextBox_Local}"
+                         IsReadOnly="True"
+                         Tag="Picture path"/>
 
-                <!-- Picture button (Icon aus Ressourcen) -->
-                <Button Grid.Row="2" Grid.Column="1"
+                <!-- Picture icon button -->
+                <Button Grid.Row="1" Grid.Column="2"
                         x:Name="btnShowFileDialog"
                         Click="btnShowFileDialog_Click"
-                        HorizontalAlignment="Right"
-                        Width="180" Height="38"
-                        BorderBrush="Black" Background="#0099ff"
-                        Foreground="White"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
                         ToolTip="Choose pic"
-                        Style="{StaticResource NormalGuiButton}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="12"/>
-                        </Style>
-                    </Button.Resources>
-                    <Image Source="{StaticResource picture}" Width="22" Height="22" Stretch="Uniform"/>
+                        Style="{StaticResource IconOnlyButton}">
+                    <Image Source="{StaticResource picture}" Width="18" Height="18" Stretch="Uniform"/>
                 </Button>
 
                 <!-- Game folder -->
-                <Grid Grid.Row="4" Grid.Column="0">
-                    <TextBox x:Name="txtGameFolderPath"
-                             Background="#5c5c5c"
-                             Height="30" FontSize="15"
-                             Padding="7,4,0,0"
-                             Foreground="White">
-                        <TextBox.ToolTip>
-                            <ToolTip ToolTipService.InitialShowDelay="0"
-                                     Background="#333333" BorderThickness="1"
-                                     BorderBrush="CornflowerBlue" Foreground="White">
-                                <TextBlock>
-                                    If specified, GameTimeX will automatically get the exe and switch between profiles (enable in settings).
-                                </TextBlock>
-                            </ToolTip>
-                        </TextBox.ToolTip>
-                    </TextBox>
-                    <TextBlock IsHitTestVisible="False"
-                               Text="Game folder (opt.)"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               Margin="9,0,0,0" Foreground="White">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=txtGameFolderPath}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
+                <TextBox Grid.Row="2" Grid.Column="0"
+                         x:Name="txtGameFolderPath"
+                         Style="{StaticResource FormTextBox_Local}"
+                         Tag="Game folder (opt.)">
+                    <TextBox.ToolTip>
+                        <ToolTip ToolTipService.InitialShowDelay="0"
+                                 Background="#333333" BorderThickness="1"
+                                 BorderBrush="CornflowerBlue" Foreground="White">
+                            <TextBlock TextWrapping="Wrap">
+                                If specified, GameTimeX will automatically get the exe and switch between profiles (enable in settings).
+                            </TextBlock>
+                        </ToolTip>
+                    </TextBox.ToolTip>
+                </TextBox>
 
-                <!-- Folder button (Icon aus Ressourcen) -->
-                <Button Grid.Row="4" Grid.Column="1"
+                <!-- Folder icon button -->
+                <Button Grid.Row="2" Grid.Column="2"
                         x:Name="btnShowFileDialogExe"
                         Click="btnShowFileDialogExe_Click"
-                        HorizontalAlignment="Right"
-                        Width="180" Height="38"
-                        BorderBrush="Black" Background="#0099ff"
-                        Foreground="White"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
                         ToolTip="Choose folder"
-                        Style="{StaticResource NormalGuiButton}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="12"/>
-                        </Style>
-                    </Button.Resources>
-                    <Image Source="{StaticResource folder}" Width="22" Height="22" Stretch="Uniform"/>
+                        Style="{StaticResource IconOnlyButton}">
+                    <Image Source="{StaticResource folder}" Width="18" Height="18" Stretch="Uniform"/>
                 </Button>
 
-                <!-- Save (links bündig mit den Feldern) -->
-                <Button Grid.Row="6" Grid.Column="0"
+                <!-- Save (volle Breite, kleine Top-/Bottom-Marge) -->
+                <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
                         x:Name="btnCreateNewProfile"
                         Content="Save"
-                        Width="200" Height="42"
-                        HorizontalAlignment="Left"
+                        Margin="0,8,0,2"
+                        HorizontalAlignment="Stretch"
                         Click="btnCreateNewProfile_Click"
-                        BorderBrush="Black" Background="#0099ff"
-                        Foreground="White"
-                        Style="{StaticResource NormalGuiButton}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="12"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                        Style="{StaticResource NormalGuiButton}"/>
             </Grid>
         </Grid>
     </Border>
