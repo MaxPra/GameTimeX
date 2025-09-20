@@ -45,7 +45,7 @@ GameTimeX is a personal project I developed as a hobby during my free time.
 ### Main Window Overview
 
 When you launch the application for the first time, the main window will appear as shown below:  
-<img width="1217" height="809" alt="image" src="https://github.com/user-attachments/assets/c3bba32f-0c31-4eb2-bdb2-af8b9b4f6ac0" />
+<img width="1212" height="813" alt="image" src="https://github.com/user-attachments/assets/6eb7e027-c952-408c-bd3a-179b4de85ab4" />
 
 **Main window sections:**
 
@@ -63,7 +63,7 @@ When you launch the application for the first time, the main window will appear 
 5. **Rename Profile** – Click the pencil icon next to the profile name to rename it.
 
 After adding a profile, the view may look like this:  
-<img width="1208" height="806" alt="image" src="https://github.com/user-attachments/assets/fea9d2e8-609a-48d5-b655-3eda2fdf0187" />
+<img width="1207" height="809" alt="image" src="https://github.com/user-attachments/assets/1627bb5e-f9a4-4c3e-be67-d2cea5a2abf1" />
 
 Profile names and images can be adjusted at any time. Simply click the pencil icon or select *Change Image*.  
 Hovering over the small “i” next to *Game Time* will show the tracked time in minutes, alongside the recorded first and last play sessions.
@@ -77,7 +77,8 @@ If you restart a game after already having recorded playtime, the *New Playthrou
 ### Settings
 
 The settings window gives you fine-grained control over how GameTimeX behaves:  
-<img width="533" height="732" alt="image" src="https://github.com/user-attachments/assets/6a25a393-b210-4b83-b2a4-164230bf5c47" />
+<img width="529" height="730" alt="image" src="https://github.com/user-attachments/assets/f4e36339-03aa-4b14-a7a9-5d5bbab2a9c9" />
+<img width="533" height="729" alt="image" src="https://github.com/user-attachments/assets/a99536a0-5d8a-4dd9-996d-a1e753bba252" />
 
 **Available options:**
 
@@ -115,7 +116,7 @@ This gives you full control and prevents false detections when multiple games sh
 
 When creating a profile, you will be prompted to select an image.  
 After choosing an image, the cropping window will open:  
-<img width="1206" height="806" alt="image" src="https://github.com/user-attachments/assets/d0738e77-1188-4c4c-bc80-f12a60385153" />
+<img width="1211" height="814" alt="image" src="https://github.com/user-attachments/assets/a94e01b8-0482-459e-9d6a-a213b8a56f8d" />
 
 **Cropping controls:**
 - Resize the cropping area: use the mouse wheel.  
