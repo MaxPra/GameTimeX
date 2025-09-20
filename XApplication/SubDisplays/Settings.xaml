@@ -109,9 +109,8 @@
                                           Content="Show current game time session when monitoring"
                                           x:Name="cbSessionGameTime">
                                     <CheckBox.ToolTip>
-                                        <ToolTip ToolTipService.InitialShowDelay="0"
-                                                 Background="#333333" BorderThickness="1"
-                                                 BorderBrush="CornflowerBlue" Foreground="White">
+                                        <ToolTip Background="#333333" BorderThickness="1"
+                                                 Foreground="White">
                                             <TextBlock TextWrapping="Wrap">
                                                 Shows the current session time below the Start/Stop button while monitoring.
                                             </TextBlock>
@@ -124,9 +123,8 @@
                                           Content="Automatic switching between game profiles"
                                           x:Name="cbGameSwitcher">
                                     <CheckBox.ToolTip>
-                                        <ToolTip ToolTipService.InitialShowDelay="0"
-                                                 Background="#333333" BorderThickness="1"
-                                                 BorderBrush="CornflowerBlue" Foreground="White">
+                                        <ToolTip Background="#333333" BorderThickness="1"
+                                                 Foreground="White">
                                             <TextBlock TextWrapping="Wrap">
                                                 Automatically switches to the matching profile when a game is launched
                                                 (requires the game's folder in the profile).
@@ -141,9 +139,8 @@
                                           x:Name="cbBlackoutKeyActive"
                                           Click="cbBlackoutKeyActive_Click">
                                     <CheckBox.ToolTip>
-                                        <ToolTip ToolTipService.InitialShowDelay="0"
-                                                 Background="#333333" BorderThickness="1"
-                                                 BorderBrush="CornflowerBlue" Foreground="White">
+                                        <ToolTip Background="#333333" BorderThickness="1"
+                                                 Foreground="White">
                                             <TextBlock TextWrapping="Wrap">
                                                 Toggle a full-screen blackout on all displays with CTRL + B to protect OLEDs.
                                             </TextBlock>

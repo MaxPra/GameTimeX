@@ -14,29 +14,53 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
+using System.Windows.Threading;
+using System.Windows.Media.Effects;
+using Color = System.Windows.Media.Color; // DropShadowEffect
 
 namespace GameTimeX
 {
     internal class DisplayHandler
     {
+        // ---- Styling/Animation Tweaks (einfach anpassen) ----
+        private const double HoverScale = 1.03;
+        private const double HoverLiftY = -2.0;
+        private const double PressScaleDelta = -0.05; // relativ
+        private const double PressLiftDelta = 1.0;    // relativ
+        private const double HoverDotWidth = 10.0;    // Breite des Hover-Punkts
+        private static readonly TimeSpan IntroDuration = TimeSpan.FromMilliseconds(260);
+        private static readonly TimeSpan HoverDuration = TimeSpan.FromMilliseconds(130);
+        private static readonly TimeSpan LeaveDuration = TimeSpan.FromMilliseconds(150);
+        private static readonly TimeSpan PressDuration = TimeSpan.FromMilliseconds(70);
+        private static readonly TimeSpan HoverDotDuration = TimeSpan.FromMilliseconds(140);
+        private static readonly Color DefaultShadowColor = Colors.Black;
+        private static readonly Color SelectedShadowColor = Color.FromRgb(40, 154, 252); // ButtonDefaultColor-ähnlich
+        // -----------------------------------------------------
+
+        // Lazy-Loading: kleiner Cache + Tag-Daten
+        private static readonly Dictionary<string, BitmapImage> _thumbCache = new();
+
+        private sealed class LazyInfo
+        {
+            public string Path;
+            public int DecodeSize;
+            public bool Loaded;
+        }
+
         public static bool CheckDisplay(bool showMessageAfterCheck, params Control[] controls)
         {
             bool emptyFields = false;
 
             foreach (var control in controls)
             {
-                // Übergebenes Control ist Textbox
-                if (control is TextBox)
+                if (control is TextBox txtBox)
                 {
-                    TextBox txtBox = (TextBox)control;
                     if (String.IsNullOrEmpty(txtBox.Text))
                     {
                         txtBox.BorderBrush = SysProps.emptyFieldsColor;
                         emptyFields = true;
                     }
                 }
-
-                // Weitere folgen....
             }
 
             return !emptyFields;
@@ -44,26 +68,19 @@ namespace GameTimeX
 
         public static void BuildInfoDisplay(int pid, MainWindow wnd)
         {
-            if(pid == 0)
+            if (pid == 0)
             {
                 BuildInfoDisplayNoGame(wnd);
                 return;
             }
 
-            // Objekt nochmal frisch aus der DB holen
             DBObject obj = DataBaseHandler.ReadPID(pid);
 
             wnd.lblGameName.Text = obj.GameName;
-
-            // Tooltip für Game Namen befüllen
             wnd.lblToolTipGameName.Text = obj.GameName;
 
-            BitmapImage bitProfilePic = new BitmapImage();
-            // Kommt es beim Croppen zu einem Fehler (warum auch immer) würde GameTimeX abstürzen, wenn er das Profil lädt
-            // => weil er kein Bild laden kann was es nicht gibt.
-            // => vorher prüfen, ob File auch exisitert, was er hier laden möchte
-            // => wenn ja, dann File laden, ansonsten wird das Default-Image verwendet
-            if (System.IO.File.Exists(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName))
+            BitmapImage bitProfilePic;
+            if (File.Exists(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName))
             {
                 bitProfilePic = new BitmapImage();
                 bitProfilePic.BeginInit();
@@ -75,7 +92,6 @@ namespace GameTimeX
                 bitProfilePic = GetDefaultProfileImage();
             }
 
-          
             wnd.currProfileImage.Source = bitProfilePic;
             wnd.lblFirstTimePlayed.Text = FormatDatePlayed(obj.FirstPlay);
             wnd.lblLastTimePlayed.Text = FormatDatePlayed(obj.LastPlay);
@@ -90,58 +106,30 @@ namespace GameTimeX
 
             // Formatieren des Spielzeittextes 
             double hours = MonitorHandler.CalcGameTime(obj.GameTime);
-
-            string gameTimeText = "";
-
-            if(hours == 0.0)
-            {
-                gameTimeText = "N/A";
-            }
-            else if(hours >= 1)
-            {
-                gameTimeText = string.Format("{0:F1}", hours) + "h";
-            }
-            else
-            {
-                gameTimeText = "< 1h";
-            }
+            string gameTimeText =
+                hours == 0.0 ? "N/A" :
+                hours >= 1 ? string.Format("{0:F1}", hours) + "h" :
+                "< 1h";
 
             wnd.lblGameTime.Text = gameTimeText;
 
             // Playthrough Game Time
-            
-            // Wenn Startpunkt des neuen Playthrough = 0 => ausblenden
-            if(obj.PlayThroughStartingPoint == 0)
+            if (obj.PlayThroughStartingPoint == 0)
             {
                 wnd.rowPlaythrough.Height = new GridLength(0);
             }
             else
             {
-                wnd.rowPlaythrough.Height = new GridLength(15, GridUnitType.Star);
-                // Ansonsten mit Daten befüllen
+                wnd.rowPlaythrough.Height = new GridLength(12);
+
                 int actPlaythroughTime = (int)obj.GameTime - obj.PlayThroughStartingPoint;
-
-
-                // ToolTip setzen
                 wnd.lblToolTipGameTimeTextNewPlaythrough.Text = actPlaythroughTime.ToString("n0") + " minutes";
 
-                // Formatieren des Spielzeittextes 
                 hours = MonitorHandler.CalcGameTime(actPlaythroughTime);
-
-                gameTimeText = "";
-
-                if (hours == 0.0)
-                {
-                    gameTimeText = "N/A";
-                }
-                else if (hours >= 1)
-                {
-                    gameTimeText = string.Format("{0:F1}", hours) + "h";
-                }
-                else
-                {
-                    gameTimeText = "< 1h";
-                }
+                gameTimeText =
+                    hours == 0.0 ? "N/A" :
+                    hours >= 1 ? string.Format("{0:F1}", hours) + "h" :
+                    "< 1h";
 
                 wnd.lblToolTipGameTimeTextNewPlaythrough.Text = gameTimeText;
             }
@@ -167,31 +155,21 @@ namespace GameTimeX
             bitProfilePic.BeginInit();
             bitProfilePic.UriSource = new Uri("pack://application:,,,/images/NO_PICTURE.png");
             bitProfilePic.EndInit();
-
             return bitProfilePic;
         }
 
         private static string FormatDatePlayed(DateTime date)
         {
-            if(date == DateTime.MinValue)
-            {
-                return "N/A";
-            }
-            else
-            {
-                return date.ToString();
-            }
+            return date == DateTime.MinValue ? "N/A" : date.ToString();
         }
 
         public static void SwitchToFirstGameInList(MainWindow wnd, StartUpParms.ViewModes viewMode)
         {
-            // Liste
-            if(viewMode == StartUpParms.ViewModes.LIST)
+            if (viewMode == StartUpParms.ViewModes.LIST)
             {
-                if(wnd.dgProfiles.Items.Count != 0)
+                if (wnd.dgProfiles.Items.Count != 0)
                     wnd.dgProfiles.SelectedIndex = 0;
             }
-            // Kacheln
             else
             {
                 if (wnd.grdGameProfiles.Children.Count != 0)
@@ -205,9 +183,22 @@ namespace GameTimeX
                     {
                         image.Selected = true;
                         SysProps.currentSelectedPID = image.PID;
-                        AnimateBorderWidth((Border)stackpanel.Children[2], image.Width, true);
+
+                        // Klick-Unterstrich vorbereiten (Wipe von links)
+                        Border underline = (Border)stackpanel.Children[2];
+                        underline.BeginAnimation(Border.WidthProperty, null);
+                        underline.Width = 0;
+                        underline.HorizontalAlignment = HorizontalAlignment.Left;
+                        double w = SafeUnderlineWidth(image);
+                        AnimateBorderWidth(underline, w, true);
+
                         image.DoBorderEffect = false;
                         textBlock.FontWeight = FontWeights.Bold;
+
+                        // visuelles „Selected“-Glow
+                        UpdateSelectionGlow(stackpanel, true);
+
+                        wnd.scrollBarTiles.ScrollToTop();
                     }
                 }
                 else
@@ -219,15 +210,35 @@ namespace GameTimeX
             BuildInfoDisplay(SysProps.currentSelectedPID, wnd);
         }
 
+        private static BitmapImage LoadTileBitmap(string path, int pixelSize)
+        {
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.UriSource = new Uri(path);
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+            if (pixelSize > 0) bmp.DecodePixelWidth = pixelSize;
+            bmp.EndInit();
+            bmp.Freeze();
+            return bmp;
+        }
+
+        private static BitmapImage LoadTileBitmapCached(string path, int pixelSize)
+        {
+            string key = $"{path}|{pixelSize}";
+            if (_thumbCache.TryGetValue(key, out var cached)) return cached;
+            var bmp = LoadTileBitmap(path, pixelSize);
+            _thumbCache[key] = bmp;
+            return bmp;
+        }
+
         public static void SwitchToSpecificGame(MainWindow wnd, StartUpParms.ViewModes viewMode, int pid)
         {
-            // Liste
             if (viewMode == StartUpParms.ViewModes.LIST)
             {
                 if (wnd.dgProfiles.Items.Count != 0)
                     SelectRowByValue(wnd.dgProfiles, pid);
             }
-            // Kacheln
             else
             {
                 if (wnd.grdGameProfiles.Children.Count != 0)
@@ -273,22 +284,30 @@ namespace GameTimeX
                 Border border = (Border)stackPanel.Children[0];
                 GTXImage img = (GTXImage)border.Child;
                 TextBlock txtBlock = (TextBlock)stackPanel.Children[1];
+                Border underline = (Border)stackPanel.Children[2];
 
                 int rowIndex = Grid.GetRow(stackPanel);
-              
-                // Tiles durchsuchen
-                if(img.PID == valueToFind)
+
+                if (img.PID == valueToFind)
                 {
                     DeselectNonCurrentProfiles(img.PID);
                     img.Selected = true;
                     img.DoBorderEffect = false;
 
-                    // Zu Zeile scrollen
                     ScrollToProileTilesGridRow(grid, scrollViewer, rowIndex);
 
                     txtBlock.FontWeight = FontWeights.Bold;
-                    AnimateBorderWidth((Border)stackPanel.Children[2], img.ActualWidth, true);
+
+                    // Klick-Unterstrich (Wipe von links)
+                    underline.BeginAnimation(Border.WidthProperty, null);
+                    underline.Width = 0;
+                    underline.HorizontalAlignment = HorizontalAlignment.Left;
+                    double w = SafeUnderlineWidth(img);
+                    AnimateBorderWidth(underline, w, true);
+
                     SysProps.currentSelectedPID = img.PID;
+
+                    UpdateSelectionGlow(stackPanel, true);
                 }
             }
         }
@@ -297,14 +316,10 @@ namespace GameTimeX
         {
             if (rowIndex >= 0 && rowIndex < grid.RowDefinitions.Count)
             {
-                // Berechne die Höhe bis zur angegebenen Zeile
                 double offset = 0;
                 for (int i = 0; i <= rowIndex; i++)
-                {
                     offset += grid.RowDefinitions[i].ActualHeight;
-                }
 
-                // Scrollen bis zur berechneten Höhe
                 scrollViewer.ScrollToVerticalOffset(offset);
             }
         }
@@ -312,11 +327,7 @@ namespace GameTimeX
         private static int GetRowIndexForItem(DataGrid grid, Profile item)
         {
             var collection = grid.ItemsSource as IList<Profile>;
-            if (collection != null)
-            {
-                return collection.IndexOf(item);
-            }
-            return -1; // Rückgabewert, falls das Element nicht gefunden wird
+            return collection != null ? collection.IndexOf(item) : -1;
         }
 
         public static void ScrollToDataGridRow(DataGrid myDataGrid, int rowIndex)
@@ -324,99 +335,107 @@ namespace GameTimeX
             if (rowIndex >= 0 && rowIndex < myDataGrid.Items.Count)
             {
                 var row = myDataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as System.Windows.Controls.DataGridRow;
-                if (row != null)
+                row?.BringIntoView();
+            }
+        }
+
+        private static List<DBObject> GetAllPlayableGames(List<DBObject> gameProfiles)
+        {
+            var playableGames = new List<DBObject>();
+
+            foreach (DBObject gameProfile in gameProfiles)
+            {
+                if (Directory.Exists(gameProfile.ExtGameFolder) &&
+                    GameSwitcherHandler.GetAllExecutablesFromDirectory(gameProfile.ExtGameFolder).Count > 0)
                 {
-                    // Scrollt die Zeile in den sichtbaren Bereich
-                    row.BringIntoView();
+                    playableGames.Add(gameProfile);
                 }
             }
+
+            return playableGames;
         }
 
         public static void BuildInfoDisplayNoGame(MainWindow wnd)
         {
-            // Buttons Disablen
             wnd.btnEditProfileName.IsEnabled = false;
             wnd.btnStartStopMonitoring.IsEnabled = false;
             wnd.lblChangeProfileImage.IsEnabled = false;
-            wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
+            wnd.currProfileImage.Source = GetDefaultProfileImage();
+            wnd.lblGameName.Text = "N/A";
+            wnd.lblFirstTimePlayed.Text = "N/A";
+            wnd.lblLastTimePlayed.Text = "N/A";
+            wnd.lblGameTime.Text = "N/A";
+            wnd.lblToolTipGameTimeText.Text = "N/A";
+            wnd.lblToolTipGameTimeTextNewPlaythrough.Text = "N/A";
         }
 
         public static void BuildGameProfileGrid(MainWindow wnd)
         {
-            // Alle Spielprofile holen
             List<DBObject> gameProfiles;
 
             wnd.grdGameProfiles.RowDefinitions.Clear();
             wnd.grdGameProfiles.ColumnDefinitions.Clear();
             wnd.grdGameProfiles.Children.Clear();
 
-            //wnd.grdGameProfiles.Margin = new Thickness(-10, 0, 0, 0);
-
             if (wnd.txtSearchBar.Text.Length > 0)
-            {
                 gameProfiles = DataBaseHandler.ReadGameName(wnd.txtSearchBar.Text);
-            }
             else
-            {
                 gameProfiles = DataBaseHandler.ReadAll();
-            }
+
+            if (wnd.btnPlayableFilter.IsChecked == true)
+                gameProfiles = GetAllPlayableGames(gameProfiles);
+
+            if (gameProfiles.Count == 0)
+                wnd.emptyStateOverlay.Visibility = Visibility.Visible;
+            else
+                wnd.emptyStateOverlay.Visibility = Visibility.Collapsed;
 
             (int, int) colAndRows = CalculateRowsAndColumnsGameProfileGrid(gameProfiles);
             int rows = colAndRows.Item1;
             int cols = colAndRows.Item2;
 
-            // Row-Definiton aufbauen
             BuildGameProfileGridRowDefinitons(wnd.grdGameProfiles, rows);
-
-            // Column-Definition aufbauen
             BuildGameProfileGridColumnDefinitions(wnd.grdGameProfiles, cols);
 
-            // Grid befüllen mit Profilen
             FillGameProfilesGrid(wnd.grdGameProfiles, gameProfiles, wnd);
 
-            SwitchToFirstGameInList(wnd, SysProps.startUpParms.ViewMode);
+            // Lazy-Loading initialisieren + initiale Sichtbarkeit prüfen
+            HookLazyLoading(wnd);
 
-            BuildInfoDisplay(SysProps.currentSelectedPID, wnd);
-            
+            // Selektion + Unterstrich erst nach Layout-Pass starten
+            wnd.Dispatcher.InvokeAsync(
+                () => SwitchToFirstGameInList(wnd, SysProps.startUpParms.ViewMode),
+                DispatcherPriority.Loaded
+            );
         }
 
         private static void BuildDGProfiles(MainWindow wnd)
         {
-
-            List<DBObject> profiles = null;
-
-            if (wnd.txtSearchBar.Text == "")
-            {
-                profiles = DataBaseHandler.ReadAll();
-            }
-            else
-            {
-                profiles = DataBaseHandler.ReadGameName(wnd.txtSearchBar.Text);
-            }
+            List<DBObject> profiles = wnd.txtSearchBar.Text == ""
+                ? DataBaseHandler.ReadAll()
+                : DataBaseHandler.ReadGameName(wnd.txtSearchBar.Text);
 
             wnd.dgProfiles.Items.Clear();
 
             foreach (DBObject dbprofile in profiles)
             {
-                Profile profile = new Profile();
-                profile.ProfileName = dbprofile.GameName;
-                profile.GameTime = dbprofile.GameTime;
-                profile.PID = dbprofile.ProfileID;
-
+                Profile profile = new Profile
+                {
+                    ProfileName = dbprofile.GameName,
+                    GameTime = dbprofile.GameTime,
+                    PID = dbprofile.ProfileID
+                };
                 wnd.dgProfiles.Items.Add(profile);
             }
 
-            DisplayHandler.SwitchToFirstGameInList(wnd, StartUpParms.ViewModes.LIST);
+            SwitchToFirstGameInList(wnd, StartUpParms.ViewModes.LIST);
 
             if (profiles.Count == 0)
-            {
-                DisplayHandler.BuildInfoDisplayNoGame(wnd);
-            }
+                BuildInfoDisplayNoGame(wnd);
         }
 
         public static void BuildGameProfileView(MainWindow wnd)
         {
-            // View Mode unterscheiden und je nachdem auswählen
             if (SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
             {
                 wnd.grdGameProfiles.Visibility = Visibility.Collapsed;
@@ -426,7 +445,6 @@ namespace GameTimeX
                 wnd.dgProfiles.Visibility = Visibility.Visible;
                 wnd.scrollBar.Visibility = Visibility.Visible;
 
-                // DataGrid aufbauen (Gameprofile laden)
                 BuildDGProfiles(wnd);
             }
             else
@@ -440,34 +458,22 @@ namespace GameTimeX
 
                 BuildGameProfileGrid(wnd);
 
-                DisplayHandler.AttachContextMenuToDataGrid(wnd.dgProfiles);
+                AttachContextMenuToDataGrid(wnd.dgProfiles);
             }
         }
 
-
-
         private static (int, int) CalculateRowsAndColumnsGameProfileGrid(List<DBObject> gameProfiles)
         {
-            // Maximale Spalten pro Zeile
             int maxColumnsPerRow = 4;
             int rows = 4;
 
-            // Anzahl der Spielprofile
             int gameProfilesCount = gameProfiles.Count;
 
-            // Wenn wir ein 4x4 Grid betrachten, müssen mind. 16 Spalten insg. erzeugt werden (4 Rows + 4 Columns)
-            // Ansonsten passen die Proportienen nicht!
-            // Sind es also mehrere, dann müssen wir die Rows ausrechnen!
-            if(gameProfilesCount > 16)
+            if (gameProfilesCount > 16)
             {
-                if(gameProfilesCount % maxColumnsPerRow != 0)
-                {
-                    rows = (gameProfilesCount / maxColumnsPerRow) + 1;
-                }
-                else
-                {
-                    rows = gameProfilesCount / maxColumnsPerRow;
-                }
+                rows = (gameProfilesCount % maxColumnsPerRow != 0)
+                    ? (gameProfilesCount / maxColumnsPerRow) + 1
+                    : (gameProfilesCount / maxColumnsPerRow);
             }
 
             return (rows, maxColumnsPerRow);
@@ -475,154 +481,159 @@ namespace GameTimeX
 
         private static void BuildGameProfileGridRowDefinitons(Grid grid, int rows)
         {
-            // Spielprofile durchgehen und Row-Definitons erstellen
-            for(int i = 0; i < rows; i++) 
-            {
-                RowDefinition rowDefinition = new RowDefinition();
-                rowDefinition.Height = new GridLength(1, GridUnitType.Star);
-                grid.RowDefinitions.Add(rowDefinition);
-            }
+            for (int i = 0; i < rows; i++)
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
         }
 
         private static void BuildGameProfileGridColumnDefinitions(Grid grid, int columns)
         {
-            // Spielprofile durchgehen und Column-Definitons erstellen
             for (int i = 0; i < columns; i++)
             {
-                ColumnDefinition columnDefinition = new ColumnDefinition();
-                columnDefinition.Width = new GridLength(1, GridUnitType.Star);
+                ColumnDefinition columnDefinition = new ColumnDefinition
+                {
+                    Width = new GridLength(1, GridUnitType.Star)
+                };
                 grid.ColumnDefinitions.Add(columnDefinition);
             }
         }
 
         private static void FillGameProfilesGrid(Grid grid, List<DBObject> gameProfiles, MainWindow wnd)
         {
-
-            // Zeilen von Grid erhalten
             int rows = grid.RowDefinitions.Count;
             int columns = grid.ColumnDefinitions.Count;
             int gameProfilesIndex = 0;
-            
-            // Zeilenweise durchgehen
-            for(int i = 0;i < rows;i++)
+
+            for (int i = 0; i < rows; i++)
             {
-                // Spaltenweise durchgehen
-                for(int j = 0;j < columns; j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    if(gameProfiles.Count - 1 >= gameProfilesIndex)
+                    if (gameProfiles.Count - 1 < gameProfilesIndex)
+                        continue;
+
+                    DBObject obj = gameProfiles[gameProfilesIndex];
+
+                    StackPanel stackPanel = new StackPanel
                     {
-                        DBObject obj = gameProfiles[gameProfilesIndex];
+                        Orientation = Orientation.Vertical,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Top,
+                        Margin = new Thickness(10),
+                        RenderTransformOrigin = new System.Windows.Point(0.5, 0.5)
+                    };
 
-                        StackPanel stackPanel = new StackPanel();
-                        Border imageBorder = new Border();
-                        imageBorder.Effect = VisualHandler.GetDropShadowEffect();
+                    // TransformGroup für Animationen
+                    var tg = new TransformGroup();
+                    var scale = new ScaleTransform(1, 1);
+                    var translate = new TranslateTransform(0, 0);
+                    tg.Children.Add(scale);
+                    tg.Children.Add(translate);
+                    stackPanel.RenderTransform = tg;
 
-                        if (j == 0)
-                        {
-                            stackPanel.Margin = new Thickness(0, 10, 0, 0);
-                        }
-                        else
-                        {
-                            stackPanel.Margin = new Thickness(10, 10, 10, 10);
-                        }
+                    Border imageBorder = new Border
+                    {
+                        CornerRadius = new CornerRadius(5),
+                        Background = System.Windows.Media.Brushes.Transparent,
+                        SnapsToDevicePixels = true,
+                        Effect = VisualHandler.GetDropShadowEffect()
+                    };
 
-                        stackPanel.Orientation = Orientation.Vertical;
+                    Border bottomBorder = new Border
+                    {
+                        Height = 4,
+                        Background = SysProps.defButtonColor,
+                        Width = 0,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        Margin = new Thickness(0),
+                        CornerRadius = new CornerRadius(2)
+                    };
 
-                        Border bottomBorder = new Border
-                        {
-                            Height = 4,
-                            Background = SysProps.defButtonColor,
-                            Width = 0, // Anfangsbreite der Border
-                            VerticalAlignment = VerticalAlignment.Bottom,
-                            HorizontalAlignment = HorizontalAlignment.Stretch,
-                            Margin = new Thickness(0),
-                            CornerRadius = new CornerRadius(2)
-                        };
+                    GTXImage profileImage = new GTXImage
+                    {
+                        PID = obj.ProfileID,
+                        MainWnd = wnd
+                    };
 
-                        GTXImage profileImage = new GTXImage();
-                        profileImage.PID = obj.ProfileID;
-                        profileImage.MainWnd = wnd;
+                    // Tilegröße ermitteln
+                    double tileSize = GetWidthForImage(grid, wnd);
 
-                        BitmapImage bitProfilePic = new BitmapImage();
-                        bitProfilePic.BeginInit();
-                        bitProfilePic.UriSource = new Uri(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName);
-                        bitProfilePic.EndInit();
+                    // Lazy-Loading: noch keine Source setzen, nur Infos merken
+                    string imgPath = SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName;
+                    profileImage.Source = null;
+                    profileImage.Tag = new LazyInfo
+                    {
+                        Path = File.Exists(imgPath) ? imgPath : null,
+                        DecodeSize = (int)Math.Ceiling(tileSize),
+                        Loaded = false
+                    };
 
-                        profileImage.Source = bitProfilePic;
-                        profileImage.Width = GetWidthForImage(grid, wnd);
-                        profileImage.Height = GetWidthForImage(grid, wnd);
-                        profileImage.Margin = new Thickness(0);
+                    profileImage.Width = tileSize;
+                    profileImage.Height = tileSize;
+                    profileImage.Margin = new Thickness(0);
+                    profileImage.Clip = new RectangleGeometry(new Rect(0, 0, tileSize, tileSize), 5, 5);
 
-                        // Cornor-Radius setzen
-                        profileImage.Clip = new RectangleGeometry
-                        {
-                            RadiusX = 5,
-                            RadiusY = 5,
-                            Rect = new Rect(0, 0, profileImage.Width, profileImage.Height)
-                        };
+                    AttachContextMenuToImage(profileImage);
 
-                        profileImage.Effect = VisualHandler.GetDropShadowEffect();
+                    TextBlock profileTitle = new TextBlock
+                    {
+                        Text = obj.GameName,
+                        MaxWidth = tileSize,
+                        FontSize = 16,
+                        Margin = new Thickness(0, 5, 0, 0),
+                        Foreground = System.Windows.Media.Brushes.White,
+                        TextTrimming = TextTrimming.CharacterEllipsis,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        IsHitTestVisible = false
+                    };
 
-                        // Kontextmenü zu Image hinzufügen
-                        AttachContextMenuToImage(profileImage);
+                    stackPanel.MouseEnter += ProfileImage_MouseEnter;
+                    stackPanel.MouseLeave += ProfileImage_MouseLeave;
+                    stackPanel.MouseDown += ProfileImage_MouseDown;
 
-                        TextBlock profileTitle = new TextBlock();
-                        profileTitle.Text = obj.GameName;
-                        profileTitle.MaxWidth = profileImage.Width;
-                        profileTitle.FontSize = 16;
-                        profileTitle.Margin = new Thickness(0, 5, 0, 0);
-                        profileTitle.Foreground = System.Windows.Media.Brushes.White;
-                        profileTitle.TextTrimming = TextTrimming.CharacterEllipsis;
-                        profileTitle.HorizontalAlignment = HorizontalAlignment.Center;
-                        profileTitle.IsHitTestVisible = false;
+                    imageBorder.Child = profileImage;
+                    stackPanel.Children.Add(imageBorder);
+                    stackPanel.Children.Add(profileTitle);
+                    stackPanel.Children.Add(bottomBorder);
 
-                        stackPanel.MouseEnter += ProfileImage_MouseEnter;
-                        stackPanel.MouseLeave += ProfileImage_MouseLeave;
-                        stackPanel.MouseDown += ProfileImage_MouseDown;
+                    Grid.SetRow(stackPanel, i);
+                    Grid.SetColumn(stackPanel, j);
+                    grid.Children.Add(stackPanel);
 
-                        imageBorder.Child = profileImage;
+                    // Intro/Fade-in pro Kachel (gestaffelt)
+                    ApplyTileIntroAnimation(stackPanel, gameProfilesIndex);
 
-                        stackPanel.Children.Add(imageBorder);
-                        stackPanel.Children.Add(profileTitle);
-                        stackPanel.Children.Add(bottomBorder);
-
-                        Grid.SetRow(stackPanel, i);
-                        Grid.SetColumn(stackPanel, j);
-
-                        grid.Children.Add(stackPanel);
-
-                        gameProfilesIndex++;
-                    }
+                    gameProfilesIndex++;
                 }
             }
         }
 
         public static void DeselectNonCurrentProfiles(int currentPID)
         {
-            foreach(StackPanel stackPanel in SysProps.mainWindow.grdGameProfiles.Children)
+            foreach (StackPanel stackPanel in SysProps.mainWindow.grdGameProfiles.Children)
             {
                 Border border = (Border)stackPanel.Children[0];
                 GTXImage img = (GTXImage)border.Child;
                 TextBlock txtBlock = (TextBlock)stackPanel.Children[1];
-                // Bilder durchsuchen
-                if(img.PID != currentPID && img.Selected)
+                Border underline = (Border)stackPanel.Children[2];
+
+                if (img.PID != currentPID && img.Selected)
                 {
                     img.Selected = false;
                     img.DoBorderEffect = true;
                     txtBlock.FontWeight = FontWeights.Normal;
-                    AnimateBorderWidth((Border)stackPanel.Children[2], img.ActualWidth, false);
+
+                    // zurück zum Hover-Punkt (ausblenden)
+                    AnimateUnderlineHoverDot(underline, false);
+
+                    UpdateSelectionGlow(stackPanel, false);
                 }
             }
         }
 
         private static void AttachContextMenuToImage(GTXImage image)
         {
-            var contextMenu = new ContextMenu
-            {
-                FontSize = 22 
-            };
+            var contextMenu = new ContextMenu { FontSize = 22 };
 
-            // Icons vorbereiten
             System.Windows.Controls.Image MakeIcon(string uri)
             {
                 var img = new System.Windows.Controls.Image
@@ -641,54 +652,31 @@ namespace GameTimeX
             var imgPlaythrough = MakeIcon(@"pack://application:,,,/images/startpoint.png");
             var imgExecutable = MakeIcon(@"pack://application:,,,/images/executable.png");
 
-            // MenuItems (keine feste Height setzen!)
-            var mIDelete = new GTXMenuItem
-            {
-                Header = "Delete",
-                Icon = imgDelete,
-                PID = image.PID
-            };
+            var mIDelete = new GTXMenuItem { Header = "Delete", Icon = imgDelete, PID = image.PID };
             mIDelete.Click += MIDelete_Clicked;
 
-            var mIProperties = new GTXMenuItem
-            {
-                Header = "Properties",
-                Icon = imgProperties,
-                PID = image.PID
-            };
+            var mIProperties = new GTXMenuItem { Header = "Properties", Icon = imgProperties, PID = image.PID };
             mIProperties.Click += MIProperties_Clicked;
 
-            var mIPlaythrough = new GTXMenuItem
-            {
-                Header = "New playthrough startpoint",
-                Icon = imgPlaythrough,
-                PID = image.PID
-            };
+            var mIPlaythrough = new GTXMenuItem { Header = "New playthrough startpoint", Icon = imgPlaythrough, PID = image.PID };
             mIPlaythrough.Click += MIPlaythrough_Clicked;
 
-            var mIExecutables = new GTXMenuItem
-            {
-                Header = "Change active executables",
-                Icon = imgExecutable,
-                PID = image.PID
-            };
+            var mIExecutables = new GTXMenuItem { Header = "Change active executables", Icon = imgExecutable, PID = image.PID };
             mIExecutables.Click += MIExecutables_Clicked;
 
-            // Zusammenbauen
             contextMenu.Items.Add(mIDelete);
             if (DataBaseHandler.IsPlayTimeGreaterZero(image.PID))
                 contextMenu.Items.Add(mIPlaythrough);
             contextMenu.Items.Add(mIProperties);
 
             DBObject dbObj = DataBaseHandler.ReadPID(image.PID);
-
-            // Hier muss zusätzlich auch auf die Anzahl der gefunden Exe abgefragt werden --> wenn ein Spiel bei Steam deinstalliert wird, bleibt scheinbar ein gewisser Ordnerpfad zurück...
-            if(dbObj.ExtGameFolder != string.Empty && Directory.Exists(dbObj.ExtGameFolder) && GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder).Count > 0)
+            if (dbObj.ExtGameFolder != string.Empty &&
+                Directory.Exists(dbObj.ExtGameFolder) &&
+                GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder).Count > 0)
             {
                 contextMenu.Items.Add(mIExecutables);
             }
 
-            // Styles
             contextMenu.Style = VisualHandler.GetApplicationResource("contextMenuStyle") as Style;
             contextMenu.ItemContainerStyle = Application.Current.FindResource("ContextMenuItemLarge") as Style;
 
@@ -697,35 +685,33 @@ namespace GameTimeX
 
         private static void MIExecutables_Clicked(object sender, RoutedEventArgs e)
         {
-
             GTXMenuItem menuItem = sender as GTXMenuItem;
 
-            // Davor GameSwitcherHandler beenden
             if (SysProps.gameSwitcherHandler != null)
                 SysProps.gameSwitcherHandler.Stop();
 
             DBObject dbObj = DataBaseHandler.ReadPID(menuItem.PID);
 
-            // Executables wählen lassen
             if (dbObj.ExtGameFolder != string.Empty)
             {
                 CExecutables cExecutables = new CExecutables(dbObj.Executables).Dezerialize();
-                
 
                 if (cExecutables.KeyValuePairs.Count == 0)
                 {
-                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
+                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(
+                        GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
                     dbObj.Executables = cExecutables.Serialize();
                 }
 
                 DataBaseHandler.Save(dbObj);
 
-                ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID);
-                manageExecutables.Owner = SysProps.mainWindow;
+                ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID)
+                {
+                    Owner = SysProps.mainWindow
+                };
                 manageExecutables.ShowDialog();
             }
 
-            // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
             if (SysProps.startUpParms.AutoProfileSwitching)
             {
                 if (SysProps.gameSwitcherHandler != null)
@@ -744,40 +730,32 @@ namespace GameTimeX
 
         public static void AttachContextMenuToDataGrid(DataGrid dataGrid)
         {
-            ContextMenu contextMenu = new ContextMenu();
-            contextMenu.FontSize = 17;
+            ContextMenu contextMenu = new ContextMenu { FontSize = 17 };
 
-            System.Windows.Controls.Image imgProperties = new System.Windows.Controls.Image();
+            System.Windows.Controls.Image imgProperties = new System.Windows.Controls.Image
+            {
+                Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/properties.png")
+            };
 
-            imgProperties.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/properties.png");
+            System.Windows.Controls.Image imgDelete = new System.Windows.Controls.Image
+            {
+                Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/delete.png")
+            };
 
-            System.Windows.Controls.Image imgDelete = new System.Windows.Controls.Image();
-            imgDelete.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/delete.png");
+            System.Windows.Controls.Image imgPlaythrough = new System.Windows.Controls.Image
+            {
+                Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/game_time.png")
+            };
 
-            System.Windows.Controls.Image imgPlaythrough = new System.Windows.Controls.Image();
-            imgPlaythrough.Source = VisualHandler.GetBitmapImage(@"pack://application:,,,/images/game_time.png");
-
-            // Kontextmenü Einträge
-
-            // Löschen Eintrag
-            GTXMenuItem mIDelete = new GTXMenuItem();
-            mIDelete.Header = "Delete";
-            mIDelete.Icon = imgDelete;
+            GTXMenuItem mIDelete = new GTXMenuItem { Header = "Delete", Icon = imgDelete };
             mIDelete.Click += MIDelete_DataGrid_Clicked;
 
-            // Eigenschaften Eintrag
-            GTXMenuItem mIProperties = new GTXMenuItem();
-            mIProperties.Header = "Properties";
-            mIProperties.Icon = imgProperties;
+            GTXMenuItem mIProperties = new GTXMenuItem { Header = "Properties", Icon = imgProperties };
             mIProperties.Click += MIProperties_DataGrid_Clicked;
 
-            // Neuer Playthrough Eintrag
-            GTXMenuItem mIPlaythrough = new GTXMenuItem();
-            mIPlaythrough.Header = "New playthrough startpoint";
-            mIPlaythrough.Icon = imgPlaythrough;
+            GTXMenuItem mIPlaythrough = new GTXMenuItem { Header = "New playthrough startpoint", Icon = imgPlaythrough };
             mIPlaythrough.Click += MIPlaythrough_DataGrid_Clicked;
 
-            // Zu Kontextmenü hinzufügen
             contextMenu.Items.Add(mIDelete);
             contextMenu.Items.Add(mIPlaythrough);
             contextMenu.Items.Add(mIProperties);
@@ -790,11 +768,8 @@ namespace GameTimeX
         private static void MIPlaythrough_DataGrid_Clicked(object sender, RoutedEventArgs e)
         {
             var menuItem = (MenuItem)sender;
-
             var contextMenu = (ContextMenu)menuItem.Parent;
-
             var item = (DataGrid)contextMenu.PlacementTarget;
-
             var profile = (Profile)item.SelectedCells[0].Item;
 
             DBObject obj = DataBaseHandler.ReadPID(profile.PID);
@@ -813,7 +788,7 @@ namespace GameTimeX
             DBObject obj = DataBaseHandler.ReadPID(menuItem.PID);
             if (obj != null)
             {
-                obj.PlayThroughStartingPoint = (int) obj.GameTime;
+                obj.PlayThroughStartingPoint = (int)obj.GameTime;
                 DataBaseHandler.Save(obj);
                 BuildInfoDisplay(menuItem.PID, SysProps.mainWindow);
             }
@@ -821,51 +796,44 @@ namespace GameTimeX
 
         private static void MIProperties_DataGrid_Clicked(object sender, RoutedEventArgs e)
         {
-
             var menuItem = (MenuItem)sender;
-
             var contextMenu = (ContextMenu)menuItem.Parent;
-
             var item = (DataGrid)contextMenu.PlacementTarget;
-
             var profile = (Profile)item.SelectedCells[0].Item;
 
-            Properties properties = new Properties(profile.PID);
-            properties.Owner = SysProps.mainWindow;
+            Properties properties = new Properties(profile.PID)
+            {
+                Owner = SysProps.mainWindow
+            };
             properties.ShowDialog();
 
-            DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+            BuildGameProfileView(SysProps.mainWindow);
         }
 
         private static void MIDelete_DataGrid_Clicked(object sender, RoutedEventArgs e)
         {
             var menuItem = (MenuItem)sender;
-
             var contextMenu = (ContextMenu)menuItem.Parent;
-
             var item = (DataGrid)contextMenu.PlacementTarget;
-
             var profile = (Profile)item.SelectedCells[0].Item;
 
             DBObject dbObj = DataBaseHandler.ReadPID(profile.PID);
 
             if (dbObj != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
-                quest.Owner = SysProps.mainWindow;
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel")
+                {
+                    Owner = SysProps.mainWindow
+                };
                 quest.ShowDialog();
 
-                // User hat "Delete" geklickt
                 if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
                 {
-                    if (dbObj != null)
-                    {
-                        DataBaseHandler.Delete(dbObj.ProfileID);
-                        DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+                    DataBaseHandler.Delete(dbObj.ProfileID);
+                    BuildGameProfileView(SysProps.mainWindow);
 
-                        if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
-                            SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
-                    }
+                    if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
+                        SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
                 }
             }
         }
@@ -874,19 +842,19 @@ namespace GameTimeX
         {
             GTXMenuItem menuItem = sender as GTXMenuItem;
 
-            // Davor GameSwitcherHandler beenden
             if (SysProps.gameSwitcherHandler != null)
                 SysProps.gameSwitcherHandler.Stop();
 
-            Properties properties = new Properties(menuItem.PID);
-            properties.Owner = SysProps.mainWindow;
+            Properties properties = new Properties(menuItem.PID)
+            {
+                Owner = SysProps.mainWindow
+            };
             properties.ShowDialog();
 
-            // Danach wieder starten
             if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
                 SysProps.gameSwitcherHandler.Start();
 
-            DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+            BuildGameProfileView(SysProps.mainWindow);
         }
 
         private static void MIDelete_Clicked(object sender, RoutedEventArgs e)
@@ -897,38 +865,34 @@ namespace GameTimeX
 
             if (dbObj != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
-                quest.Owner = SysProps.mainWindow;
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel")
+                {
+                    Owner = SysProps.mainWindow
+                };
                 quest.ShowDialog();
 
-                // User hat "Delete" geklickt
                 if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
                 {
-                    if (dbObj != null)
-                    {
-                        DataBaseHandler.Delete(dbObj.ProfileID);
-                        DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+                    DataBaseHandler.Delete(dbObj.ProfileID);
+                    BuildGameProfileView(SysProps.mainWindow);
 
-                        if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
-                            SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
-                    }
+                    if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
+                        SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
                 }
             }
         }
 
         private static void ProfileImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
             StackPanel stackPanel = (StackPanel)sender;
 
             Border border = (Border)stackPanel.Children[0];
             TextBlock txtBlock = (TextBlock)stackPanel.Children[1];
             GTXImage image = (GTXImage)border.Child;
+            Border underline = (Border)stackPanel.Children[2];
 
             if (e.ChangedButton == MouseButton.Left)
             {
-
-
                 if (image != null)
                 {
                     if (image.PID != SysProps.currentSelectedPID && MonitorHandler.CurrentlyMonitoringGameTime())
@@ -941,21 +905,40 @@ namespace GameTimeX
 
                     DeselectNonCurrentProfiles(image.PID);
                     BuildInfoDisplay(image.PID, image.MainWnd);
+
+                    // Klick-Feedback (kurzer Bounce)
+                    PulsePress(stackPanel);
+
+                    // Klick-Unterstrich (Wipe von links)
+                    underline.BeginAnimation(Border.WidthProperty, null);
+                    underline.Width = 0;
+                    underline.HorizontalAlignment = HorizontalAlignment.Left;
+                    double w = SafeUnderlineWidth(image);
+                    AnimateBorderWidth(underline, w, true);
+
+                    // Selektion-Glow
+                    UpdateSelectionGlow(stackPanel, true);
                 }
             }
         }
 
         private static void ProfileImage_MouseLeave(object sender, MouseEventArgs e)
         {
-
             StackPanel stackPanel = (StackPanel)sender;
             Border border = (Border)stackPanel.Children[0];
             GTXImage image = (GTXImage)border.Child;
+            Border underline = (Border)stackPanel.Children[2];
 
             if (image != null)
             {
-                if(image.DoBorderEffect)
-                    AnimateBorderWidth((Border)stackPanel.Children[2], image.ActualWidth, false);
+                if (image.DoBorderEffect)
+                {
+                    // Hover-Punkt ausblenden
+                    AnimateUnderlineHoverDot(underline, false);
+                }
+
+                // Hover-Out: Scale/Lift zurück
+                ApplyHoverLift(stackPanel, false);
 
                 image.MainWnd.Cursor = Cursors.Arrow;
             }
@@ -966,41 +949,291 @@ namespace GameTimeX
             StackPanel stackPanel = (StackPanel)sender;
             Border border = (Border)stackPanel.Children[0];
             GTXImage image = (GTXImage)border.Child;
+            Border underline = (Border)stackPanel.Children[2];
 
             if (image != null)
             {
-                if (image.DoBorderEffect)
+                if (image.DoBorderEffect && !image.Selected)
                 {
-                    AnimateBorderWidth((Border)stackPanel.Children[2], image.ActualWidth, true);
+                    // Hover-Punkt einblenden (mittig)
+                    AnimateUnderlineHoverDot(underline, true);
                     image.MainWnd.Cursor = Cursors.Hand;
-                } 
-            }  
+                }
+
+                // Hover-In: sanfter Lift + Scale + stärkerer Shadow
+                ApplyHoverLift(stackPanel, true);
+            }
         }
 
         private static double GetWidthForImage(Grid grid, MainWindow wnd)
         {
-            double gridWidth = grid.ActualWidth;
-            double margin = 10;
-            double scrollBarWidth = 20;
+            const int COLS = 4;
+            const double TILE_MARGIN = 10;
 
-            double marginWidth = (margin * 2) * 4 + scrollBarWidth + 2;
+            double available = wnd.scrollBarTiles.ActualWidth;
+            if (available <= 0) available = wnd.tilesAreaFrame.ActualWidth;
 
-            return (gridWidth - marginWidth) / 4;
+            // Scrollbarbreite immer reservieren
+            available -= SystemParameters.VerticalScrollBarWidth;
+
+            // Rahmen + Innenabstände
+            available -= wnd.tilesAreaFrame.BorderThickness.Left + wnd.tilesAreaFrame.BorderThickness.Right;
+            available -= wnd.grdGameProfiles.Margin.Left + wnd.grdGameProfiles.Margin.Right;
+
+            // 4 Kacheln * 2 Seiten * 10px = 80px
+            double totalSideMargins = COLS * 2 * TILE_MARGIN;
+
+            double w = Math.Floor((available - totalSideMargins) / COLS);
+            return Math.Max(60, w);
+        }
+
+        private static double SafeUnderlineWidth(GTXImage image)
+        {
+            double w = image.Width;
+            if (double.IsNaN(w) || w <= 0) w = image.ActualWidth;
+            return w > 0 ? w : 0;
         }
 
         private static void AnimateBorderWidth(Border border, double targetWidth, bool isMouseEnter)
         {
-            // Erstelle die Animation
             DoubleAnimation widthAnimation = new DoubleAnimation
             {
-                From = isMouseEnter ? 0 : targetWidth, // Von 0 bei MouseEnter oder zum Zielwert bei MouseLeave
-                To = isMouseEnter ? targetWidth : 0,  // Zielwert der Animation (die Breite des Bildes)
-                Duration = new Duration(TimeSpan.FromSeconds(0.5)), // Dauer der Animation
-                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Sanfte Übergänge
+                From = isMouseEnter ? 0 : targetWidth,
+                To = isMouseEnter ? targetWidth : 0,
+                Duration = TimeSpan.FromMilliseconds(500),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
+            border.BeginAnimation(Border.WidthProperty, widthAnimation);
+        }
+
+        // Hover-Punkt (mittig)
+        private static void AnimateUnderlineHoverDot(Border border, bool show)
+        {
+            border.BeginAnimation(Border.WidthProperty, null);
+            border.HorizontalAlignment = HorizontalAlignment.Center;
+
+            double from = show ? 0 : (border.ActualWidth > 0 ? border.ActualWidth : HoverDotWidth);
+            double to = show ? HoverDotWidth : 0;
+
+            var anim = new DoubleAnimation
+            {
+                From = from,
+                To = to,
+                Duration = HoverDotDuration,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
             };
 
-            // Startet die Animation
-            border.BeginAnimation(Border.WidthProperty, widthAnimation);
+            border.BeginAnimation(Border.WidthProperty, anim);
+        }
+
+
+        private static void ApplyTileIntroAnimation(StackPanel sp, int index)
+        {
+            sp.Opacity = 0;
+
+            var tg = sp.RenderTransform as TransformGroup;
+            var translate = tg?.Children[1] as TranslateTransform;
+
+            var fade = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = IntroDuration,
+                BeginTime = TimeSpan.FromMilliseconds(80 * index),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+            };
+            sp.BeginAnimation(UIElement.OpacityProperty, fade);
+
+            if (translate != null)
+            {
+                var drop = new DoubleAnimation
+                {
+                    From = 6,
+                    To = 0,
+                    Duration = IntroDuration,
+                    BeginTime = fade.BeginTime,
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                };
+                translate.BeginAnimation(TranslateTransform.YProperty, drop);
+            }
+        }
+
+        private static void ApplyHoverLift(StackPanel sp, bool enter)
+        {
+            var tg = sp.RenderTransform as TransformGroup;
+            if (tg == null) return;
+
+            var scale = tg.Children[0] as ScaleTransform;
+            var translate = tg.Children[1] as TranslateTransform;
+
+            double targetScale = enter ? HoverScale : 1.0;
+            double targetY = enter ? HoverLiftY : 0.0;
+
+            if (scale != null)
+            {
+                var animX = new DoubleAnimation
+                {
+                    To = targetScale,
+                    Duration = enter ? HoverDuration : LeaveDuration,
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                };
+                var animY = animX.Clone();
+                scale.BeginAnimation(ScaleTransform.ScaleXProperty, animX);
+                scale.BeginAnimation(ScaleTransform.ScaleYProperty, animY);
+            }
+
+            if (translate != null)
+            {
+                var animT = new DoubleAnimation
+                {
+                    To = targetY,
+                    Duration = enter ? HoverDuration : LeaveDuration,
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                };
+                translate.BeginAnimation(TranslateTransform.YProperty, animT);
+            }
+
+            var border = (Border)sp.Children[0];
+            if (border?.Effect is DropShadowEffect dse)
+            {
+                var depthAnim = new DoubleAnimation
+                {
+                    To = enter ? 8 : 5,
+                    Duration = enter ? HoverDuration : LeaveDuration
+                };
+                var blurAnim = new DoubleAnimation
+                {
+                    To = enter ? 16 : 10,
+                    Duration = enter ? HoverDuration : LeaveDuration
+                };
+                var opAnim = new DoubleAnimation
+                {
+                    To = enter ? 0.9 : 0.7,
+                    Duration = enter ? HoverDuration : LeaveDuration
+                };
+
+                dse.BeginAnimation(DropShadowEffect.ShadowDepthProperty, depthAnim);
+                dse.BeginAnimation(DropShadowEffect.BlurRadiusProperty, blurAnim);
+                dse.BeginAnimation(DropShadowEffect.OpacityProperty, opAnim);
+            }
+        }
+
+        private static void PulsePress(StackPanel sp)
+        {
+            var tg = sp.RenderTransform as TransformGroup;
+            if (tg == null) return;
+
+            var scale = tg.Children[0] as ScaleTransform;
+            var translate = tg.Children[1] as TranslateTransform;
+
+            if (scale != null)
+            {
+                var a = new DoubleAnimation
+                {
+                    By = PressScaleDelta,
+                    Duration = PressDuration,
+                    AutoReverse = true,
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                };
+                scale.BeginAnimation(ScaleTransform.ScaleXProperty, a);
+                scale.BeginAnimation(ScaleTransform.ScaleYProperty, a.Clone());
+            }
+
+            if (translate != null)
+            {
+                var t = new DoubleAnimation
+                {
+                    By = PressLiftDelta,
+                    Duration = PressDuration,
+                    AutoReverse = true,
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                };
+                translate.BeginAnimation(TranslateTransform.YProperty, t);
+            }
+        }
+
+        private static void UpdateSelectionGlow(StackPanel sp, bool selected)
+        {
+            var border = (Border)sp.Children[0];
+            if (border?.Effect is DropShadowEffect dse)
+            {
+                var colorAnim = new ColorAnimation
+                {
+                    To = selected ? SelectedShadowColor : DefaultShadowColor,
+                    Duration = TimeSpan.FromMilliseconds(160),
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                };
+                var blurAnim = new DoubleAnimation
+                {
+                    To = selected ? 18 : 10,
+                    Duration = TimeSpan.FromMilliseconds(160)
+                };
+                var opAnim = new DoubleAnimation
+                {
+                    To = selected ? 0.95 : 0.7,
+                    Duration = TimeSpan.FromMilliseconds(160)
+                };
+
+                var shadowBrush = new SolidColorBrush(dse.Color);
+                shadowBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
+                colorAnim.Completed += (_, __) => dse.Color = selected ? SelectedShadowColor : DefaultShadowColor;
+
+                dse.BeginAnimation(DropShadowEffect.BlurRadiusProperty, blurAnim);
+                dse.BeginAnimation(DropShadowEffect.OpacityProperty, opAnim);
+            }
+        }
+
+        // ------- Lazy-Loading Integration -------
+
+        private static void HookLazyLoading(MainWindow wnd)
+        {
+            wnd.scrollBarTiles.ScrollChanged -= Tiles_ScrollChanged;
+            wnd.scrollBarTiles.ScrollChanged += Tiles_ScrollChanged;
+
+            // Initial laden, was sichtbar ist
+            wnd.Dispatcher.InvokeAsync(() => UpdateLazyImages(wnd), DispatcherPriority.Loaded);
+        }
+
+        private static void Tiles_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (SysProps.mainWindow != null)
+                UpdateLazyImages(SysProps.mainWindow);
+        }
+
+        private static void UpdateLazyImages(MainWindow wnd)
+        {
+            var sv = wnd.scrollBarTiles;
+            var grid = wnd.grdGameProfiles;
+
+            double viewTop = sv.VerticalOffset;
+            double viewBottom = viewTop + sv.ViewportHeight;
+            const double preload = 200;
+
+            foreach (StackPanel sp in grid.Children)
+            {
+                if (sp.Children.Count == 0) continue;
+
+                var border = (Border)sp.Children[0];
+                var img = border.Child as System.Windows.Controls.Image;
+                if (img?.Tag is not LazyInfo info) continue;
+
+                // Position der Kachel relativ zum Grid
+                var p = sp.TranslatePoint(new System.Windows.Point(0, 0), grid);
+                double top = p.Y;
+                double bottom = top + sp.ActualHeight;
+
+                bool inRange = bottom >= (viewTop - preload) && top <= (viewBottom + preload);
+
+                if (inRange && !info.Loaded)
+                {
+                    if (!string.IsNullOrEmpty(info.Path))
+                        img.Source = LoadTileBitmapCached(info.Path, info.DecodeSize);
+                    else
+                        img.Source = GetDefaultProfileImage();
+
+                    info.Loaded = true;
+                }
+            }
         }
     }
 }

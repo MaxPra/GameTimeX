@@ -19,7 +19,6 @@
         Style="{StaticResource DefaultWindowStyle}">
 
     <Window.Resources>
-        <!-- Icon-Only-Button auf TextBox-Höhe -->
         <Style x:Key="IconOnlyButton" TargetType="Button" BasedOn="{StaticResource NormalGuiButton}">
             <Setter Property="Width" Value="56"/>
             <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
@@ -30,14 +29,20 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <!-- TextBox an gleiche Höhe/Abstand binden -->
         <Style x:Key="FormTextBox_Local" TargetType="TextBox" BasedOn="{StaticResource FormTextBox}">
             <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
             <Setter Property="Margin" Value="{StaticResource FormRowSpacing}"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <!-- Start/Stop Farb-Animationen -->
+        <Style x:Key="PaneFrameStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Background" Value="#0F000000"/>
+            <Setter Property="BorderBrush" Value="#20FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+        </Style>
+
         <Storyboard x:Key="StartStopButtonHoverNotMonitoring" Duration="00:00:4">
             <ColorAnimation Storyboard.TargetName="btnStartStopMonitoring"
                             Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
@@ -68,7 +73,6 @@
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
     </WindowChrome.WindowChrome>
 
-    <!-- Außenrahmen -->
     <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
             BorderThickness="1"
             SnapsToDevicePixels="True"
@@ -82,12 +86,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Titelzeile -->
             <Border Grid.Row="0"
                     x:Name="titleBar"
                     Background="Black"
                     CornerRadius="12,12,0,0"
-                    ClipToBounds="True"/>
+                    ClipToBounds="True" MouseDown="titleBar_MouseDown"/>
             <TextBlock Grid.Row="0"
                        Text="GameTimeX"
                        VerticalAlignment="Center"
@@ -128,7 +131,6 @@
                 </Button>
             </StackPanel>
 
-            <!-- Inhalt -->
             <Grid Grid.Row="1" x:Name="grdContent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70*"/>
@@ -139,18 +141,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Suche & Icons -->
                 <Grid Margin="10,10,10,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <!-- Search -->
                         <ColumnDefinition Width="16"/>
-                        <!-- Abstand -->
                         <ColumnDefinition Width="*"/>
-                        <!-- Icon-Leiste -->
                     </Grid.ColumnDefinitions>
 
-                    <!-- SearchTextBox (kommt aus Styles) -->
                     <TextBox x:Name="txtSearchBar"
                              Grid.Column="0"
                              Width="420" MaxWidth="520"
@@ -158,7 +155,6 @@
                              Tag="Search for games here"
                              TextChanged="txtSearchBar_TextChanged"/>
 
-                    <!-- Icons gleichmäßig verteilt -->
                     <Grid Grid.Column="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -166,9 +162,20 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" x:Name="btnMode"
+                        <ToggleButton Grid.Column="0" x:Name="btnPlayableFilter"
+                                      Height="{StaticResource FormControlHeight}" Width="36"
+                                      Background="Transparent" BorderBrush="Transparent"
+                                      Style="{StaticResource MenuBarToggleButton}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Click="btnPlayableFilter_Click"
+                                      ToolTip="Show only playable game profiles">
+                            <Image Source="{StaticResource playable}" />
+                        </ToggleButton>
+
+                        <Button Grid.Column="1" x:Name="btnMode"
                                 Height="{StaticResource FormControlHeight}" Width="36"
                                 Background="Transparent" BorderBrush="Transparent"
                                 Click="btnMode_Click" Foreground="White"
@@ -177,7 +184,7 @@
                             <Image x:Name="imgMode" Source="{StaticResource ModeTiles}" />
                         </Button>
 
-                        <Button Grid.Column="1" x:Name="btnNew"
+                        <Button Grid.Column="2" x:Name="btnNew"
                                 Height="{StaticResource FormControlHeight}" Width="36"
                                 Background="Transparent" BorderBrush="Transparent"
                                 Click="btnNew_Click" Foreground="White"
@@ -186,7 +193,7 @@
                             <Image Source="{StaticResource CreateNewImageSource}"/>
                         </Button>
 
-                        <Button Grid.Column="2" x:Name="btnDelete"
+                        <Button Grid.Column="3" x:Name="btnDelete"
                                 Height="{StaticResource FormControlHeight}" Width="36"
                                 Background="Transparent" BorderBrush="Transparent"
                                 Click="btnDelete_Click" Foreground="White"
@@ -195,7 +202,7 @@
                             <Image Source="{StaticResource DeleteImageSource}" />
                         </Button>
 
-                        <Button Grid.Column="3" x:Name="btnProperties"
+                        <Button Grid.Column="4" x:Name="btnProperties"
                                 Height="{StaticResource FormControlHeight}" Width="36"
                                 Background="Transparent" BorderBrush="Transparent"
                                 Click="btnProperties_Click" Foreground="White"
@@ -204,7 +211,7 @@
                             <Image Source="{StaticResource PropertiesSource}" />
                         </Button>
 
-                        <Button Grid.Column="4" x:Name="btnSettings"
+                        <Button Grid.Column="5" x:Name="btnSettings"
                                 Height="{StaticResource FormControlHeight}" Width="36"
                                 Background="Transparent" BorderBrush="Transparent"
                                 Click="btnSettings_Click" Foreground="White"
@@ -215,9 +222,8 @@
                     </Grid>
                 </Grid>
 
-                <!-- Tabelle -->
                 <ScrollViewer PreviewMouseWheel="scrollBar_PreviewMouseWheel"
-                              Margin="10,0,0,0"
+                              Margin="10"
                               Grid.Row="1" Grid.Column="0"
                               HorizontalScrollBarVisibility="Hidden"
                               VerticalScrollBarVisibility="Auto"
@@ -292,17 +298,50 @@
                     </DataGrid>
                 </ScrollViewer>
 
-                <!-- Tiles -->
-                <ScrollViewer x:Name="scrollBarTiles"
-                              Margin="0,0,0,10"
-                              Grid.Row="1" Grid.Column="0"
-                              HorizontalScrollBarVisibility="Hidden"
-                              VerticalScrollBarVisibility="Auto"
-                              HorizontalAlignment="Stretch">
-                    <Grid x:Name="grdGameProfiles"/>
-                </ScrollViewer>
+                <Border x:Name="tilesAreaFrame"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="10"
+                        Style="{StaticResource PaneFrameStyle}">
+                    <ScrollViewer x:Name="scrollBarTiles"
+                                  Margin="0"
+                                  HorizontalScrollBarVisibility="Hidden"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalAlignment="Stretch">
+                        <Grid x:Name="grdGameProfiles" Margin="12"/>
+                    </ScrollViewer>
+                </Border>
 
-                <!-- Detailbereich -->
+                <Grid x:Name="emptyStateOverlay"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                      Margin="10"
+                      Visibility="Collapsed"
+                      Panel.ZIndex="10">
+                    <Border Style="{StaticResource PaneFrameStyle}">
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <Image Source="{DynamicResource EmptyStateImage}"
+                                   Width="140"
+                                   Height="140"
+                                   Stretch="Uniform"
+                                   Margin="0,0,0,12"
+                                   Opacity="0.9"/>
+                            <TextBlock Text="No games to show"
+                                       Foreground="White"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Add a game or adjust your filters."
+                                       Foreground="#CCFFFFFF"
+                                       FontSize="13"
+                                       Margin="0,6,0,0"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
                 <Grid Grid.Row="1" Grid.Column="1" x:Name="grdGameInfo">
                     <Grid.Resources>
                         <LinearGradientBrush x:Key="CardBg" StartPoint="0,0" EndPoint="0,1">
@@ -342,7 +381,7 @@
                             Margin="10"
                             SnapsToDevicePixels="True"/>
 
-                    <Border BorderBrush="#20FFFFFF" BorderThickness="1,0,0,0" Margin="0,0,0,15"/>
+                    <Border BorderBrush="#20FFFFFF" BorderThickness="1,0,0,0" Margin="0,10,0,10"/>
 
                     <Grid Margin="22">
                         <Grid.RowDefinitions>
@@ -372,10 +411,8 @@
                                            HorizontalAlignment="Center"
                                            Margin="0,0,10,0">
                                     <TextBlock.ToolTip>
-                                        <ToolTip ToolTipService.InitialShowDelay="0"
-                                                 Background="#333333"
+                                        <ToolTip Background="#333333"
                                                  BorderThickness="1"
-                                                 BorderBrush="CornflowerBlue"
                                                  Foreground="White">
                                             <TextBlock Name="lblToolTipGameName" Text="N/A"/>
                                         </ToolTip>
@@ -454,7 +491,7 @@
                                                Foreground="White" FontSize="16" VerticalAlignment="Center"/>
                                     <Button x:Name="btnGameTimeInfo" Style="{StaticResource PillIconButton}">
                                         <Button.ToolTip>
-                                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                            <ToolTip Background="#333333" BorderThickness="1" Foreground="White">
                                                 <TextBlock Name="lblToolTipGameTimeText">0 Minutes</TextBlock>
                                             </ToolTip>
                                         </Button.ToolTip>
@@ -473,7 +510,7 @@
                                                Foreground="White" FontSize="16" VerticalAlignment="Center"/>
                                     <Button x:Name="btnGameTimeNewPlaythrough" Style="{StaticResource PillIconButton}">
                                         <Button.ToolTip>
-                                            <ToolTip ToolTipService.InitialShowDelay="0" Background="#333333" BorderThickness="1" BorderBrush="CornflowerBlue" Foreground="White">
+                                            <ToolTip Background="#333333" BorderThickness="1" Foreground="White">
                                                 <TextBlock Name="lblToolTipGameTimeTextNewPlaythrough">0 Minutes</TextBlock>
                                             </ToolTip>
                                         </Button.ToolTip>

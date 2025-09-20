@@ -12,6 +12,7 @@
     <None Remove="images\create_new.png" />
     <None Remove="images\delete.png" />
     <None Remove="images\edit.png" />
+    <None Remove="images\empty.png" />
     <None Remove="images\executable.png" />
     <None Remove="images\folder.png" />
     <None Remove="images\GameTimeX_Banner.png" />
@@ -20,6 +21,7 @@
     <None Remove="images\list.png" />
     <None Remove="images\no_picture.png" />
     <None Remove="images\picture.png" />
+    <None Remove="images\playable.png" />
     <None Remove="images\properties.png" />
     <None Remove="images\question_mark.png" />
     <None Remove="images\settings.png" />
@@ -47,6 +49,7 @@
   <ItemGroup>
     <Resource Include="Fonts\Roboto-Bold.ttf" />
     <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="images\empty.png" />
     <Resource Include="images\executable.png" />
     <Resource Include="images\folder.png" />
     <Resource Include="images\GameTimeX_Banner.png" />
@@ -54,6 +57,7 @@
     <Resource Include="images\game_time1.png" />
     <Resource Include="images\list.png" />
     <Resource Include="images\picture.png" />
+    <Resource Include="images\playable.png" />
     <Resource Include="images\properties.png" />
     <Resource Include="images\question_mark.png" />
     <Resource Include="images\settings.png" />

@@ -72,6 +72,9 @@ namespace GameTimeX
             // List-View wurde mit 2.0.1 / Retouched entfernt
             // Hier für alle, die diese aktiviert hatten auf Tile-View ändern
             SysProps.startUpParms.ViewMode = StartUpParms.ViewModes.TILES;
+
+            // Toggle Button für "Nur spielbare Spiele" aktivieren/deaktivieren lt. StartupParms
+            wnd.btnPlayableFilter.IsChecked = startUpParms.ShowOnlyPlayableGames;
             
             // Auf Backup Prüfen
             if(startUpParms.BackupType != StartUpParms.BackupTypes.NO_BACKUP || startUpParms.AutoBackup)
@@ -141,6 +144,10 @@ namespace GameTimeX
             }
 
             loadingApp.Close();
+
+            wnd.dgProfiles.Visibility = Visibility.Collapsed;
+            wnd.grdGameProfiles.Visibility = Visibility.Visible;
+            wnd.emptyStateOverlay.Visibility = Visibility.Collapsed;
         }
 
         public static void StopKeyInputHandler()

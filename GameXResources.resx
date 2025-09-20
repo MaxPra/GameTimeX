@@ -127,6 +127,9 @@
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\edit.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\empty.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="executable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\executable.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -150,6 +153,9 @@
   </data>
   <data name="picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\picture.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="playable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\playable.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="properties" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\properties.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

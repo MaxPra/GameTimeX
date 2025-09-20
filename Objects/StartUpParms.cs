@@ -40,5 +40,7 @@ namespace GameTimeX.Objects
         public bool BlackOutShortcutActive { get; set; } = false;
 
         public bool BlackOutSideMonitorsWhileMonitoring { get; set; } = false;
+
+        public bool ShowOnlyPlayableGames { get; set; } = false;
     }
 }

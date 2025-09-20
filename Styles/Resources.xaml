@@ -16,6 +16,8 @@
     <BitmapImage x:Key="PropertiesSource" UriSource="pack://application:,,,/../images/properties.png" />
     <BitmapImage x:Key="picture" UriSource="pack://application:,,,/../images/picture.png" />
     <BitmapImage x:Key="folder" UriSource="pack://application:,,,/../images/folder.png" />
+    <BitmapImage x:Key="playable" UriSource="pack://application:,,,/../images/playable.png" />
+    <BitmapImage x:Key="EmptyStateImage" UriSource="pack://application:,,,/../images/empty.png" />
     
     
     <!-- Colors -->

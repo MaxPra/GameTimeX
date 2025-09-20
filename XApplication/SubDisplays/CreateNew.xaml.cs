@@ -31,6 +31,8 @@ namespace GameTimeX
         private double cropWidth;
         private double cropHeight;
 
+        public int ProfileID { get; set; }
+
         string filePath = "";
         public CreateNew()
         {
@@ -126,6 +128,8 @@ namespace GameTimeX
                         SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
                     }
                 }
+
+                ProfileID = dbObj.ProfileID;
 
                 Close();
             }

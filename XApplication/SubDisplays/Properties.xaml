@@ -132,9 +132,8 @@
                          Style="{StaticResource FormTextBox_Local}"
                          Tag="Game folder (opt.)">
                     <TextBox.ToolTip>
-                        <ToolTip ToolTipService.InitialShowDelay="0"
-                                 Background="#333333" BorderThickness="1"
-                                 BorderBrush="CornflowerBlue" Foreground="White">
+                        <ToolTip Background="#333333" BorderThickness="1"
+                                 Foreground="White">
                             <TextBlock TextWrapping="Wrap">
                                 If specified, GameTimeX will automatically get the exe and switch between profiles (enable in settings).
                             </TextBlock>

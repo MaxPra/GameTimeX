@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace GameTimeX
 {
@@ -32,7 +33,7 @@ namespace GameTimeX
         /// <param name="e"></param>
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            //DragMove();
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -84,6 +85,11 @@ namespace GameTimeX
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+            // Empty Bereich anzeigen
+            dgProfiles.Visibility = Visibility.Collapsed;
+            grdGameProfiles.Visibility = Visibility.Collapsed;
+            emptyStateOverlay.Visibility = Visibility.Visible;
+
             // Bei Programmstart / Fensterstart System initialisieren
             SysProps.InitializeSystem(this);
 
@@ -121,6 +127,8 @@ namespace GameTimeX
             cnWin.Owner = this;
             cnWin.ShowDialog();
 
+            int profileID = cnWin.ProfileID;
+
             // Danach wieder starten
             if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
             {
@@ -130,6 +138,12 @@ namespace GameTimeX
 
 
             DisplayHandler.BuildGameProfileView(this);
+
+            SysProps.mainWindow.Dispatcher.InvokeAsync(
+                () => DisplayHandler.SwitchToSpecificGame(SysProps.mainWindow, StartUpParms.ViewModes.TILES, profileID),
+                DispatcherPriority.Loaded
+            );
+            
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -400,7 +414,7 @@ namespace GameTimeX
         {
             if(SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
             {
-                // Künftigen Mode setzen
+                // Künftigen Mode setzen 
                 SysProps.startUpParms.ViewMode = StartUpParms.ViewModes.TILES;
                 imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.LIST);
             }
@@ -435,6 +449,22 @@ namespace GameTimeX
                
 
             DisplayHandler.BuildGameProfileView(this);
+        }
+
+        private void btnPlayableFilter_Click(object sender, RoutedEventArgs e)
+        {
+
+            DisplayHandler.BuildGameProfileView(SysProps.mainWindow);
+
+            SysProps.startUpParms.ShowOnlyPlayableGames = btnPlayableFilter.IsChecked == true;
+
+            // Aktuellen Modus speichern
+            FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
+        }
+
+        private void titleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }
