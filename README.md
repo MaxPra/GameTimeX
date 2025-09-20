@@ -30,11 +30,13 @@ Download the latest installer [here](https://github.com/MaxPra/GameTimeX/release
 - Visual redesign of the UI
 - Removed the list view
 - Minor UI-related bug fixes
+- **Installed Games Filter** *(controller + play icon)* – new toolbar toggle that shows **only profiles with currently installed games** (installation folder exists).  
+  *Prerequisite:* set each game’s installation folder in the profile **Properties**.
 - **OLED Care (Blackout Screen)** – toggle at any time with **CTRL + B** to fully darken all screens while you’re AFK
 - **Optional side-screen dimming while tracking** – when enabled in **Settings**, all non-primary displays are dimmed automatically while GameTimeX is actively tracking, and restored once tracking stops
 - **Security: SQL-injection hardening** – database access now uses parameterized SQLite queries
-- **Executable selection for Automatic Game Switch** – you can now define which executables should be monitored in the background for profile switching. This prevents conflicts when different games share identical executables.
-- **Smart executable pre-filtering** – when adding a game for the first time, GameTimeX automatically deselects common non-game executables (e.g., launchers, crash reporters, helpers, benchmark tools). Only relevant executables remain selected, ensuring more accurate and reliable automatic detection.
+- **Executable selection for Automatic Game Switch** – define which executables should be monitored for profile switching (prevents conflicts when different games share identical executables)
+- **Smart executable pre-filtering** – on first profile creation, common non-game executables (launchers, crash reporters, helpers, benchmark tools) are deselected automatically
 
 ---
 
@@ -45,12 +47,14 @@ GameTimeX is a personal project I developed as a hobby during my free time.
 ### Main Window Overview
 
 When you launch the application for the first time, the main window will appear as shown below:  
-<img width="1212" height="813" alt="image" src="https://github.com/user-attachments/assets/6eb7e027-c952-408c-bd3a-179b4de85ab4" />
+<img width="1208" height="813" alt="image" src="https://github.com/user-attachments/assets/9866aa9b-2c03-4039-81b8-02dd83b425ae" />
 
 **Main window sections:**
 
 1. **Profile Search Bar** – Quickly find profiles when the list grows too long.  
 2. **Profile Management Buttons** – Located next to the search bar:  
+   - **Installed Games Filter** *(controller icon with a play symbol)* – shows **only profiles where the game is currently installed** (i.e., the installation folder exists).  
+     *Prerequisite:* the game’s installation folder must be set in the profile’s **Properties**.  
    - Create New Profile  
    - Delete Profile  
    - Properties  
@@ -63,7 +67,7 @@ When you launch the application for the first time, the main window will appear 
 5. **Rename Profile** – Click the pencil icon next to the profile name to rename it.
 
 After adding a profile, the view may look like this:  
-<img width="1207" height="809" alt="image" src="https://github.com/user-attachments/assets/1627bb5e-f9a4-4c3e-be67-d2cea5a2abf1" />
+<img width="1216" height="816" alt="image" src="https://github.com/user-attachments/assets/69a4db40-2477-429b-b863-46894fc5a2a4" />
 
 Profile names and images can be adjusted at any time. Simply click the pencil icon or select *Change Image*.  
 Hovering over the small “i” next to *Game Time* will show the tracked time in minutes, alongside the recorded first and last play sessions.
@@ -84,7 +88,7 @@ The settings window gives you fine-grained control over how GameTimeX behaves:
 
 - **Session Time Tracking** – Display the duration of the current session directly in the information panel while monitoring is active.  
 - **Automatic Profile Switching** – If enabled, GameTimeX will automatically switch to the correct profile when a game is launched (requires the game’s installation folder to be specified).  
-  - With the new update, you can also manage which **executables** should be monitored for automatic switching, and exclude irrelevant ones.  
+  - Manage which **executables** should be monitored for automatic switching, and exclude irrelevant ones.  
 - **Monitor Key** – Assign a hotkey to start and stop monitoring without leaving the game. Nearly all keyboard keys are supported.  
 - **Backup & Restore** – Export or import your profiles at any time. The app restarts automatically after import/export. Optional auto-backup on every startup.  
 - **OLED Care (Blackout Screen)** – Fully black out all screens while you’re AFK to protect OLED panels. Toggle with **CTRL + B**.  
@@ -96,7 +100,7 @@ The settings window gives you fine-grained control over how GameTimeX behaves:
 
 ### Manage Executables
 
-When using Automatic Profile Switching, GameTimeX now lets you control exactly which executables are tracked.  
+When using Automatic Profile Switching, GameTimeX lets you control exactly which executables are tracked.  
 This prevents helper processes, launchers, crash reporters, or engine-related executables from interfering with automatic switching.
 
 <img width="554" height="494" alt="image" src="https://github.com/user-attachments/assets/920efc3b-2073-4004-bc3e-d52988125172" />
