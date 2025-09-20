@@ -13,18 +13,18 @@ Download the latest installer:
 
 ## Key Features
 
-- **Accurate Time Tracking** – records only while the game process is genuinely running.
-- **Installed Games Filter** *(controller + play icon)* – optional toolbar filter that shows only profiles for games that are currently installed (installation folder exists).  
+- 🎮 **Accurate Time Tracking** – records only while the game process is genuinely running.  
+- 🎛️ **Installed Games Filter** *(controller + play icon)* – optional toolbar filter that shows only profiles for games that are currently installed (installation folder exists).  
   *Prerequisite:* the installation folder must be specified in each profile’s **Properties**.
-- **Automatic Profile Switching** – switches to the correct profile when a game launches.  
+- 🔄 **Automatic Profile Switching** – switches to the correct profile when a game launches.  
   - Per-executable selection to prevent conflicts where different games share executables.  
   - Smart initial pre-filtering automatically deselects common non-game executables (launchers, crash reporters, helpers, etc.).
-- **Customizable Profiles** – create, rename, and assign cropped images for each game.
-- **OLED Care (Blackout Screen)** – toggle with **CTRL+B** to black out all displays while AFK.
-- **Side-Screen Dimming** – optionally dims secondary displays automatically while tracking is active.
-- **Hotkey Monitoring** – start/stop tracking via a configurable hotkey.
-- **Backup & Restore** – export or import all profiles; optional automatic backup at startup.
-- **Hardened Database Access** – parameterized SQLite queries for protection against SQL injection.
+- 🖼️ **Customizable Profiles** – create, rename, and assign cropped images for each game.
+- 🌙 **OLED Care (Blackout Screen)** – toggle with **CTRL+B** to black out all displays while AFK.
+- 🖥️ **Side-Screen Dimming** – optionally dims secondary displays automatically while tracking is active.
+- ⌨️ **Hotkey Monitoring** – start/stop tracking via a configurable hotkey.
+- 💾 **Backup & Restore** – export or import all profiles; optional automatic backup at startup.
+- 🔒 **Hardened Database Access** – parameterized SQLite queries for protection against SQL injection.
 
 ---
 
