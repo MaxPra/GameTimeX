@@ -50,7 +50,7 @@ GameTimeX is designed for reliability and clarity, with an emphasis on clean int
 ### Main Window
 
 Initial application view:  
-<img width="1208" height="813" alt="image" src="https://github.com/user-attachments/assets/9866aa9b-2c03-4039-81b8-02dd83b425ae" />
+<img width="1218" height="814" alt="image" src="https://github.com/user-attachments/assets/fe5d1687-a3ec-428a-9501-d4cb20dca6b1" />
 
 **Key areas:**
 
@@ -68,7 +68,7 @@ Initial application view:
 5. **Rename Profile** – click the pencil icon next to the profile name.
 
 Example with profiles:  
-<img width="1216" height="816" alt="image" src="https://github.com/user-attachments/assets/69a4db40-2477-429b-b863-46894fc5a2a4" />
+<img width="1212" height="811" alt="image" src="https://github.com/user-attachments/assets/4f653594-1e2a-478a-a28d-ef74d1add646" />
 
 Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.
 
@@ -118,7 +118,7 @@ This prevents launchers, helpers, and engine processes from causing false detect
 ## Profile Image Cropping
 
 When adding a profile image, a cropping dialog enables quick framing:  
-<img width="1211" height="814" alt="image" src="https://github.com/user-attachments/assets/a94e01b8-0482-459e-9d6a-a213b8a56f8d" />
+<img width="1214" height="809" alt="image" src="https://github.com/user-attachments/assets/e18a8246-cce6-49af-8a67-0936453f84dc" />
 
 **Controls:**
 
