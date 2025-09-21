@@ -14,14 +14,32 @@ using System.Windows.Shapes;
 
 namespace GameTimeX.XApplication.SubDisplays
 {
-    /// <summary>
-    /// Interaktionslogik für LoadingApplication.xaml
-    /// </summary>
     public partial class LoadingApplication : Window
     {
         public LoadingApplication()
         {
             InitializeComponent();
+        }
+
+        private const double Corner = 12.0; // identisch zum Border CornerRadius
+
+        private void ClipHost_Loaded(object sender, RoutedEventArgs e)
+        {
+            ApplyRoundClip();
+        }
+
+        private void ClipHost_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ApplyRoundClip();
+        }
+
+        private void ApplyRoundClip()
+        {
+            if (ClipHost.ActualWidth <= 0 || ClipHost.ActualHeight <= 0) return;
+
+            ClipHost.Clip = new RectangleGeometry(
+                new Rect(0, 0, ClipHost.ActualWidth, ClipHost.ActualHeight),
+                Corner, Corner);
         }
     }
 }

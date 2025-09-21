@@ -290,10 +290,28 @@
                         </Border>
 
                         <!-- Footer -->
-                        <TextBlock Margin="12,8,12,0"
-                                   HorizontalAlignment="Right"
-                                   Foreground="Gray"
-                                   Text="Version 2.0.11 / Retouched"/>
+                        <Grid Margin="12,8,12,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Links -->
+                            <TextBlock Grid.Column="0"
+                                       Foreground="Gray"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Text="Icons by icons8"/>
+
+                            <!-- Rechts -->
+                            <TextBlock Grid.Column="1"
+                                       Foreground="Gray"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Text="Version 2.0.11 / Retouched"/>
+                        </Grid>
+
+
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

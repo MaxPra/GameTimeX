@@ -157,6 +157,9 @@
   <data name="playable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\playable.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="playable_banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\playable_banner.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="properties" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\properties.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

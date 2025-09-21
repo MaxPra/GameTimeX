@@ -22,6 +22,7 @@
     <None Remove="images\no_picture.png" />
     <None Remove="images\picture.png" />
     <None Remove="images\playable.png" />
+    <None Remove="images\playable_banner.png" />
     <None Remove="images\properties.png" />
     <None Remove="images\question_mark.png" />
     <None Remove="images\settings.png" />
@@ -58,6 +59,7 @@
     <Resource Include="images\list.png" />
     <Resource Include="images\picture.png" />
     <Resource Include="images\playable.png" />
+    <Resource Include="images\playable_banner.png" />
     <Resource Include="images\properties.png" />
     <Resource Include="images\question_mark.png" />
     <Resource Include="images\settings.png" />

@@ -85,6 +85,8 @@ namespace GameTimeX
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+            this.Visibility = Visibility.Hidden;
+
             // Empty Bereich anzeigen
             dgProfiles.Visibility = Visibility.Collapsed;
             grdGameProfiles.Visibility = Visibility.Collapsed;
@@ -98,11 +100,13 @@ namespace GameTimeX
 
             SysProps.mainWindow = this;
 
+            this.Visibility = Visibility.Visible;
+
             // View Mode unterscheiden und je nachdem auswählen
             DisplayHandler.BuildGameProfileView(this);
 
             // Mode Icon richtig wählen
-            if(SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
+            if (SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
             {
                 imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.TILES);
             }

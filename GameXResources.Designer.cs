@@ -193,6 +193,16 @@ namespace GameTimeX {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
+        internal static byte[] playable_banner {
+            get {
+                object obj = ResourceManager.GetObject("playable_banner", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
         internal static byte[] properties {
             get {
                 object obj = ResourceManager.GetObject("properties", resourceCulture);

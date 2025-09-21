@@ -312,6 +312,49 @@
                     </ScrollViewer>
                 </Border>
 
+                <!-- Lade-Overlay -->
+                <Grid x:Name="loadingOverlay"
+                      Grid.Row="1" Grid.Column="0"
+                      Margin="10"
+                      Visibility="Collapsed"
+                      Opacity="0"
+                      Panel.ZIndex="30">
+                    <Border Style="{StaticResource PaneFrameStyle}">
+                        <StackPanel Orientation="Vertical"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+
+                            <!-- Spinner -->
+                            <Grid Width="42" Height="42" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Ellipse Width="42" Height="42" Stroke="#33FFFFFF" StrokeThickness="4"/>
+                                <Path Stroke="#289afc" StrokeThickness="4" Data="M21,2 A19,19 0 0 1 40,21">
+                                    <Path.RenderTransform>
+                                        <RotateTransform x:Name="rtSpinner" CenterX="21" CenterY="21"/>
+                                    </Path.RenderTransform>
+                                </Path>
+
+                                <Grid.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard RepeatBehavior="Forever">
+                                                <DoubleAnimation Storyboard.TargetName="rtSpinner"
+                                                                 Storyboard.TargetProperty="Angle"
+                                                                 From="0" To="360"
+                                                                 Duration="0:0:0.9"
+                                                                 RepeatBehavior="Forever"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Grid.Triggers>
+                            </Grid>
+
+                            
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+
+
                 <Grid x:Name="emptyStateOverlay"
                       Grid.Row="1"
                       Grid.Column="0"
