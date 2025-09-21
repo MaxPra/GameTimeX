@@ -16,6 +16,8 @@ Download the latest installer:
 - 🎮 **Accurate Time Tracking** – records only while the game process is genuinely running.  
 - 🎛️ **Installed Games Filter** *(controller + play icon)* – optional toolbar filter that shows only profiles for games that are currently installed (installation folder exists).  
   *Prerequisite:* the installation folder must be specified in each profile’s **Properties**.
+- 🏷️ **Installed Icon Overlay** – each profile tile shows an indicator icon in the **top-right corner** of the profile image if the game is installed  
+  *(installation folder set + valid executable detected)*.
 - 🔄 **Automatic Profile Switching** – switches to the correct profile when a game launches.  
   - Per-executable selection to prevent conflicts where different games share executables.  
   - Smart initial pre-filtering automatically deselects common non-game executables (launchers, crash reporters, helpers, etc.).
@@ -35,6 +37,8 @@ Download the latest installer:
 - Minor UI-related fixes and refinements
 - **Installed Games Filter** *(controller + play icon)* – new toolbar toggle to display **only profiles for installed games** (installation folder exists).  
   *Prerequisite:* set the game’s installation folder in the profile **Properties**.
+- **Installed Icon Overlay** – profile tiles now display a **small indicator icon in the top-right corner** of the profile image whenever the game is installed.  
+  This provides a quick visual cue without opening the profile properties.
 - **OLED Care (Blackout Screen)** – toggle anytime with **CTRL+B** to fully darken all screens while away
 - **Optional side-screen dimming while tracking** – automatically dims all non-primary displays while GameTimeX is actively tracking; restores displays afterwards
 - **Security: SQL-injection hardening** – all database access uses parameterized SQLite queries
@@ -63,9 +67,12 @@ Initial application view:
    - Properties  
    - Settings  
    (Properties and Delete are also available via the profile context menu.)
-3. **Information Panel** – details for the selected profile, including thumbnail.  
-4. **Start/Stop Monitoring** – status indicated by button color (blue = idle, red = active).  
-5. **Rename Profile** – click the pencil icon next to the profile name.
+3. **Profile Tiles with Install Indicator** – each game profile shows its image; if the game is installed, a **small install icon appears in the top-right corner**.  
+   Example of a profile tile with the install icon:  
+   <img width="191" height="219" alt="image" src="https://github.com/user-attachments/assets/0bdc29b4-df16-4bd4-b04e-bce4052f83dc" />
+4. **Information Panel** – details for the selected profile, including thumbnail.  
+5. **Start/Stop Monitoring** – status indicated by button color (blue = idle, red = active).  
+6. **Rename Profile** – click the pencil icon next to the profile name.
 
 Example with profiles:  
 <img width="1212" height="811" alt="image" src="https://github.com/user-attachments/assets/4f653594-1e2a-478a-a28d-ef74d1add646" />
