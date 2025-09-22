@@ -1,20 +1,12 @@
-﻿using GameTimeX.Function;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using GameTimeX.Function;
 using GameTimeX.Objects;
 using GameTimeX.XApplication.SubDisplays;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GameTimeX
 {
@@ -37,9 +29,16 @@ namespace GameTimeX
         string filePath = "";
 
         private int pid = 0;
+
+        DBObject dBObject = null;
+
+        public SteamGame SteamGame { get; private set; }
+
         public Properties(int pid)
         {
             this.pid = pid;
+
+            this.dBObject = DataBaseHandler.ReadPID(pid);
 
             InitializeComponent();
         }
@@ -90,7 +89,7 @@ namespace GameTimeX
         private void btnCreateNewProfile_Click(object sender, RoutedEventArgs e)
         {
 
-            
+
         }
 
         private void btnShowFileDialog_Click(object sender, RoutedEventArgs e)
@@ -152,29 +151,40 @@ namespace GameTimeX
                 }
 
                 // Werte in Datenbank speichern
-                DBObject dbObj = DataBaseHandler.ReadPID(pid);
-                dbObj.GameName = txtProfileName.Text;
-                dbObj.ExtGameFolder = txtGameFolderPath.Text;
-                
+                dBObject.GameName = txtProfileName.Text;
+                dBObject.ExtGameFolder = txtGameFolderPath.Text;
 
-                if(txtPicPath.Text != oldPicPath)
+                // Profil Einstellungen
+                CProfileSettings profileSettings = new CProfileSettings();
+                profileSettings.HDREnabled = cbEnableHdr.IsChecked == true;
+
+                dBObject.ProfileSettings = profileSettings.Serialize();
+
+                // Steam
+                if (SteamGame != null)
+                    dBObject.SteamAppID = (int)SteamGame.AppId;
+
+
+                if (txtPicPath.Text != oldPicPath)
                 {
-                    dbObj.ProfilePicFileName = fileNameHash;
+                    dBObject.ProfilePicFileName = fileNameHash;
 
                     // Bild croppen und abspeichern
                     FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
                 }
 
+                DataBaseHandler.Save(dBObject);
+
                 // Executables wählen lassen
-                if (oldGameFolderPath != dbObj.ExtGameFolder)
+                if (oldGameFolderPath != dBObject.ExtGameFolder)
                 {
                     CExecutables cExecutables = new CExecutables();
-                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
-                    dbObj.Executables = cExecutables.Serialize();
+                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dBObject.ExtGameFolder), true));
+                    dBObject.Executables = cExecutables.Serialize();
 
-                    DataBaseHandler.Save(dbObj);
+                    DataBaseHandler.Save(dBObject);
 
-                    ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID);
+                    ManageExecutables manageExecutables = new ManageExecutables(dBObject.ProfileID);
                     manageExecutables.Owner = this;
                     manageExecutables.ShowDialog();
                 }
@@ -184,8 +194,8 @@ namespace GameTimeX
                 {
                     if (SysProps.gameSwitcherHandler != null)
                     {
-                        List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dbObj);
-                        SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
+                        List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dBObject);
+                        SysProps.gameSwitcherHandler.AddExecutables(dBObject.ProfileID, executables);
                     }
                 }
 
@@ -195,13 +205,96 @@ namespace GameTimeX
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DBObject obj = DataBaseHandler.ReadPID(pid);
-            txtGameFolderPath.Text = obj.ExtGameFolder;
-            txtPicPath.Text = obj.ProfilePicFileName;
-            txtProfileName.Text = obj.GameName;
+            txtGameFolderPath.Text = dBObject.ExtGameFolder;
+            txtPicPath.Text = dBObject.ProfilePicFileName;
+            txtProfileName.Text = dBObject.GameName;
+
+            if (SteamLocatorHandler.GetSteamRoot() == null)
+            {
+                btnImportFromSteam.IsEnabled = false;
+                btnImportFromSteam.ToolTip = "Steam is not installed";
+            }
+
+
+            // Steam Profil linked Text
+            if (dBObject.SteamAppID == 0)
+                bSteamProfileLinked.Visibility = Visibility.Collapsed;
+
+            // Profil Settings laden
+            CProfileSettings profileSettings = new CProfileSettings(dBObject.ProfileSettings).Dezerialize();
+            cbEnableHdr.IsChecked = profileSettings.HDREnabled;
 
             oldPicPath = txtPicPath.Text;
             oldGameFolderPath = txtGameFolderPath.Text;
+
+            if (dBObject.SteamAppID == 0)
+            {
+                cbEnableHdr.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void btnImportFromSteam_Click(object sender, RoutedEventArgs e)
+        {
+            // Import Fenster öffnen
+
+            SteamImportWindow steamImportWnd = new SteamImportWindow();
+            steamImportWnd.Owner = this;
+            steamImportWnd.ShowDialog();
+
+            if (steamImportWnd.SelectedGame != null)
+            {
+                SteamGame = steamImportWnd.SelectedGame;
+
+                txtProfileName.Text = SteamGame.Name;
+                txtGameFolderPath.Text = SteamManifestsHandler.ResolveInstallPath(SteamGame);
+                cbEnableHdr.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cbEnableHdr.IsChecked = false;
+                cbEnableHdr.Visibility = Visibility.Collapsed;
+            }
+
+            // Wenn kein Steamprofil hinterlegt
+            if (SteamGame == null && dBObject.SteamAppID == 0)
+            {
+                cbEnableHdr.IsChecked = false;
+                cbEnableHdr.Visibility = Visibility.Collapsed;
+                bSteamProfileLinked.Visibility = Visibility.Collapsed;
+            }
+            else if (SteamGame == null && dBObject.SteamAppID != 0)
+            {
+                cbEnableHdr.Visibility = Visibility.Visible;
+                bSteamProfileLinked.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cbEnableHdr.Visibility = Visibility.Visible;
+                bSteamProfileLinked.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btnUnlinkSteamProfile_Click(object sender, RoutedEventArgs e)
+        {
+            if (dBObject != null)
+            {
+                dBObject.SteamAppID = 0;
+
+                // Profilsettings
+                CProfileSettings profileSettings = new CProfileSettings(dBObject.ProfileSettings).Dezerialize();
+
+                // Hier Steam-abhängige Settings deaktivieren
+                profileSettings.HDREnabled = false;
+
+                // Profile Settings serialisieren und in Feld speichern
+                dBObject.ProfileSettings = profileSettings.Serialize();
+
+                // Enable HDR darf nicht sichtbar sein, wenn Steam-Profil nicht verlinkt
+                cbEnableHdr.IsChecked = false;
+                cbEnableHdr.Visibility = Visibility.Collapsed;
+
+                bSteamProfileLinked.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

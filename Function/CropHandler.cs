@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Controls;
 
 namespace GameTimeX.Function
 {
     class CropHandler
     {
         // X Position des Crop-Bereichs
-        public double CropX {  get; set; }
+        public double CropX { get; set; }
 
         // Y Position des Crop-Bereichs
         public double CropY { get; set; }
@@ -17,17 +13,17 @@ namespace GameTimeX.Function
         // Breite des Crop-Bereichs
         public double CropWidth { get; set; }
         // Höhe des CropBereichs
-        public double CropHeight {  get; set; }   
+        public double CropHeight { get; set; }
 
         // Mauspos. X bei Klick
         public double MouseXBeginning { get; set; }
         // Mauspos. X bei Loslassen
-        public double MouseXEnd {  get; set; }
+        public double MouseXEnd { get; set; }
         // Mauspos. Y bei Klick
         public double MouseYBeginning { get; set; }
         // Mausepos. Y bei Loslassen
-        public double MouseYEnd {  get; set; }
-        
+        public double MouseYEnd { get; set; }
+
         public double CanvasHeight { get; set; }
         public double CanvasWidth { get; set; }
 
@@ -75,13 +71,13 @@ namespace GameTimeX.Function
             if (newCropX < 0)
                 newCropX = CropX;
 
-            if(newCropY < 0)
+            if (newCropY < 0)
                 newCropY = CropY;
 
             if (newCropX + CropWidth > CanvasWidth && mouseMovedPixelsX < 0)
                 newCropX = CropX;
 
-            if (newCropY + CropHeight> CanvasHeight && mouseMovedPixelsY < 0)
+            if (newCropY + CropHeight > CanvasHeight && mouseMovedPixelsY < 0)
                 newCropY = CropY;
 
             CropX = newCropX;
@@ -114,6 +110,24 @@ namespace GameTimeX.Function
                 return true;
 
             return false;
+        }
+
+        public static int CalculateMinWidthHeight(Image image, int currWidthHeight, double picRatio)
+        {
+            int minWidth = currWidthHeight;
+            int minHeight = currWidthHeight;
+
+            if (currWidthHeight > image.ActualWidth)
+            {
+                minWidth = (int)image.ActualWidth - 20;
+            }
+
+            if (currWidthHeight > image.ActualHeight)
+            {
+                minHeight = (int)image.ActualHeight - 20;
+            }
+
+            return (int)(minWidth < minHeight ? minWidth : minHeight);
         }
     }
 }

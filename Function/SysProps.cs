@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows;
-using GameTimeX.Objects;
+using System.Windows.Media;
 using GameTimeX.Function;
-using System.Threading;
+using GameTimeX.Objects;
 using GameTimeX.XApplication.SubDisplays;
 
 namespace GameTimeX
@@ -53,7 +48,7 @@ namespace GameTimeX
         public static MainWindow? mainWindow = null;
 
         public static bool contextShown = false;
-        
+
 
         public static void InitializeSystem(MainWindow wnd)
         {
@@ -75,12 +70,12 @@ namespace GameTimeX
 
             // Toggle Button für "Nur spielbare Spiele" aktivieren/deaktivieren lt. StartupParms
             wnd.btnPlayableFilter.IsChecked = startUpParms.ShowOnlyPlayableGames;
-            
+
             // Auf Backup Prüfen
-            if(startUpParms.BackupType != StartUpParms.BackupTypes.NO_BACKUP || startUpParms.AutoBackup)
+            if (startUpParms.BackupType != StartUpParms.BackupTypes.NO_BACKUP || startUpParms.AutoBackup)
             {
                 // Muss ein Backup erstellt werden?
-                if(startUpParms.BackupType == StartUpParms.BackupTypes.CREATE_BACKUP || (startUpParms.AutoBackup && startUpParms.BackupType != StartUpParms.BackupTypes.IMPORT_BACKUP))
+                if (startUpParms.BackupType == StartUpParms.BackupTypes.CREATE_BACKUP || (startUpParms.AutoBackup && startUpParms.BackupType != StartUpParms.BackupTypes.IMPORT_BACKUP))
                 {
                     // Backup erstellen
                     FileHandler.CreateBackup();
@@ -94,7 +89,7 @@ namespace GameTimeX
                 }
 
                 // Muss ein Backup importiert werden?
-                if(startUpParms.BackupType == StartUpParms.BackupTypes.IMPORT_BACKUP)
+                if (startUpParms.BackupType == StartUpParms.BackupTypes.IMPORT_BACKUP)
                 {
                     // Backup importieren
                     FileHandler.ImportBackup();
@@ -103,7 +98,7 @@ namespace GameTimeX
                     info.Owner = Application.Current.MainWindow;
                     info.ShowDialog();
                 }
-            }                
+            }
 
             bool db_created = DataBaseHandler.ConnectToSQLite();
 
@@ -115,6 +110,9 @@ namespace GameTimeX
 
             // Aufgrund der neu hinzugefügten Spalte Executables ist eine Migration notwendig!
             DataBaseHandler.MigrateDB();
+
+            // TodayStats initialiseren (bei jedem Anwendungsstart)
+            InitProfileStats();
 
             //wnd.btnStartStopMonitoring.BitmapEffect = VisualHandler.GetDropShadowEffect();
             wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
@@ -152,7 +150,7 @@ namespace GameTimeX
 
         public static void StopKeyInputHandler()
         {
-            if(keyInputHandler != null)
+            if (keyInputHandler != null)
                 keyInputHandler.StopListening();
         }
 
@@ -161,13 +159,13 @@ namespace GameTimeX
             if (gameSwitcherHandler != null)
                 gameSwitcherHandler.Stop();
         }
-        
+
         public static void RestartApplication()
         {
             if (keyInputHandler != null)
                 keyInputHandler.StopListening();
 
-            if(keyInputHandlerBlackout != null)
+            if (keyInputHandlerBlackout != null)
                 keyInputHandlerBlackout.StopListening();
 
             if (gameSwitcherHandler != null)
@@ -189,6 +187,19 @@ namespace GameTimeX
                 gameSwitcherHandler.Stop();
 
             Application.Current.Shutdown();
+        }
+
+        private static void InitProfileStats()
+        {
+            List<DBObject> dbObjects = DataBaseHandler.ReadAll();
+
+            foreach (DBObject obj in dbObjects)
+            {
+                CTodayStats ctodayStats = new CTodayStats(obj.TodayStats).Dezerialize();
+                ctodayStats.ResetProfileStats(obj);
+
+                DataBaseHandler.Save(obj);
+            }
         }
     }
 }

@@ -1,23 +1,19 @@
-﻿using GameTimeX.Function;
-using GameTimeX.Objects;
-using GameTimeX.XApplication.SubDisplays;
-using SkiaSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Threading;
 using System.Windows.Media.Effects;
-using Color = System.Windows.Media.Color;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using GameTimeX.Function;
+using GameTimeX.Objects;
+using GameTimeX.XApplication.SubDisplays;
 using Brushes = System.Windows.Media.Brushes; // DropShadowEffect
+using Color = System.Windows.Media.Color;
 
 namespace GameTimeX
 {
@@ -104,15 +100,36 @@ namespace GameTimeX
             wnd.btnEditProfileName.IsEnabled = true;
             wnd.lblChangeProfileImage.IsEnabled = true;
 
+            if (obj.SteamAppID == 0)
+                wnd.btnLaunchSteamGame.Visibility = Visibility.Collapsed;
+            else
+                wnd.btnLaunchSteamGame.Visibility = Visibility.Visible;
+
+            // Text für "heute gespielt"
+            string playedToday = "";
+            long minutesToday = 0;
+            CTodayStats cTodayStats = new CTodayStats(obj.TodayStats).Dezerialize();
+
+            if (cTodayStats.playTime > 0)
+            {
+                minutesToday = obj.GameTime - cTodayStats.playTime;
+                playedToday = "Played today: " + minutesToday.ToString("n0") + " min (" + string.Format("{0:F1}", MonitorHandler.CalcGameTime(minutesToday)) + " h)";
+            }
+
             // ToolTip setzen
-            wnd.lblToolTipGameTimeText.Text = obj.GameTime.ToString("n0") + " minutes";
+            string tooltipText = obj.GameTime.ToString("n0") + " minutes";
+
+            if (minutesToday > 0)
+                tooltipText += "\n" + playedToday;
+
+            wnd.lblToolTipGameTimeText.Text = tooltipText;
 
             // Formatieren des Spielzeittextes 
             double hours = MonitorHandler.CalcGameTime(obj.GameTime);
             string gameTimeText =
                 hours == 0.0 ? "N/A" :
-                hours >= 1 ? string.Format("{0:F1}", hours) + "h" :
-                "< 1h";
+                hours >= 1 ? string.Format("{0:F1}", hours) + " h" :
+                "< 1 h";
 
             wnd.lblGameTime.Text = gameTimeText;
 
@@ -131,8 +148,8 @@ namespace GameTimeX
                 hours = MonitorHandler.CalcGameTime(actPlaythroughTime);
                 gameTimeText =
                     hours == 0.0 ? "N/A" :
-                    hours >= 1 ? string.Format("{0:F1}", hours) + "h" :
-                    "< 1h";
+                    hours >= 1 ? string.Format("{0:F1}", hours) + " h" :
+                    "< 1 h";
 
                 wnd.lblToolTipGameTimeTextNewPlaythrough.Text = gameTimeText;
             }
@@ -159,6 +176,7 @@ namespace GameTimeX
             bitProfilePic.UriSource = new Uri("pack://application:,,,/images/NO_PICTURE.png");
             bitProfilePic.EndInit();
             return bitProfilePic;
+
         }
 
         private static string FormatDatePlayed(DateTime date)
@@ -439,7 +457,7 @@ namespace GameTimeX
             //else
             //    return count;
 
-            return count-1;
+            return count - 1;
         }
 
         private static void BuildDGProfiles(MainWindow wnd)

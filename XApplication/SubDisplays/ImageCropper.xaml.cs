@@ -1,10 +1,11 @@
-﻿using GameTimeX.Function;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using GameTimeX.Function;
 
 namespace GameTimeX
 {
@@ -26,6 +27,8 @@ namespace GameTimeX
 
         // Verhältnis von Original- und Anzeigebild
         private double picRatioScale = 0;
+
+        private int minWidthHeight = 0;
 
         // cropHandler
         private CropHandler cropHandler = null;
@@ -117,6 +120,8 @@ namespace GameTimeX
             cvsCropper.Width = imgProfilePic.ActualWidth;
             cvsCropper.Height = imgProfilePic.ActualHeight;
 
+            minWidthHeight = 300;
+
             //this.SizeToContent = SizeToContent.WidthAndHeight;
 
             // Achtung: Hier muss PixelWidth verwendet werden (wir benötigen die Width in Pixeln)
@@ -124,7 +129,20 @@ namespace GameTimeX
             // => das führt beim Croppen zu Problemen (Crop-Bereich größer als Bild!!)
             picRatioScale = bitProfilePic.PixelWidth / imgProfilePic.ActualWidth;
 
-            cropHandler = new CropHandler(300, 300, cvsCropper.Width, cvsCropper.Height, picRatioScale, picRatioScale);
+            // Wenn Cropper größer als Bild
+            int widthNew = CropHandler.CalculateMinWidthHeight(imgProfilePic, minWidthHeight, picRatioScale);
+            minWidthHeight = widthNew;
+
+            cropHandler = new CropHandler(minWidthHeight, minWidthHeight, cvsCropper.Width, cvsCropper.Height, picRatioScale, picRatioScale);
+            cropHandler.CropHeight = minWidthHeight;
+            cropHandler.CropWidth = minWidthHeight;
+
+            cropWidthHeightRec = minWidthHeight;
+
+            recTransformArea.Width = minWidthHeight;
+            recTransformArea.Height = minWidthHeight;
+
+            UpdateOverlayAndGuides();
 
         }
 
@@ -179,6 +197,8 @@ namespace GameTimeX
 
             Canvas.SetLeft(recTransformArea, cropPosition.Item1);
             Canvas.SetTop(recTransformArea, cropPosition.Item2);
+
+            UpdateOverlayAndGuides();
         }
 
         /// <summary>
@@ -203,9 +223,13 @@ namespace GameTimeX
             {
                 double cropWidthHeightRecTemp = cropWidthHeightRec;
                 cropWidthHeightRecTemp -= 20;
-                if (cropWidthHeightRecTemp > 300)
+                if (cropWidthHeightRecTemp > minWidthHeight)
                 {
                     cropWidthHeightRec = cropWidthHeightRecTemp;
+                }
+                else
+                {
+                    cropWidthHeightRec = minWidthHeight;
                 }
             }
 
@@ -214,6 +238,56 @@ namespace GameTimeX
 
             recTransformArea.Width = cropWidthHeightRec;
             recTransformArea.Height = cropWidthHeightRec;
+
+            UpdateOverlayAndGuides();
+        }
+
+        private void UpdateOverlayAndGuides()
+        {
+            if (cvsCropper == null || recTransformArea == null || maskOutside == null) return;
+
+            // Position/Größe der Auswahl
+            double left = Canvas.GetLeft(recTransformArea);
+            double top = Canvas.GetTop(recTransformArea);
+            double w = recTransformArea.Width;
+            double h = recTransformArea.Height;
+
+            // Gesamtrechteck (Canvas)
+            Rect full = new Rect(0, 0, cvsCropper.ActualWidth, cvsCropper.ActualHeight);
+            // Loch (Auswahl)
+            Rect hole = new Rect(left, top, w, h);
+
+            // EvenOdd-Geometrie: volle Fläche + Loch
+            var gg = new GeometryGroup { FillRule = FillRule.EvenOdd };
+            gg.Children.Add(new RectangleGeometry(full));
+            gg.Children.Add(new RectangleGeometry(hole, recTransformArea.RadiusX, recTransformArea.RadiusY));
+            maskOutside.Data = gg;
+
+            // --- optionale Drittel-Guides im Rahmen ---
+            // Vertikale Linien
+            SetLine(guideV1,
+                    x1: left + w / 3.0, y1: top,
+                    x2: left + w / 3.0, y2: top + h);
+
+            SetLine(guideV2,
+                    x1: left + 2.0 * w / 3.0, y1: top,
+                    x2: left + 2.0 * w / 3.0, y2: top + h);
+
+            // Horizontale Linien
+            SetLine(guideH1,
+                    x1: left, y1: top + h / 3.0,
+                    x2: left + w, y2: top + h / 3.0);
+
+            SetLine(guideH2,
+                    x1: left, y1: top + 2.0 * h / 3.0,
+                    x2: left + w, y2: top + 2.0 * h / 3.0);
+        }
+
+        private static void SetLine(Line line, double x1, double y1, double x2, double y2)
+        {
+            if (line == null) return;
+            line.X1 = x1; line.Y1 = y1;
+            line.X2 = x2; line.Y2 = y2;
         }
     }
 }

@@ -6,25 +6,23 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Create New Profile"
-        Width="560" Height="250"
+        Width="560" Height="300"
         WindowStyle="None"
         WindowStartupLocation="CenterOwner"
         AllowsTransparency="True"
         Background="Transparent"
         Style="{StaticResource DefaultWindowStyle}"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Loaded="Window_Loaded">
 
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
 
-    <!-- Lokale Maße/Styles -->
     <Window.Resources>
-        <!-- einheitliche Höhe und kompakter Reihenabstand -->
         <sys:Double x:Key="FormControlHeight">32</sys:Double>
         <Thickness x:Key="FormRowSpacing">0,3,0,3</Thickness>
 
-        <!-- Icon-Only-Button auf TextBox-Höhe -->
         <Style x:Key="IconOnlyButton" TargetType="Button" BasedOn="{StaticResource NormalGuiButton}">
             <Setter Property="Width" Value="56"/>
             <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
@@ -35,7 +33,6 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <!-- TextBox an gleiche Höhe/Abstand binden -->
         <Style x:Key="FormTextBox_Local" TargetType="TextBox" BasedOn="{StaticResource FormTextBox}">
             <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
             <Setter Property="Margin" Value="{StaticResource FormRowSpacing}"/>
@@ -43,7 +40,6 @@
         </Style>
     </Window.Resources>
 
-    <!-- Außenrahmen -->
     <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
             BorderThickness="1"
             Background="#2F2F2F"
@@ -85,42 +81,70 @@
 
             <!-- Inhalt -->
             <Grid Grid.Row="1" Margin="18">
-                <!-- Spalten: Felder | Spacer | Icon-Spalte -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="12"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Kompakte Reihen: nur Auto + Füller + Save -->
+                <!-- Reihen: Status | Name | Pic path | Game folder | Füller | Save -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <!-- Name -->
+                    <!-- 0 Status -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Pic path -->
+                    <!-- 1 Name -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Game folder -->
+                    <!-- 2 Pic path -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- 3 Game folder -->
                     <RowDefinition Height="*"/>
-                    <!-- Füller -->
+                    <!-- 4 Füller -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Save -->
+                    <!-- 5 Save -->
                 </Grid.RowDefinitions>
 
+                <!-- Steam profile linked bar -->
+                <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                        Background="#3A3A3A"
+                        CornerRadius="6"
+                        Margin="0,0,0,8"
+                        Padding="6,2"
+                        x:Name="bSteamProfileLinked">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="✔"
+                                   Foreground="{DynamicResource ButtonDefaultBrush}"
+                                   FontWeight="Bold"
+                                   Margin="0,0,6,0"/>
+                        <TextBlock Text="Steam profile linked"
+                                   Foreground="White"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
                 <!-- Profile name -->
-                <TextBox Grid.Row="0" Grid.Column="0"
+                <TextBox Grid.Row="1" Grid.Column="0"
                          x:Name="txtProfileName"
                          Style="{StaticResource FormTextBox_Local}"
                          Tag="Profile name"/>
 
                 <!-- Picture path -->
-                <TextBox Grid.Row="1" Grid.Column="0"
+                <TextBox Grid.Row="2" Grid.Column="0"
                          x:Name="txtPicPath"
                          Style="{StaticResource FormTextBox_Local}"
                          IsReadOnly="True"
                          Tag="Picture path"/>
 
-                <!-- Picture icon button -->
+                <!-- Steam Import button -->
                 <Button Grid.Row="1" Grid.Column="2"
+                        x:Name="btnImportFromSteam"
+                        ToolTip="Import game from steam"
+                        Style="{StaticResource IconOnlyButton}"
+                        Click="btnImportFromSteam_Click">
+                    <Image Source="{StaticResource steamImportImage}" Width="30" Height="30" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Picture icon button -->
+                <Button Grid.Row="2" Grid.Column="2"
                         x:Name="btnShowFileDialog"
                         Click="btnShowFileDialog_Click"
                         ToolTip="Choose pic"
@@ -129,7 +153,7 @@
                 </Button>
 
                 <!-- Game folder -->
-                <TextBox Grid.Row="2" Grid.Column="0"
+                <TextBox Grid.Row="3" Grid.Column="0"
                          x:Name="txtGameFolderPath"
                          Style="{StaticResource FormTextBox_Local}"
                          Tag="Game folder (opt.)">
@@ -144,7 +168,7 @@
                 </TextBox>
 
                 <!-- Folder icon button -->
-                <Button Grid.Row="2" Grid.Column="2"
+                <Button Grid.Row="3" Grid.Column="2"
                         x:Name="btnShowFileDialogExe"
                         Click="btnShowFileDialogExe_Click"
                         ToolTip="Choose folder"
@@ -152,8 +176,8 @@
                     <Image Source="{StaticResource folder}" Width="18" Height="18" Stretch="Uniform"/>
                 </Button>
 
-                <!-- Save (volle Breite, kleine Top-/Bottom-Marge) -->
-                <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                <!-- Save -->
+                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"
                         x:Name="btnCreateNewProfile"
                         Content="Save"
                         Margin="0,8,0,2"

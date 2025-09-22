@@ -1,13 +1,10 @@
-﻿using GameTimeX.Function;
-using GameTimeX.Objects;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using GameTimeX.Function;
+using GameTimeX.Objects;
 
 namespace GameTimeX
 {
@@ -43,7 +40,7 @@ namespace GameTimeX
 
         private void btnMaximize_Click(object sender, RoutedEventArgs e)
         {
-            if(WindowState == WindowState.Maximized)
+            if (WindowState == WindowState.Maximized)
             {
                 WindowState = WindowState.Normal;
             }
@@ -69,7 +66,7 @@ namespace GameTimeX
 
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
         {
-            btnClose.Background = VisualHandler.ConvertHexToBrush(SysProps.hexValCloseWindow); 
+            btnClose.Background = VisualHandler.ConvertHexToBrush(SysProps.hexValCloseWindow);
         }
 
         private void btnClose_MouseLeave(object sender, MouseEventArgs e)
@@ -147,13 +144,13 @@ namespace GameTimeX
                 () => DisplayHandler.SwitchToSpecificGame(SysProps.mainWindow, StartUpParms.ViewModes.TILES, profileID),
                 DispatcherPriority.Loaded
             );
-            
+
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
 
-            if(dbObj != null)
+            if (dbObj != null)
             {
                 QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
                 quest.Owner = this;
@@ -167,7 +164,7 @@ namespace GameTimeX
                         DataBaseHandler.Delete(dbObj.ProfileID);
                         DisplayHandler.BuildGameProfileView(this);
 
-                        if(SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
+                        if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
                             SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
                     }
                 }
@@ -179,7 +176,7 @@ namespace GameTimeX
             // Derzeit selektierte Zeile holen
             Profile profile = dgProfiles.SelectedItem as Profile;
 
-            if(profile != null)
+            if (profile != null)
             {
                 // Wird das Profil während der Zeitaufnahme gewechselt, so muss das Monitoring beendet u. gespeichert werden
                 if (profile.PID != SysProps.currentSelectedPID && MonitorHandler.CurrentlyMonitoringGameTime())
@@ -190,7 +187,7 @@ namespace GameTimeX
 
                 // Info-Display befüllen / aufbauen
                 DisplayHandler.BuildInfoDisplay(profile.PID, this);
-            }            
+            }
         }
 
         private void btnStartStopMonitoring_Click(object sender, RoutedEventArgs e)
@@ -247,7 +244,7 @@ namespace GameTimeX
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             // Wenn derzeit die Spielzeit aufgenommen wird --> beenden
-            if(MonitorHandler.CurrentlyMonitoringGameTime())
+            if (MonitorHandler.CurrentlyMonitoringGameTime())
                 MonitorHandler.EndMonitoringGameTime(this);
 
             // Vor öffnen den InputHandler beenden!
@@ -274,7 +271,7 @@ namespace GameTimeX
             // Wenn Monitor Key nicht aktiv oder Monitor Key = (kein Key) --> Stoppen
             else if (!SysProps.startUpParms.MonitorShortcutActive || SysProps.startUpParms.MonitorShortcut == KeyInput.VirtualKey.VK_NONE)
             {
-                if(SysProps.keyInputHandler != null)
+                if (SysProps.keyInputHandler != null)
                     SysProps.keyInputHandler.StopListening();
             }
 
@@ -294,7 +291,7 @@ namespace GameTimeX
             // Nach Schließen des Settings-Windows GameSwitcherHandler starten oder beenden!
             if (SysProps.startUpParms.AutoProfileSwitching)
             {
-                if(SysProps.gameSwitcherHandler == null)
+                if (SysProps.gameSwitcherHandler == null)
                 {
                     SysProps.gameSwitcherHandler = new GameSwitcherHandler(this);
                     SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
@@ -306,12 +303,12 @@ namespace GameTimeX
                     {
                         SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
                         SysProps.gameSwitcherHandler.Start();
-                    }                    
+                    }
                 }
             }
             else
             {
-                if(SysProps.gameSwitcherHandler != null)
+                if (SysProps.gameSwitcherHandler != null)
                     SysProps.gameSwitcherHandler.Stop();
             }
         }
@@ -319,36 +316,36 @@ namespace GameTimeX
         private void btnStartStopMonitoring_MouseEnter(object sender, MouseEventArgs e)
         {
 
-            if (VisualHandler.startStopMonitoringBtnActive)
-            {
-                // Monitoring aktiv Hover
-                Storyboard sb = this.FindResource("StartStopButtonHoverMonitoring") as Storyboard;
-                sb.Begin();
-            }
-            else
-            {
-                // Default Hover
-                Storyboard sb = this.FindResource("StartStopButtonHoverNotMonitoring") as Storyboard;
-                sb.Begin();
-            }
+            //if (VisualHandler.startStopMonitoringBtnActive)
+            //{
+            //    // Monitoring aktiv Hover
+            //    Storyboard sb = this.FindResource("StartStopButtonHoverMonitoring") as Storyboard;
+            //    sb.Begin();
+            //}
+            //else
+            //{
+            //    // Default Hover
+            //    Storyboard sb = this.FindResource("StartStopButtonHoverNotMonitoring") as Storyboard;
+            //    sb.Begin();
+            //}
 
         }
 
         private void btnStartStopMonitoring_MouseLeave(object sender, MouseEventArgs e)
         {
 
-            if (VisualHandler.startStopMonitoringBtnActive)
-            {
-                // Monitoring aktiv Hover
-                Storyboard sb = this.FindResource("StartStopButtonNoHoverMonitoring") as Storyboard;
-                sb.Begin();
-            }
-            else
-            {
-                // Default Hover
-                Storyboard sb = this.FindResource("StartStopButtonNoHoverNotMonitoring") as Storyboard;
-                sb.Begin();
-            }
+            //if (VisualHandler.startStopMonitoringBtnActive)
+            //{
+            //    // Monitoring aktiv Hover
+            //    Storyboard sb = this.FindResource("StartStopButtonNoHoverMonitoring") as Storyboard;
+            //    sb.Begin();
+            //}
+            //else
+            //{
+            //    // Default Hover
+            //    Storyboard sb = this.FindResource("StartStopButtonNoHoverNotMonitoring") as Storyboard;
+            //    sb.Begin();
+            //}
         }
 
         private void btnGameTimeInfo_Click(object sender, RoutedEventArgs e)
@@ -370,7 +367,7 @@ namespace GameTimeX
             double cropX = 0;
             double cropY = 0;
             double cropWidth = 0;
-            double cropHeight = 0; 
+            double cropHeight = 0;
 
             // Process open file dialog box results
             if (result == true)
@@ -416,7 +413,7 @@ namespace GameTimeX
 
         private void btnMode_Click(object sender, RoutedEventArgs e)
         {
-            if(SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
+            if (SysProps.startUpParms.ViewMode == StartUpParms.ViewModes.LIST)
             {
                 // Künftigen Mode setzen 
                 SysProps.startUpParms.ViewMode = StartUpParms.ViewModes.TILES;
@@ -450,7 +447,7 @@ namespace GameTimeX
                 SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
                 SysProps.gameSwitcherHandler.Start();
             }
-               
+
 
             DisplayHandler.BuildGameProfileView(this);
         }
@@ -469,6 +466,18 @@ namespace GameTimeX
         private void titleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void btnLaunchSteamGame_Click(object sender, RoutedEventArgs e)
+        {
+
+            DBObject dBObject = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
+
+            if (dBObject == null)
+                return;
+
+            // Spiel starten
+            SteamGameStarterHandler.StartSteamGame(dBObject.SteamAppID.ToString(), dBObject.ProfileID);
         }
     }
 }

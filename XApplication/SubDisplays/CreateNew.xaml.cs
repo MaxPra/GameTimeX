@@ -1,20 +1,12 @@
-﻿using GameTimeX.Function;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using GameTimeX.Function;
 using GameTimeX.Objects;
 using GameTimeX.XApplication.SubDisplays;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GameTimeX
 {
@@ -34,6 +26,9 @@ namespace GameTimeX
         public int ProfileID { get; set; }
 
         string filePath = "";
+
+        private SteamGame SteamGame { get; set; }
+
         public CreateNew()
         {
             InitializeComponent();
@@ -102,6 +97,10 @@ namespace GameTimeX
                 dbObj.ProfilePicFileName = fileNameHash;
                 dbObj.ExtGameFolder = txtGameFolderPath.Text;
 
+                // Steam
+                if (SteamGame != null)
+                    dbObj.SteamAppID = (int)SteamGame.AppId;
+
                 CExecutables cExecutables = new CExecutables();
                 cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
                 dbObj.Executables = cExecutables.Serialize();
@@ -112,17 +111,17 @@ namespace GameTimeX
                 FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
 
                 // Executables wählen lassen
-                if(dbObj.ExtGameFolder != string.Empty)
+                if (dbObj.ExtGameFolder != string.Empty)
                 {
                     ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID);
                     manageExecutables.Owner = this;
                     manageExecutables.ShowDialog();
                 }
-                
+
                 // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
                 if (SysProps.startUpParms.AutoProfileSwitching)
                 {
-                    if(SysProps.gameSwitcherHandler != null)
+                    if (SysProps.gameSwitcherHandler != null)
                     {
                         List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dbObj);
                         SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
@@ -178,6 +177,34 @@ namespace GameTimeX
             }
 
             window.Focus();
+        }
+
+        private void btnImportFromSteam_Click(object sender, RoutedEventArgs e)
+        {
+            // Import Fenster öffnen
+
+            SteamImportWindow steamImportWnd = new SteamImportWindow();
+            steamImportWnd.Owner = this;
+            steamImportWnd.ShowDialog();
+
+            if (steamImportWnd.SelectedGame != null)
+            {
+                SteamGame = steamImportWnd.SelectedGame;
+
+                txtProfileName.Text = SteamGame.Name;
+                txtGameFolderPath.Text = SteamManifestsHandler.ResolveInstallPath(SteamGame);
+
+                bSteamProfileLinked.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                bSteamProfileLinked.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            bSteamProfileLinked.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -175,6 +175,12 @@
   <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\settings.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="steam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\steam.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="steam_import" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\steam_import.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="tiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\tiles.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

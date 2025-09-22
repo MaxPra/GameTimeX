@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Text;
 
 namespace GameTimeX
 {
@@ -20,36 +19,43 @@ namespace GameTimeX
 
         public static void MigrateDB()
         {
-            // ExtGameFolder
             using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'ExtGameFolder';", connection))
             using (var reader = cmd.ExecuteReader())
-            {
                 if (!reader.Read())
                     AlterTableExtGameFolder();
-            }
 
-            // StartpointPlaythroughTime
             using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'StartpointPlaythroughTime';", connection))
             using (var reader = cmd.ExecuteReader())
-            {
                 if (!reader.Read())
                     AlterTableStartpointPlaythroughTime();
-            }
 
-            // Executables (NEU)
             using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'Executables';", connection))
             using (var reader = cmd.ExecuteReader())
-            {
                 if (!reader.Read())
                     AlterTableExecutables();
-            }
+
+            using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'SteamAppID';", connection))
+            using (var reader = cmd.ExecuteReader())
+                if (!reader.Read())
+                    AlterTableSteamAppID();
+
+            // NEU: ProfileSettings
+            using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'ProfileSettings';", connection))
+            using (var reader = cmd.ExecuteReader())
+                if (!reader.Read())
+                    AlterTableProfileSettings();
+
+            // NEU: TodayStats
+            using (var cmd = new SQLiteCommand("SELECT 1 FROM PRAGMA_table_info('tblGameProfiles') WHERE name = 'TodayStats';", connection))
+            using (var reader = cmd.ExecuteReader())
+                if (!reader.Read())
+                    AlterTableTodayStats();
         }
 
         private static void AlterTableExtGameFolder()
         {
             using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN ExtGameFolder varchar(1000);", connection))
                 cmd.ExecuteNonQuery();
-
             using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET ExtGameFolder = '';", connection))
                 cmd.ExecuteNonQuery();
         }
@@ -58,28 +64,48 @@ namespace GameTimeX
         {
             using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN StartpointPlaythroughTime INTEGER;", connection))
                 cmd.ExecuteNonQuery();
-
             using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET StartpointPlaythroughTime = 0;", connection))
                 cmd.ExecuteNonQuery();
         }
 
-        // NEU: Executables-Spalte migrieren (TEXT = „longstring“ in SQLite)
         private static void AlterTableExecutables()
         {
             using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN Executables TEXT;", connection))
                 cmd.ExecuteNonQuery();
-
             using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET Executables = '';", connection))
                 cmd.ExecuteNonQuery();
         }
 
-        /// <summary>Erstellt – wenn nötig – die SQLite-Datenbanktabelle.</summary>
+        private static void AlterTableSteamAppID()
+        {
+            using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN SteamAppID INTEGER;", connection))
+                cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET SteamAppID = 0;", connection))
+                cmd.ExecuteNonQuery();
+        }
+
+        // NEU
+        private static void AlterTableProfileSettings()
+        {
+            using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN ProfileSettings TEXT;", connection))
+                cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET ProfileSettings = '';", connection))
+                cmd.ExecuteNonQuery();
+        }
+
+        // NEU
+        private static void AlterTableTodayStats()
+        {
+            using (var cmd = new SQLiteCommand("ALTER TABLE tblGameProfiles ADD COLUMN TodayStats TEXT;", connection))
+                cmd.ExecuteNonQuery();
+            using (var cmd = new SQLiteCommand("UPDATE tblGameProfiles SET TodayStats = '';", connection))
+                cmd.ExecuteNonQuery();
+        }
+
         public static void CreateTable()
         {
             if (connection == null) return;
 
-            // WICHTIG: Executables als LETZTE Spalte anlegen,
-            // damit Reihenfolge zu migrierter Tabelle passt.
             using (var cmd = new SQLiteCommand(
                 "CREATE TABLE tblGameProfiles (" +
                 "ProfileID INTEGER PRIMARY KEY, " +
@@ -92,7 +118,10 @@ namespace GameTimeX
                 "StartpointPlaythroughTime INTEGER, " +
                 "CreatedAt DATETIME, " +
                 "ChangedAt DATETIME, " +
-                "Executables TEXT)", connection))
+                "SteamAppID INTEGER, " +        // neu
+                "ProfileSettings TEXT, " +      // neu
+                "TodayStats TEXT, " +           // neu
+                "Executables TEXT)", connection)) // Executables am Ende lassen
             {
                 cmd.ExecuteNonQuery();
             }
@@ -115,11 +144,9 @@ namespace GameTimeX
             }
 
             connection = new SQLiteConnection(connectionString);
-            try { connection.Open(); } catch { /* ignore */ }
+            try { connection.Open(); } catch { }
             return newDB;
         }
-
-        // ---------- Parameterisierte Commands ----------
 
         private static SQLiteCommand BuildUpdateCommand(DBObject dbObj)
         {
@@ -133,6 +160,9 @@ namespace GameTimeX
                 "ExtGameFolder = @ExtGameFolder, " +
                 "StartpointPlaythroughTime = @Startpoint, " +
                 "ChangedAt = @ChangedAt, " +
+                "SteamAppID = @SteamAppID, " +
+                "ProfileSettings = @ProfileSettings, " +
+                "TodayStats = @TodayStats, " +
                 "Executables = @Executables " +
                 "WHERE ProfileID = @ProfileID;";
 
@@ -145,6 +175,9 @@ namespace GameTimeX
             cmd.Parameters.AddWithValue("@ExtGameFolder", dbObj.ExtGameFolder ?? string.Empty);
             cmd.Parameters.AddWithValue("@Startpoint", dbObj.PlayThroughStartingPoint);
             cmd.Parameters.AddWithValue("@ChangedAt", ToSQLDateFormat(DateTime.Now));
+            cmd.Parameters.AddWithValue("@SteamAppID", dbObj.SteamAppID);
+            cmd.Parameters.AddWithValue("@ProfileSettings", dbObj.ProfileSettings ?? string.Empty);
+            cmd.Parameters.AddWithValue("@TodayStats", dbObj.TodayStats ?? string.Empty);
             cmd.Parameters.AddWithValue("@Executables", dbObj.Executables ?? string.Empty);
             cmd.Parameters.AddWithValue("@ProfileID", dbObj.ProfileID);
             return cmd;
@@ -154,8 +187,8 @@ namespace GameTimeX
         {
             var sql =
                 "INSERT INTO tblGameProfiles " +
-                "(GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, StartpointPlaythroughTime, CreatedAt, ChangedAt, Executables) " +
-                "VALUES (@GameName, @GameTime, @FirstPlay, @LastPlay, @ProfilePicFileName, @ExtGameFolder, @Startpoint, @CreatedAt, @ChangedAt, @Executables);";
+                "(GameName, GameTime, FirstPlay, LastPlay, ProfilePicFileName, ExtGameFolder, StartpointPlaythroughTime, CreatedAt, ChangedAt, SteamAppID, ProfileSettings, TodayStats, Executables) " +
+                "VALUES (@GameName, @GameTime, @FirstPlay, @LastPlay, @ProfilePicFileName, @ExtGameFolder, @Startpoint, @CreatedAt, @ChangedAt, @SteamAppID, @ProfileSettings, @TodayStats, @Executables);";
 
             var cmd = new SQLiteCommand(sql, connection);
             cmd.Parameters.AddWithValue("@GameName", dbObj.GameName ?? string.Empty);
@@ -167,6 +200,9 @@ namespace GameTimeX
             cmd.Parameters.AddWithValue("@Startpoint", dbObj.PlayThroughStartingPoint);
             cmd.Parameters.AddWithValue("@CreatedAt", ToSQLDateFormat(DateTime.Now));
             cmd.Parameters.AddWithValue("@ChangedAt", ToSQLDateFormat(DateTime.Now));
+            cmd.Parameters.AddWithValue("@SteamAppID", dbObj.SteamAppID);
+            cmd.Parameters.AddWithValue("@ProfileSettings", dbObj.ProfileSettings ?? string.Empty);
+            cmd.Parameters.AddWithValue("@TodayStats", dbObj.TodayStats ?? string.Empty);
             cmd.Parameters.AddWithValue("@Executables", dbObj.Executables ?? string.Empty);
             return cmd;
         }
@@ -181,7 +217,6 @@ namespace GameTimeX
             using (var cmd = BuildCommand(obj))
                 cmd.ExecuteNonQuery();
 
-            // Nur nach Insert überschreiben
             if (obj.ProfileID == 0)
                 obj.ProfileID = getLastInsertedPID();
         }
@@ -204,7 +239,6 @@ namespace GameTimeX
             }
         }
 
-        /// <summary>Alle Profile, deren Name den Suchtext enthält (SQL-Injection-sicher, LIKE mit Escape).</summary>
         public static List<DBObject> ReadGameName(string gameName)
         {
             var list = new List<DBObject>();
@@ -241,7 +275,6 @@ namespace GameTimeX
             return list;
         }
 
-        /// <summary>Liest das Objekt mit der übergebenen PID ein.</summary>
         public static DBObject ReadPID(int pid)
         {
             using (var cmd = connection.CreateCommand())
@@ -260,18 +293,6 @@ namespace GameTimeX
 
         private static DBObject Map(SQLiteDataReader reader)
         {
-            // Spaltenreihenfolge:
-            // 0: ProfileID
-            // 1: GameName
-            // 2: GameTime
-            // 3: FirstPlay
-            // 4: LastPlay
-            // 5: ProfilePicFileName
-            // 6: ExtGameFolder
-            // 7: StartpointPlaythroughTime
-            // 8: CreatedAt
-            // 9: ChangedAt
-            // 10: Executables   (NEU – immer LETZTE Spalte)
             var dbObj = new DBObject
             {
                 ProfileID = reader.GetInt32(0),
@@ -284,8 +305,36 @@ namespace GameTimeX
                 PlayThroughStartingPoint = reader.GetInt32(7),
                 CreatedAt = DateTime.Parse(reader.GetString(8)),
                 ChangedAt = DateTime.Parse(reader.GetString(9)),
-                Executables = reader.IsDBNull(10) ? string.Empty : reader.GetString(10)
             };
+
+            try
+            {
+                int o = reader.GetOrdinal("SteamAppID");
+                dbObj.SteamAppID = !reader.IsDBNull(o) ? Convert.ToInt32(reader.GetValue(o)) : 0;
+            }
+            catch { dbObj.SteamAppID = 0; }
+
+            try
+            {
+                int o = reader.GetOrdinal("ProfileSettings");
+                dbObj.ProfileSettings = !reader.IsDBNull(o) ? reader.GetString(o) : string.Empty;
+            }
+            catch { dbObj.ProfileSettings = string.Empty; }
+
+            try
+            {
+                int o = reader.GetOrdinal("TodayStats");
+                dbObj.TodayStats = !reader.IsDBNull(o) ? reader.GetString(o) : string.Empty;
+            }
+            catch { dbObj.TodayStats = string.Empty; }
+
+            try
+            {
+                int o = reader.GetOrdinal("Executables");
+                dbObj.Executables = !reader.IsDBNull(o) ? reader.GetString(o) : string.Empty;
+            }
+            catch { dbObj.Executables = string.Empty; }
+
             return dbObj;
         }
 
@@ -302,7 +351,10 @@ namespace GameTimeX
                 PlayThroughStartingPoint = 0,
                 CreatedAt = DateTime.Now,
                 ChangedAt = DateTime.MinValue,
-                Executables = "" // NEU
+                SteamAppID = 0,
+                ProfileSettings = "",
+                TodayStats = "",
+                Executables = ""
             };
         }
 
@@ -344,7 +396,6 @@ namespace GameTimeX
         private static string ToSQLDateFormat(DateTime date)
             => date.ToString("yyyy-MM-dd HH:mm:ss");
 
-        // Escaping für LIKE (%, _ und \)
         private static string EscapeLikeValue(string value)
         {
             return value

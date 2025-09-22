@@ -1,76 +1,96 @@
-﻿<Window x:Class="GameTimeX.ImageCropper"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameTimeX"
-        mc:Ignorable="d"
-        x:Name="imageCropperWindow"
-        Background="Transparent"
-        AllowsTransparency="True"
-        ResizeMode="NoResize"
-        Style="{StaticResource DefaultWindowStyle}"
-        WindowStyle="None"
-        Title="Settings"
-        Height="500" Width="800" MinHeight="500" MinWidth="800"
-        WindowStartupLocation="CenterOwner"
-        Loaded="Window_Loaded"
-        PreviewMouseWheel="imageCropperWindow_PreviewMouseWheel">
+﻿<Window
+    x:Class="GameTimeX.ImageCropper"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GameTimeX"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="imageCropperWindow"
+    Title="Settings"
+    Width="800"
+    Height="500"
+    MinWidth="800"
+    MinHeight="500"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Loaded="Window_Loaded"
+    PreviewMouseWheel="imageCropperWindow_PreviewMouseWheel"
+    ResizeMode="NoResize"
+    Style="{StaticResource DefaultWindowStyle}"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <!-- Außenrahmen + Abrundung -->
-    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="12"
-            Background="#2F2F2F"
-            SnapsToDevicePixels="True"
-            Padding="0">
+    <!--  Außenrahmen + Abrundung  -->
+    <Border
+        Padding="0"
+        Background="#2F2F2F"
+        BorderBrush="{DynamicResource ButtonDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="12"
+        SnapsToDevicePixels="True">
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- Titlebar -->
-            <Border Grid.Row="0"
-                    x:Name="titleBar"
-                    Background="Black"
-                    CornerRadius="12,12,0,0"
-                    ClipToBounds="True"
-                    MouseDown="titleBar_MouseDown"/>
-            <TextBlock Grid.Row="0"
-                       Text="Crop Profile Image"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
-                       Margin="10,0,0,0"
-                       Foreground="White"/>
+            <!--  Titlebar  -->
+            <Border
+                x:Name="titleBar"
+                Grid.Row="0"
+                Background="Black"
+                ClipToBounds="True"
+                CornerRadius="12,12,0,0"
+                MouseDown="titleBar_MouseDown" />
+            <TextBlock
+                Grid.Row="0"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="White"
+                Text="Crop Profile Image" />
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btnClose" Content="X" Width="40" Height="30"
-                        BorderBrush="Transparent" Background="Transparent"
-                        Click="btnClose_Click" Foreground="White"
-                        MouseEnter="btnClose_MouseEnter" Style="{StaticResource NoMouseOverButtonStyle}"
-                        MouseLeave="btnClose_MouseLeave">
-                    <!-- abgerundete Ecke oben rechts beim Hover -->
+            <StackPanel
+                Grid.Row="0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnClose"
+                    Width="40"
+                    Height="30"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Click="btnClose_Click"
+                    Content="X"
+                    Foreground="White"
+                    MouseEnter="btnClose_MouseEnter"
+                    MouseLeave="btnClose_MouseLeave"
+                    Style="{StaticResource NoMouseOverButtonStyle}">
+                    <!--  abgerundete Ecke oben rechts beim Hover  -->
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="bg"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="0,12,0,0"
-                                    SnapsToDevicePixels="True">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
+                            <Border
+                                x:Name="bg"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="0,12,0,0"
+                                SnapsToDevicePixels="True">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="Red"/>
+                                    <Setter TargetName="bg" Property="Background" Value="Red" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="#CC0000"/>
+                                    <Setter TargetName="bg" Property="Background" Value="#CC0000" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -78,22 +98,83 @@
                 </Button>
             </StackPanel>
 
-            <!-- Inhalt (unverändert) -->
-            <Grid Grid.Row="1" x:Name="grdContent" HorizontalAlignment="Left">
-                <Image x:Name="imgProfilePic"/>
-                <Canvas x:Name="cvsCropper"
-                        Background="Transparent"
-                        MouseDown="Canvas_MouseDown"
-                        MouseUp="Canvas_MouseUp"
-                        MouseMove="Canvas_MouseMove">
-                    <Rectangle x:Name="recTransformArea"
-                               Fill="Transparent"
-                               Stroke="White"
-                               StrokeThickness="2"
-                               Width="300"
-                               Height="300"
-                               Canvas.Left="0"
-                               Canvas.Top="0"/>
+            <!--  Inhalt  -->
+            <Grid
+                x:Name="grdContent"
+                Grid.Row="1"
+                HorizontalAlignment="Left">
+                <Image x:Name="imgProfilePic" />
+
+                <!--  Canvas für Auswahl und Overlay  -->
+                <Canvas
+                    x:Name="cvsCropper"
+                    Background="Transparent"
+                    MouseDown="Canvas_MouseDown"
+                    MouseMove="Canvas_MouseMove"
+                    MouseUp="Canvas_MouseUp">
+
+                    <!--  Abgedunkelte Fläche außerhalb der Auswahl (EvenOdd-Loch)  -->
+                    <Path
+                        x:Name="maskOutside"
+                        Fill="#99000000"
+                        IsHitTestVisible="False">
+                        <Path.Data>
+                            <GeometryGroup FillRule="EvenOdd">
+                                <!--  hier fügen wir im CodeBehind die Rechtecke hinzu  -->
+                            </GeometryGroup>
+                        </Path.Data>
+                    </Path>
+
+
+                    <!--  Auswahlrahmen (hübsch & sichtbar)  -->
+                    <Rectangle
+                        x:Name="recTransformArea"
+                        Canvas.Left="0"
+                        Canvas.Top="0"
+                        Width="300"
+                        Height="300"
+                        Fill="#19000000"
+                        RadiusX="10"
+                        RadiusY="10"
+                        SnapsToDevicePixels="True"
+                        Stroke="{DynamicResource ButtonDefaultBrush}"
+                        StrokeDashArray="4 2"
+                        StrokeThickness="2.5">
+                        <Rectangle.Effect>
+                            <DropShadowEffect
+                                BlurRadius="14"
+                                Opacity="0.6"
+                                ShadowDepth="0"
+                                Color="Black" />
+                        </Rectangle.Effect>
+                    </Rectangle>
+
+                    <!--  optionale Drittel-Guides (dezent)  -->
+                    <Line
+                        x:Name="guideV1"
+                        IsHitTestVisible="False"
+                        Stroke="#66FFFFFF"
+                        StrokeDashArray="2 6"
+                        StrokeThickness="1" />
+                    <Line
+                        x:Name="guideV2"
+                        IsHitTestVisible="False"
+                        Stroke="#66FFFFFF"
+                        StrokeDashArray="2 6"
+                        StrokeThickness="1" />
+                    <Line
+                        x:Name="guideH1"
+                        IsHitTestVisible="False"
+                        Stroke="#66FFFFFF"
+                        StrokeDashArray="2 6"
+                        StrokeThickness="1" />
+                    <Line
+                        x:Name="guideH2"
+                        IsHitTestVisible="False"
+                        Stroke="#66FFFFFF"
+                        StrokeDashArray="2 6"
+                        StrokeThickness="1" />
+
                 </Canvas>
             </Grid>
         </Grid>

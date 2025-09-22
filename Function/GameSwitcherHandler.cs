@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using GameTimeX.Objects;
 
@@ -36,7 +35,7 @@ namespace GameTimeX.Function
 
             foreach (DBObject profile in profiles)
             {
-                if(profile.ExtGameFolder == string.Empty)
+                if (profile.ExtGameFolder == string.Empty)
                     continue;
 
                 // Für dieses Profil alle Exes holen
@@ -68,9 +67,9 @@ namespace GameTimeX.Function
             running = false;
         }
 
-        public bool IsRunning() 
-        { 
-            return running; 
+        public bool IsRunning()
+        {
+            return running;
         }
 
         private void HandleGameSwitching()
@@ -88,9 +87,11 @@ namespace GameTimeX.Function
                 {
                     if (profile.ExtGameFolder == string.Empty) continue;
                     List<string> executables = ExecutablesToSearch[profile.ProfileID];
+                    string exePath = profile.ExtGameFolder;
+
                     foreach (string executable in executables)
                     {
-                        if (IsProcessRunning(executable))
+                        if (IsProcessRunningWithPathPart(executable, exePath))
                         {
                             wnd.Dispatcher.Invoke((Action)(() =>
                             {
@@ -100,7 +101,7 @@ namespace GameTimeX.Function
                                 {
                                     // Nur switchen, wenn noch nicht als aktuelles Profil selektiert!
                                     // Ansonsten gibt es einen komischen Bug mit der Selektionsanzeige (Border animiert öfter als 1x)
-                                    if(SysProps.currentSelectedPID != currentProfileRunning.pid)
+                                    if (SysProps.currentSelectedPID != currentProfileRunning.pid)
                                     {
                                         DisplayHandler.SwitchToSpecificGame(wnd, SysProps.startUpParms.ViewMode, profile.ProfileID);
 
@@ -114,7 +115,7 @@ namespace GameTimeX.Function
                                             MonitorHandler.EndMonitoringGameTime(wnd);
                                         }
                                     }
-                                        
+
                                     currentProfileRunning.pid = profile.ProfileID;
                                     currentProfileRunning.executables.Add(executable);
                                 }
@@ -139,10 +140,15 @@ namespace GameTimeX.Function
 
                                 if (currentProfileRunning.countNotRunning == currentProfileRunning.executables.Count)
                                 {
+
+                                    // Profilsettings deaktivieren (z.B. HDR)
+                                    GameStarterHandler.DeactivateProfileSettings(currentProfileRunning.pid);
+
                                     // Keine der vorher aufgenommenen EXE laufen mehr
                                     // D.h. Spiel muss geschlossen worden sein
                                     // Also => Clearen
                                     currentProfileRunning = new CurrentProfileRunning();
+
                                 }
                             }
                         }
@@ -179,6 +185,37 @@ namespace GameTimeX.Function
             return false;
         }
 
+        public bool IsProcessRunningWithPathPart(string exeName, string partialPath)
+        {
+            var nameNoExt = Path.GetFileNameWithoutExtension(exeName);
+
+            foreach (var p in Process.GetProcesses())
+            {
+                try
+                {
+                    if (!p.ProcessName.Equals(nameNoExt, StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    string procPath = p.MainModule?.FileName;
+                    if (string.IsNullOrEmpty(procPath))
+                        continue;
+
+                    if (procPath.IndexOf(partialPath, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                }
+                catch
+                {
+                    return IsProcessRunning(exeName);
+                }
+                finally
+                {
+                    try { p.Dispose(); } catch { }
+                }
+            }
+            return false;
+        }
+
+
         /// <summary>
         /// Fügt zu einem Gameprofile eine Exe hinzu
         /// </summary>
@@ -207,7 +244,7 @@ namespace GameTimeX.Function
                 ExecutablesToSearch[pid] = executablesList;
             }
 
-            
+
         }
 
         /// <summary>
@@ -240,7 +277,7 @@ namespace GameTimeX.Function
             foreach (var kvp in cExecutables.KeyValuePairs)
             {
                 // Nur aktive Exes in die Liste aufnehmen
-                if(kvp.Value)
+                if (kvp.Value)
                     activeExes.Add(kvp.Key);
             }
 

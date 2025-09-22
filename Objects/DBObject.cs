@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameTimeX
 {
@@ -32,5 +28,8 @@ namespace GameTimeX
         public int PlayThroughStartingPoint { get => playThroughStartingPoint; set => playThroughStartingPoint = value; }
 
         public string Executables { get => executables; set => executables = value; }
+        public int SteamAppID { get; set; }
+        public string ProfileSettings { get; set; }
+        public string TodayStats { get; set; }
     }
 }

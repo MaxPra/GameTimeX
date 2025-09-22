@@ -27,6 +27,8 @@
     <None Remove="images\question_mark.png" />
     <None Remove="images\settings.png" />
     <None Remove="images\startpoint.png" />
+    <None Remove="images\steam.png" />
+    <None Remove="images\steam_import.png" />
     <None Remove="images\tiles.png" />
     <None Remove="Resources\create_new.png" />
     <None Remove="Resources\delete.png" />
@@ -87,6 +89,8 @@
     <Resource Include="images\edit.png" />
     <Resource Include="images\no_picture.png" />
     <Resource Include="images\startpoint.png" />
+    <Resource Include="images\steam.png" />
+    <Resource Include="images\steam_import.png" />
     <Resource Include="images\tiles.png" />
     <Resource Include="Resources\create_new.png" />
     <Resource Include="Resources\delete.png" />
@@ -105,6 +109,7 @@
     <Resource Include="Resources\Roboto-Bold.ttf" />
     <Resource Include="Resources\Roboto-Regular.ttf" />
     <Resource Include="Resources\settings.png" />
+    <Resource Include="Resources\steam_import.png" />
     <Resource Include="Resources\tiles.png" />
   </ItemGroup>
 

@@ -1,83 +1,192 @@
-﻿<Window x:Class="GameTimeX.ToastMessage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameTimeX"
-        mc:Ignorable="d"
-        Style="{StaticResource DefaultWindowStyle}"
-        Title="Info"
-        Height="150"
-        Width="370"
-        Background="Transparent"
-        WindowStyle="None"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        WindowStartupLocation="Manual"
-        Loaded="Window_Loaded"
-        ResizeMode="NoResize"
-        ShowInTaskbar="False"
-        Focusable="False"
-        IsHitTestVisible="False"
-        AllowsTransparency="True">
-
-    <Window.Effect>
-        <DropShadowEffect Color="#99000000" BlurRadius="20" ShadowDepth="4" Opacity="0.6"/>
-    </Window.Effect>
+﻿<Window
+    x:Class="GameTimeX.ToastMessage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Info"
+    Width="370"
+    Height="150"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Focusable="False"
+    IsHitTestVisible="False"
+    Loaded="Window_Loaded"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Style="{StaticResource DefaultWindowStyle}"
+    Topmost="True"
+    WindowStartupLocation="Manual"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
+    <!--  weicher Fensterschatten  -->
+    <Window.Effect>
+        <DropShadowEffect
+            BlurRadius="18"
+            Opacity="0.6"
+            ShadowDepth="4"
+            Color="#99000000" />
+    </Window.Effect>
+
+    <Window.Resources>
+        <!--  5s-Progress-Animation (ScaleX 0 -> 1)  -->
+        <Storyboard x:Key="sbProgress5s">
+            <DoubleAnimation
+                FillBehavior="HoldEnd"
+                Storyboard.TargetName="ProgressScale"
+                Storyboard.TargetProperty="ScaleX"
+                From="1"
+                To="0"
+                Duration="0:0:3" />
+        </Storyboard>
+    </Window.Resources>
+
     <Grid>
-        <Border Background="#2F2F2F"
-                CornerRadius="10"
-                BorderBrush="{DynamicResource ButtonDefaultBrush}"
-                BorderThickness="2"
-                SnapsToDevicePixels="True">
-            <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="3" Opacity="0.4"/>
-            </Border.Effect>
+        <!--  Hauptkarte  -->
+        <Border
+            BorderBrush="{DynamicResource ButtonDefaultBrush}"
+            BorderThickness="1.2"
+            CornerRadius="12"
+            SnapsToDevicePixels="True">
+            <Border.Background>
+                <!--  dezenter Dark-Verlauf  -->
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#323232" />
+                    <GradientStop Offset="1" Color="#2B2B2B" />
+                </LinearGradientBrush>
+            </Border.Background>
 
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="32"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <!--  Spalte 0: Accent-Leiste | Spalte 1: Inhalt  -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                <!-- Header -->
-                <Border Grid.Row="0"
-                        Background="#1A000000"
-                        CornerRadius="10,10,0,0"
-                        BorderBrush="#22000000"
-                        BorderThickness="0,0,0,1"/>
-                
-                <TextBlock x:Name="Title"
-                           Grid.Row="0"
-                           Text="Info"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left"
-                           Margin="10,0,0,0"
-                           Foreground="White"
-                           FontSize="14"
-                           FontWeight="SemiBold"
-                           TextTrimming="CharacterEllipsis"
-                           TextWrapping="NoWrap"
-                           MaxWidth="350"/>
+                <!--  linke Accent-Leiste in App-Blau  -->
+                <Border
+                    Grid.Column="0"
+                    Background="{DynamicResource ButtonDefaultBrush}"
+                    CornerRadius="12,0,0,12" />
 
+                <!--  Inhalt  -->
+                <Grid Grid.Column="1" Margin="12,10,12,12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <!--  Header  -->
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="*" />
+                        <!--  Message  -->
+                        <RowDefinition Height="10" />
+                        <!--  Abstand vor Progress  -->
+                        <RowDefinition Height="Auto" />
+                        <!--  Progress  -->
+                    </Grid.RowDefinitions>
 
-                <!-- Content -->
-                <Grid Grid.Row="1" x:Name="grdContent">
-                    <TextBlock x:Name="Message"
-                               Text="Text"
-                               TextWrapping="NoWrap"
-                               TextTrimming="CharacterEllipsis"
-                               Foreground="White"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="30"
-                               Margin="14,8,14,8"/>
+                    <!--  Headerzeile: Icon + Titel (vertikal mittig)  -->
+                    <Grid Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <!--  Icon  -->
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="*" />
+                            <!--  Titel  -->
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Icon (Segoe MDL2 Assets)  -->
+                        <Border
+                            Grid.Column="0"
+                            Width="28"
+                            Height="28"
+                            VerticalAlignment="Center"
+                            Background="#21000000"
+                            BorderBrush="#33000000"
+                            BorderThickness="1"
+                            CornerRadius="6">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets"
+                                FontSize="18"
+                                Foreground="{DynamicResource ButtonDefaultBrush}"
+                                Text="" />
+                        </Border>
+
+                        <!--  Titel  -->
+                        <TextBlock
+                            x:Name="Title"
+                            Grid.Column="2"
+                            MaxWidth="320"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="Info"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </Grid>
+
+                    <!--  feine Trennlinie  -->
+                    <Border
+                        Grid.Row="1"
+                        Height="1"
+                        Background="#22000000"
+                        CornerRadius="1" />
+
+                    <!--  Nachricht  -->
+                    <TextBlock
+                        x:Name="Message"
+                        Grid.Row="2"
+                        MaxHeight="76"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        Foreground="#F0FFFFFF"
+                        Text="Text"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="Wrap" />
+
+                    <!--  Progress-Bar unten  -->
+                    <Grid
+                        x:Name="ProgressTrack"
+                        Grid.Row="4"
+                        Margin="12,0,12,0">
+                        <!--  Track  -->
+                        <Border
+                            Height="4"
+                            Background="#33000000"
+                            CornerRadius="3" />
+                        <!--  Fill (füllt die gesamte Breite, skaliert per RenderTransform)  -->
+                        <Border
+                            x:Name="ProgressFill"
+                            Height="4"
+                            HorizontalAlignment="Stretch"
+                            Background="{DynamicResource ButtonDefaultBrush}"
+                            CornerRadius="3"
+                            RenderTransformOrigin="0,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform x:Name="ProgressScale" ScaleX="0" ScaleY="1" />
+                            </Border.RenderTransform>
+                        </Border>
+                    </Grid>
                 </Grid>
             </Grid>
         </Border>
     </Grid>
+
+    <!--  Animation automatisch starten  -->
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource sbProgress5s}" />
+        </EventTrigger>
+    </Window.Triggers>
 </Window>
