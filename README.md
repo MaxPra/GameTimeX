@@ -30,6 +30,7 @@ Download the latest installer:
 - 🟦 **Steam Integration** – import Steam games and link them with GameTimeX profiles.  
   - Launch Steam games directly from GameTimeX  
   - Optionally enable **HDR automatically before game launch** (only if linked with a Steam profile)
+- 🗓️ **Today’s Playtime in Tooltip** – in the details panel, the **total time tooltip** now also shows **how many hours you’ve played today**.
 
 ---
 
@@ -49,6 +50,7 @@ Download the latest installer:
 - **Smart executable pre-filtering** – on first profile creation, non-game executables (launchers, crash reporters, helpers, benchmarks) are deselected automatically
 - **Steam Integration** – Steam games can now be **imported and linked** to GameTimeX profiles.  
   Linked Steam games can be launched directly from GameTimeX, and HDR can be activated automatically before startup.
+- **Today’s Playtime in Tooltip** – hover over the “i” icon next to *Game Time* in the details view to also see **today’s total playtime**.
 
 ---
 
@@ -82,7 +84,8 @@ Initial application view:
 Example with profiles:  
 <img width="1212" height="811" alt="image" src="https://github.com/user-attachments/assets/4f653594-1e2a-478a-a28d-ef74d1add646" />
 
-Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.
+Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.  
+➡️ The tooltip now also shows **how many hours you played today**.
 
 If a new playthrough begins after time has already been recorded, use **New Playthrough Startpoint**. The application saves the current total time and reports playthrough time as the difference from that point forward.  
 - **Total time** remains cumulative.  
