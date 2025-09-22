@@ -82,7 +82,7 @@ Initial application view:
 6. **Rename Profile** – click the pencil icon next to the profile name.
 
 Example with profiles:  
-<img width="1212" height="811" alt="image" src="https://github.com/user-attachments/assets/4f653594-1e2a-478a-a28d-ef74d1add646" />
+<img width="1220" height="820" alt="image" src="https://github.com/user-attachments/assets/fbb43f6a-3d25-46f3-906a-4e8979a26190" />
 
 Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.  
 ➡️ The tooltip now also shows **how many hours you played today**.
