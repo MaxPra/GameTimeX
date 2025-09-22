@@ -150,7 +150,7 @@ This prevents launchers, helpers, and engine processes from causing false detect
 ## Profile Image Cropping
 
 When adding a profile image, a cropping dialog enables quick framing:  
-<img width="1214" height="809" alt="image" src="https://github.com/user-attachments/assets/e18a8246-cce6-49af-8a67-0936453f84dc" />
+<img width="1220" height="813" alt="image" src="https://github.com/user-attachments/assets/5c0a23a5-8b2b-44ff-a4c9-8ba0debfd7d2" />
 
 **Controls:**
 
