@@ -27,6 +27,9 @@ Download the latest installer:
 - ⌨️ **Hotkey Monitoring** – start/stop tracking via a configurable hotkey.
 - 💾 **Backup & Restore** – export or import all profiles; optional automatic backup at startup.
 - 🔒 **Hardened Database Access** – parameterized SQLite queries for protection against SQL injection.
+- 🟦 **Steam Integration** – import Steam games and link them with GameTimeX profiles.  
+  - Launch Steam games directly from GameTimeX  
+  - Optionally enable **HDR automatically before game launch** (only if linked with a Steam profile)
 
 ---
 
@@ -44,6 +47,8 @@ Download the latest installer:
 - **Security: SQL-injection hardening** – all database access uses parameterized SQLite queries
 - **Executable selection for Automatic Profile Switching** – define the exact executables to monitor for profile switching; avoids collisions with shared executables
 - **Smart executable pre-filtering** – on first profile creation, non-game executables (launchers, crash reporters, helpers, benchmarks) are deselected automatically
+- **Steam Integration** – Steam games can now be **imported and linked** to GameTimeX profiles.  
+  Linked Steam games can be launched directly from GameTimeX, and HDR can be activated automatically before startup.
 
 ---
 
@@ -85,6 +90,22 @@ If a new playthrough begins after time has already been recorded, use **New Play
 
 ---
 
+## Properties & Steam Linking
+
+The **Properties window** provides central configuration for each profile:  
+
+<img width="570" height="310" alt="image" src="https://github.com/user-attachments/assets/c6d87264-1b43-4a18-a83d-ffc84bd6cb3d" />
+
+- Define the **installation folder** for installed game detection  
+- Assign profile image, rename profile, and manage monitored executables  
+- **Steam Integration:**  
+  - Shows whether the profile is already linked to a Steam game  
+  - A dedicated **Steam button with link icon** allows importing and linking Steam games directly  
+  - When linked, Steam games can be launched straight from GameTimeX  
+  - Optional: enable **HDR activation before launch**
+
+---
+
 ## Settings
 
 The settings dialog provides granular control:  
@@ -100,6 +121,7 @@ The settings dialog provides granular control:
 - **Backup & Restore** – export or import profiles; the application restarts automatically after import/export. Optional automatic backup on startup.
 - **OLED Care (Blackout Screen)** – fully darkens all screens to protect OLED panels (CTRL+B).
 - **Side-Screen Dimming (optional)** – dims all secondary displays **only while tracking**; automatically restores them afterwards.
+- **Steam Integration Options** – choose whether HDR should be toggled automatically when launching a Steam-linked game.
 
 *Tip:* For Steam titles, locate the installation folder via **Steam → Game → Properties → Installed Files → Browse**.
 
