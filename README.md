@@ -99,7 +99,7 @@ If a new playthrough begins after time has already been recorded, use **New Play
 
 The **Properties window** provides central configuration for each profile:  
 
-<img width="570" height="409" alt="image" src="https://github.com/user-attachments/assets/d276b1b1-fbc2-4460-a1b2-54c6a474d380" />
+<img width="573" height="434" alt="image" src="https://github.com/user-attachments/assets/d81642ce-315e-4cf5-a76b-9487e4aec0c4" />
 
 - Define the **installation folder** for installed game detection  
 - Assign profile image, rename profile, and manage monitored executables  
