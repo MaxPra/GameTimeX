@@ -1,46 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameTimeX.Objects;
+﻿using GameTimeX.Objects;
 
 namespace GameTimeX.Function
 {
     internal class GameStarterHandler
     {
-        public static void ActivateProfileSettings(int pid)
+        public static void ActivateProfileSettings(CProfileSettings cProfileSettings)
         {
-            DBObject dbObj = DataBaseHandler.ReadPID(pid);
-
-            if (dbObj != null)
+            // Wenn HDR im Profil aktiviert --> HDR aktivieren
+            if (cProfileSettings.HDREnabled)
             {
-                // Hier Profileinstellungen laden
-                CProfileSettings cProfileSettings = new CProfileSettings(dbObj.ProfileSettings).Dezerialize();
-                
-                // Wenn HDR im Profil aktiviert --> HDR aktivieren
-                if (cProfileSettings.HDREnabled)
-                {
-                    HdrToggler.SetHdrForAllActiveDisplays(true);
-                }
+                HdrToggler.SetHdrForAllActiveDisplays(true);
+            }
+        }
+
+        public static void DeactivateProfileSettings(CProfileSettings cProfileSettings)
+        {
+            // Wenn HDR im Profil aktiviert --> HDR aktivieren
+            if (cProfileSettings.HDREnabled)
+            {
+                HdrToggler.SetHdrForAllActiveDisplays(false);
             }
         }
 
         public static void DeactivateProfileSettings(int pid)
         {
-            DBObject dbObj = DataBaseHandler.ReadPID(pid);
+            if (pid == 0)
+                return;
 
-            if (dbObj != null)
-            {
-                // Hier Profileinstellungen laden
-                CProfileSettings cProfileSettings = new CProfileSettings(dbObj.ProfileSettings).Dezerialize();
+            DBObject dBObject = DataBaseHandler.ReadPID(pid);
 
-                // Wenn HDR im Profil aktiviert --> HDR jetzt deaktivieren
-                if (cProfileSettings.HDREnabled)
-                {
-                    HdrToggler.SetHdrForAllActiveDisplays(false);
-                }
-            }
+            if (dBObject == null)
+                return;
+
+            CProfileSettings cProfileSettings = new CProfileSettings(dBObject.ProfileSettings).Dezerialize();
+
+            DeactivateProfileSettings(cProfileSettings);
         }
     }
 }

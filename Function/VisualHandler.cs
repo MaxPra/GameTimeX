@@ -1,6 +1,4 @@
-﻿using GameTimeX.Objects;
-using System;
-using System.Threading;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GameTimeX.Objects;
 
 namespace GameTimeX
 {
@@ -139,7 +138,7 @@ namespace GameTimeX
 
         public static object GetApplicationResource(string resourceName)
         {
-            if(SysProps.mainWindow != null)
+            if (SysProps.mainWindow != null)
                 return SysProps.mainWindow.FindResource(resourceName);
 
             return new object();
@@ -161,7 +160,7 @@ namespace GameTimeX
 
             if (mode == StartUpParms.ViewModes.LIST)
             {
-                
+
                 bitModePic.BeginInit();
                 bitModePic.UriSource = new Uri("pack://application:,,,/images/list.png");
                 bitModePic.EndInit();

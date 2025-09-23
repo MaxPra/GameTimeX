@@ -102,7 +102,7 @@ namespace GameTimeX
                     dbObj.SteamAppID = (int)SteamGame.AppId;
 
                 CExecutables cExecutables = new CExecutables();
-                cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
+                cExecutables.Initialize(CExecutables.ConvertListToDictionary(FuncExecutables.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
                 dbObj.Executables = cExecutables.Serialize();
 
                 DataBaseHandler.Save(dbObj);
@@ -119,13 +119,10 @@ namespace GameTimeX
                 }
 
                 // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
-                if (SysProps.startUpParms.AutoProfileSwitching)
+                if (SysProps.gameRunningHandler != null)
                 {
-                    if (SysProps.gameSwitcherHandler != null)
-                    {
-                        List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dbObj);
-                        SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
-                    }
+                    List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dbObj);
+                    SysProps.gameRunningHandler.AddExecutables(dbObj.ProfileID, executables);
                 }
 
                 ProfileID = dbObj.ProfileID;

@@ -373,7 +373,7 @@ namespace GameTimeX
             foreach (DBObject gameProfile in gameProfiles)
             {
                 if (Directory.Exists(gameProfile.ExtGameFolder) &&
-                    GameSwitcherHandler.GetAllExecutablesFromDirectory(gameProfile.ExtGameFolder).Count > 0)
+                    FuncExecutables.GetAllExecutablesFromDirectory(gameProfile.ExtGameFolder).Count > 0)
                 {
                     playableGames.Add(gameProfile);
                 }
@@ -682,7 +682,7 @@ namespace GameTimeX
         private static bool IsGameInstalled(DBObject gameProfile)
         {
             return Directory.Exists(gameProfile.ExtGameFolder) &&
-                   GameSwitcherHandler.GetAllExecutablesFromDirectory(gameProfile.ExtGameFolder).Count > 0;
+                   FuncExecutables.GetAllExecutablesFromDirectory(gameProfile.ExtGameFolder).Count > 0;
         }
 
 
@@ -751,7 +751,7 @@ namespace GameTimeX
             DBObject dbObj = DataBaseHandler.ReadPID(image.PID);
             if (dbObj.ExtGameFolder != string.Empty &&
                 Directory.Exists(dbObj.ExtGameFolder) &&
-                GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder).Count > 0)
+                FuncExecutables.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder).Count > 0)
             {
                 contextMenu.Items.Add(mIExecutables);
             }
@@ -766,8 +766,8 @@ namespace GameTimeX
         {
             GTXMenuItem menuItem = sender as GTXMenuItem;
 
-            if (SysProps.gameSwitcherHandler != null)
-                SysProps.gameSwitcherHandler.Stop();
+            if (SysProps.gameRunningHandler != null)
+                SysProps.gameRunningHandler.Stop();
 
             DBObject dbObj = DataBaseHandler.ReadPID(menuItem.PID);
 
@@ -778,7 +778,7 @@ namespace GameTimeX
                 if (cExecutables.KeyValuePairs.Count == 0)
                 {
                     cExecutables.Initialize(CExecutables.ConvertListToDictionary(
-                        GameSwitcherHandler.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
+                        FuncExecutables.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
                     dbObj.Executables = cExecutables.Serialize();
                 }
 
@@ -791,19 +791,16 @@ namespace GameTimeX
                 manageExecutables.ShowDialog();
             }
 
-            if (SysProps.startUpParms.AutoProfileSwitching)
+            if (SysProps.gameRunningHandler != null)
             {
-                if (SysProps.gameSwitcherHandler != null)
-                {
-                    List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dbObj);
-                    SysProps.gameSwitcherHandler.AddExecutables(dbObj.ProfileID, executables);
-                }
+                List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dbObj);
+                SysProps.gameRunningHandler.AddExecutables(dbObj.ProfileID, executables);
             }
 
-            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
+            if (SysProps.gameRunningHandler != null && !SysProps.gameRunningHandler.IsRunning())
             {
-                SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
-                SysProps.gameSwitcherHandler.Start();
+                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
         }
 
@@ -911,8 +908,8 @@ namespace GameTimeX
                     DataBaseHandler.Delete(dbObj.ProfileID);
                     BuildGameProfileView(SysProps.mainWindow);
 
-                    if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
-                        SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                    if (SysProps.gameRunningHandler != null)
+                        SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
                 }
             }
         }
@@ -921,8 +918,8 @@ namespace GameTimeX
         {
             GTXMenuItem menuItem = sender as GTXMenuItem;
 
-            if (SysProps.gameSwitcherHandler != null)
-                SysProps.gameSwitcherHandler.Stop();
+            if (SysProps.gameRunningHandler != null)
+                SysProps.gameRunningHandler.Stop();
 
             Properties properties = new Properties(menuItem.PID)
             {
@@ -930,8 +927,8 @@ namespace GameTimeX
             };
             properties.ShowDialog();
 
-            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
-                SysProps.gameSwitcherHandler.Start();
+            if (SysProps.gameRunningHandler != null && !SysProps.gameRunningHandler.IsRunning())
+                SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
 
             BuildGameProfileView(SysProps.mainWindow);
         }
@@ -955,8 +952,8 @@ namespace GameTimeX
                     DataBaseHandler.Delete(dbObj.ProfileID);
                     BuildGameProfileView(SysProps.mainWindow);
 
-                    if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
-                        SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                    if (SysProps.gameRunningHandler != null)
+                        SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
                 }
             }
         }

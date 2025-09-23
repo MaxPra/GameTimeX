@@ -157,6 +157,7 @@ namespace GameTimeX
                 // Profil Einstellungen
                 CProfileSettings profileSettings = new CProfileSettings();
                 profileSettings.HDREnabled = cbEnableHdr.IsChecked == true;
+                profileSettings.SteamGameArgs = txtSteamParams.Text.Replace(" ", ";");
 
                 dBObject.ProfileSettings = profileSettings.Serialize();
 
@@ -179,7 +180,7 @@ namespace GameTimeX
                 if (oldGameFolderPath != dBObject.ExtGameFolder)
                 {
                     CExecutables cExecutables = new CExecutables();
-                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(GameSwitcherHandler.GetAllExecutablesFromDirectory(dBObject.ExtGameFolder), true));
+                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(FuncExecutables.GetAllExecutablesFromDirectory(dBObject.ExtGameFolder), true));
                     dBObject.Executables = cExecutables.Serialize();
 
                     DataBaseHandler.Save(dBObject);
@@ -190,12 +191,12 @@ namespace GameTimeX
                 }
 
                 // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
-                if (SysProps.startUpParms.AutoProfileSwitching && (oldGameFolderPath != txtGameFolderPath.Text))
+                if (oldGameFolderPath != txtGameFolderPath.Text)
                 {
-                    if (SysProps.gameSwitcherHandler != null)
+                    if (SysProps.gameRunningHandler != null)
                     {
-                        List<string> executables = GameSwitcherHandler.GetAllActiveExecutablesFromDBObj(dBObject);
-                        SysProps.gameSwitcherHandler.AddExecutables(dBObject.ProfileID, executables);
+                        List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dBObject);
+                        SysProps.gameRunningHandler.AddExecutables(dBObject.ProfileID, executables);
                     }
                 }
 
@@ -223,13 +224,15 @@ namespace GameTimeX
             // Profil Settings laden
             CProfileSettings profileSettings = new CProfileSettings(dBObject.ProfileSettings).Dezerialize();
             cbEnableHdr.IsChecked = profileSettings.HDREnabled;
+            txtSteamParams.Text = profileSettings.SteamGameArgs.Replace(";", " ");
 
             oldPicPath = txtPicPath.Text;
             oldGameFolderPath = txtGameFolderPath.Text;
 
             if (dBObject.SteamAppID == 0)
             {
-                cbEnableHdr.Visibility = Visibility.Collapsed;
+                gbProfileSettings.IsEnabled = false;
+
             }
         }
 
@@ -251,25 +254,25 @@ namespace GameTimeX
             }
             else
             {
-                cbEnableHdr.IsChecked = false;
-                cbEnableHdr.Visibility = Visibility.Collapsed;
+                DisableProfileSettings();
             }
 
             // Wenn kein Steamprofil hinterlegt
             if (SteamGame == null && dBObject.SteamAppID == 0)
             {
-                cbEnableHdr.IsChecked = false;
-                cbEnableHdr.Visibility = Visibility.Collapsed;
+                DisableProfileSettings();
                 bSteamProfileLinked.Visibility = Visibility.Collapsed;
             }
             else if (SteamGame == null && dBObject.SteamAppID != 0)
             {
                 cbEnableHdr.Visibility = Visibility.Visible;
+                gbProfileSettings.IsEnabled = true;
                 bSteamProfileLinked.Visibility = Visibility.Visible;
             }
             else
             {
                 cbEnableHdr.Visibility = Visibility.Visible;
+                gbProfileSettings.IsEnabled = true;
                 bSteamProfileLinked.Visibility = Visibility.Visible;
             }
         }
@@ -289,12 +292,21 @@ namespace GameTimeX
                 // Profile Settings serialisieren und in Feld speichern
                 dBObject.ProfileSettings = profileSettings.Serialize();
 
-                // Enable HDR darf nicht sichtbar sein, wenn Steam-Profil nicht verlinkt
-                cbEnableHdr.IsChecked = false;
-                cbEnableHdr.Visibility = Visibility.Collapsed;
+                // Profileinstellungen auf Enabled = false stellen
+                DisableProfileSettings();
 
                 bSteamProfileLinked.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void DisableProfileSettings()
+        {
+            // Enable HDR darf nicht sichtbar sein, wenn Steam-Profil nicht verlinkt
+            cbEnableHdr.IsChecked = false;
+
+            txtSteamParams.Text = string.Empty;
+
+            gbProfileSettings.IsEnabled = false;
         }
     }
 }

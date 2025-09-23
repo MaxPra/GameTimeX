@@ -7,7 +7,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     Title="Properties"
     Width="560"
-    Height="300"
+    Height="415"
     AllowsTransparency="True"
     Background="Transparent"
     Loaded="Window_Loaded"
@@ -124,7 +124,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!--  Reihen: Status | Name | Pic | Folder | HDR | Füller | Save  -->
+                <!--  Reihen: Status | Name | Pic | Folder | Profile settings (HDR+Params) | Füller | Save  -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <!--  0 Status  -->
@@ -135,14 +135,13 @@
                     <RowDefinition Height="Auto" />
                     <!--  3 Game folder  -->
                     <RowDefinition Height="Auto" />
-                    <!--  4 HDR toggle  -->
+                    <!--  4 Profile settings group  -->
                     <RowDefinition Height="*" />
                     <!--  5 filler  -->
                     <RowDefinition Height="Auto" />
                     <!--  6 Save  -->
                 </Grid.RowDefinitions>
 
-                <!--  Steam profile linked bar  -->
                 <!--  Steam profile linked bar  -->
                 <Border
                     x:Name="bSteamProfileLinked"
@@ -210,8 +209,6 @@
                         </Button>
                     </Grid>
                 </Border>
-
-
 
                 <!--  Profile name  -->
                 <TextBox
@@ -294,27 +291,55 @@
                         Stretch="Uniform" />
                 </Button>
 
-                <!--  HDR toggle  -->
-                <CheckBox
-                    x:Name="cbEnableHdr"
+                <!--  Profile settings (group)  -->
+                <GroupBox
+                    x:Name="gbProfileSettings"
                     Grid.Row="4"
                     Grid.Column="0"
-                    Margin="0,6,0,0"
-                    Content="Enable HDR before launching game"
-                    Style="{StaticResource CheckBoxDefaultStyle}"
-                    ToolTipService.ShowDuration="20000">
-                    <CheckBox.ToolTip>
-                        <ToolTip
-                            Background="#333333"
-                            BorderThickness="1"
-                            Foreground="White">
-                            <TextBlock Width="320" TextWrapping="Wrap">
-                                When enabled, GameTimeX will attempt to enable Windows HDR before launching the game and, if desired, disable it once the game has closed.
-                                Automatic game switching is required to restore HDR settings after the game exits.
-                            </TextBlock>
-                        </ToolTip>
-                    </CheckBox.ToolTip>
-                </CheckBox>
+                    Grid.ColumnSpan="3"
+                    Margin="0,12,0,0"
+                    Header="Profile settings"
+                    Style="{StaticResource CardGroupBox}">
+                    <StackPanel>
+                        <!--  HDR toggle  -->
+                        <CheckBox
+                            x:Name="cbEnableHdr"
+                            Margin="0,0,0,10"
+                            Content="Enable HDR before launching game"
+                            Style="{StaticResource CheckBoxDefaultStyle}"
+                            ToolTipService.ShowDuration="20000">
+                            <CheckBox.ToolTip>
+                                <ToolTip
+                                    Background="#333333"
+                                    BorderThickness="1"
+                                    Foreground="White">
+                                    <TextBlock Width="320" TextWrapping="Wrap">
+                                        When enabled, GameTimeX will attempt to enable Windows HDR before launching the game and, if desired, disable it once the game has closed.
+                                    </TextBlock>
+                                </ToolTip>
+                            </CheckBox.ToolTip>
+                        </CheckBox>
+
+                        <!--  Steam launch parameters  -->
+                        <TextBox
+                            x:Name="txtSteamParams"
+                            Margin="0,0,0,0"
+                            Style="{StaticResource FormTextBox_Local}"
+                            Tag="Steam launch parameters"
+                            ToolTipService.ShowDuration="20000">
+                            <TextBox.ToolTip>
+                                <ToolTip
+                                    Background="#333333"
+                                    BorderThickness="1"
+                                    Foreground="White">
+                                    <TextBlock Width="320" TextWrapping="Wrap">
+                                        Optional Steam launch parameters (e.g. -fullscreen, -novid).
+                                    </TextBlock>
+                                </ToolTip>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                </GroupBox>
 
                 <!--  Save  -->
                 <Button

@@ -55,7 +55,7 @@ namespace GameTimeX
 
             // KeyInputHandler stoppen
             SysProps.StopKeyInputHandler();
-            SysProps.StopGameSwicherHandler();
+            SysProps.StopGameRunningHandler();
             Close();
         }
 
@@ -121,8 +121,8 @@ namespace GameTimeX
         {
 
             // Davor GameSwitcherHandler beenden
-            if (SysProps.gameSwitcherHandler != null)
-                SysProps.gameSwitcherHandler.Stop();
+            if (SysProps.gameRunningHandler != null)
+                SysProps.gameRunningHandler.Stop();
 
             CreateNew cnWin = new CreateNew();
             cnWin.Owner = this;
@@ -131,10 +131,10 @@ namespace GameTimeX
             int profileID = cnWin.ProfileID;
 
             // Danach wieder starten
-            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
+            if (SysProps.gameRunningHandler != null && !SysProps.gameRunningHandler.IsRunning())
             {
-                SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
-                SysProps.gameSwitcherHandler.Start();
+                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
 
 
@@ -164,8 +164,8 @@ namespace GameTimeX
                         DataBaseHandler.Delete(dbObj.ProfileID);
                         DisplayHandler.BuildGameProfileView(this);
 
-                        if (SysProps.startUpParms.AutoProfileSwitching && SysProps.gameSwitcherHandler != null)
-                            SysProps.gameSwitcherHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                        if (SysProps.gameRunningHandler != null)
+                            SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
                     }
                 }
             }
@@ -289,27 +289,19 @@ namespace GameTimeX
             }
 
             // Nach Schließen des Settings-Windows GameSwitcherHandler starten oder beenden!
-            if (SysProps.startUpParms.AutoProfileSwitching)
+            if (SysProps.gameRunningHandler == null)
             {
-                if (SysProps.gameSwitcherHandler == null)
-                {
-                    SysProps.gameSwitcherHandler = new GameSwitcherHandler(this);
-                    SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
-                    SysProps.gameSwitcherHandler.Start();
-                }
-                else
-                {
-                    if (!SysProps.gameSwitcherHandler.IsRunning())
-                    {
-                        SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
-                        SysProps.gameSwitcherHandler.Start();
-                    }
-                }
+                SysProps.gameRunningHandler = new GameRunningHandler();
+                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
             else
             {
-                if (SysProps.gameSwitcherHandler != null)
-                    SysProps.gameSwitcherHandler.Stop();
+                if (!SysProps.gameRunningHandler.IsRunning())
+                {
+                    SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                    SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
+                }
             }
         }
 
@@ -434,18 +426,18 @@ namespace GameTimeX
         {
 
             // Davor GameSwitcherHandler beenden
-            if (SysProps.gameSwitcherHandler != null)
-                SysProps.gameSwitcherHandler.Stop();
+            if (SysProps.gameRunningHandler != null)
+                SysProps.gameRunningHandler.Stop();
 
             Properties properties = new Properties(SysProps.currentSelectedPID);
             properties.Owner = this;
             properties.ShowDialog();
 
             // Danach wieder starten
-            if (SysProps.gameSwitcherHandler != null && !SysProps.gameSwitcherHandler.IsRunning())
+            if (SysProps.gameRunningHandler != null && !SysProps.gameRunningHandler.IsRunning())
             {
-                SysProps.gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
-                SysProps.gameSwitcherHandler.Start();
+                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
 
 

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using GameTimeX.Objects;
 
 namespace GameTimeX.Function
 {
@@ -16,20 +13,22 @@ namespace GameTimeX.Function
         {
             if (SteamLocatorHandler.IsGameInstalledByAppId(steamAppID))
             {
-                // Zuvor Profileinstellungen aktivieren
-                GameStarterHandler.ActivateProfileSettings(pid);
+                DBObject dbObj = DataBaseHandler.ReadPID(pid);
 
-                // Asynchron 2 Sekunden warten (UI bleibt responsiv)
+                if (dbObj == null)
+                    return;
+
+                // Profileinstellungen laden
+                CProfileSettings cProfileSettings = new CProfileSettings(dbObj.ProfileSettings).Dezerialize();
+
+                // Zuvor Profileinstellungen aktivieren
+                GameStarterHandler.ActivateProfileSettings(cProfileSettings);
+
                 await Task.Delay(5000);
 
-                var steamRoot = SteamLocatorHandler.GetSteamRoot();
-                var steamExe = System.IO.Path.Combine(steamRoot, "steam.exe");
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                {
-                    FileName = steamExe,
-                    Arguments = $"-applaunch {steamAppID}",
-                    UseShellExecute = true
-                });
+                SteamGameStarter steamGameStarter = new SteamGameStarter(FuncConvert.ToList(cProfileSettings.SteamGameArgs), steamAppID);
+                steamGameStarter.StartGame();
+
             }
             else
             {

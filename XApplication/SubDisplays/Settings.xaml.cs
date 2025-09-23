@@ -1,22 +1,11 @@
-﻿using GameTimeX.Function;
-using GameTimeX.Objects;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static GameTimeX.Objects.KeyInput;
+using GameTimeX.Objects;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace GameTimeX
 {
@@ -60,7 +49,7 @@ namespace GameTimeX
             SysProps.startUpParms.AutoProfileSwitching = (bool)cbGameSwitcher.IsChecked;
             SysProps.startUpParms.ShowToastNotification = (bool)cbShowToastNotification.IsChecked;
             SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring = (bool)cbBlackoutSideMonitor.IsChecked;
-            
+
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
             Close();
@@ -84,7 +73,7 @@ namespace GameTimeX
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.InitialDirectory = "C:\\Users";
             dialog.IsFolderPicker = true;
-            var result = dialog.ShowDialog();   
+            var result = dialog.ShowDialog();
             if (result == CommonFileDialogResult.Ok)
             {
                 txtBackupPath.Text = dialog.FileName;
@@ -97,7 +86,7 @@ namespace GameTimeX
                 btnCreateBackup.IsEnabled = true;
                 cbAutoBackup.IsEnabled = true;
             }
-                
+
         }
 
         private void btnCreateBackup_Click(object sender, RoutedEventArgs e)
@@ -136,7 +125,7 @@ namespace GameTimeX
                 btnImportBackup.IsEnabled = true;
                 lblBackUpDate.Text = "Backup date of file: " + File.GetCreationTime(txtBackupPathImport.Text).ToString("f");
             }
-                
+
         }
 
         private void btnImportBackup_Click(object sender, RoutedEventArgs e)
@@ -189,20 +178,20 @@ namespace GameTimeX
             {
                 txtBackupPathImport.Text = backUpImportPath;
             }
-            
+
             // Button Enabled handeln
-            if(txtBackupPath.Text != string.Empty)
+            if (txtBackupPath.Text != string.Empty)
             {
                 btnCreateBackup.IsEnabled = true;
                 cbAutoBackup.IsEnabled = true;
                 cbAutoBackup.IsChecked = SysProps.startUpParms.AutoBackup;
             }
 
-            if(txtBackupPathImport.Text != string.Empty)
+            if (txtBackupPathImport.Text != string.Empty)
             {
-                btnImportBackup.IsEnabled=true;
+                btnImportBackup.IsEnabled = true;
                 lblBackUpDate.Text = "Backup date of file: " + File.GetCreationTime(txtBackupPathImport.Text).ToString("f");
-               
+
             }
         }
 
@@ -217,8 +206,8 @@ namespace GameTimeX
             monitorKeyWnd.Owner = this;
             monitorKeyWnd.Focus();
             monitorKeyWnd.ShowDialog();
-            
-            
+
+
 
             KeyInput.VirtualKey key = monitorKeyWnd.key;
 
@@ -242,7 +231,7 @@ namespace GameTimeX
                 btnMonitoringKey.IsEnabled = false;
                 SysProps.startUpParms.MonitorShortcutActive = false;
                 cbShowToastNotification.IsEnabled = false;
-                cbBlackoutSideMonitor.IsEnabled = false;    
+                cbBlackoutSideMonitor.IsEnabled = false;
             }
 
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
@@ -250,7 +239,7 @@ namespace GameTimeX
 
         private void cbAutoBackup_Click(object sender, RoutedEventArgs e)
         {
-            if(cbAutoBackup.IsChecked == true)
+            if (cbAutoBackup.IsChecked == true)
             {
                 SysProps.startUpParms.AutoBackup = true;
             }
@@ -277,7 +266,7 @@ namespace GameTimeX
             }
             else
             {
-                SysProps.startUpParms.BlackOutShortcutActive= false;
+                SysProps.startUpParms.BlackOutShortcutActive = false;
             }
 
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameTimeX.Objects
+﻿namespace GameTimeX.Objects
 {
     class StartUpParms
     {
@@ -15,7 +9,7 @@ namespace GameTimeX.Objects
             CREATE_BACKUP = 1,
             IMPORT_BACKUP = 2
         }
-        
+
         public enum ViewModes
         {
             LIST,
@@ -25,8 +19,8 @@ namespace GameTimeX.Objects
         public BackupTypes BackupType { get; set; }
         public bool AutoBackup { get; set; }
 
-        public string BackupPath { get; set; } = string.Empty;   
-        public string BackUpImportPath {  get; set; } = string.Empty;
+        public string BackupPath { get; set; } = string.Empty;
+        public string BackUpImportPath { get; set; } = string.Empty;
 
         public bool SessionGameTime { get; set; } = false;
         public KeyInput.VirtualKey MonitorShortcut { get; set; }

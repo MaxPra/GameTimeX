@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameTimeX.Objects
+﻿namespace GameTimeX.Objects
 {
     internal class CProfileSettings : GTXComponent<CProfileSettings>
     {
 
         public bool HDREnabled { get; set; } = false;
+        public string SteamGameArgs { get; set; } = string.Empty;
 
-        public CProfileSettings() { HDREnabled = false; }
+        public CProfileSettings() { }
 
         public CProfileSettings(string rawValue) : base(rawValue) { }
 

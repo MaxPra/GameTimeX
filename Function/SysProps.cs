@@ -43,12 +43,13 @@ namespace GameTimeX
 
         public static KeyInputHandler? keyInputHandler;
         public static KeyInputHandler? keyInputHandlerBlackout;
-        public static GameSwitcherHandler? gameSwitcherHandler = null;
+        public static GameRunningHandler? gameRunningHandler = null;
 
         public static MainWindow? mainWindow = null;
 
         public static bool contextShown = false;
 
+        public static int waitTimeGameRunningHandler = 2000;
 
         public static void InitializeSystem(MainWindow wnd)
         {
@@ -117,21 +118,16 @@ namespace GameTimeX
             //wnd.btnStartStopMonitoring.BitmapEffect = VisualHandler.GetDropShadowEffect();
             wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
 
+            // GameRunningHandler starten
+            gameRunningHandler = new GameRunningHandler();
+            gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+            gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
 
             if (startUpParms.MonitorShortcutActive)
             {
                 // Starte KeyInputHandler
                 keyInputHandler = new KeyInputHandler(startUpParms.MonitorShortcut, wnd);
                 keyInputHandler.StartListening();
-            }
-
-            // Wenn das autom. wechseln der Spielprofile aktiviert ist => GameSwitcherHandler starten (Überwachung der Prozesse)
-            if (startUpParms.AutoProfileSwitching)
-            {
-                // GameSwitcher starten
-                gameSwitcherHandler = new GameSwitcherHandler(wnd);
-                gameSwitcherHandler.InitializeFirst(DataBaseHandler.ReadAll());
-                gameSwitcherHandler.Start();
             }
 
             if (startUpParms.BlackOutShortcutActive)
@@ -154,10 +150,10 @@ namespace GameTimeX
                 keyInputHandler.StopListening();
         }
 
-        public static void StopGameSwicherHandler()
+        public static void StopGameRunningHandler()
         {
-            if (gameSwitcherHandler != null)
-                gameSwitcherHandler.Stop();
+            if (gameRunningHandler != null)
+                gameRunningHandler.Stop();
         }
 
         public static void RestartApplication()
@@ -168,8 +164,8 @@ namespace GameTimeX
             if (keyInputHandlerBlackout != null)
                 keyInputHandlerBlackout.StopListening();
 
-            if (gameSwitcherHandler != null)
-                gameSwitcherHandler.Stop();
+            if (gameRunningHandler != null)
+                gameRunningHandler.Stop();
 
             System.Diagnostics.Process.Start(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
             App.Current.Shutdown();
@@ -183,8 +179,8 @@ namespace GameTimeX
             if (keyInputHandlerBlackout != null)
                 keyInputHandlerBlackout.StopListening();
 
-            if (gameSwitcherHandler != null)
-                gameSwitcherHandler.Stop();
+            if (gameRunningHandler != null)
+                gameRunningHandler.Stop();
 
             Application.Current.Shutdown();
         }
