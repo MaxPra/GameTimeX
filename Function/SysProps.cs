@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
+using GameTimeX.DataBase.DataManager;
 using GameTimeX.Function;
 using GameTimeX.Objects;
 using GameTimeX.XApplication.SubDisplays;
@@ -101,26 +101,27 @@ namespace GameTimeX
                 }
             }
 
-            bool db_created = DataBaseHandler.ConnectToSQLite();
+            bool db_created = DataBaseConnector.ConnectToSQLite();
 
             // Tabelle muss nur erzeugt werden, wenn es die Datenbank noch nicht gegeben hat
             if (db_created)
-            {
-                DataBaseHandler.CreateTable();
-            }
+                DataBaseConnector.CreateTable();
 
-            // Aufgrund der neu hinzugefügten Spalte Executables ist eine Migration notwendig!
-            DataBaseHandler.MigrateDB();
+            // Aufgrund der neu hinzugefügten Spalten ist eine Migration nötig
 
-            // TodayStats initialiseren (bei jedem Anwendungsstart)
-            InitProfileStats();
+            // Info anzeigen am Loadingscreen
+            loadingApp.ShowInfo("Migrating to new data model…");
+
+            DataBaseConnector.MigrateDB();
+
+            loadingApp.HideInfo();
 
             //wnd.btnStartStopMonitoring.BitmapEffect = VisualHandler.GetDropShadowEffect();
             wnd.currProfileImage.Source = DisplayHandler.GetDefaultProfileImage();
 
             // GameRunningHandler starten
             gameRunningHandler = new GameRunningHandler();
-            gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+            gameRunningHandler.Initialize(DM_Profile.ReadAll());
             gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
 
             if (startUpParms.MonitorShortcutActive)
@@ -183,19 +184,6 @@ namespace GameTimeX
                 gameRunningHandler.Stop();
 
             Application.Current.Shutdown();
-        }
-
-        private static void InitProfileStats()
-        {
-            List<DBObject> dbObjects = DataBaseHandler.ReadAll();
-
-            foreach (DBObject obj in dbObjects)
-            {
-                CTodayStats ctodayStats = new CTodayStats(obj.TodayStats).Dezerialize();
-                ctodayStats.ResetProfileStats(obj);
-
-                DataBaseHandler.Save(obj);
-            }
         }
     }
 }

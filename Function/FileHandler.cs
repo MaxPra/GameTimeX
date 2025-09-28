@@ -1,18 +1,15 @@
-﻿using GameTimeX.Objects;
-using SkiaSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
+using GameTimeX.Objects;
+using SkiaSharp;
 
 namespace GameTimeX
-{ 
+{
     internal class FileHandler
     {
 
@@ -94,16 +91,16 @@ namespace GameTimeX
 
         public static void DeleteUnusedImages()
         {
-            List<DBObject> profiles = DataBaseHandler.ReadAll();
+            List<DBO_Profile> profiles = DM_Profile.ReadAll();
 
-            string[] files =  Directory.GetFiles(SysProps.picDestPath);
+            string[] files = Directory.GetFiles(SysProps.picDestPath);
 
             foreach (string file in files)
             {
                 bool used = false;
-                foreach (DBObject obj in profiles)
+                foreach (DBO_Profile obj in profiles)
                 {
-                   if(obj.ProfilePicFileName == Path.GetFileName(file))
+                    if (obj.ProfilePicFileName == Path.GetFileName(file))
                     {
                         used = true;
                     }
@@ -176,7 +173,7 @@ namespace GameTimeX
             // Json einlesen
             string startParmsJSON = File.ReadAllText(startParmsPath);
 
-            if(startParmsJSON != null)
+            if (startParmsJSON != null)
             {
                 StartUpParms startUpParms = JsonSerializer.Deserialize<StartUpParms>(startParmsJSON);
 

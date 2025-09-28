@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
 using GameTimeX.Function.baseClass;
+using GameTimeX.Function.Utils;
 using GameTimeX.Function.Windows;
 
 namespace GameTimeX.Function
@@ -18,14 +21,15 @@ namespace GameTimeX.Function
         public override void Logic()
         {
             // Alle Profile durchloopen
-            List<DBObject> profiles = DataBaseHandler.ReadAll();
+            List<DBO_Profile> profiles = DM_Profile.ReadAll();
 
-            foreach (DBObject profile in profiles)
+            foreach (DBO_Profile profile in profiles)
             {
                 if (profile.ExtGameFolder == string.Empty)
                     continue;
 
                 List<string> executables = ExecutablesToSearch[profile.ProfileID];
+
                 string exePath = profile.ExtGameFolder;
 
                 foreach (string executable in executables)
@@ -41,6 +45,7 @@ namespace GameTimeX.Function
 
                                 currentProfileRunning.pid = profile.ProfileID;
                                 currentProfileRunning.executables.Add(executable);
+                                currentProfileRunning.path = exePath;
                             }
 
                         }));
@@ -55,7 +60,7 @@ namespace GameTimeX.Function
                             // Prüfen, ob alle Exe vom derzeit aktiven Profil nicht mehr laufen
                             foreach (string exe in currentProfileRunning.executables)
                             {
-                                if (exe == executable)
+                                if (exe == executable && exePath == currentProfileRunning.path)
                                 {
                                     currentProfileRunning.countNotRunning++;
                                 }
@@ -68,14 +73,20 @@ namespace GameTimeX.Function
                                 // e.g. Absturz, etc.
                                 if (MonitorHandler.CurrentlyMonitoringGameTime())
                                 {
-                                    DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
-                                    string profileName = dbObj.GameName;
+                                    DBO_Profile dbo_Profile = DM_Profile.ReadPID(SysProps.currentSelectedPID);
+                                    string profileName = dbo_Profile.GameName;
 
                                     string title = "GameTimeX | " + profileName;
 
                                     MonitorHandler.EndMonitoringGameTime(SysProps.mainWindow);
                                     VisualHandler.ShowToastNotification(title, "Monitoring stopped!", 3000);
+
+                                    SysProps.mainWindow.Dispatcher.Invoke((Action)(() =>
+                                    {
+                                        DisplayHandler.BuildInfoDisplay(dbo_Profile.ProfileID, SysProps.mainWindow);
+                                    }));
                                 }
+
 
                                 // Profilsettings deaktivieren (z.B. HDR)
                                 GameStarterHandler.DeactivateProfileSettings(currentProfileRunning.pid);
@@ -92,7 +103,7 @@ namespace GameTimeX.Function
             }
         }
 
-        private void SwitchToGame(DBObject profile)
+        private void SwitchToGame(DBO_Profile profile)
         {
             // Nur switchen, wenn in den Einstellungen aktiviert
             if (!SysProps.startUpParms.AutoProfileSwitching)
@@ -117,12 +128,12 @@ namespace GameTimeX.Function
         /// Fügt für alle übergebenen Profile die gefunden EXEs hinzu
         /// </summary>
         /// <param name="profiles"></param>
-        public void Initialize(List<DBObject> profiles)
+        public void Initialize(List<DBO_Profile> profiles)
         {
             // Neuinitialisierung
             ExecutablesToSearch = new Dictionary<int, List<string>>();
 
-            foreach (DBObject profile in profiles)
+            foreach (DBO_Profile profile in profiles)
             {
                 if (profile.ExtGameFolder == string.Empty)
                     continue;
@@ -184,6 +195,7 @@ namespace GameTimeX.Function
             public int pid = 0;
             public List<string> executables = new List<string>();
             public int countNotRunning = 0;
+            public string path = string.Empty;
         }
     }
 }

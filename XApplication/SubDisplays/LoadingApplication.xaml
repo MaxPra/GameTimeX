@@ -1,99 +1,133 @@
-﻿<Window x:Class="GameTimeX.XApplication.SubDisplays.LoadingApplication"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="LoadingApplication"
-        Height="450" Width="800"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner"
-        AllowsTransparency="True"
-        Background="Transparent">
+﻿<Window
+    x:Class="GameTimeX.XApplication.SubDisplays.LoadingApplication"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="LoadingApplication"
+    Width="800"
+    Height="450"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
-    <!-- WindowChrome ohne Ecken-Interferenz -->
+    <!--  WindowChrome ohne Ecken-Interferenz  -->
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <!-- Äußerer Rahmen (blau) -->
-    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="12"
-            Background="Transparent"
+    <!--  Äußerer Rahmen (blau)  -->
+    <Border
+        Background="Transparent"
+        BorderBrush="{DynamicResource ButtonDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="12"
+        SnapsToDevicePixels="True">
+
+        <!--  Inhaltshost, wird per Code-Behind rund geclippt  -->
+        <Grid
+            x:Name="ClipHost"
+            Loaded="ClipHost_Loaded"
+            RenderOptions.BitmapScalingMode="HighQuality"
+            SizeChanged="ClipHost_SizeChanged"
             SnapsToDevicePixels="True">
 
-        <!-- Inhaltshost, wird per Code-Behind rund geclippt -->
-        <Grid x:Name="ClipHost"
-              Loaded="ClipHost_Loaded"
-              SizeChanged="ClipHost_SizeChanged"
-              SnapsToDevicePixels="True"
-              RenderOptions.BitmapScalingMode="HighQuality">
+            <!--  Hintergrund-Banner (keine Abdunkelung)  -->
+            <Image Source="{StaticResource BannerSource}" Stretch="UniformToFill" />
 
-            <!-- Hintergrund-Banner (keine Abdunkelung) -->
-            <Image Source="{StaticResource BannerSource}" Stretch="UniformToFill"/>
-
-            <!-- Zentrale Loading-Anzeige -->
-            <StackPanel x:Name="loadingArea"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Opacity="0"
-                        RenderTransformOrigin="0.5,0.5">
+            <!--  Zentrale Loading-Anzeige  -->
+            <StackPanel
+                x:Name="loadingArea"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Opacity="0"
+                Orientation="Horizontal"
+                RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
-                    <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                    <ScaleTransform ScaleX="0.98" ScaleY="0.98" />
                 </StackPanel.RenderTransform>
 
-                <TextBlock Text="Loading"
-                           Foreground="White"
-                           FontSize="36"
-                           FontWeight="SemiBold"
-                           Margin="0,0,10,0">
+                <TextBlock
+                    Margin="0,0,10,0"
+                    FontSize="36"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Text="Loading">
                     <TextBlock.Effect>
-                        <DropShadowEffect Color="#289AFC" BlurRadius="14" ShadowDepth="0" Opacity="0.55"/>
+                        <DropShadowEffect
+                            BlurRadius="14"
+                            Opacity="0.55"
+                            ShadowDepth="0"
+                            Color="#289AFC" />
                     </TextBlock.Effect>
                 </TextBlock>
 
-                <!-- Animierte Punkte -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Ellipse Width="10" Height="10" Fill="#FFFFFFFF" Opacity="0.25" Margin="3,0">
+                <!--  Animierte Punkte  -->
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <Ellipse
+                        Width="10"
+                        Height="10"
+                        Margin="3,0"
+                        Fill="#FFFFFFFF"
+                        Opacity="0.25">
                         <Ellipse.Triggers>
                             <EventTrigger RoutedEvent="Loaded">
                                 <BeginStoryboard>
                                     <Storyboard RepeatBehavior="Forever">
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0.25" To="1.0"
-                                                         Duration="0:0:0.6"
-                                                         AutoReverse="True"/>
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.25"
+                                            To="1.0"
+                                            Duration="0:0:0.6" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </Ellipse.Triggers>
                     </Ellipse>
-                    <Ellipse Width="10" Height="10" Fill="#FFFFFFFF" Opacity="0.25" Margin="3,0">
+                    <Ellipse
+                        Width="10"
+                        Height="10"
+                        Margin="3,0"
+                        Fill="#FFFFFFFF"
+                        Opacity="0.25">
                         <Ellipse.Triggers>
                             <EventTrigger RoutedEvent="Loaded">
                                 <BeginStoryboard>
-                                    <Storyboard RepeatBehavior="Forever" BeginTime="0:0:0.2">
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0.25" To="1.0"
-                                                         Duration="0:0:0.6"
-                                                         AutoReverse="True"/>
+                                    <Storyboard BeginTime="0:0:0.2" RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.25"
+                                            To="1.0"
+                                            Duration="0:0:0.6" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </Ellipse.Triggers>
                     </Ellipse>
-                    <Ellipse Width="10" Height="10" Fill="#FFFFFFFF" Opacity="0.25" Margin="3,0">
+                    <Ellipse
+                        Width="10"
+                        Height="10"
+                        Margin="3,0"
+                        Fill="#FFFFFFFF"
+                        Opacity="0.25">
                         <Ellipse.Triggers>
                             <EventTrigger RoutedEvent="Loaded">
                                 <BeginStoryboard>
-                                    <Storyboard RepeatBehavior="Forever" BeginTime="0:0:0.4">
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0.25" To="1.0"
-                                                         Duration="0:0:0.6"
-                                                         AutoReverse="True"/>
+                                    <Storyboard BeginTime="0:0:0.4" RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.25"
+                                            To="1.0"
+                                            Duration="0:0:0.6" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
@@ -102,20 +136,45 @@
                 </StackPanel>
             </StackPanel>
 
-            <!-- Fade-/Scale-In -->
+            <!--  Optionaler Info-Balken unten  -->
+            <Border
+                x:Name="InfoPanel"
+                Margin="16"
+                Padding="12"
+                VerticalAlignment="Bottom"
+                Background="#99000000"
+                CornerRadius="8"
+                Opacity="0"
+                Visibility="Collapsed">
+                <TextBlock
+                    x:Name="InfoText"
+                    FontSize="16"
+                    Foreground="White"
+                    Text=""
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+            </Border>
+
+            <!--  Fade-/Scale-In  -->
             <Grid.Triggers>
                 <EventTrigger RoutedEvent="Loaded">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="loadingArea"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To="1" Duration="0:0:0.28"/>
-                            <DoubleAnimation Storyboard.TargetName="loadingArea"
-                                             Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                             To="1" Duration="0:0:0.28"/>
-                            <DoubleAnimation Storyboard.TargetName="loadingArea"
-                                             Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                             To="1" Duration="0:0:0.28"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="loadingArea"
+                                Storyboard.TargetProperty="Opacity"
+                                To="1"
+                                Duration="0:0:0.28" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="loadingArea"
+                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                To="1"
+                                Duration="0:0:0.28" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="loadingArea"
+                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                To="1"
+                                Duration="0:0:0.28" />
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>

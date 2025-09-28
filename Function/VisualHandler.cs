@@ -101,39 +101,54 @@ namespace GameTimeX
 
         public static void ActivateMonitoringVisualButton(Button btn)
         {
-            btn.Content = SysProps.stopMonitoringText;
-            btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultMonitoringColor"));
-            ((Path)btn.Template.FindName("Icon", btn)).Data = Geometry.Parse("M2,2 H12 V12 H2 Z");
-            VisualHandler.startStopMonitoringBtnActive = true;
+            SysProps.mainWindow.Dispatcher.Invoke((Action)(() =>
+            {
+                btn.Content = SysProps.stopMonitoringText;
+                btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultMonitoringColor"));
+                ((Path)btn.Template.FindName("Icon", btn)).Data = Geometry.Parse("M2,2 H12 V12 H2 Z");
+                VisualHandler.startStopMonitoringBtnActive = true;
+            }));
         }
 
         public static void DeactivateMonitoringVisualButton(Button btn)
         {
-            btn.Content = SysProps.startMonitoringText;
-            btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultColor"));
-            ((Path)btn.Template.FindName("Icon", btn)).Data = Geometry.Parse("M 0,0 L 0,12 L 10,6 Z");
-            VisualHandler.startStopMonitoringBtnActive = false;
+            SysProps.mainWindow.Dispatcher.Invoke((Action)(() =>
+            {
+                btn.Content = SysProps.startMonitoringText;
+                btn.Background = new SolidColorBrush((Color)Application.Current.FindResource("ButtonDefaultColor"));
+                ((Path)btn.Template.FindName("Icon", btn)).Data = Geometry.Parse("M 0,0 L 0,12 L 10,6 Z");
+                VisualHandler.startStopMonitoringBtnActive = false;
+            }));
         }
 
         public static void DeactivateGameTimeSeesion(TextBlock txtBlock)
         {
-            txtBlock.Visibility = Visibility.Hidden;
+            SysProps.mainWindow.Dispatcher.Invoke((Action)(() =>
+            {
+                txtBlock.Visibility = Visibility.Hidden;
+            }));
         }
 
         public static void ActivateGameTimeSeesion(TextBlock txtBlock)
         {
-            txtBlock.Visibility = Visibility.Visible;
-            txtBlock.Text = "Session: 0 minute(s)";
+            SysProps.mainWindow.Dispatcher.Invoke((Action)(() =>
+            {
+                txtBlock.Visibility = Visibility.Visible;
+                txtBlock.Text = "Session: 0 minute(s)";
+            }));
         }
 
         public static async void ShowToastNotification(string title, string message, int durationMillis)
         {
-            ToastMessage toastMessage = new ToastMessage(title, message);
-            toastMessage.Topmost = true;
-            toastMessage.Focusable = false;
-            toastMessage.Show();
-            await Task.Delay(durationMillis);
-            toastMessage.Close();
+            SysProps.mainWindow.Dispatcher.Invoke((Action)(async () =>
+            {
+                ToastMessage toastMessage = new ToastMessage(title, message);
+                toastMessage.Topmost = true;
+                toastMessage.Focusable = false;
+                toastMessage.Show();
+                await Task.Delay(durationMillis);
+                toastMessage.Close();
+            }));
         }
 
         public static object GetApplicationResource(string resourceName)

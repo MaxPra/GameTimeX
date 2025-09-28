@@ -3,8 +3,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
 using GameTimeX.Function;
-using GameTimeX.Objects;
+using GameTimeX.Function.Utils;
+using GameTimeX.Objects.Components;
 using GameTimeX.XApplication.SubDisplays;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -92,28 +95,28 @@ namespace GameTimeX
                 }
 
                 // Werte in Datenbank speichern
-                DBObject dbObj = DataBaseHandler.CreateNew();
-                dbObj.GameName = txtProfileName.Text;
-                dbObj.ProfilePicFileName = fileNameHash;
-                dbObj.ExtGameFolder = txtGameFolderPath.Text;
+                DBO_Profile dbo_Profile = DM_Profile.CreateNew();
+                dbo_Profile.GameName = txtProfileName.Text;
+                dbo_Profile.ProfilePicFileName = fileNameHash;
+                dbo_Profile.ExtGameFolder = txtGameFolderPath.Text;
 
                 // Steam
                 if (SteamGame != null)
-                    dbObj.SteamAppID = (int)SteamGame.AppId;
+                    dbo_Profile.SteamAppID = (int)SteamGame.AppId;
 
                 CExecutables cExecutables = new CExecutables();
-                cExecutables.Initialize(CExecutables.ConvertListToDictionary(FuncExecutables.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
-                dbObj.Executables = cExecutables.Serialize();
+                cExecutables.Initialize(CExecutables.ConvertListToDictionary(FuncExecutables.GetAllExecutablesFromDirectory(dbo_Profile.ExtGameFolder), true));
+                dbo_Profile.Executables = cExecutables.Serialize();
 
-                DataBaseHandler.Save(dbObj);
+                DM_Profile.Save(dbo_Profile);
 
                 // Bild croppen und abspeichern
                 FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
 
                 // Executables wählen lassen
-                if (dbObj.ExtGameFolder != string.Empty)
+                if (dbo_Profile.ExtGameFolder != string.Empty)
                 {
-                    ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID);
+                    ManageExecutables manageExecutables = new ManageExecutables(dbo_Profile.ProfileID);
                     manageExecutables.Owner = this;
                     manageExecutables.ShowDialog();
                 }
@@ -121,11 +124,11 @@ namespace GameTimeX
                 // Executables zu diesem Profil holen und dem GameSwitcher mitgeben (nur wenn aktiviert)
                 if (SysProps.gameRunningHandler != null)
                 {
-                    List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dbObj);
-                    SysProps.gameRunningHandler.AddExecutables(dbObj.ProfileID, executables);
+                    List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dbo_Profile);
+                    SysProps.gameRunningHandler.AddExecutables(dbo_Profile.ProfileID, executables);
                 }
 
-                ProfileID = dbObj.ProfileID;
+                ProfileID = dbo_Profile.ProfileID;
 
                 Close();
             }

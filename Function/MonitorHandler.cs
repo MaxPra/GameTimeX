@@ -1,8 +1,6 @@
-﻿using GameTimeX.Function;
-using System;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Windows.Controls;
+﻿using System;
+using GameTimeX.Function;
+using GameTimeX.Function.DataBaseObjectFunctions;
 
 namespace GameTimeX
 {
@@ -13,6 +11,9 @@ namespace GameTimeX
         private static int monitoringPid = 0;
 
         private static GameSessionThread? gameTimeSessionThread = null;
+
+        private static DateTime startTimeMonitoringTime;
+        private static DateTime endTimeMonitoringTime;
 
         /// <summary>
         /// Prüft, ob gerade ein Spiel aufgenommen wird
@@ -47,8 +48,10 @@ namespace GameTimeX
 
             monitoringPid = pid;
 
+            startTimeMonitoringTime = DateTimeOffset.Now.DateTime;
+
             // Erste Spielzeit speichern
-            DataBaseHandler.SaveFirstTimePlayed(pid);
+            FN_Profile.SaveFirstTimePlayed(pid);
         }
 
         private static long GetCurrentGameTimeInMinutes()
@@ -80,7 +83,7 @@ namespace GameTimeX
         public static void EndMonitoringGameTime(MainWindow wnd)
         {
             // Thread beenden
-            if(gameTimeSessionThread != null)
+            if (gameTimeSessionThread != null)
                 gameTimeSessionThread.Stop();
 
             // Style ändern
@@ -93,10 +96,12 @@ namespace GameTimeX
             // Spielzeit berechnen
             long playtime = endTimeMonitoring - startTimeMonitoring;
 
-            // In Datenbank abspeichern
-            DataBaseHandler.SaveMonitoredTime(CalcMinutesFromMillis(playtime), monitoringPid);
+            endTimeMonitoringTime = DateTimeOffset.Now.DateTime;
 
-            DataBaseHandler.SaveLastTimePlayed(monitoringPid);
+            // In Datenbank abspeichern
+            FN_Profile.SaveMonitoredTime(CalcMinutesFromMillis(playtime), monitoringPid, startTimeMonitoringTime, endTimeMonitoringTime);
+
+            FN_Profile.SaveLastTimePlayed(monitoringPid);
 
             // Werte zurücksetzen
             ResetMonitoringValues();
@@ -123,18 +128,18 @@ namespace GameTimeX
         }
 
         /// <summary>
-        /// Berechnet anhand der Millisekunden die Stunden
+        /// Berechnet anhand der Minuten die Stunden
         /// </summary>
         /// <param name="minutes"></param>
         /// <returns></returns>
         public static double CalcGameTime(long minutes)
         {
-            if(minutes == 0)
+            if (minutes == 0)
             {
                 return 0;
             }
 
-            double returnVal = (double) minutes / 60;
+            double returnVal = (double)minutes / 60;
 
             return returnVal;
         }

@@ -9,8 +9,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using GameTimeX.Function;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
+using GameTimeX.Function.DataBaseObjectFunctions;
+using GameTimeX.Function.Utils;
 using GameTimeX.Objects;
+using GameTimeX.Objects.Components;
 using GameTimeX.XApplication.SubDisplays;
 using Brushes = System.Windows.Media.Brushes; // DropShadowEffect
 using Color = System.Windows.Media.Color;
@@ -73,17 +77,17 @@ namespace GameTimeX
                 return;
             }
 
-            DBObject obj = DataBaseHandler.ReadPID(pid);
+            DBO_Profile dbo_profiles = DM_Profile.ReadPID(pid);
 
-            wnd.lblGameName.Text = obj.GameName;
-            wnd.lblToolTipGameName.Text = obj.GameName;
+            wnd.lblGameName.Text = dbo_profiles.GameName;
+            wnd.lblToolTipGameName.Text = dbo_profiles.GameName;
 
             BitmapImage bitProfilePic;
-            if (File.Exists(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName))
+            if (File.Exists(SysProps.picDestPath + SysProps.separator + dbo_profiles.ProfilePicFileName))
             {
                 bitProfilePic = new BitmapImage();
                 bitProfilePic.BeginInit();
-                bitProfilePic.UriSource = new Uri(SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName);
+                bitProfilePic.UriSource = new Uri(SysProps.picDestPath + SysProps.separator + dbo_profiles.ProfilePicFileName);
                 bitProfilePic.EndInit();
             }
             else
@@ -92,32 +96,33 @@ namespace GameTimeX
             }
 
             wnd.currProfileImage.Source = bitProfilePic;
-            wnd.lblFirstTimePlayed.Text = FormatDatePlayed(obj.FirstPlay);
-            wnd.lblLastTimePlayed.Text = FormatDatePlayed(obj.LastPlay);
+            wnd.lblFirstTimePlayed.Text = FormatDatePlayed(dbo_profiles.FirstPlay);
+            wnd.lblLastTimePlayed.Text = FormatDatePlayed(dbo_profiles.LastPlay);
 
             // Buttons enablen
             wnd.btnStartStopMonitoring.IsEnabled = true;
             wnd.btnEditProfileName.IsEnabled = true;
             wnd.lblChangeProfileImage.IsEnabled = true;
 
-            if (obj.SteamAppID == 0)
+            if (dbo_profiles.SteamAppID == 0)
                 wnd.btnLaunchSteamGame.Visibility = Visibility.Collapsed;
             else
                 wnd.btnLaunchSteamGame.Visibility = Visibility.Visible;
 
             // Text für "heute gespielt"
             string playedToday = "";
-            long minutesToday = 0;
-            CTodayStats cTodayStats = new CTodayStats(obj.TodayStats).Dezerialize();
+            long minutesToday = FN_Profile.GetTodaysPlayTime(dbo_profiles.ProfileID);
 
-            if (cTodayStats.playTime > 0)
+            if (minutesToday > 0)
             {
-                minutesToday = obj.GameTime - cTodayStats.playTime;
                 playedToday = "Played today: " + minutesToday.ToString("n0") + " min (" + string.Format("{0:F1}", MonitorHandler.CalcGameTime(minutesToday)) + " h)";
             }
 
+            // Totale Spielzeit in Minuten
+            long playedTotal = FN_Profile.GetTotalPlayTime(dbo_profiles.ProfileID);
+
             // ToolTip setzen
-            string tooltipText = obj.GameTime.ToString("n0") + " minutes";
+            string tooltipText = playedTotal.ToString("n0") + " minutes";
 
             if (minutesToday > 0)
                 tooltipText += "\n" + playedToday;
@@ -125,7 +130,7 @@ namespace GameTimeX
             wnd.lblToolTipGameTimeText.Text = tooltipText;
 
             // Formatieren des Spielzeittextes 
-            double hours = MonitorHandler.CalcGameTime(obj.GameTime);
+            double hours = MonitorHandler.CalcGameTime(playedTotal);
             string gameTimeText =
                 hours == 0.0 ? "N/A" :
                 hours >= 1 ? string.Format("{0:F1}", hours) + " h" :
@@ -134,15 +139,15 @@ namespace GameTimeX
             wnd.lblGameTime.Text = gameTimeText;
 
             // Playthrough Game Time
-            if (obj.PlayThroughStartingPoint == 0)
+            if (dbo_profiles.PlaythroughStartPointDate == DateTime.MinValue)
             {
                 wnd.rowPlaythrough.Height = new GridLength(0);
             }
             else
             {
-                wnd.rowPlaythrough.Height = new GridLength(12);
+                wnd.rowPlaythrough.Height = new GridLength(30);
 
-                int actPlaythroughTime = (int)obj.GameTime - obj.PlayThroughStartingPoint;
+                long actPlaythroughTime = FN_Profile.GetCurrentPlaythroughTime(dbo_profiles.ProfileID, dbo_profiles.PlaythroughStartPointDate);
                 wnd.lblToolTipGameTimeTextNewPlaythrough.Text = actPlaythroughTime.ToString("n0") + " minutes";
 
                 hours = MonitorHandler.CalcGameTime(actPlaythroughTime);
@@ -366,11 +371,11 @@ namespace GameTimeX
             }
         }
 
-        private static List<DBObject> GetAllPlayableGames(List<DBObject> gameProfiles)
+        private static List<DBO_Profile> GetAllPlayableGames(List<DBO_Profile> gameProfiles)
         {
-            var playableGames = new List<DBObject>();
+            var playableGames = new List<DBO_Profile>();
 
-            foreach (DBObject gameProfile in gameProfiles)
+            foreach (DBO_Profile gameProfile in gameProfiles)
             {
                 if (Directory.Exists(gameProfile.ExtGameFolder) &&
                     FuncExecutables.GetAllExecutablesFromDirectory(gameProfile.ExtGameFolder).Count > 0)
@@ -401,16 +406,16 @@ namespace GameTimeX
             // Ladeanimation anzeigen
             ShowTilesLoading(wnd, true);
 
-            List<DBObject> gameProfiles;
+            List<DBO_Profile> gameProfiles;
 
             wnd.grdGameProfiles.RowDefinitions.Clear();
             wnd.grdGameProfiles.ColumnDefinitions.Clear();
             wnd.grdGameProfiles.Children.Clear();
 
             if (wnd.txtSearchBar.Text.Length > 0)
-                gameProfiles = DataBaseHandler.ReadGameName(wnd.txtSearchBar.Text);
+                gameProfiles = DM_Profile.ReadGameName(wnd.txtSearchBar.Text);
             else
-                gameProfiles = DataBaseHandler.ReadAll();
+                gameProfiles = DM_Profile.ReadAll();
 
             if (wnd.btnPlayableFilter.IsChecked == true)
                 gameProfiles = GetAllPlayableGames(gameProfiles);
@@ -462,13 +467,13 @@ namespace GameTimeX
 
         private static void BuildDGProfiles(MainWindow wnd)
         {
-            List<DBObject> profiles = wnd.txtSearchBar.Text == ""
-                ? DataBaseHandler.ReadAll()
-                : DataBaseHandler.ReadGameName(wnd.txtSearchBar.Text);
+            List<DBO_Profile> profiles = wnd.txtSearchBar.Text == ""
+                ? DM_Profile.ReadAll()
+                : DM_Profile.ReadGameName(wnd.txtSearchBar.Text);
 
             wnd.dgProfiles.Items.Clear();
 
-            foreach (DBObject dbprofile in profiles)
+            foreach (DBO_Profile dbprofile in profiles)
             {
                 Profile profile = new Profile
                 {
@@ -513,7 +518,7 @@ namespace GameTimeX
             }
         }
 
-        private static (int, int) CalculateRowsAndColumnsGameProfileGrid(List<DBObject> gameProfiles)
+        private static (int, int) CalculateRowsAndColumnsGameProfileGrid(List<DBO_Profile> gameProfiles)
         {
             int maxColumnsPerRow = 4;
             int rows = 4;
@@ -548,7 +553,7 @@ namespace GameTimeX
             }
         }
 
-        private static void FillGameProfilesGrid(Grid grid, List<DBObject> gameProfiles, MainWindow wnd)
+        private static void FillGameProfilesGrid(Grid grid, List<DBO_Profile> gameProfiles, MainWindow wnd)
         {
             int rows = grid.RowDefinitions.Count;
             int columns = grid.ColumnDefinitions.Count;
@@ -561,7 +566,7 @@ namespace GameTimeX
                     if (gameProfiles.Count - 1 < gameProfilesIndex)
                         continue;
 
-                    DBObject obj = gameProfiles[gameProfilesIndex];
+                    DBO_Profile obj = gameProfiles[gameProfilesIndex];
 
                     StackPanel stackPanel = new StackPanel
                     {
@@ -679,7 +684,7 @@ namespace GameTimeX
         }
 
         // Installations-Check
-        private static bool IsGameInstalled(DBObject gameProfile)
+        private static bool IsGameInstalled(DBO_Profile gameProfile)
         {
             return Directory.Exists(gameProfile.ExtGameFolder) &&
                    FuncExecutables.GetAllExecutablesFromDirectory(gameProfile.ExtGameFolder).Count > 0;
@@ -744,14 +749,14 @@ namespace GameTimeX
             mIExecutables.Click += MIExecutables_Clicked;
 
             contextMenu.Items.Add(mIDelete);
-            if (DataBaseHandler.IsPlayTimeGreaterZero(image.PID))
+            if (DM_Profile.IsPlayTimeGreaterZero(image.PID))
                 contextMenu.Items.Add(mIPlaythrough);
             contextMenu.Items.Add(mIProperties);
 
-            DBObject dbObj = DataBaseHandler.ReadPID(image.PID);
-            if (dbObj.ExtGameFolder != string.Empty &&
-                Directory.Exists(dbObj.ExtGameFolder) &&
-                FuncExecutables.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder).Count > 0)
+            DBO_Profile dbo_Profile = DM_Profile.ReadPID(image.PID);
+            if (dbo_Profile.ExtGameFolder != string.Empty &&
+                Directory.Exists(dbo_Profile.ExtGameFolder) &&
+                FuncExecutables.GetAllExecutablesFromDirectory(dbo_Profile.ExtGameFolder).Count > 0)
             {
                 contextMenu.Items.Add(mIExecutables);
             }
@@ -769,22 +774,22 @@ namespace GameTimeX
             if (SysProps.gameRunningHandler != null)
                 SysProps.gameRunningHandler.Stop();
 
-            DBObject dbObj = DataBaseHandler.ReadPID(menuItem.PID);
+            DBO_Profile dbo_Profile = DM_Profile.ReadPID(menuItem.PID);
 
-            if (dbObj.ExtGameFolder != string.Empty)
+            if (dbo_Profile.ExtGameFolder != string.Empty)
             {
-                CExecutables cExecutables = new CExecutables(dbObj.Executables).Dezerialize();
+                CExecutables cExecutables = new CExecutables(dbo_Profile.Executables).Dezerialize();
 
                 if (cExecutables.KeyValuePairs.Count == 0)
                 {
                     cExecutables.Initialize(CExecutables.ConvertListToDictionary(
-                        FuncExecutables.GetAllExecutablesFromDirectory(dbObj.ExtGameFolder), true));
-                    dbObj.Executables = cExecutables.Serialize();
+                        FuncExecutables.GetAllExecutablesFromDirectory(dbo_Profile.ExtGameFolder), true));
+                    dbo_Profile.Executables = cExecutables.Serialize();
                 }
 
-                DataBaseHandler.Save(dbObj);
+                DM_Profile.Save(dbo_Profile);
 
-                ManageExecutables manageExecutables = new ManageExecutables(dbObj.ProfileID)
+                ManageExecutables manageExecutables = new ManageExecutables(dbo_Profile.ProfileID)
                 {
                     Owner = SysProps.mainWindow
                 };
@@ -793,13 +798,13 @@ namespace GameTimeX
 
             if (SysProps.gameRunningHandler != null)
             {
-                List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dbObj);
-                SysProps.gameRunningHandler.AddExecutables(dbObj.ProfileID, executables);
+                List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dbo_Profile);
+                SysProps.gameRunningHandler.AddExecutables(dbo_Profile.ProfileID, executables);
             }
 
             if (SysProps.gameRunningHandler != null && !SysProps.gameRunningHandler.IsRunning())
             {
-                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Initialize(DM_Profile.ReadAll());
                 SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
         }
@@ -848,11 +853,11 @@ namespace GameTimeX
             var item = (DataGrid)contextMenu.PlacementTarget;
             var profile = (Profile)item.SelectedCells[0].Item;
 
-            DBObject obj = DataBaseHandler.ReadPID(profile.PID);
+            DBO_Profile obj = DM_Profile.ReadPID(profile.PID);
             if (obj != null)
             {
-                obj.PlayThroughStartingPoint = (int)obj.GameTime;
-                DataBaseHandler.Save(obj);
+                obj.PlaythroughStartPointDate = DateTime.Now;
+                DM_Profile.Save(obj);
                 BuildInfoDisplay(profile.PID, SysProps.mainWindow);
             }
         }
@@ -861,11 +866,11 @@ namespace GameTimeX
         {
             GTXMenuItem menuItem = sender as GTXMenuItem;
 
-            DBObject obj = DataBaseHandler.ReadPID(menuItem.PID);
-            if (obj != null)
+            DBO_Profile dboProfile = DM_Profile.ReadPID(menuItem.PID);
+            if (dboProfile != null)
             {
-                obj.PlayThroughStartingPoint = (int)obj.GameTime;
-                DataBaseHandler.Save(obj);
+                dboProfile.PlaythroughStartPointDate = DateTime.Now;
+                DM_Profile.Save(dboProfile);
                 BuildInfoDisplay(menuItem.PID, SysProps.mainWindow);
             }
         }
@@ -893,11 +898,11 @@ namespace GameTimeX
             var item = (DataGrid)contextMenu.PlacementTarget;
             var profile = (Profile)item.SelectedCells[0].Item;
 
-            DBObject dbObj = DataBaseHandler.ReadPID(profile.PID);
+            DBO_Profile dbo_Profile = DM_Profile.ReadPID(profile.PID);
 
-            if (dbObj != null)
+            if (dbo_Profile != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel")
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbo_Profile.GameName + "'?", "Delete", "Cancel")
                 {
                     Owner = SysProps.mainWindow
                 };
@@ -905,11 +910,11 @@ namespace GameTimeX
 
                 if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
                 {
-                    DataBaseHandler.Delete(dbObj.ProfileID);
+                    DM_Profile.Delete(dbo_Profile.ProfileID);
                     BuildGameProfileView(SysProps.mainWindow);
 
                     if (SysProps.gameRunningHandler != null)
-                        SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                        SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbo_Profile.ProfileID);
                 }
             }
         }
@@ -937,11 +942,11 @@ namespace GameTimeX
         {
             GTXMenuItem menuItem = sender as GTXMenuItem;
 
-            DBObject dbObj = DataBaseHandler.ReadPID(menuItem.PID);
+            DBO_Profile dbo_Profile = DM_Profile.ReadPID(menuItem.PID);
 
-            if (dbObj != null)
+            if (dbo_Profile != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel")
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbo_Profile.GameName + "'?", "Delete", "Cancel")
                 {
                     Owner = SysProps.mainWindow
                 };
@@ -949,11 +954,11 @@ namespace GameTimeX
 
                 if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
                 {
-                    DataBaseHandler.Delete(dbObj.ProfileID);
+                    DM_Profile.Delete(dbo_Profile.ProfileID);
                     BuildGameProfileView(SysProps.mainWindow);
 
                     if (SysProps.gameRunningHandler != null)
-                        SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                        SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbo_Profile.ProfileID);
                 }
             }
         }

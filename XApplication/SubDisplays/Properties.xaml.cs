@@ -3,8 +3,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
 using GameTimeX.Function;
-using GameTimeX.Objects;
+using GameTimeX.Function.Utils;
+using GameTimeX.Objects.Components;
 using GameTimeX.XApplication.SubDisplays;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -30,7 +33,7 @@ namespace GameTimeX
 
         private int pid = 0;
 
-        DBObject dBObject = null;
+        DBO_Profile dbo_Profile = null;
 
         public SteamGame SteamGame { get; private set; }
 
@@ -38,7 +41,7 @@ namespace GameTimeX
         {
             this.pid = pid;
 
-            this.dBObject = DataBaseHandler.ReadPID(pid);
+            this.dbo_Profile = DM_Profile.ReadPID(pid);
 
             InitializeComponent();
         }
@@ -151,41 +154,41 @@ namespace GameTimeX
                 }
 
                 // Werte in Datenbank speichern
-                dBObject.GameName = txtProfileName.Text;
-                dBObject.ExtGameFolder = txtGameFolderPath.Text;
+                dbo_Profile.GameName = txtProfileName.Text;
+                dbo_Profile.ExtGameFolder = txtGameFolderPath.Text;
 
                 // Profil Einstellungen
                 CProfileSettings profileSettings = new CProfileSettings();
                 profileSettings.HDREnabled = cbEnableHdr.IsChecked == true;
                 profileSettings.SteamGameArgs = txtSteamParams.Text.Replace(" ", ";");
 
-                dBObject.ProfileSettings = profileSettings.Serialize();
+                dbo_Profile.ProfileSettings = profileSettings.Serialize();
 
                 // Steam
                 if (SteamGame != null)
-                    dBObject.SteamAppID = (int)SteamGame.AppId;
+                    dbo_Profile.SteamAppID = (int)SteamGame.AppId;
 
 
                 if (txtPicPath.Text != oldPicPath)
                 {
-                    dBObject.ProfilePicFileName = fileNameHash;
+                    dbo_Profile.ProfilePicFileName = fileNameHash;
 
                     // Bild croppen und abspeichern
                     FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
                 }
 
-                DataBaseHandler.Save(dBObject);
+                DM_Profile.Save(dbo_Profile);
 
                 // Executables wählen lassen
-                if (oldGameFolderPath != dBObject.ExtGameFolder)
+                if (oldGameFolderPath != dbo_Profile.ExtGameFolder)
                 {
                     CExecutables cExecutables = new CExecutables();
-                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(FuncExecutables.GetAllExecutablesFromDirectory(dBObject.ExtGameFolder), true));
-                    dBObject.Executables = cExecutables.Serialize();
+                    cExecutables.Initialize(CExecutables.ConvertListToDictionary(FuncExecutables.GetAllExecutablesFromDirectory(dbo_Profile.ExtGameFolder), true));
+                    dbo_Profile.Executables = cExecutables.Serialize();
 
-                    DataBaseHandler.Save(dBObject);
+                    DM_Profile.Save(dbo_Profile);
 
-                    ManageExecutables manageExecutables = new ManageExecutables(dBObject.ProfileID);
+                    ManageExecutables manageExecutables = new ManageExecutables(dbo_Profile.ProfileID);
                     manageExecutables.Owner = this;
                     manageExecutables.ShowDialog();
                 }
@@ -195,8 +198,8 @@ namespace GameTimeX
                 {
                     if (SysProps.gameRunningHandler != null)
                     {
-                        List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dBObject);
-                        SysProps.gameRunningHandler.AddExecutables(dBObject.ProfileID, executables);
+                        List<string> executables = FuncExecutables.GetAllActiveExecutablesFromDBObj(dbo_Profile);
+                        SysProps.gameRunningHandler.AddExecutables(dbo_Profile.ProfileID, executables);
                     }
                 }
 
@@ -206,9 +209,9 @@ namespace GameTimeX
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txtGameFolderPath.Text = dBObject.ExtGameFolder;
-            txtPicPath.Text = dBObject.ProfilePicFileName;
-            txtProfileName.Text = dBObject.GameName;
+            txtGameFolderPath.Text = dbo_Profile.ExtGameFolder;
+            txtPicPath.Text = dbo_Profile.ProfilePicFileName;
+            txtProfileName.Text = dbo_Profile.GameName;
 
             if (SteamLocatorHandler.GetSteamRoot() == null)
             {
@@ -218,18 +221,18 @@ namespace GameTimeX
 
 
             // Steam Profil linked Text
-            if (dBObject.SteamAppID == 0)
+            if (dbo_Profile.SteamAppID == 0)
                 bSteamProfileLinked.Visibility = Visibility.Collapsed;
 
             // Profil Settings laden
-            CProfileSettings profileSettings = new CProfileSettings(dBObject.ProfileSettings).Dezerialize();
+            CProfileSettings profileSettings = new CProfileSettings(dbo_Profile.ProfileSettings).Dezerialize();
             cbEnableHdr.IsChecked = profileSettings.HDREnabled;
             txtSteamParams.Text = profileSettings.SteamGameArgs.Replace(";", " ");
 
             oldPicPath = txtPicPath.Text;
             oldGameFolderPath = txtGameFolderPath.Text;
 
-            if (dBObject.SteamAppID == 0)
+            if (dbo_Profile.SteamAppID == 0)
             {
                 gbProfileSettings.IsEnabled = false;
 
@@ -258,12 +261,12 @@ namespace GameTimeX
             }
 
             // Wenn kein Steamprofil hinterlegt
-            if (SteamGame == null && dBObject.SteamAppID == 0)
+            if (SteamGame == null && dbo_Profile.SteamAppID == 0)
             {
                 DisableProfileSettings();
                 bSteamProfileLinked.Visibility = Visibility.Collapsed;
             }
-            else if (SteamGame == null && dBObject.SteamAppID != 0)
+            else if (SteamGame == null && dbo_Profile.SteamAppID != 0)
             {
                 cbEnableHdr.Visibility = Visibility.Visible;
                 gbProfileSettings.IsEnabled = true;
@@ -279,18 +282,18 @@ namespace GameTimeX
 
         private void btnUnlinkSteamProfile_Click(object sender, RoutedEventArgs e)
         {
-            if (dBObject != null)
+            if (dbo_Profile != null)
             {
-                dBObject.SteamAppID = 0;
+                dbo_Profile.SteamAppID = 0;
 
                 // Profilsettings
-                CProfileSettings profileSettings = new CProfileSettings(dBObject.ProfileSettings).Dezerialize();
+                CProfileSettings profileSettings = new CProfileSettings(dbo_Profile.ProfileSettings).Dezerialize();
 
                 // Hier Steam-abhängige Settings deaktivieren
                 profileSettings.HDREnabled = false;
 
                 // Profile Settings serialisieren und in Feld speichern
-                dBObject.ProfileSettings = profileSettings.Serialize();
+                dbo_Profile.ProfileSettings = profileSettings.Serialize();
 
                 // Profileinstellungen auf Enabled = false stellen
                 DisableProfileSettings();

@@ -1,10 +1,14 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
 using GameTimeX.Function;
 using GameTimeX.Objects;
+using GameTimeX.XApplication.SubDisplays;
 
 namespace GameTimeX
 {
@@ -115,6 +119,23 @@ namespace GameTimeX
             // Corner Radius für Image setzen
             this.currProfileImage.Effect = VisualHandler.GetDropShadowEffect();
             VisualHandler.SetCornerRadiusImage(this.currProfileImage, 5, 5);
+
+            DateTime today = DateTime.Today;
+
+            // Start: 01.12. des aktuellen Jahres
+            DateTime start = new DateTime(today.Year, 12, 1);
+            // Ende: 30.12. des aktuellen Jahres
+            DateTime end = new DateTime(today.Year, 12, 30);
+
+            if (today >= start && today <= end && DM_Profile.ReadAll().Count > 0)
+            {
+                YearGameStats yearGameStats = new YearGameStats
+                {
+                    Owner = this
+                };
+                yearGameStats.ShowDialog();
+            }
+
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -133,7 +154,7 @@ namespace GameTimeX
             // Danach wieder starten
             if (SysProps.gameRunningHandler != null && !SysProps.gameRunningHandler.IsRunning())
             {
-                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Initialize(DM_Profile.ReadAll());
                 SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
 
@@ -148,24 +169,24 @@ namespace GameTimeX
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
+            DBO_Profile dbo_Profile = DM_Profile.ReadPID(SysProps.currentSelectedPID);
 
-            if (dbObj != null)
+            if (dbo_Profile != null)
             {
-                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbObj.GameName + "'?", "Delete", "Cancel");
+                QuestionBox quest = new QuestionBox("Do you really want to delete '" + dbo_Profile.GameName + "'?", "Delete", "Cancel");
                 quest.Owner = this;
                 quest.ShowDialog();
 
                 // User hat "Delete" geklickt
                 if (quest.UsrReturnType == QuestionBox.ReturnType.YES)
                 {
-                    if (dbObj != null)
+                    if (dbo_Profile != null)
                     {
-                        DataBaseHandler.Delete(dbObj.ProfileID);
+                        DM_Profile.Delete(dbo_Profile.ProfileID);
                         DisplayHandler.BuildGameProfileView(this);
 
                         if (SysProps.gameRunningHandler != null)
-                            SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbObj.ProfileID);
+                            SysProps.gameRunningHandler.RemoveProfileAndExecutables(dbo_Profile.ProfileID);
                     }
                 }
             }
@@ -226,7 +247,7 @@ namespace GameTimeX
         private void btnEditProfileName_Click(object sender, RoutedEventArgs e)
         {
             Rename rename = new Rename();
-            rename.CurrObject = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
+            rename.CurrObject = DM_Profile.ReadPID(SysProps.currentSelectedPID);
             rename.Owner = this;
             rename.ShowDialog();
 
@@ -292,14 +313,14 @@ namespace GameTimeX
             if (SysProps.gameRunningHandler == null)
             {
                 SysProps.gameRunningHandler = new GameRunningHandler();
-                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Initialize(DM_Profile.ReadAll());
                 SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
             else
             {
                 if (!SysProps.gameRunningHandler.IsRunning())
                 {
-                    SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                    SysProps.gameRunningHandler.Initialize(DM_Profile.ReadAll());
                     SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
                 }
             }
@@ -385,9 +406,9 @@ namespace GameTimeX
                 }
 
                 // Werte in Datenbank speichern
-                DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
-                dbObj.ProfilePicFileName = fileNameHash;
-                DataBaseHandler.Save(dbObj);
+                DBO_Profile dbo_Profile = DM_Profile.ReadPID(SysProps.currentSelectedPID);
+                dbo_Profile.ProfilePicFileName = fileNameHash;
+                DM_Profile.Save(dbo_Profile);
 
                 // Bild croppen und abspeichern
                 FileHandler.CropImageAndSave(filePath, (int)cropWidth, (int)cropHeight, SysProps.picDestPath, fileNameHash, (int)cropX, (int)cropY);
@@ -436,7 +457,7 @@ namespace GameTimeX
             // Danach wieder starten
             if (SysProps.gameRunningHandler != null && !SysProps.gameRunningHandler.IsRunning())
             {
-                SysProps.gameRunningHandler.Initialize(DataBaseHandler.ReadAll());
+                SysProps.gameRunningHandler.Initialize(DM_Profile.ReadAll());
                 SysProps.gameRunningHandler.Start(SysProps.waitTimeGameRunningHandler);
             }
 
@@ -463,13 +484,13 @@ namespace GameTimeX
         private void btnLaunchSteamGame_Click(object sender, RoutedEventArgs e)
         {
 
-            DBObject dBObject = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
+            DBO_Profile dbo_Profile = DM_Profile.ReadPID(SysProps.currentSelectedPID);
 
-            if (dBObject == null)
+            if (dbo_Profile == null)
                 return;
 
             // Spiel starten
-            SteamGameStarterHandler.StartSteamGame(dBObject.SteamAppID.ToString(), dBObject.ProfileID);
+            SteamGameStarterHandler.StartSteamGame(dbo_Profile.SteamAppID.ToString(), dbo_Profile.ProfileID);
         }
     }
 }

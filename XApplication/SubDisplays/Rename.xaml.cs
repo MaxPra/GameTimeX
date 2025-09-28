@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
 
 namespace GameTimeX
 {
@@ -24,7 +16,7 @@ namespace GameTimeX
 
         public int Pid { get; set; }
 
-        public DBObject CurrObject { get; set; }   
+        public DBO_Profile CurrObject { get; set; }
 
         public Rename()
         {
@@ -81,9 +73,9 @@ namespace GameTimeX
 
             {
                 // Werte in Datenbank speichern
-                DBObject dbObject = DataBaseHandler.ReadPID(CurrObject.ProfileID);
-                dbObject.GameName = txtProfileName.Text;
-                DataBaseHandler.Save(dbObject);
+                DBO_Profile dbo_Profile = DM_Profile.ReadPID(CurrObject.ProfileID);
+                dbo_Profile.GameName = txtProfileName.Text;
+                DM_Profile.Save(dbo_Profile);
                 Close();
             }
         }
@@ -100,7 +92,7 @@ namespace GameTimeX
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(CurrObject != null)
+            if (CurrObject != null)
                 txtProfileName.Text = CurrObject.GameName;
         }
     }

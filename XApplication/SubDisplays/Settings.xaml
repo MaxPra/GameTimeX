@@ -1,66 +1,89 @@
-﻿<Window x:Class="GameTimeX.Settings"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d"
-        Title="Settings"
-        Width="520" Height="720"
-        MinWidth="350" MinHeight="450"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        UseLayoutRounding="True"
-        SnapsToDevicePixels="True"
-        Background="Transparent"
-        Style="{StaticResource DefaultWindowStyle}"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        Loaded="Window_Loaded">
+﻿<Window
+    x:Class="GameTimeX.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    Title="Settings"
+    Width="520"
+    Height="720"
+    MinWidth="350"
+    MinHeight="450"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Loaded="Window_Loaded"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    SnapsToDevicePixels="True"
+    Style="{StaticResource DefaultWindowStyle}"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <!-- Außenrahmen -->
-    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
-            BorderThickness="1"
-            Background="#2F2F2F"
-            CornerRadius="12"
-            SnapsToDevicePixels="True">
+    <!--  Außenrahmen  -->
+    <Border
+        Background="#2F2F2F"
+        BorderBrush="{DynamicResource ButtonDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="12"
+        SnapsToDevicePixels="True">
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- Titlebar -->
-            <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
-            <TextBlock Grid.Row="0" Text="Settings"
-                       Margin="10,0,0,0" Foreground="White"
-                       VerticalAlignment="Center"/>
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btnClose" Content="X" Width="40" Height="30"
-                        BorderBrush="Transparent" Background="Transparent"
-                        Click="btnClose_Click" Foreground="White"
-                        Style="{StaticResource NoMouseOverButtonStyle}">
+            <!--  Titlebar  -->
+            <Border
+                Grid.Row="0"
+                Background="Black"
+                ClipToBounds="True"
+                CornerRadius="12,12,0,0" />
+            <TextBlock
+                Grid.Row="0"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Foreground="White"
+                Text="Settings" />
+            <StackPanel
+                Grid.Row="0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnClose"
+                    Width="40"
+                    Height="30"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Click="btnClose_Click"
+                    Content="X"
+                    Foreground="White"
+                    Style="{StaticResource NoMouseOverButtonStyle}">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="bg"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="0,12,0,0"
-                                    SnapsToDevicePixels="True">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
+                            <Border
+                                x:Name="bg"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="0,12,0,0"
+                                SnapsToDevicePixels="True">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="Red"/>
+                                    <Setter TargetName="bg" Property="Background" Value="Red" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="#CC0000"/>
+                                    <Setter TargetName="bg" Property="Background" Value="#CC0000" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -68,49 +91,56 @@
                 </Button>
             </StackPanel>
 
-            <!-- Inhalt -->
+            <!--  Inhalt  -->
             <Grid Grid.Row="1">
-                <!-- Lokale Maße/Styles -->
+                <!--  Lokale Maße/Styles  -->
                 <Grid.Resources>
                     <sys:Double x:Key="CtlH">32</sys:Double>
 
-                    <Style x:Key="FormTextBox_Local" TargetType="TextBox" BasedOn="{StaticResource FormTextBox}">
-                        <Setter Property="Height" Value="{StaticResource CtlH}"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Style
+                        x:Key="FormTextBox_Local"
+                        BasedOn="{StaticResource FormTextBox}"
+                        TargetType="TextBox">
+                        <Setter Property="Height" Value="{StaticResource CtlH}" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
 
                     <Style x:Key="SectionHeader" TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="Margin" Value="0,0,0,10"/>
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Margin" Value="0,0,0,10" />
                     </Style>
 
                     <Style x:Key="Card" TargetType="Border">
-                        <Setter Property="Background" Value="#333333"/>
-                        <Setter Property="CornerRadius" Value="10"/>
-                        <Setter Property="Padding" Value="14"/>
-                        <Setter Property="BorderBrush" Value="#20FFFFFF"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="Margin" Value="12,10,12,0"/>
+                        <Setter Property="Background" Value="#333333" />
+                        <Setter Property="CornerRadius" Value="10" />
+                        <Setter Property="Padding" Value="14" />
+                        <Setter Property="BorderBrush" Value="#20FFFFFF" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Margin" Value="12,10,12,0" />
                     </Style>
                 </Grid.Resources>
 
-                <!-- Scrollbarer Inhalt mit einheitlichem Innenabstand -->
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled"
-                              Padding="0,10,0,12">
+                <!--  Scrollbarer Inhalt mit einheitlichem Innenabstand  -->
+                <ScrollViewer
+                    Padding="0,10,0,12"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
 
-                        <!-- GENERAL OPTIONS -->
+                        <!--  GENERAL OPTIONS  -->
                         <Border Style="{StaticResource Card}">
                             <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="General Options"/>
-                                <CheckBox Style="{StaticResource CheckBoxDefaultStyle}"
-                                          Content="Show current game time session when monitoring"
-                                          x:Name="cbSessionGameTime">
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="General Options" />
+                                <CheckBox
+                                    x:Name="cbSessionGameTime"
+                                    Content="Show current game time session when monitoring"
+                                    Style="{StaticResource CheckBoxDefaultStyle}">
                                     <CheckBox.ToolTip>
-                                        <ToolTip Background="#333333" BorderThickness="1"
-                                                 Foreground="White">
+                                        <ToolTip
+                                            Background="#333333"
+                                            BorderThickness="1"
+                                            Foreground="White">
                                             <TextBlock TextWrapping="Wrap">
                                                 Shows the current session time below the Start/Stop button while monitoring.
                                             </TextBlock>
@@ -118,13 +148,16 @@
                                     </CheckBox.ToolTip>
                                 </CheckBox>
 
-                                <CheckBox Margin="0,8,0,0"
-                                          Style="{StaticResource CheckBoxDefaultStyle}"
-                                          Content="Automatic switching between game profiles"
-                                          x:Name="cbGameSwitcher">
+                                <CheckBox
+                                    x:Name="cbGameSwitcher"
+                                    Margin="0,8,0,0"
+                                    Content="Automatic switching between game profiles"
+                                    Style="{StaticResource CheckBoxDefaultStyle}">
                                     <CheckBox.ToolTip>
-                                        <ToolTip Background="#333333" BorderThickness="1"
-                                                 Foreground="White">
+                                        <ToolTip
+                                            Background="#333333"
+                                            BorderThickness="1"
+                                            Foreground="White">
                                             <TextBlock TextWrapping="Wrap">
                                                 Automatically switches to the matching profile when a game is launched
                                                 (requires the game's folder in the profile).
@@ -133,14 +166,17 @@
                                     </CheckBox.ToolTip>
                                 </CheckBox>
 
-                                <CheckBox Margin="0,8,0,0"
-                                          Style="{StaticResource CheckBoxDefaultStyle}"
-                                          Content="Activate blackout key combination (OLED care)"
-                                          x:Name="cbBlackoutKeyActive"
-                                          Click="cbBlackoutKeyActive_Click">
+                                <CheckBox
+                                    x:Name="cbBlackoutKeyActive"
+                                    Margin="0,8,0,0"
+                                    Click="cbBlackoutKeyActive_Click"
+                                    Content="Activate blackout key combination (OLED care)"
+                                    Style="{StaticResource CheckBoxDefaultStyle}">
                                     <CheckBox.ToolTip>
-                                        <ToolTip Background="#333333" BorderThickness="1"
-                                                 Foreground="White">
+                                        <ToolTip
+                                            Background="#333333"
+                                            BorderThickness="1"
+                                            Foreground="White">
                                             <TextBlock TextWrapping="Wrap">
                                                 Toggle a full-screen blackout on all displays with CTRL + B to protect OLEDs.
                                             </TextBlock>
@@ -148,167 +184,198 @@
                                     </CheckBox.ToolTip>
                                 </CheckBox>
 
-                                <Button Margin="0,12,0,0"
-                                        x:Name="btnShowDataFolder"
-                                        Content="Show data folder"
-                                        MinWidth="160"
-                                        Height="{StaticResource CtlH}"
-                                        HorizontalAlignment="Left"
-                                        Click="btnShowDataFolder_Click"
-                                        Style="{StaticResource PrimaryButton}"/>
+                                <Button
+                                    x:Name="btnShowDataFolder"
+                                    Height="{StaticResource CtlH}"
+                                    MinWidth="160"
+                                    Margin="0,12,0,0"
+                                    HorizontalAlignment="Left"
+                                    Click="btnShowDataFolder_Click"
+                                    Content="Show data folder"
+                                    Style="{StaticResource PrimaryButton}" />
                             </StackPanel>
                         </Border>
 
-                        <!-- KEY FOR GAME MONITORING -->
+                        <!--  KEY FOR GAME MONITORING  -->
                         <Border Style="{StaticResource Card}">
                             <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="Key for game monitoring"/>
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="Key for game monitoring" />
                                 <StackPanel Orientation="Horizontal">
-                                    <CheckBox Style="{StaticResource CheckBoxDefaultStyle}"
-                                              Content="Key active"
-                                              x:Name="cbMonitoringKeyActive"
-                                              Click="cbMonitoringKeyActive_Click"/>
-                                    <CheckBox Margin="12,0,0,0"
-                                              Style="{StaticResource CheckBoxDefaultStyle}"
-                                              Content="Show toast notification"
-                                              x:Name="cbShowToastNotification"
-                                              IsEnabled="False"
-                                              Click="cbMonitoringKeyActive_Click"/>
-                                    <CheckBox Margin="12,0,0,0"
-                                              Style="{StaticResource CheckBoxDefaultStyle}"
-                                              Content="Blackout side monitors"
-                                              x:Name="cbBlackoutSideMonitor"
-                                              IsEnabled="False"
-                                              Click="cbBlackoutSideMonitor_Click"/>
+                                    <CheckBox
+                                        x:Name="cbMonitoringKeyActive"
+                                        Click="cbMonitoringKeyActive_Click"
+                                        Content="Key active"
+                                        Style="{StaticResource CheckBoxDefaultStyle}" />
+                                    <CheckBox
+                                        x:Name="cbShowToastNotification"
+                                        Margin="12,0,0,0"
+                                        Click="cbMonitoringKeyActive_Click"
+                                        Content="Show toast notification"
+                                        IsEnabled="False"
+                                        Style="{StaticResource CheckBoxDefaultStyle}" />
+                                    <CheckBox
+                                        x:Name="cbBlackoutSideMonitor"
+                                        Margin="12,0,0,0"
+                                        Click="cbBlackoutSideMonitor_Click"
+                                        Content="Blackout side monitors"
+                                        IsEnabled="False"
+                                        Style="{StaticResource CheckBoxDefaultStyle}" />
                                 </StackPanel>
 
-                                <TextBlock Margin="0,8,0,0" Foreground="White" x:Name="lblCurrentKey">
+                                <TextBlock
+                                    x:Name="lblCurrentKey"
+                                    Margin="0,8,0,0"
+                                    Foreground="White">
                                     Current key: (no key)
                                 </TextBlock>
 
-                                <Button Margin="0,12,0,0"
-                                        x:Name="btnMonitoringKey"
-                                        Content="Monitor key"
-                                        MinWidth="160"
-                                        Height="{StaticResource CtlH}"
-                                        HorizontalAlignment="Left"
-                                        IsEnabled="False"
-                                        Click="btnMonitoringKey_Click"
-                                        Style="{StaticResource PrimaryButton}"/>
+                                <Button
+                                    x:Name="btnMonitoringKey"
+                                    Height="{StaticResource CtlH}"
+                                    MinWidth="160"
+                                    Margin="0,12,0,0"
+                                    HorizontalAlignment="Left"
+                                    Click="btnMonitoringKey_Click"
+                                    Content="Monitor key"
+                                    IsEnabled="False"
+                                    Style="{StaticResource PrimaryButton}" />
                             </StackPanel>
                         </Border>
 
-                        <!-- CREATE BACKUP -->
+                        <!--  CREATE BACKUP  -->
                         <Border Style="{StaticResource Card}">
                             <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="Create Backup"/>
-                                <TextBlock Foreground="White" FontSize="12"
-                                           Text="Create a backup of the saved profiles and the saved game time data"/>
-                                <TextBlock Margin="0,2,0,8" Foreground="Red" FontSize="12"
-                                           Text="GameTimeX will be restarted automatically to create the backup!"/>
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="Create Backup" />
+                                <TextBlock
+                                    FontSize="12"
+                                    Foreground="White"
+                                    Text="Create a backup of the saved profiles and the saved game time data" />
+                                <TextBlock
+                                    Margin="0,2,0,8"
+                                    FontSize="12"
+                                    Foreground="Red"
+                                    Text="GameTimeX will be restarted automatically to create the backup!" />
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="12"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox Grid.Column="0"
-                                             x:Name="txtBackupPath"
-                                             Style="{StaticResource FormTextBox_Local}"
-                                             IsReadOnly="True"/>
-                                    <Button Grid.Column="2"
-                                            x:Name="btnChooseGameFolder"
-                                            Content="Choose Backup Folder"
-                                            MinWidth="190"
-                                            Height="{StaticResource CtlH}"
-                                            Click="btnChooseGameFolder_Click"
-                                            Style="{StaticResource PrimaryButton}"/>
+                                    <TextBox
+                                        x:Name="txtBackupPath"
+                                        Grid.Column="0"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource FormTextBox_Local}" />
+                                    <Button
+                                        x:Name="btnChooseGameFolder"
+                                        Grid.Column="2"
+                                        Height="{StaticResource CtlH}"
+                                        MinWidth="190"
+                                        Click="btnChooseGameFolder_Click"
+                                        Content="Choose Backup Folder"
+                                        Style="{StaticResource PrimaryButton}" />
                                 </Grid>
 
-                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                    <Button x:Name="btnCreateBackup"
-                                            Content="Create Backup"
-                                            MinWidth="160"
-                                            Height="{StaticResource CtlH}"
-                                            IsEnabled="False"
-                                            Click="btnCreateBackup_Click"
-                                            Style="{StaticResource PrimaryButton}"/>
-                                    <CheckBox Margin="12,6,0,0"
-                                              Style="{StaticResource CheckBoxDefaultStyle}"
-                                              Content="Auto Backup"
-                                              x:Name="cbAutoBackup"
-                                              IsEnabled="False"
-                                              Click="cbAutoBackup_Click"/>
+                                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                    <Button
+                                        x:Name="btnCreateBackup"
+                                        Height="{StaticResource CtlH}"
+                                        MinWidth="160"
+                                        Click="btnCreateBackup_Click"
+                                        Content="Create Backup"
+                                        IsEnabled="False"
+                                        Style="{StaticResource PrimaryButton}" />
+                                    <CheckBox
+                                        x:Name="cbAutoBackup"
+                                        Margin="12,6,0,0"
+                                        Click="cbAutoBackup_Click"
+                                        Content="Auto Backup"
+                                        IsEnabled="False"
+                                        Style="{StaticResource CheckBoxDefaultStyle}" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>
 
-                        <!-- IMPORT BACKUP -->
+                        <!--  IMPORT BACKUP  -->
                         <Border Style="{StaticResource Card}">
                             <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="Import Backup"/>
-                                <TextBlock Foreground="White" FontSize="12"
-                                           Text="Import a backup of the saved profiles and the saved game time data"/>
-                                <TextBlock Margin="0,2,0,8" Foreground="Red" FontSize="12"
-                                           Text="GameTimeX will be restarted automatically to import the backup!"/>
+                                <TextBlock Style="{StaticResource SectionHeader}" Text="Import Backup" />
+                                <TextBlock
+                                    FontSize="12"
+                                    Foreground="White"
+                                    Text="Import a backup of the saved profiles and the saved game time data" />
+                                <TextBlock
+                                    Margin="0,2,0,8"
+                                    FontSize="12"
+                                    Foreground="Red"
+                                    Text="GameTimeX will be restarted automatically to import the backup!" />
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="12"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox Grid.Column="0"
-                                             x:Name="txtBackupPathImport"
-                                             Style="{StaticResource FormTextBox_Local}"
-                                             IsReadOnly="True"/>
-                                    <Button Grid.Column="2"
-                                            x:Name="btnChooseBackUpFile"
-                                            Content="Choose Backup File"
-                                            MinWidth="170"
-                                            Height="{StaticResource CtlH}"
-                                            Click="btnChooseBackUpFile_Click"
-                                            Style="{StaticResource PrimaryButton}"/>
+                                    <TextBox
+                                        x:Name="txtBackupPathImport"
+                                        Grid.Column="0"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource FormTextBox_Local}" />
+                                    <Button
+                                        x:Name="btnChooseBackUpFile"
+                                        Grid.Column="2"
+                                        Height="{StaticResource CtlH}"
+                                        MinWidth="170"
+                                        Click="btnChooseBackUpFile_Click"
+                                        Content="Choose Backup File"
+                                        Style="{StaticResource PrimaryButton}" />
                                 </Grid>
 
-                                <TextBlock Margin="0,6,0,0" Foreground="White" FontSize="12"
-                                           x:Name="lblBackUpDate" Text="Backup date of file: -"/>
+                                <TextBlock
+                                    x:Name="lblBackUpDate"
+                                    Margin="0,6,0,0"
+                                    FontSize="12"
+                                    Foreground="White"
+                                    Text="Backup date of file: -" />
 
-                                <Button Margin="0,10,0,0"
-                                        x:Name="btnImportBackup"
-                                        Content="Import Backup"
-                                        MinWidth="160"
-                                        Height="{StaticResource CtlH}"
-                                        HorizontalAlignment="Left"
-                                        IsEnabled="False"
-                                        Click="btnImportBackup_Click"
-                                        Style="{StaticResource PrimaryButton}"/>
+                                <Button
+                                    x:Name="btnImportBackup"
+                                    Height="{StaticResource CtlH}"
+                                    MinWidth="160"
+                                    Margin="0,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    Click="btnImportBackup_Click"
+                                    Content="Import Backup"
+                                    IsEnabled="False"
+                                    Style="{StaticResource PrimaryButton}" />
                             </StackPanel>
                         </Border>
 
-                        <!-- Footer -->
+                        <!--  Footer  -->
                         <Grid Margin="12,8,12,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- Links -->
-                            <TextBlock Grid.Column="0"
-                                       Foreground="Gray"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Left"
-                                       Text="Icons by icons8"/>
+                            <!--  Links  -->
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="Gray"
+                                Text="Icons by icons8" />
 
-                            <!-- Rechts -->
-                            <TextBlock Grid.Column="1"
-                                       Foreground="Gray"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Right"
-                                       Text="Version 2.0.11 / Retouched"/>
+                            <!--  Rechts  -->
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Foreground="Gray"
+                                Text="Version 2.1.0" />
                         </Grid>
 
 

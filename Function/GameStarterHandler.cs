@@ -1,4 +1,6 @@
-﻿using GameTimeX.Objects;
+﻿using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
+using GameTimeX.Objects.Components;
 
 namespace GameTimeX.Function
 {
@@ -27,12 +29,12 @@ namespace GameTimeX.Function
             if (pid == 0)
                 return;
 
-            DBObject dBObject = DataBaseHandler.ReadPID(pid);
+            DBO_Profile dbo_Profile = DM_Profile.ReadPID(pid);
 
-            if (dBObject == null)
+            if (dbo_Profile == null)
                 return;
 
-            CProfileSettings cProfileSettings = new CProfileSettings(dBObject.ProfileSettings).Dezerialize();
+            CProfileSettings cProfileSettings = new CProfileSettings(dbo_Profile.ProfileSettings).Dezerialize();
 
             DeactivateProfileSettings(cProfileSettings);
         }

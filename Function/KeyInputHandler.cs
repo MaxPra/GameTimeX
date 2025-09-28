@@ -1,11 +1,12 @@
-﻿using GameTimeX.Objects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
-using System.Xml;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
+using GameTimeX.Objects;
 using static GameTimeX.Objects.KeyInput;
 namespace GameTimeX.Function
 {
@@ -60,11 +61,11 @@ namespace GameTimeX.Function
         /// </summary>
         public void StartListening()
         {
-            if(th != null)
+            if (th != null)
             {
                 th.IsBackground = true;
                 th.Start();
-            }   
+            }
         }
 
         /// <summary>
@@ -89,25 +90,25 @@ namespace GameTimeX.Function
                 if (stopListening)
                     break;
 
-                if(startType == StartType.GAME_MONITORING)
+                if (startType == StartType.GAME_MONITORING)
                 {
                     bool keyPressed = CheckForSpecificKeyOnKeyboard(keyToListenFor);
                     if (keyPressed)
                     {
                         this.wnd.Dispatcher.Invoke((Action)(() =>
                         {
-                            if(SysProps.currentSelectedPID != 0)
+                            if (SysProps.currentSelectedPID != 0)
                             {
                                 // Profilnamen lt. aktuell selektiertem Spiel ermitteln
-                                DBObject dbObj = DataBaseHandler.ReadPID(SysProps.currentSelectedPID);
-                                string profileName = dbObj.GameName;
+                                DBO_Profile dbo_Profile = DM_Profile.ReadPID(SysProps.currentSelectedPID);
+                                string profileName = dbo_Profile.GameName;
 
                                 string title = "GameTimeX | " + profileName;
 
                                 if (!MonitorHandler.CurrentlyMonitoringGameTime())
                                 {
                                     MonitorHandler.StartMonitoringGameTime((MainWindow)wnd, SysProps.currentSelectedPID);
-                                    if(SysProps.startUpParms.ShowToastNotification)
+                                    if (SysProps.startUpParms.ShowToastNotification)
                                         VisualHandler.ShowToastNotification(title, "Monitoring startet!", 3000);
                                     if (SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring)
                                         BlackoutHandler.ToggleSecondaryBlackout((MainWindow)wnd);
@@ -122,14 +123,14 @@ namespace GameTimeX.Function
                                     if (SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring)
                                         BlackoutHandler.ToggleSecondaryBlackout((MainWindow)wnd);
                                 }
-                                    
+
 
                                 DisplayHandler.BuildInfoDisplay(SysProps.currentSelectedPID, (MainWindow)wnd);
                             }
                         }));
                     }
                 }
-                else if(startType == StartType.MONITORE_KEY)
+                else if (startType == StartType.MONITORE_KEY)
                 {
                     VirtualKey keyPressed = CheckAllKeysOnKeyboard();
                     if (keyPressed != VirtualKey.VK_NONE && keyPressed != VirtualKey.VK_NORESULT)
@@ -141,9 +142,9 @@ namespace GameTimeX.Function
                             monitorKeyWnd.Close();
                         }));
                     }
-                    
+
                 }
-                else if(startType == StartType.BLACKOUT_SCREEN)
+                else if (startType == StartType.BLACKOUT_SCREEN)
                 {
                     if (CheckForKeyCombination(VirtualKey.VK_CONTROL, VirtualKey.VK_B))
                     {
@@ -166,16 +167,16 @@ namespace GameTimeX.Function
         /// <returns></returns>
         private VirtualKey CheckAllKeysOnKeyboard()
         {
-            foreach(int key in Enum.GetValues(typeof(KeyInput.VirtualKey)))
+            foreach (int key in Enum.GetValues(typeof(KeyInput.VirtualKey)))
             {
-               int keystate = SysWin32.GetAsyncKeyState(key);
+                int keystate = SysWin32.GetAsyncKeyState(key);
 
                 // Prüfen, ob Taste gedrückt
                 if ((keystate & 0x8000) != 0)
                 {
-                     return ParseKeyEnum(key);
+                    return ParseKeyEnum(key);
                 }
-               
+
             }
 
             return VirtualKey.VK_NORESULT;
@@ -257,7 +258,7 @@ namespace GameTimeX.Function
 
         public static VirtualKey GetVirtualKeyByValue(Dictionary<VirtualKey, string> list, string value)
         {
-           return list.FirstOrDefault(x => x.Value == value).Key;
+            return list.FirstOrDefault(x => x.Value == value).Key;
         }
 
         public enum StartType

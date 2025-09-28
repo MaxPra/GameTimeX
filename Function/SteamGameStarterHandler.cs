@@ -1,5 +1,9 @@
 ﻿using System.Threading.Tasks;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
+using GameTimeX.Function.Utils;
 using GameTimeX.Objects;
+using GameTimeX.Objects.Components;
 
 namespace GameTimeX.Function
 {
@@ -13,13 +17,13 @@ namespace GameTimeX.Function
         {
             if (SteamLocatorHandler.IsGameInstalledByAppId(steamAppID))
             {
-                DBObject dbObj = DataBaseHandler.ReadPID(pid);
+                DBO_Profile dbo_Profile = DM_Profile.ReadPID(pid);
 
-                if (dbObj == null)
+                if (dbo_Profile == null)
                     return;
 
                 // Profileinstellungen laden
-                CProfileSettings cProfileSettings = new CProfileSettings(dbObj.ProfileSettings).Dezerialize();
+                CProfileSettings cProfileSettings = new CProfileSettings(dbo_Profile.ProfileSettings).Dezerialize();
 
                 // Zuvor Profileinstellungen aktivieren
                 GameStarterHandler.ActivateProfileSettings(cProfileSettings);

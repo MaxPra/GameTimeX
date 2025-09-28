@@ -5,13 +5,16 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using GameTimeX.DataBase.DataManager;
+using GameTimeX.DataBase.Objects;
 using GameTimeX.Objects;
+using GameTimeX.Objects.Components;
 
 namespace GameTimeX.XApplication.SubDisplays
 {
     public partial class ManageExecutables : Window, INotifyPropertyChanged
     {
-        private DBObject dbObject = null!;
+        private DBO_Profile dbo_Profile = null!;
         private CExecutables cExecutables = null!;
 
         public ObservableCollection<Executable> Executables { get; } = new();
@@ -33,8 +36,8 @@ namespace GameTimeX.XApplication.SubDisplays
         {
             InitializeComponent();
 
-            dbObject = DataBaseHandler.ReadPID(pid);
-            cExecutables = new CExecutables(dbObject.Executables).Dezerialize();
+            dbo_Profile = DM_Profile.ReadPID(pid);
+            cExecutables = new CExecutables(dbo_Profile.Executables).Dezerialize();
 
             if (cExecutables.KeyValuePairs == null)
                 return;
@@ -78,8 +81,8 @@ namespace GameTimeX.XApplication.SubDisplays
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             cExecutables.KeyValuePairs = Executables.ToDictionary(x => x.Name, x => x.IsActive);
-            dbObject.Executables = cExecutables.Serialize();
-            DataBaseHandler.Save(dbObject);
+            dbo_Profile.Executables = cExecutables.Serialize();
+            DM_Profile.Save(dbo_Profile);
             Close();
         }
 
