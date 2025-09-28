@@ -3,11 +3,11 @@
 GameTimeX is a desktop application for precise tracking of actual gameplay time.  
 Unlike platform counters that may continue running while a title is idle, GameTimeX records playtime only when the game is truly active.
 
-**Version 2.0.11 — “Retouched”**  
-Same core functionality, redesigned user interface.
+**Version 2.1.0**  
+Same reliable core, new refinements and December playtime statistics.
 
 Download the latest installer:  
-[GameTimeXSetup_Latest.msi](https://github.com/MaxPra/GameTimeX/releases/download/Version2.0.11/GameTimeXSetup_Latest.msi)
+[GameTimeXSetup_Latest.msi](https://github.com/MaxPra/GameTimeX/releases/download/Version2.1.0/GameTimeXSetup_Latest.msi)
 
 ---
 
@@ -32,27 +32,15 @@ Download the latest installer:
   - Optionally enable **HDR automatically before game launch** (only if linked with a Steam profile)  
   - **Steam Start Parameters** – specify custom Steam launch arguments per game directly inside GameTimeX
 - 🗓️ **Today’s Playtime in Tooltip** – in the details panel, the **total time tooltip** now also shows **how many hours you’ve played today**.
+- 📊 **December Statistics** – during December, GameTimeX shows a **monthly overview of which games you played/recorded and for how long**.
+- 🎨 **UI Style Refinements** – subtle visual improvements for a cleaner and more consistent experience.
 
 ---
 
-## What’s New in 2.0.11
+## What’s New in 2.1.0
 
-- Complete visual refresh of the UI
-- Removal of the legacy list view
-- Minor UI-related fixes and refinements
-- **Installed Games Filter** *(controller + play icon)* – new toolbar toggle to display **only profiles for installed games** (installation folder exists).  
-  *Prerequisite:* set the game’s installation folder in the profile **Properties**.
-- **Installed Icon Overlay** – profile tiles now display a **small indicator icon in the top-right corner** of the profile image whenever the game is installed.  
-  This provides a quick visual cue without opening the profile properties.
-- **OLED Care (Blackout Screen)** – toggle anytime with **CTRL+B** to fully darken all screens while away
-- **Optional side-screen dimming while tracking** – automatically dims all non-primary displays while GameTimeX is actively tracking; restores displays afterwards
-- **Security: SQL-injection hardening** – all database access uses parameterized SQLite queries
-- **Executable selection for Automatic Profile Switching** – define the exact executables to monitor for profile switching; avoids collisions with shared executables
-- **Smart executable pre-filtering** – on first profile creation, non-game executables (launchers, crash reporters, helpers, benchmarks) are deselected automatically
-- **Steam Integration** – Steam games can now be **imported and linked** to GameTimeX profiles.  
-  Linked Steam games can be launched directly from GameTimeX, and HDR can be activated automatically before startup.  
-  ➡️ **New:** custom **Steam launch arguments** can be set per game profile.
-- **Today’s Playtime in Tooltip** – hover over the “i” icon next to *Game Time* in the details view to also see **today’s total playtime**.
+- 📊 **December Stats** – a new feature that displays a **summary of your recorded playtime per game in December**, giving you a clear end-of-year overview.  
+- 🎨 **UI Style Refinements** – minor improvements in visuals, spacing, and consistency across the app.
 
 ---
 
@@ -87,7 +75,8 @@ Example with profiles:
 <img width="1220" height="820" alt="image" src="https://github.com/user-attachments/assets/fbb43f6a-3d25-46f3-906a-4e8979a26190" />
 
 Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.  
-➡️ The tooltip now also shows **how many hours you played today**.
+➡️ The tooltip now also shows **how many hours you played today**.  
+➡️ **New in 2.1.0:** during December, you also get a **statistical overview of your playtime by game**.
 
 If a new playthrough begins after time has already been recorded, use **New Playthrough Startpoint**. The application saves the current total time and reports playthrough time as the difference from that point forward.  
 - **Total time** remains cumulative.  
@@ -128,6 +117,7 @@ The settings dialog provides granular control:
 - **OLED Care (Blackout Screen)** – fully darkens all screens to protect OLED panels (CTRL+B).
 - **Side-Screen Dimming (optional)** – dims all secondary displays **only while tracking**; automatically restores them afterwards.
 - **Steam Integration Options** – choose whether HDR should be toggled automatically when launching a Steam-linked game, and configure **per-game Steam launch parameters**.
+- **New in 2.1.0:** **December Statistics** toggle and configuration – view and enable the monthly playtime overview.
 
 *Tip:* For Steam titles, locate the installation folder via **Steam → Game → Properties → Installed Files → Browse**.
 
