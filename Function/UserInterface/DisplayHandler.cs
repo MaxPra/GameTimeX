@@ -153,12 +153,12 @@ namespace GameTimeX.Function.UserInterface
                 wnd.lblToolTipGameTimeTextNewPlaythrough.Text = actPlaythroughTime.ToString("n0") + " minutes";
 
                 hours = MonitorHandler.CalcGameTime(actPlaythroughTime);
-                gameTimeText =
+                string gameTimeText2 =
                     hours == 0.0 ? "N/A" :
                     hours >= 1 ? string.Format("{0:F1}", hours) + " h" :
                     "< 1 h";
 
-                wnd.lblToolTipGameTimeTextNewPlaythrough.Text = gameTimeText;
+                wnd.lblToolTipGameTimeTextNewPlaythrough.Text = gameTimeText2;
             }
         }
 
@@ -580,7 +580,6 @@ namespace GameTimeX.Function.UserInterface
                     };
 
                     var tg = new TransformGroup();
-                    tg.Children.Add(new ScaleTransform(1, 1));
                     tg.Children.Add(new TranslateTransform(0, 0));
                     stackPanel.RenderTransform = tg;
 
@@ -613,12 +612,16 @@ namespace GameTimeX.Function.UserInterface
 
                     string imgPath = SysProps.picDestPath + SysProps.separator + obj.ProfilePicFileName;
                     profileImage.Source = null;
+
                     profileImage.Tag = new LazyInfo
                     {
                         Path = File.Exists(imgPath) ? imgPath : null,
-                        DecodeSize = (int)Math.Ceiling(tileSize),
+                        DecodeSize = (int)Math.Ceiling(tileSize * HoverScale), // <- Headroom
                         Loaded = false
                     };
+
+                    RenderOptions.SetBitmapScalingMode(profileImage, BitmapScalingMode.HighQuality);
+                    profileImage.SnapsToDevicePixels = true;
 
                     profileImage.Width = tileSize;
                     profileImage.Height = tileSize;
@@ -645,6 +648,9 @@ namespace GameTimeX.Function.UserInterface
                         Width = tileSize,
                         Height = tileSize
                     };
+
+                    overlay.RenderTransformOrigin = new Point(0.5, 0.5);
+                    overlay.RenderTransform = new ScaleTransform(1, 1);
 
                     overlay.Children.Add(profileImage);
 
@@ -1118,7 +1124,7 @@ namespace GameTimeX.Function.UserInterface
             sp.Opacity = 0;
 
             var tg = sp.RenderTransform as TransformGroup;
-            var translate = tg?.Children[1] as TranslateTransform;
+            var translate = tg?.Children[0] as TranslateTransform;
 
             var fade = new DoubleAnimation
             {
@@ -1146,27 +1152,25 @@ namespace GameTimeX.Function.UserInterface
 
         private static void ApplyHoverLift(StackPanel sp, bool enter)
         {
-            var tg = sp.RenderTransform as TransformGroup;
-            if (tg == null) return;
-
-            var scale = tg.Children[0] as ScaleTransform;
-            var translate = tg.Children[1] as TranslateTransform;
-
             double targetScale = enter ? HoverScale : 1.0;
             double targetY = enter ? HoverLiftY : 0.0;
 
+            var overlay = GetTileOverlay(sp);
+            var scale = overlay?.RenderTransform as ScaleTransform;
             if (scale != null)
             {
-                var animX = new DoubleAnimation
+                var anim = new DoubleAnimation
                 {
                     To = targetScale,
                     Duration = enter ? HoverDuration : LeaveDuration,
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
                 };
-                var animY = animX.Clone();
-                scale.BeginAnimation(ScaleTransform.ScaleXProperty, animX);
-                scale.BeginAnimation(ScaleTransform.ScaleYProperty, animY);
+                scale.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
+                scale.BeginAnimation(ScaleTransform.ScaleYProperty, anim.Clone());
             }
+
+            var tg = sp.RenderTransform as TransformGroup;
+            var translate = tg?.Children[0] as TranslateTransform;
 
             if (translate != null)
             {
@@ -1206,11 +1210,8 @@ namespace GameTimeX.Function.UserInterface
 
         private static void PulsePress(StackPanel sp)
         {
-            var tg = sp.RenderTransform as TransformGroup;
-            if (tg == null) return;
-
-            var scale = tg.Children[0] as ScaleTransform;
-            var translate = tg.Children[1] as TranslateTransform;
+            var overlay = GetTileOverlay(sp);
+            var scale = overlay?.RenderTransform as ScaleTransform;
 
             if (scale != null)
             {
@@ -1224,6 +1225,9 @@ namespace GameTimeX.Function.UserInterface
                 scale.BeginAnimation(ScaleTransform.ScaleXProperty, a);
                 scale.BeginAnimation(ScaleTransform.ScaleYProperty, a.Clone());
             }
+
+            var tg = sp.RenderTransform as TransformGroup;
+            var translate = tg?.Children[0] as TranslateTransform;
 
             if (translate != null)
             {
@@ -1368,6 +1372,11 @@ namespace GameTimeX.Function.UserInterface
         private static TextBlock GetTileTitle(StackPanel sp) => sp?.Children.Count > 1 ? sp.Children[1] as TextBlock : null;
         private static Border GetTileUnderline(StackPanel sp) => sp?.Children.Count > 2 ? sp.Children[2] as Border : null;
 
-
+        private static Grid GetTileOverlay(StackPanel sp)
+        {
+            if (sp == null || sp.Children.Count == 0) return null;
+            var border = sp.Children[0] as Border;
+            return border?.Child as Grid;
+        }
     }
 }
