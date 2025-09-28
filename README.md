@@ -32,7 +32,7 @@ Download the latest installer:
   - Optionally enable **HDR automatically before game launch** (only if linked with a Steam profile)  
   - **Steam Start Parameters** – specify custom Steam launch arguments per game directly inside GameTimeX
 - 🗓️ **Today’s Playtime in Tooltip** – in the details panel, the **total time tooltip** now also shows **how many hours you’ve played today**.
-- 📊 **December Statistics** – during December, GameTimeX shows a **monthly overview of which games you played/recorded and for how long**.
+- 📊 **December Statistics** – during December, GameTimeX shows a **overview of which games you played/recorded and for how long**.
 - 🎨 **UI Style Refinements** – subtle visual improvements for a cleaner and more consistent experience.
 
 ---
