@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using GameTimeX.DataBase.Objects;
+using GameTimeX.Function.DataBase;
 
 namespace GameTimeX.DataBase.DataManager
 {

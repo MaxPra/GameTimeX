@@ -1,0 +1,114 @@
+﻿<Window
+    x:Class="GameTimeX.XApplication.SubDisplays.HappyHalloween"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Happy Halloween"
+    Width="670"
+    Height="430"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    Style="{StaticResource DefaultWindowStyle}"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Border
+        Background="#2F2F2F"
+        BorderBrush="{DynamicResource ButtonDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="12"
+        SnapsToDevicePixels="True">
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--  Titlebar  -->
+            <DockPanel Grid.Row="0" LastChildFill="True">
+                <TextBlock
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="🎃 Happy Halloween" />
+                <Button
+                    x:Name="btnClose"
+                    Width="40"
+                    Height="30"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Click="btnClose_Click"
+                    Content="X"
+                    DockPanel.Dock="Right"
+                    Foreground="White"
+                    Style="{StaticResource NoMouseOverButtonStyle}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border
+                                x:Name="bg"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="0,12,0,0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="Red" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="#CC0000" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </DockPanel>
+
+            <!--  Content  -->
+            <StackPanel
+                Grid.Row="1"
+                Margin="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <!--  Bild: lege /images/halloween.png als Resource ins Projekt  -->
+                <Image
+                    Width="220"
+                    Height="220"
+                    Source="{StaticResource halloween}"
+                    Stretch="Uniform" />
+                <TextBlock
+                    Margin="0,20,0,0"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Text="GameTimeX wishes you a spooky Halloween!"
+                    TextAlignment="Center" />
+            </StackPanel>
+
+            <!--  Footer  -->
+            <Grid Grid.Row="2" Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="btnCloseBottom"
+                    Grid.Column="1"
+                    Width="120"
+                    Height="36"
+                    Click="btnClose_Click"
+                    Content="Close"
+                    Style="{StaticResource NormalGuiButton}" />
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

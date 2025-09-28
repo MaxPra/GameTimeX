@@ -6,6 +6,9 @@ using System.Threading;
 using System.Windows;
 using GameTimeX.DataBase.DataManager;
 using GameTimeX.DataBase.Objects;
+using GameTimeX.Function.AppEnvironment;
+using GameTimeX.Function.Monitoring;
+using GameTimeX.Function.UserInterface;
 using GameTimeX.Objects;
 using static GameTimeX.Objects.KeyInput;
 namespace GameTimeX.Function

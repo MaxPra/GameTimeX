@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GameTimeX.Function;
+using GameTimeX.Function.AppEnvironment;
+using GameTimeX.Function.UserInterface;
 
 namespace GameTimeX
 {

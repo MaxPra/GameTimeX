@@ -76,7 +76,7 @@ namespace GameTimeX.XApplication.SubDisplays {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GameTimeX;V1.0.0.0;component/xapplication/subdisplays/yeargamestats.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GameTimeX;component/xapplication/subdisplays/yeargamestats.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\XApplication\SubDisplays\YearGameStats.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

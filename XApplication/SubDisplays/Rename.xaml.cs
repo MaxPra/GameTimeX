@@ -3,6 +3,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using GameTimeX.DataBase.DataManager;
 using GameTimeX.DataBase.Objects;
+using GameTimeX.Function.AppEnvironment;
+using GameTimeX.Function.UserInterface;
 
 namespace GameTimeX
 {

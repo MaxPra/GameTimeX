@@ -18,6 +18,8 @@
     <None Remove="images\GameTimeX_Banner.png" />
     <None Remove="images\game_time.png" />
     <None Remove="images\game_time1.png" />
+    <None Remove="images\halloween.png" />
+    <None Remove="images\happy_new_year.png" />
     <None Remove="images\list.png" />
     <None Remove="images\no_picture.png" />
     <None Remove="images\picture.png" />
@@ -58,6 +60,8 @@
     <Resource Include="images\GameTimeX_Banner.png" />
     <Resource Include="images\game_time.png" />
     <Resource Include="images\game_time1.png" />
+    <Resource Include="images\halloween.png" />
+    <Resource Include="images\happy_new_year.png" />
     <Resource Include="images\list.png" />
     <Resource Include="images\picture.png" />
     <Resource Include="images\playable.png" />

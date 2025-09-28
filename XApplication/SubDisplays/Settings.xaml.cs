@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using GameTimeX.Function.AppEnvironment;
+using GameTimeX.Function.UserInterface;
 using GameTimeX.Objects;
 using Microsoft.WindowsAPICodePack.Dialogs;
 

@@ -36,5 +36,13 @@
         public bool BlackOutSideMonitorsWhileMonitoring { get; set; } = false;
 
         public bool ShowOnlyPlayableGames { get; set; } = false;
+
+        public string YearStats { get; set; } = string.Empty;
+
+        public string HappyNewYearEvent { get; set; } = string.Empty;
+
+        public string HalloweenEvent { get; set; } = string.Empty;
+
+
     }
 }

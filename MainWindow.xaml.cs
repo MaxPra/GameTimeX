@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -7,8 +6,13 @@ using System.Windows.Threading;
 using GameTimeX.DataBase.DataManager;
 using GameTimeX.DataBase.Objects;
 using GameTimeX.Function;
+using GameTimeX.Function.AppEnvironment;
+using GameTimeX.Function.Game;
+using GameTimeX.Function.Monitoring;
+using GameTimeX.Function.Steam;
+using GameTimeX.Function.UserInterface;
+using GameTimeX.Function.WorldEvents;
 using GameTimeX.Objects;
-using GameTimeX.XApplication.SubDisplays;
 
 namespace GameTimeX
 {
@@ -116,26 +120,11 @@ namespace GameTimeX
                 imgMode.Source = VisualHandler.GetModePic(StartUpParms.ViewModes.LIST);
             }
 
+            WorldEventHandler.HandleWorldEvents();
+
             // Corner Radius für Image setzen
             this.currProfileImage.Effect = VisualHandler.GetDropShadowEffect();
             VisualHandler.SetCornerRadiusImage(this.currProfileImage, 5, 5);
-
-            DateTime today = DateTime.Today;
-
-            // Start: 01.12. des aktuellen Jahres
-            DateTime start = new DateTime(today.Year, 12, 1);
-            // Ende: 30.12. des aktuellen Jahres
-            DateTime end = new DateTime(today.Year, 12, 30);
-
-            if (today >= start && today <= end && DM_Profile.ReadAll().Count > 0)
-            {
-                YearGameStats yearGameStats = new YearGameStats
-                {
-                    Owner = this
-                };
-                yearGameStats.ShowDialog();
-            }
-
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
