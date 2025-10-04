@@ -56,9 +56,9 @@ namespace GameTimeX.Function.Monitoring
             FN_Profile.SaveFirstTimePlayed(pid);
         }
 
-        private static long GetCurrentGameTimeInMinutes()
+        private static double GetCurrentGameTimeInMinutes()
         {
-            long currentGameTime = 0;
+            double currentGameTime = 0;
 
             // Derzeitige Zeit berechnen
             currentGameTime = DateTimeOffset.Now.ToUnixTimeMilliseconds() - startTimeMonitoring;
@@ -67,9 +67,9 @@ namespace GameTimeX.Function.Monitoring
             return currentGameTime;
         }
 
-        public static long GetCurrentGameTimeInMinutes(long startTime)
+        public static double GetCurrentGameTimeInMinutes(long startTime)
         {
-            long currentGameTime = 0;
+            double currentGameTime = 0.0;
 
             // Derzeitige Zeit berechnen
             currentGameTime = DateTimeOffset.Now.ToUnixTimeMilliseconds() - startTime;
@@ -96,7 +96,7 @@ namespace GameTimeX.Function.Monitoring
             endTimeMonitoring = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
             // Spielzeit berechnen
-            long playtime = endTimeMonitoring - startTimeMonitoring;
+            double playtime = endTimeMonitoring - startTimeMonitoring;
 
             endTimeMonitoringTime = DateTimeOffset.Now.DateTime;
 
@@ -114,7 +114,7 @@ namespace GameTimeX.Function.Monitoring
         /// </summary>
         /// <param name="millis"></param>
         /// <returns></returns>
-        private static long CalcMinutesFromMillis(long millis)
+        private static double CalcMinutesFromMillis(double millis)
         {
             return millis / 60000;
         }
@@ -134,7 +134,7 @@ namespace GameTimeX.Function.Monitoring
         /// </summary>
         /// <param name="minutes"></param>
         /// <returns></returns>
-        public static double CalcGameTime(long minutes)
+        public static double CalcGameTime(double minutes)
         {
             if (minutes == 0)
             {

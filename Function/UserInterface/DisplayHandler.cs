@@ -113,7 +113,7 @@ namespace GameTimeX.Function.UserInterface
 
             // Text für "heute gespielt"
             string playedToday = "";
-            long minutesToday = FN_Profile.GetTodaysPlayTime(dbo_profiles.ProfileID);
+            double minutesToday = FN_Profile.GetTodaysPlayTime(dbo_profiles.ProfileID);
 
             if (minutesToday > 0)
             {
@@ -121,7 +121,7 @@ namespace GameTimeX.Function.UserInterface
             }
 
             // Totale Spielzeit in Minuten
-            long playedTotal = FN_Profile.GetTotalPlayTime(dbo_profiles.ProfileID);
+            double playedTotal = FN_Profile.GetTotalPlayTime(dbo_profiles.ProfileID);
 
             // ToolTip setzen
             string tooltipText = playedTotal.ToString("n0") + " minutes";
@@ -149,7 +149,7 @@ namespace GameTimeX.Function.UserInterface
             {
                 wnd.rowPlaythrough.Height = new GridLength(30);
 
-                long actPlaythroughTime = FN_Profile.GetCurrentPlaythroughTime(dbo_profiles.ProfileID, dbo_profiles.PlaythroughStartPointDate);
+                double actPlaythroughTime = FN_Profile.GetCurrentPlaythroughTime(dbo_profiles.ProfileID, dbo_profiles.PlaythroughStartPointDate);
                 wnd.lblToolTipGameTimeTextNewPlaythrough.Text = actPlaythroughTime.ToString("n0") + " minutes";
 
                 hours = MonitorHandler.CalcGameTime(actPlaythroughTime);

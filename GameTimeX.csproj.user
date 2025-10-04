@@ -33,6 +33,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="GameXResources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="LanguageTerms.de.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

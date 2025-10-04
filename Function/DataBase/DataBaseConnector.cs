@@ -49,8 +49,13 @@ namespace GameTimeX.Function.DataBase
             // Sessions-Tabelle + Legacy-Übertrag
             if (!TableExists("tblGameSessions"))
             {
-                CreateTable_Sessions();
-                MigrateOldPlaytimeToSessions();
+                CreateTable_Sessions();              // erstellt Playtime als REAL
+                MigrateOldPlaytimeToSessions();      // übernimmt alte Summen (als double)
+            }
+            else
+            {
+                // Migration: Playtime auf REAL umstellen, falls noch nicht REAL
+                EnsureSessionPlaytimeIsReal();
             }
         }
 
@@ -62,7 +67,7 @@ namespace GameTimeX.Function.DataBase
                 "CREATE TABLE tblGameProfiles (" +
                 "ProfileID INTEGER PRIMARY KEY, " +
                 "GameName VARCHAR(200), " +
-                "GameTime BIGINT, " +
+                "GameTime BIGINT, " + // unverändert (Bestand)
                 "FirstPlay DATETIME, " +
                 "LastPlay DATETIME, " +
                 "ProfilePicFileName varchar(10000), " +
@@ -339,7 +344,7 @@ namespace GameTimeX.Function.DataBase
                 "FK_PID INTEGER NOT NULL, " +
                 "Played_From DATETIME NOT NULL, " +
                 "Played_To DATETIME NOT NULL, " +
-                "Playtime BIGINT NOT NULL DEFAULT 0, " +
+                "Playtime REAL NOT NULL DEFAULT 0.0, " +
                 "FOREIGN KEY (FK_PID) REFERENCES tblGameProfiles(ProfileID) ON DELETE CASCADE)",
                 connection))
             {
@@ -361,9 +366,100 @@ namespace GameTimeX.Function.DataBase
                 dbo_Session.Played_To = dbo_prof.LastPlay == DateTime.MinValue ? dbo_prof.FirstPlay : dbo_prof.LastPlay;
                 if (dbo_Session.Played_To < dbo_Session.Played_From)
                     (dbo_Session.Played_From, dbo_Session.Played_To) = (dbo_Session.Played_To, dbo_Session.Played_From);
+
                 dbo_Session.Playtime = dbo_prof.GameTime;
 
                 DM_Session.Save(dbo_Session);
+            }
+        }
+
+        // ---------------------------
+        // Migration: Playtime BIGINT -> REAL
+        // ---------------------------
+
+        private static void EnsureSessionPlaytimeIsReal()
+        {
+            // Prüfe Spaltentyp
+            string colType = GetColumnType("tblGameSessions", "Playtime");
+            if (string.Equals(colType, "REAL", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            // Rebuild der Tabelle mit REAL-Spalte (analog zu oben, exklusive Verbindung + Retry)
+            RebuildSessionsTableWithRealPlaytime();
+        }
+
+        private static string GetColumnType(string table, string column)
+        {
+            using var cmd = new SQLiteCommand($"PRAGMA table_info('{table}');", connection);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var name = reader["name"]?.ToString();
+                if (string.Equals(name, column, StringComparison.OrdinalIgnoreCase))
+                    return reader["type"]?.ToString() ?? "";
+            }
+            return "";
+        }
+
+        private static void RebuildSessionsTableWithRealPlaytime()
+        {
+            var cs = connection.ConnectionString;
+            bool reopen = connection.State == ConnectionState.Open;
+            try { connection.Close(); } catch { }
+            SQLiteConnection.ClearAllPools();
+
+            using (var conn = new SQLiteConnection(cs))
+            {
+                conn.Open();
+
+                ExecNonQueryRetry(conn, "PRAGMA busy_timeout = 20000;");
+                ExecNonQueryRetry(conn, "PRAGMA foreign_keys = OFF;");
+                ExecNonQueryRetry(conn, "BEGIN IMMEDIATE;");
+
+                bool ok = false;
+                try
+                {
+                    // Neue Tabelle mit REAL für Playtime
+                    ExecNonQueryRetry(conn,
+                        "CREATE TABLE tblGameSessions_new (" +
+                        "SID INTEGER PRIMARY KEY, " +
+                        "FK_PID INTEGER NOT NULL, " +
+                        "Played_From DATETIME NOT NULL, " +
+                        "Played_To DATETIME NOT NULL, " +
+                        "Playtime REAL NOT NULL DEFAULT 0.0, " +
+                        "FOREIGN KEY (FK_PID) REFERENCES tblGameProfiles(ProfileID) ON DELETE CASCADE)");
+
+                    // Daten übernehmen, Playtime sauber als REAL casten
+                    ExecNonQueryRetry(conn,
+                        "INSERT INTO tblGameSessions_new (SID, FK_PID, Played_From, Played_To, Playtime) " +
+                        "SELECT SID, FK_PID, Played_From, Played_To, CAST(Playtime AS REAL) " +
+                        "FROM tblGameSessions;");
+
+                    ExecNonQueryRetry(conn, "DROP TABLE tblGameSessions;");
+                    ExecNonQueryRetry(conn, "ALTER TABLE tblGameSessions_new RENAME TO tblGameSessions;");
+
+                    ExecNonQueryRetry(conn, "COMMIT;");
+                    ok = true;
+                }
+                finally
+                {
+                    if (!ok)
+                    {
+                        try { ExecNonQueryQuiet(conn, "ROLLBACK;"); } catch { }
+                    }
+                    ExecNonQueryQuiet(conn, "PRAGMA foreign_keys = ON;");
+                }
+            }
+
+            if (reopen)
+            {
+                try
+                {
+                    connection.Open();
+                    using var fkOn = new SQLiteCommand("PRAGMA foreign_keys = ON;", connection);
+                    fkOn.ExecuteNonQuery();
+                }
+                catch { }
             }
         }
     }

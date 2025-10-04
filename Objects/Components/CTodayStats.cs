@@ -11,7 +11,7 @@ namespace GameTimeX.Objects.Components
         public string Date { get; set; } = DateTime.MinValue.ToShortDateString();
 
         // Startpunkt der Spielzeit (ähnlich zu Playthrough Start Point)
-        public long playTime { get; set; }
+        public double playTime { get; set; }
 
 
         public CTodayStats(string rawValue) : base(rawValue) { }

@@ -15,7 +15,7 @@ namespace GameTimeX.DataBase.DataManager
                 FK_PID = fkPid,
                 Played_From = DateTime.MinValue,
                 Played_To = DateTime.MinValue,
-                Playtime = 0L
+                Playtime = 0.0
             };
         }
 
@@ -129,7 +129,7 @@ namespace GameTimeX.DataBase.DataManager
                 FK_PID = reader.GetInt32(reader.GetOrdinal("FK_PID")),
                 Played_From = DateTime.Parse(reader.GetString(reader.GetOrdinal("Played_From"))),
                 Played_To = DateTime.Parse(reader.GetString(reader.GetOrdinal("Played_To"))),
-                Playtime = Convert.ToInt64(reader.GetValue(reader.GetOrdinal("Playtime")))
+                Playtime = Convert.ToDouble(reader.GetValue(reader.GetOrdinal("Playtime")))
             };
             return dbo;
         }

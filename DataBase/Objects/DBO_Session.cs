@@ -11,7 +11,7 @@ namespace GameTimeX.DataBase.Objects
         public int FK_PID { get; set; }           // FK -> tblGameProfiles.ProfileID
         public DateTime Played_From { get; set; } // Start der Session
         public DateTime Played_To { get; set; }   // Ende der Session
-        public long Playtime { get; set; }        // Minuten (Int64)
+        public double Playtime { get; set; }      // Minuten (Double, erlaubt Kommawerte)
 
         public DBO_Session()
         {
@@ -19,7 +19,7 @@ namespace GameTimeX.DataBase.Objects
             FK_PID = 0;
             Played_From = DateTime.MinValue;
             Played_To = DateTime.MinValue;
-            Playtime = 0L;
+            Playtime = 0.0;
         }
     }
 }

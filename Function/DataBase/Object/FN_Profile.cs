@@ -71,7 +71,7 @@ namespace GameTimeX.Function.DataBase.Object
             {
                 if (reader.Read())
                 {
-                    long playTimeLastYearMinutes = GTXQuery.GetInt64(reader, "PlayTimeSumYear");
+                    double playTimeLastYearMinutes = GTXQuery.GetDouble(reader, "PlayTimeSumYear");
                     yearGameRow.HoursLastYear = MonitorHandler.CalcGameTime(playTimeLastYearMinutes);
                 }
             }
@@ -86,7 +86,7 @@ namespace GameTimeX.Function.DataBase.Object
             {
                 if (reader.Read())
                 {
-                    long playTimeTotal = GTXQuery.GetInt64(reader, "PlayTimeTotal");
+                    double playTimeTotal = GTXQuery.GetDouble(reader, "PlayTimeTotal");
                     yearGameRow.HoursTotalOverall = MonitorHandler.CalcGameTime(playTimeTotal);
                 }
             }
@@ -99,10 +99,10 @@ namespace GameTimeX.Function.DataBase.Object
         /// </summary>
         /// <param name="pid">Profil-ID</param>
         /// <returns>Gesamte Spielzeit</returns>
-        public static long GetTotalPlayTime(int pid)
+        public static double GetTotalPlayTime(int pid)
         {
 
-            long totalPlayTime = 0;
+            double totalPlayTime = 0;
 
             // Query zusammenbauen
             GTXQuery query = new GTXQuery(DBO_Session.GetTableName(), DataBaseConnector.connection);
@@ -115,16 +115,16 @@ namespace GameTimeX.Function.DataBase.Object
             {
                 if (reader.Read())
                 {
-                    totalPlayTime = GTXQuery.GetInt64(reader, "TotalPlaytime");
+                    totalPlayTime = GTXQuery.GetDouble(reader, "TotalPlaytime");
                 }
             }
 
             return totalPlayTime;
         }
 
-        public static long GetTodaysPlayTime(int pid)
+        public static double GetTodaysPlayTime(int pid)
         {
-            long todaysPlayTime = 0;
+            double todaysPlayTime = 0;
 
             // Query zusammenbauen
             GTXQuery query = new GTXQuery(DBOI_Session.TABLE, DataBaseConnector.connection);
@@ -139,7 +139,7 @@ namespace GameTimeX.Function.DataBase.Object
             {
                 if (reader.Read())
                 {
-                    todaysPlayTime = GTXQuery.GetInt64(reader, "TotalPlayTimeToday");
+                    todaysPlayTime = GTXQuery.GetDouble(reader, "TotalPlayTimeToday");
                 }
             }
 
@@ -151,9 +151,9 @@ namespace GameTimeX.Function.DataBase.Object
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public static long GetCurrentPlaythroughTime(int pid, DateTime playthroughStartPointDate)
+        public static double GetCurrentPlaythroughTime(int pid, DateTime playthroughStartPointDate)
         {
-            long currPlayThorughTime = 0;
+            double currPlayThorughTime = 0;
 
             // Query zusammenbauen
             GTXQuery query = new GTXQuery(DBOI_Session.TABLE, DataBaseConnector.connection);
@@ -168,14 +168,14 @@ namespace GameTimeX.Function.DataBase.Object
             {
                 if (reader.Read())
                 {
-                    currPlayThorughTime = GTXQuery.GetInt64(reader, "CurrPlayThroughTime");
+                    currPlayThorughTime = GTXQuery.GetDouble(reader, "CurrPlayThroughTime");
                 }
             }
 
             return currPlayThorughTime;
         }
 
-        public static void SaveMonitoredTime(long minutes, int pid, DateTime startTimeMonitoring, DateTime endTimeMonitoring)
+        public static void SaveMonitoredTime(double minutes, int pid, DateTime startTimeMonitoring, DateTime endTimeMonitoring)
         {
             var dboProfile = DM_Profile.ReadPID(pid);
             if (dboProfile != null)
