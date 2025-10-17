@@ -9,6 +9,7 @@ using GameTimeX.Function.AppEnvironment;
 using GameTimeX.Function.Steam;
 using GameTimeX.Function.UserInterface;
 using GameTimeX.Function.Utils;
+using GameTimeX.Function.Windows;
 using GameTimeX.Objects.Components;
 using GameTimeX.XApplication.SubDisplays;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -207,6 +208,32 @@ namespace GameTimeX
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             bSteamProfileLinked.Visibility = Visibility.Collapsed;
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                string imagePath = ClipBoardManager.SaveClipboardImageToDisk();
+
+                if (imagePath == null)
+                {
+                    VisualHandler.ShowInfoMessageBox("No valid image provided");
+                    return;
+                }
+
+                ImageCropper imageCropper = new ImageCropper(imagePath);
+                imageCropper.Owner = this;
+                imageCropper.ShowDialog();
+
+                cropX = imageCropper.CropX;
+                cropY = imageCropper.CropY;
+                cropWidth = imageCropper.CropWidth;
+                cropHeight = imageCropper.CropHeight;
+
+                filePath = imagePath;
+                txtPicPath.Text = imagePath;
+            }
         }
     }
 }

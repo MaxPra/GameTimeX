@@ -80,6 +80,11 @@ namespace GameTimeX.Function.AppEnvironment
                 Directory.CreateDirectory(SysProps.picDestPath);
             }
 
+            if (!Directory.Exists(SysProps.tempImgFolder))
+            {
+                Directory.CreateDirectory(SysProps.tempImgFolder);
+            }
+
             if (!File.Exists(SysProps.startUpParmsPath))
             {
                 // Leere JSON-Datei erstellen
@@ -91,6 +96,22 @@ namespace GameTimeX.Function.AppEnvironment
 
         public static void DeleteUnusedImages()
         {
+            // Ganzen Images/_temp Ordner clearen
+            if (Directory.Exists(SysProps.tempImgFolder))
+            {
+                string[] filesTemp = Directory.GetFiles(SysProps.tempImgFolder);
+
+                foreach (string file in filesTemp)
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+
+            // Unbenutze Profilbilder löschen
             List<DBO_Profile> profiles = DM_Profile.ReadAll();
 
             string[] files = Directory.GetFiles(SysProps.picDestPath);

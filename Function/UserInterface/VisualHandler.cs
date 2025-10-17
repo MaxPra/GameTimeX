@@ -210,5 +210,12 @@ namespace GameTimeX.Function.UserInterface
 
             image.Clip = clipGeometry;
         }
+
+        public static void ShowInfoMessageBox(string message)
+        {
+            InfoBox info = new InfoBox(message);
+            info.Owner = SysProps.mainWindow;
+            info.ShowDialog();
+        }
     }
 }

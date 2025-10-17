@@ -68,6 +68,7 @@ namespace GameTimeX.Function.Game
                                 }
                             }
 
+                            // Spiel wurde geschlossen
                             if (currentProfileRunning.countNotRunning == currentProfileRunning.executables.Count)
                             {
 
@@ -81,6 +82,13 @@ namespace GameTimeX.Function.Game
                                     string title = "GameTimeX | " + profileName;
 
                                     MonitorHandler.EndMonitoringGameTime(SysProps.mainWindow);
+
+                                    // Wenn Seitenmonitore blacked --> deaktivieren, wenn Spiel geschlossen
+                                    if (BlackoutHandler.IsActive())
+                                    {
+                                        BlackoutHandler.ToggleSecondaryBlackout(SysProps.mainWindow);
+                                    }
+
                                     VisualHandler.ShowToastNotification(title, "Monitoring stopped!", 3000);
 
                                     SysProps.mainWindow.Dispatcher.Invoke(() =>

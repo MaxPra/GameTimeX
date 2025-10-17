@@ -95,6 +95,15 @@ namespace GameTimeX.Function
                 EnableOnSecondaryMonitors(owner, manageCursor);
         }
 
+        /// <summary>
+        /// Gibt zurück, ob Blackout gerade aktiv ist oder nicht
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsActive()
+        {
+            return isActive;
+        }
+
         // -------------------- Fenster-Handling --------------------
 
         // NEU: generische Erzeugung basierend auf Prädikat (z. B. alle / nur Neben-Monitore)

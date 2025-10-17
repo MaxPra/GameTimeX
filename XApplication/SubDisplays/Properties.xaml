@@ -12,6 +12,7 @@
     Background="Transparent"
     Loaded="Window_Loaded"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    PreviewKeyDown="Window_PreviewKeyDown"
     Style="{StaticResource DefaultWindowStyle}"
     WindowStartupLocation="CenterOwner"
     WindowStyle="None"

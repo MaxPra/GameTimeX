@@ -19,6 +19,7 @@ namespace GameTimeX.Function.AppEnvironment
         public static string programPathFolder = "C:\\GameTimeX";
         public static string picDestPath = programPathFolder + Path.DirectorySeparatorChar + "images";
         public static string startUpParmsPath = programPathFolder + Path.DirectorySeparatorChar + "startUpParms.json";
+        public static string tempImgFolder = picDestPath + Path.DirectorySeparatorChar + "_temp";
 
         // Colors
         public static string hexValDef = "#0099ff";
