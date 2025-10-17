@@ -21,7 +21,8 @@ Download the latest installer:
 - 🔄 **Automatic Profile Switching** – switches to the correct profile when a game launches.  
   - Per-executable selection to prevent conflicts where different games share executables.  
   - Smart initial pre-filtering automatically deselects common non-game executables (launchers, crash reporters, helpers, etc.).
-- 🖼️ **Customizable Profiles** – create, rename, and assign cropped images for each game.
+- 🖼️ **Customizable Profiles** – create, rename, and assign cropped images for each game.  
+  - **New:** You can now paste profile pictures directly from the clipboard using **CTRL+V** in both the **Create** and **Properties** windows.
 - 🌙 **OLED Care (Blackout Screen)** – toggle with **CTRL+B** to black out all displays while AFK.
 - 🖥️ **Side-Screen Dimming** – optionally dims secondary displays automatically while tracking is active.
 - ⌨️ **Hotkey Monitoring** – start/stop tracking via a configurable hotkey.
@@ -41,7 +42,8 @@ Download the latest installer:
 ## What’s New in 2.1.0
 
 - 📊 **December Yearly Stats** – in December, GameTimeX now displays a **clear overview of your total playtime per game for the entire current year**.  
-- 🎨 **UI Style Refinements** – minor improvements in visuals, spacing, and consistency across the app.
+- 🎨 **UI Style Refinements** – minor improvements in visuals, spacing, and consistency across the app.  
+- 🖼️ **Profile picture pasting** – profile images can now be pasted directly from the clipboard using **CTRL+V** in both the **Create** and **Properties** windows.
 
 ---
 
@@ -77,7 +79,8 @@ Example with profiles:
 
 Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.  
 ➡️ The tooltip now also shows **how many hours you played today**.  
-➡️ **New in 2.1.0:** in December, an **automatic yearly summary** shows how much time you spent in each game throughout the current year.
+➡️ **New in 2.1.0:** in December, an **automatic yearly summary** shows how much time you spent in each game throughout the current year.  
+➡️ **New:** profile pictures can now be pasted directly from the clipboard using **CTRL+V** in the **Create** and **Properties** windows.
 
 If a new playthrough begins after time has already been recorded, use **New Playthrough Startpoint**. The application saves the current total time and reports playthrough time as the difference from that point forward.  
 - **Total time** remains cumulative.  
@@ -93,6 +96,7 @@ The **Properties window** provides central configuration for each profile:
 
 - Define the **installation folder** for installed game detection  
 - Assign profile image, rename profile, and manage monitored executables  
+- **Paste from Clipboard:** profile images can now be inserted directly from the clipboard via **CTRL+V**.  
 - **Steam Integration:**  
   - Shows whether the profile is already linked to a Steam game  
   - A dedicated **Steam button with link icon** allows importing and linking Steam games directly  
@@ -147,6 +151,7 @@ When adding a profile image, a cropping dialog enables quick framing:
 
 - Resize the crop area with the mouse wheel  
 - Reposition the crop area via drag (left mouse button)
+- **New:** profile images can also be pasted directly from the clipboard using **CTRL+V** in the **Create** and **Properties** windows.
 
 The cropped image is saved and immediately shown in the profile view.
 
