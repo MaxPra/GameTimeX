@@ -11,9 +11,13 @@
     MinHeight="520"
     AllowsTransparency="True"
     Background="Transparent"
+    FontFamily="{DynamicResource AppFontFamily}"
+    FontSize="13"
     Loaded="Window_Loaded"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    SnapsToDevicePixels="True"
     Style="{StaticResource DefaultWindowStyle}"
+    UseLayoutRounding="True"
     WindowStartupLocation="CenterOwner"
     WindowStyle="None"
     mc:Ignorable="d">
@@ -25,12 +29,159 @@
             GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
+    <Window.Resources>
+        <!--  frei nutzbare Schrift  -->
+        <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Segoe UI</FontFamily>
+
+        <Color x:Key="AccentBlue">#289AFC</Color>
+        <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlue}" />
+
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2FFFFFF" />
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#C8FFFFFF" />
+
+        <SolidColorBrush x:Key="WindowStrokeBrush" Color="#22FFFFFF" />
+        <SolidColorBrush x:Key="PanelStrokeBrush" Color="#1EFFFFFF" />
+
+        <LinearGradientBrush x:Key="WindowBaseGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#FF0B0D10" />
+            <GradientStop Offset="0.55" Color="#FF0A0C10" />
+            <GradientStop Offset="1" Color="#FF090A0E" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="WindowColorWashGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0" Color="#2218232B" />
+            <GradientStop Offset="0.55" Color="#1A2B2A36" />
+            <GradientStop Offset="1" Color="#26211B18" />
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowVignetteBrush" Center="0.52,0.50" GradientOrigin="0.52,0.50" RadiusX="0.95" RadiusY="0.95">
+            <GradientStop Offset="0" Color="#00000000" />
+            <GradientStop Offset="0.62" Color="#00000000" />
+            <GradientStop Offset="1" Color="#CC000000" />
+        </RadialGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowSoftHighlightBrush" Center="0.82,0.28" GradientOrigin="0.82,0.28" RadiusX="0.85" RadiusY="0.85">
+            <GradientStop Offset="0" Color="#14289AFC" />
+            <GradientStop Offset="0.35" Color="#0B289AFC" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </RadialGradientBrush>
+
+        <DrawingBrush
+            x:Key="SoftNoiseBrush"
+            Opacity="0.045"
+            TileMode="Tile"
+            Viewport="0,0,160,160"
+            ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <RectangleGeometry Rect="12,18,1,1" />
+                                <RectangleGeometry Rect="28,62,1,1" />
+                                <RectangleGeometry Rect="64,20,1,1" />
+                                <RectangleGeometry Rect="88,78,1,1" />
+                                <RectangleGeometry Rect="104,44,1,1" />
+                                <RectangleGeometry Rect="140,28,1,1" />
+                                <RectangleGeometry Rect="18,132,1,1" />
+                                <RectangleGeometry Rect="46,112,1,1" />
+                                <RectangleGeometry Rect="118,120,1,1" />
+                                <RectangleGeometry Rect="150,96,1,1" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <DrawingBrush x:Key="WindowBackgroundBrush" Stretch="Fill">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource WindowBaseGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowColorWashGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowSoftHighlightBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource SoftNoiseBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowVignetteBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <LinearGradientBrush x:Key="PanelBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#900F1218" />
+            <GradientStop Offset="1" Color="#700B0D12" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PanelInnerSheenBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#10FFFFFF" />
+            <GradientStop Offset="0.35" Color="#06000000" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </LinearGradientBrush>
+
+        <Style x:Key="PaneFrameStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PanelStrokeBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+        </Style>
+
+        <Style x:Key="HeaderKpiPill" TargetType="Border">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="BorderBrush" Value="#18FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0" Color="#24289AFC" />
+                        <GradientStop Offset="0.55" Color="#16000000" />
+                        <GradientStop Offset="1" Color="#12000000" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border
-        Background="#2F2F2F"
-        BorderBrush="{DynamicResource ButtonDefaultBrush}"
+        Padding="0"
+        Background="{StaticResource WindowBackgroundBrush}"
+        BorderBrush="{StaticResource WindowStrokeBrush}"
         BorderThickness="1"
+        ClipToBounds="True"
         CornerRadius="12"
         SnapsToDevicePixels="True">
+
+        <Border.Effect>
+            <DropShadowEffect
+                BlurRadius="26"
+                ShadowDepth="0"
+                Color="#AA000000" />
+        </Border.Effect>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -43,14 +194,30 @@
             <!--  Titlebar  -->
             <Border
                 Grid.Row="0"
-                Background="Black"
                 ClipToBounds="True"
+                CornerRadius="12,12,0,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#CC0A0C10" />
+                        <GradientStop Offset="1" Color="#7A0A0C10" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <Border
+                Grid.Row="0"
+                BorderBrush="#18FFFFFF"
+                BorderThickness="0,0,0,1"
                 CornerRadius="12,12,0,0" />
+
             <TextBlock
                 Grid.Row="0"
-                Margin="10,0,0,0"
+                Margin="12,0,0,0"
                 VerticalAlignment="Center"
-                Foreground="White"
+                FontFamily="{StaticResource AppFontFamily}"
+                FontSize="14"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource TextPrimaryBrush}"
                 Text="{Binding HeaderText}" />
 
             <StackPanel
@@ -72,15 +239,16 @@
                             <Border
                                 x:Name="bg"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="0,12,0,0">
+                                CornerRadius="0,12,0,0"
+                                SnapsToDevicePixels="True">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="Red" />
+                                    <Setter TargetName="bg" Property="Background" Value="#CCFF3B30" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="#CC0000" />
+                                    <Setter TargetName="bg" Property="Background" Value="#AAFF3B30" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -95,11 +263,10 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!--  Cool line  -->
                 <TextBlock
                     Grid.Column="0"
                     FontStyle="Italic"
-                    Foreground="#BBBBBB"
+                    Foreground="{StaticResource TextSecondaryBrush}"
                     Text="As the year draws to a close, here’s your playtime rewind — every game you touched this year."
                     TextWrapping="Wrap" />
 
@@ -107,11 +274,13 @@
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     Orientation="Horizontal">
-                    <TextBlock
-                        Margin="0,0,14,0"
-                        Foreground="#DDDDDD"
-                        Text="{Binding ElementName=dgGames, Path=Items.Count, StringFormat=Items: {0}}" />
-                    <TextBlock Foreground="#DDDDDD" Text="{Binding TotalHoursLastYear, StringFormat=Total hours last year: {0:0.0} h}" />
+                    <Border Margin="0,0,10,0" Style="{StaticResource HeaderKpiPill}">
+                        <TextBlock Foreground="{StaticResource TextPrimaryBrush}" Text="{Binding ElementName=dgGames, Path=Items.Count, StringFormat=Items: {0}}" />
+                    </Border>
+
+                    <Border Style="{StaticResource HeaderKpiPill}">
+                        <TextBlock Foreground="{StaticResource TextPrimaryBrush}" Text="{Binding TotalHoursLastYear, StringFormat=Total hours last year: {0:0.0} h}" />
+                    </Border>
                 </StackPanel>
             </Grid>
 
@@ -119,100 +288,107 @@
             <Border
                 Grid.Row="2"
                 Margin="18"
-                Background="#3A3A3A"
-                BorderBrush="#20FFFFFF"
-                BorderThickness="1"
-                CornerRadius="10">
-                <DataGrid
-                    x:Name="dgGames"
-                    AutoGenerateColumns="False"
-                    CanUserAddRows="False"
-                    CanUserDeleteRows="False"
-                    IsReadOnly="True"
-                    ItemsSource="{Binding Games}"
-                    RowHeight="60"
-                    Style="{StaticResource SteamDataGrid}">
+                Style="{StaticResource PaneFrameStyle}">
+                <Grid ClipToBounds="True">
+                    <Rectangle Fill="{StaticResource PanelBackgroundBrush}" />
+                    <Rectangle Fill="{StaticResource PanelInnerSheenBrush}" />
 
-                    <DataGrid.Columns>
-                        <!--  Cover  -->
-                        <DataGridTemplateColumn Width="68" Header="">
-                            <DataGridTemplateColumn.CellStyle>
-                                <Style BasedOn="{StaticResource SteamDataGridCell}" TargetType="DataGridCell">
-                                    <Setter Property="Padding" Value="4" />
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTemplateColumn.CellStyle>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Border
-                                        Width="52"
-                                        Height="52"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Background="#222"
-                                        BorderBrush="#20FFFFFF"
-                                        BorderThickness="1"
-                                        CornerRadius="6">
-                                        <Image Source="{Binding CoverUri}" Stretch="UniformToFill">
-                                            <Image.Style>
-                                                <Style TargetType="Image">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding CoverUri}" Value="{x:Null}">
-                                                            <Setter Property="Source" Value="{StaticResource MyImageSource}" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding CoverUri}" Value="">
-                                                            <Setter Property="Source" Value="{StaticResource MyImageSource}" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                        </Image>
-                                    </Border>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                    <DataGrid
+                        x:Name="dgGames"
+                        Margin="0"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Games}"
+                        RowHeight="60"
+                        Style="{StaticResource SteamDataGrid}">
 
-                        <!--  Name  -->
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Title}"
-                            Header="Game">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
+                        <DataGrid.Columns>
+                            <!--  Cover  -->
+                            <DataGridTemplateColumn Width="68" Header="">
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource SteamDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="Padding" Value="4" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border
+                                            Width="52"
+                                            Height="52"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Background="#1E000000"
+                                            BorderBrush="#20FFFFFF"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            SnapsToDevicePixels="True">
+                                            <Image Source="{Binding CoverUri}" Stretch="UniformToFill">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding CoverUri}" Value="{x:Null}">
+                                                                <Setter Property="Source" Value="{StaticResource MyImageSource}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding CoverUri}" Value="">
+                                                                <Setter Property="Source" Value="{StaticResource MyImageSource}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
-                        <!--  Total time overall  -->
-                        <DataGridTextColumn
-                            Width="130"
-                            Binding="{Binding HoursTotalOverall, StringFormat={}{0:0.0}}"
-                            Header="Total Hours">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Left" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
+                            <!--  Name  -->
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Title}"
+                                Header="Game">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
 
-                        <!--  Hours last year  -->
-                        <DataGridTextColumn
-                            Width="150"
-                            Binding="{Binding HoursLastYear, StringFormat={}{0:0.0}}"
-                            Header="Hours Last Year">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Left" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                            <!--  Total time overall  -->
+                            <DataGridTextColumn
+                                Width="130"
+                                Binding="{Binding HoursTotalOverall, StringFormat={}{0:0.0}}"
+                                Header="Total Hours">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!--  Hours last year  -->
+                            <DataGridTextColumn
+                                Width="150"
+                                Binding="{Binding HoursLastYear, StringFormat={}{0:0.0}}"
+                                Header="Hours Last Year">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </Border>
 
             <!--  Footer  -->

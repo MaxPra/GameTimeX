@@ -3,6 +3,7 @@ using GameTimeX.DataBase.DataManager;
 using GameTimeX.DataBase.Objects;
 using GameTimeX.Function.AppEnvironment;
 using GameTimeX.Function.Game;
+using GameTimeX.Function.UserInterface;
 using GameTimeX.Function.Utils;
 using GameTimeX.Objects.Components;
 
@@ -18,6 +19,14 @@ namespace GameTimeX.Function.Steam
         {
             if (SteamLocatorHandler.IsGameInstalledByAppId(steamAppID))
             {
+                // InfoBox anzeigen, dass Spiel startet
+                SysProps.infoBoxGameStarting = new InfoBox("Starting game...", false);
+                SysProps.infoBoxGameStarting.Owner = SysProps.mainWindow;
+                SysProps.infoBoxGameStarting.Show();
+
+                // Launch Steam Game Button ausgrauen
+                VisualHandler.DisableStartGameButtons();
+
                 DBO_Profile dbo_Profile = DM_Profile.ReadPID(pid);
 
                 if (dbo_Profile == null)

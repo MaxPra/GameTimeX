@@ -13,6 +13,8 @@
     MinHeight="500"
     AllowsTransparency="True"
     Background="Transparent"
+    FontFamily="{DynamicResource AppFontFamily}"
+    FontSize="13"
     Loaded="Window_Loaded"
     PreviewMouseWheel="imageCropperWindow_PreviewMouseWheel"
     ResizeMode="NoResize"
@@ -28,155 +30,302 @@
             GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <!--  Außenrahmen + Abrundung  -->
-    <Border
-        Padding="0"
-        Background="#2F2F2F"
-        BorderBrush="{DynamicResource ButtonDefaultBrush}"
-        BorderThickness="1"
-        CornerRadius="12"
-        SnapsToDevicePixels="True">
+    <Window.Resources>
+        <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Segoe UI</FontFamily>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Color x:Key="AccentBlue">#289AFC</Color>
+        <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlue}" />
 
-            <!--  Titlebar  -->
-            <Border
-                x:Name="titleBar"
-                Grid.Row="0"
-                Background="Black"
-                ClipToBounds="True"
-                CornerRadius="12,12,0,0"
-                MouseDown="titleBar_MouseDown" />
-            <TextBlock
-                Grid.Row="0"
-                Margin="10,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Foreground="White"
-                Text="Crop Profile Image" />
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2FFFFFF" />
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#C8FFFFFF" />
 
-            <StackPanel
-                Grid.Row="0"
-                HorizontalAlignment="Right"
-                Orientation="Horizontal">
-                <Button
-                    x:Name="btnClose"
-                    Width="40"
-                    Height="30"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="btnClose_Click"
-                    Content="X"
-                    Foreground="White"
-                    MouseEnter="btnClose_MouseEnter"
-                    MouseLeave="btnClose_MouseLeave"
-                    Style="{StaticResource NoMouseOverButtonStyle}">
-                    <!--  abgerundete Ecke oben rechts beim Hover  -->
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border
-                                x:Name="bg"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="0,12,0,0"
-                                SnapsToDevicePixels="True">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="Red" />
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="#CC0000" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
+        <SolidColorBrush x:Key="WindowStrokeBrush" Color="#22FFFFFF" />
+        <SolidColorBrush x:Key="PanelStrokeBrush" Color="#1EFFFFFF" />
 
-            <!--  Inhalt  -->
-            <Grid
-                x:Name="grdContent"
-                Grid.Row="1"
-                HorizontalAlignment="Left">
-                <Image x:Name="imgProfilePic" />
+        <LinearGradientBrush x:Key="WindowBaseGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#FF0B0D10" />
+            <GradientStop Offset="0.55" Color="#FF0A0C10" />
+            <GradientStop Offset="1" Color="#FF090A0E" />
+        </LinearGradientBrush>
 
-                <!--  Canvas für Auswahl und Overlay  -->
-                <Canvas
-                    x:Name="cvsCropper"
-                    Background="Transparent"
-                    MouseDown="Canvas_MouseDown"
-                    MouseMove="Canvas_MouseMove"
-                    MouseUp="Canvas_MouseUp">
+        <LinearGradientBrush x:Key="WindowColorWashGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0" Color="#2218232B" />
+            <GradientStop Offset="0.55" Color="#1A2B2A36" />
+            <GradientStop Offset="1" Color="#26211B18" />
+        </LinearGradientBrush>
 
-                    <!--  Abgedunkelte Fläche außerhalb der Auswahl (EvenOdd-Loch)  -->
-                    <Path
-                        x:Name="maskOutside"
-                        Fill="#99000000"
-                        IsHitTestVisible="False">
-                        <Path.Data>
-                            <GeometryGroup FillRule="EvenOdd">
-                                <!--  hier fügen wir im CodeBehind die Rechtecke hinzu  -->
+        <RadialGradientBrush x:Key="WindowVignetteBrush" Center="0.52,0.50" GradientOrigin="0.52,0.50" RadiusX="0.85" RadiusY="0.85">
+            <GradientStop Offset="0" Color="#00000000" />
+            <GradientStop Offset="0.60" Color="#00000000" />
+            <GradientStop Offset="1" Color="#CC000000" />
+        </RadialGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowSoftHighlightBrush" Center="0.82,0.28" GradientOrigin="0.82,0.28" RadiusX="0.75" RadiusY="0.75">
+            <GradientStop Offset="0" Color="#14289AFC" />
+            <GradientStop Offset="0.35" Color="#0B289AFC" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </RadialGradientBrush>
+
+        <DrawingBrush
+            x:Key="SoftNoiseBrush"
+            Opacity="0.045"
+            TileMode="Tile"
+            Viewport="0,0,160,160"
+            ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <RectangleGeometry Rect="12,18,1,1" />
+                                <RectangleGeometry Rect="28,62,1,1" />
+                                <RectangleGeometry Rect="64,20,1,1" />
+                                <RectangleGeometry Rect="88,78,1,1" />
+                                <RectangleGeometry Rect="104,44,1,1" />
+                                <RectangleGeometry Rect="140,28,1,1" />
+                                <RectangleGeometry Rect="18,132,1,1" />
+                                <RectangleGeometry Rect="46,112,1,1" />
+                                <RectangleGeometry Rect="118,120,1,1" />
+                                <RectangleGeometry Rect="150,96,1,1" />
                             </GeometryGroup>
-                        </Path.Data>
-                    </Path>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
 
+        <DrawingBrush x:Key="WindowBackgroundBrush" Stretch="Fill">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource WindowBaseGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
 
-                    <!--  Auswahlrahmen (hübsch & sichtbar)  -->
-                    <Rectangle
-                        x:Name="recTransformArea"
-                        Canvas.Left="0"
-                        Canvas.Top="0"
-                        Width="300"
-                        Height="300"
-                        Fill="#19000000"
-                        RadiusX="10"
-                        RadiusY="10"
-                        SnapsToDevicePixels="True"
-                        Stroke="{DynamicResource ButtonDefaultBrush}"
-                        StrokeDashArray="4 2"
-                        StrokeThickness="2.5">
-                        <Rectangle.Effect>
-                            <DropShadowEffect
-                                BlurRadius="14"
-                                Opacity="0.6"
-                                ShadowDepth="0"
-                                Color="Black" />
-                        </Rectangle.Effect>
-                    </Rectangle>
+                    <GeometryDrawing Brush="{StaticResource WindowColorWashGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
 
-                    <!--  optionale Drittel-Guides (dezent)  -->
-                    <Line
-                        x:Name="guideV1"
-                        IsHitTestVisible="False"
-                        Stroke="#66FFFFFF"
-                        StrokeDashArray="2 6"
-                        StrokeThickness="1" />
-                    <Line
-                        x:Name="guideV2"
-                        IsHitTestVisible="False"
-                        Stroke="#66FFFFFF"
-                        StrokeDashArray="2 6"
-                        StrokeThickness="1" />
-                    <Line
-                        x:Name="guideH1"
-                        IsHitTestVisible="False"
-                        Stroke="#66FFFFFF"
-                        StrokeDashArray="2 6"
-                        StrokeThickness="1" />
-                    <Line
-                        x:Name="guideH2"
-                        IsHitTestVisible="False"
-                        Stroke="#66FFFFFF"
-                        StrokeDashArray="2 6"
-                        StrokeThickness="1" />
+                    <GeometryDrawing Brush="{StaticResource WindowSoftHighlightBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
 
-                </Canvas>
+                    <GeometryDrawing Brush="{StaticResource SoftNoiseBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowVignetteBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <LinearGradientBrush x:Key="PanelBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#900F1218" />
+            <GradientStop Offset="1" Color="#700B0D12" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PanelInnerSheenBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#10FFFFFF" />
+            <GradientStop Offset="0.35" Color="#06000000" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </LinearGradientBrush>
+
+        <Style x:Key="PaneFrameStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PanelStrokeBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+        </Style>
+
+        <Style x:Key="CropAreaStyle" TargetType="Rectangle">
+            <Setter Property="Fill" Value="#18000000" />
+            <Setter Property="RadiusX" Value="12" />
+            <Setter Property="RadiusY" Value="12" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="StrokeThickness" Value="2.5" />
+            <Setter Property="StrokeDashArray" Value="4 2" />
+            <Setter Property="Stroke">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0" Color="#FF289AFC" />
+                        <GradientStop Offset="1" Color="#FF1C7FE0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GuideLineStyle" TargetType="Line">
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Stroke" Value="#55FFFFFF" />
+            <Setter Property="StrokeDashArray" Value="2 6" />
+            <Setter Property="StrokeThickness" Value="1" />
+        </Style>
+    </Window.Resources>
+
+    <Grid SnapsToDevicePixels="True">
+        <Rectangle
+            Margin="6"
+            Fill="#00000000"
+            IsHitTestVisible="False"
+            RadiusX="12"
+            RadiusY="12">
+            <Rectangle.Effect>
+                <DropShadowEffect
+                    BlurRadius="22"
+                    ShadowDepth="0"
+                    Color="#AA000000" />
+            </Rectangle.Effect>
+        </Rectangle>
+
+        <Border
+            Margin="6"
+            Padding="0"
+            Background="{StaticResource WindowBackgroundBrush}"
+            BorderBrush="{StaticResource WindowStrokeBrush}"
+            BorderThickness="1"
+            ClipToBounds="True"
+            CornerRadius="12"
+            SnapsToDevicePixels="True">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border
+                    x:Name="titleBar"
+                    Grid.Row="0"
+                    ClipToBounds="True"
+                    CornerRadius="12,12,0,0"
+                    MouseDown="titleBar_MouseDown">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#CC0A0C10" />
+                            <GradientStop Offset="1" Color="#7A0A0C10" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <Border
+                    Grid.Row="0"
+                    ClipToBounds="True"
+                    CornerRadius="12,12,0,0">
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="#18FFFFFF" />
+                    </Border.BorderBrush>
+                    <Border.BorderThickness>0,0,0,1</Border.BorderThickness>
+                </Border>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontFamily="{DynamicResource AppFontFamily}"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource TextPrimaryBrush}"
+                    Text="Crop Profile Image" />
+
+                <StackPanel
+                    Grid.Row="0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="btnClose"
+                        Width="40"
+                        Height="30"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Click="btnClose_Click"
+                        Content="X"
+                        Foreground="White"
+                        MouseEnter="btnClose_MouseEnter"
+                        MouseLeave="btnClose_MouseLeave"
+                        Style="{StaticResource NoMouseOverButtonStyle}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border
+                                    x:Name="bg"
+                                    Background="{TemplateBinding Background}"
+                                    ClipToBounds="True"
+                                    CornerRadius="0,12,0,0"
+                                    SnapsToDevicePixels="True">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bg" Property="Background" Value="#CCFF3B30" />
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bg" Property="Background" Value="#AAFF3B30" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+
+                <Grid
+                    x:Name="grdContent"
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    ClipToBounds="True">
+                    <Image x:Name="imgProfilePic" RenderOptions.BitmapScalingMode="HighQuality" />
+
+                    <Canvas
+                        x:Name="cvsCropper"
+                        Background="Transparent"
+                        MouseDown="Canvas_MouseDown"
+                        MouseMove="Canvas_MouseMove"
+                        MouseUp="Canvas_MouseUp">
+
+                        <Path
+                            x:Name="maskOutside"
+                            Fill="#9A000000"
+                            IsHitTestVisible="False">
+                            <Path.Data>
+                                <GeometryGroup FillRule="EvenOdd" />
+                            </Path.Data>
+                        </Path>
+
+                        <Rectangle
+                            x:Name="recTransformArea"
+                            Canvas.Left="0"
+                            Canvas.Top="0"
+                            Width="300"
+                            Height="300"
+                            Style="{StaticResource CropAreaStyle}">
+                            <Rectangle.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="16"
+                                    Opacity="0.55"
+                                    ShadowDepth="0"
+                                    Color="#CC000000" />
+                            </Rectangle.Effect>
+                        </Rectangle>
+
+                        <Line x:Name="guideV1" Style="{StaticResource GuideLineStyle}" />
+                        <Line x:Name="guideV2" Style="{StaticResource GuideLineStyle}" />
+                        <Line x:Name="guideH1" Style="{StaticResource GuideLineStyle}" />
+                        <Line x:Name="guideH2" Style="{StaticResource GuideLineStyle}" />
+
+                    </Canvas>
+                </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+    </Grid>
 </Window>

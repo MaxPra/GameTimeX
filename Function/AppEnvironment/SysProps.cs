@@ -50,6 +50,7 @@ namespace GameTimeX.Function.AppEnvironment
         public static GameRunningHandler? gameRunningHandler = null;
 
         public static MainWindow? mainWindow = null;
+        public static InfoBox? infoBoxGameStarting = null;
 
         public static bool contextShown = false;
 

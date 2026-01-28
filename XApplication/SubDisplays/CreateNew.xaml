@@ -10,6 +10,8 @@
     Height="300"
     AllowsTransparency="True"
     Background="Transparent"
+    FontFamily="{DynamicResource AppFontFamily}"
+    FontSize="13"
     Loaded="Window_Loaded"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
     PreviewKeyDown="Window_PreviewKeyDown"
@@ -28,6 +30,141 @@
     <Window.Resources>
         <sys:Double x:Key="FormControlHeight">32</sys:Double>
         <Thickness x:Key="FormRowSpacing">0,3,0,3</Thickness>
+
+        <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Segoe UI</FontFamily>
+
+        <Color x:Key="AccentBlue">#289AFC</Color>
+        <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlue}" />
+
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2FFFFFF" />
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#C8FFFFFF" />
+
+        <SolidColorBrush x:Key="WindowStrokeBrush" Color="#22FFFFFF" />
+        <SolidColorBrush x:Key="PanelStrokeBrush" Color="#1EFFFFFF" />
+
+        <LinearGradientBrush x:Key="WindowBaseGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#FF0B0D10" />
+            <GradientStop Offset="0.55" Color="#FF0A0C10" />
+            <GradientStop Offset="1" Color="#FF090A0E" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="WindowColorWashGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0" Color="#2218232B" />
+            <GradientStop Offset="0.55" Color="#1A2B2A36" />
+            <GradientStop Offset="1" Color="#26211B18" />
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowVignetteBrush" Center="0.52,0.50" GradientOrigin="0.52,0.50" RadiusX="0.85" RadiusY="0.85">
+            <GradientStop Offset="0" Color="#00000000" />
+            <GradientStop Offset="0.60" Color="#00000000" />
+            <GradientStop Offset="1" Color="#CC000000" />
+        </RadialGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowSoftHighlightBrush" Center="0.82,0.28" GradientOrigin="0.82,0.28" RadiusX="0.75" RadiusY="0.75">
+            <GradientStop Offset="0" Color="#14289AFC" />
+            <GradientStop Offset="0.35" Color="#0B289AFC" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </RadialGradientBrush>
+
+        <DrawingBrush
+            x:Key="SoftNoiseBrush"
+            Opacity="0.045"
+            TileMode="Tile"
+            Viewport="0,0,160,160"
+            ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <RectangleGeometry Rect="12,18,1,1" />
+                                <RectangleGeometry Rect="28,62,1,1" />
+                                <RectangleGeometry Rect="64,20,1,1" />
+                                <RectangleGeometry Rect="88,78,1,1" />
+                                <RectangleGeometry Rect="104,44,1,1" />
+                                <RectangleGeometry Rect="140,28,1,1" />
+                                <RectangleGeometry Rect="18,132,1,1" />
+                                <RectangleGeometry Rect="46,112,1,1" />
+                                <RectangleGeometry Rect="118,120,1,1" />
+                                <RectangleGeometry Rect="150,96,1,1" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <DrawingBrush x:Key="WindowBackgroundBrush" Stretch="Fill">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource WindowBaseGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowColorWashGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowSoftHighlightBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource SoftNoiseBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowVignetteBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <LinearGradientBrush x:Key="PanelBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#900F1218" />
+            <GradientStop Offset="1" Color="#700B0D12" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PanelInnerSheenBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#10FFFFFF" />
+            <GradientStop Offset="0.35" Color="#06000000" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </LinearGradientBrush>
+
+        <Style x:Key="PaneFrameStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PanelStrokeBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+        </Style>
+
+        <Style x:Key="LinkedBarStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderBrush" Value="#1EFFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0" Color="#30289AFC" />
+                        <GradientStop Offset="0.45" Color="#16000000" />
+                        <GradientStop Offset="1" Color="#12000000" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style
             x:Key="IconOnlyButton"
@@ -52,207 +189,233 @@
         </Style>
     </Window.Resources>
 
-    <Border
-        Background="#2F2F2F"
-        BorderBrush="{DynamicResource ButtonDefaultBrush}"
-        BorderThickness="1"
-        CornerRadius="12"
-        SnapsToDevicePixels="True">
+    <Grid SnapsToDevicePixels="True">
+        <Rectangle
+            Margin="6"
+            Fill="#00000000"
+            IsHitTestVisible="False"
+            RadiusX="12"
+            RadiusY="12">
+            <Rectangle.Effect>
+                <DropShadowEffect
+                    BlurRadius="22"
+                    ShadowDepth="0"
+                    Color="#AA000000" />
+            </Rectangle.Effect>
+        </Rectangle>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="28" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Border
+            Margin="6"
+            Padding="0"
+            Background="{StaticResource WindowBackgroundBrush}"
+            BorderBrush="{StaticResource WindowStrokeBrush}"
+            BorderThickness="1"
+            ClipToBounds="True"
+            CornerRadius="12"
+            SnapsToDevicePixels="True">
 
-            <!--  Titlebar  -->
-            <Border
-                Grid.Row="0"
-                Background="Black"
-                ClipToBounds="True"
-                CornerRadius="12,12,0,0" />
-            <TextBlock
-                Grid.Row="0"
-                Margin="10,0,0,0"
-                VerticalAlignment="Center"
-                Foreground="White"
-                Text="Create new profile" />
-
-            <StackPanel
-                Grid.Row="0"
-                HorizontalAlignment="Right"
-                Orientation="Horizontal">
-                <Button
-                    x:Name="btnClose"
-                    Width="40"
-                    Height="28"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="btnClose_Click"
-                    Content="X"
-                    Foreground="White"
-                    Style="{StaticResource NoMouseOverButtonStyle}">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border
-                                x:Name="bg"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="0,12,0,0">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="Red" />
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="#CC0000" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
-
-            <!--  Inhalt  -->
-            <Grid Grid.Row="1" Margin="18">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="12" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <!--  Reihen: Status | Name | Pic path | Game folder | Füller | Save  -->
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <!--  0 Status  -->
-                    <RowDefinition Height="Auto" />
-                    <!--  1 Name  -->
-                    <RowDefinition Height="Auto" />
-                    <!--  2 Pic path  -->
-                    <RowDefinition Height="Auto" />
-                    <!--  3 Game folder  -->
+                    <RowDefinition Height="28" />
                     <RowDefinition Height="*" />
-                    <!--  4 Füller  -->
-                    <RowDefinition Height="Auto" />
-                    <!--  5 Save  -->
                 </Grid.RowDefinitions>
 
-                <!--  Steam profile linked bar  -->
                 <Border
-                    x:Name="bSteamProfileLinked"
                     Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Margin="0,0,0,8"
-                    Padding="6,2"
-                    Background="#3A3A3A"
-                    CornerRadius="6">
-                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,6,0"
-                            FontWeight="Bold"
-                            Foreground="{DynamicResource ButtonDefaultBrush}"
-                            Text="✔" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Steam profile linked" />
-                    </StackPanel>
+                    ClipToBounds="True"
+                    CornerRadius="12,12,0,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#CC0A0C10" />
+                            <GradientStop Offset="1" Color="#7A0A0C10" />
+                        </LinearGradientBrush>
+                    </Border.Background>
                 </Border>
 
-                <!--  Profile name  -->
-                <TextBox
-                    x:Name="txtProfileName"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Style="{StaticResource FormTextBox_Local}"
-                    Tag="Profile name" />
+                <Border
+                    Grid.Row="0"
+                    ClipToBounds="True"
+                    CornerRadius="12,12,0,0">
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="#18FFFFFF" />
+                    </Border.BorderBrush>
+                    <Border.BorderThickness>0,0,0,1</Border.BorderThickness>
+                </Border>
 
-                <!--  Picture path  -->
-                <TextBox
-                    x:Name="txtPicPath"
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    IsReadOnly="True"
-                    Style="{StaticResource FormTextBox_Local}"
-                    Tag="Picture path" />
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{DynamicResource AppFontFamily}"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource TextPrimaryBrush}"
+                    Text="Create new profile" />
 
-                <!--  Steam Import button  -->
-                <Button
-                    x:Name="btnImportFromSteam"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Click="btnImportFromSteam_Click"
-                    Style="{StaticResource IconOnlyButton}"
-                    ToolTip="Import game from steam">
-                    <Image
-                        Width="30"
-                        Height="30"
-                        Source="{StaticResource steamImportImage}"
-                        Stretch="Uniform" />
-                </Button>
+                <StackPanel
+                    Grid.Row="0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="btnClose"
+                        Width="40"
+                        Height="28"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Click="btnClose_Click"
+                        Content="X"
+                        Foreground="White"
+                        Style="{StaticResource NoMouseOverButtonStyle}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border
+                                    x:Name="bg"
+                                    Background="{TemplateBinding Background}"
+                                    ClipToBounds="True"
+                                    CornerRadius="0,12,0,0"
+                                    SnapsToDevicePixels="True">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bg" Property="Background" Value="#CCFF3B30" />
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bg" Property="Background" Value="#AAFF3B30" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
 
-                <!--  Picture icon button  -->
-                <Button
-                    x:Name="btnShowFileDialog"
-                    Grid.Row="2"
-                    Grid.Column="2"
-                    Click="btnShowFileDialog_Click"
-                    Style="{StaticResource IconOnlyButton}"
-                    ToolTip="Choose pic">
-                    <Image
-                        Width="18"
-                        Height="18"
-                        Source="{StaticResource picture}"
-                        Stretch="Uniform" />
-                </Button>
+                <Grid Grid.Row="1" Margin="18">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <!--  Game folder  -->
-                <TextBox
-                    x:Name="txtGameFolderPath"
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Style="{StaticResource FormTextBox_Local}"
-                    Tag="Game folder (opt.)">
-                    <TextBox.ToolTip>
-                        <ToolTip
-                            Background="#333333"
-                            BorderThickness="1"
-                            Foreground="White">
-                            <TextBlock TextWrapping="Wrap">
-                                If specified, GameTimeX will automatically get the exe and switch between profiles (enable in settings).
-                            </TextBlock>
-                        </ToolTip>
-                    </TextBox.ToolTip>
-                </TextBox>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <!--  Folder icon button  -->
-                <Button
-                    x:Name="btnShowFileDialogExe"
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Click="btnShowFileDialogExe_Click"
-                    Style="{StaticResource IconOnlyButton}"
-                    ToolTip="Choose folder">
-                    <Image
-                        Width="18"
-                        Height="18"
-                        Source="{StaticResource folder}"
-                        Stretch="Uniform" />
-                </Button>
+                    <Border
+                        x:Name="bSteamProfileLinked"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Margin="0,0,0,8"
+                        Style="{StaticResource LinkedBarStyle}">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,8,0"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource AccentBlueBrush}"
+                                Text="✔" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource TextPrimaryBrush}"
+                                Text="Steam profile linked" />
+                        </StackPanel>
+                    </Border>
 
-                <!--  Save  -->
-                <Button
-                    x:Name="btnCreateNewProfile"
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Margin="0,8,0,2"
-                    HorizontalAlignment="Stretch"
-                    Click="btnCreateNewProfile_Click"
-                    Content="Save"
-                    Style="{StaticResource NormalGuiButton}" />
+                    <TextBox
+                        x:Name="txtProfileName"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Style="{StaticResource FormTextBox_Local}"
+                        Tag="Profile name" />
+
+                    <TextBox
+                        x:Name="txtPicPath"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        IsReadOnly="True"
+                        Style="{StaticResource FormTextBox_Local}"
+                        Tag="Picture path" />
+
+                    <Button
+                        x:Name="btnImportFromSteam"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        Click="btnImportFromSteam_Click"
+                        Style="{StaticResource IconOnlyButton}"
+                        ToolTip="Import game from steam">
+                        <Image
+                            Width="30"
+                            Height="30"
+                            Source="{StaticResource steamImportImage}"
+                            Stretch="Uniform" />
+                    </Button>
+
+                    <Button
+                        x:Name="btnShowFileDialog"
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Click="btnShowFileDialog_Click"
+                        Style="{StaticResource IconOnlyButton}"
+                        ToolTip="Choose pic">
+                        <Image
+                            Width="18"
+                            Height="18"
+                            Source="{StaticResource picture}"
+                            Stretch="Uniform" />
+                    </Button>
+
+                    <TextBox
+                        x:Name="txtGameFolderPath"
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Style="{StaticResource FormTextBox_Local}"
+                        Tag="Game folder (opt.)">
+                        <TextBox.ToolTip>
+                            <ToolTip
+                                Background="#333333"
+                                BorderThickness="1"
+                                Cursor=""
+                                Foreground="White">
+                                <TextBlock TextWrapping="Wrap">
+                                    If specified, GameTimeX will automatically get the exe and switch between profiles (enable in settings).
+                                </TextBlock>
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+
+                    <Button
+                        x:Name="btnShowFileDialogExe"
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        Click="btnShowFileDialogExe_Click"
+                        Style="{StaticResource IconOnlyButton}"
+                        ToolTip="Choose folder">
+                        <Image
+                            Width="18"
+                            Height="18"
+                            Source="{StaticResource folder}"
+                            Stretch="Uniform" />
+                    </Button>
+
+                    <Button
+                        x:Name="btnCreateNewProfile"
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Margin="0,8,0,2"
+                        HorizontalAlignment="Stretch"
+                        Click="btnCreateNewProfile_Click"
+                        Content="Save"
+                        Style="{StaticResource NormalGuiButton}" />
+                </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+    </Grid>
 </Window>

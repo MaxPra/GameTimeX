@@ -12,6 +12,8 @@
     MinHeight="450"
     AllowsTransparency="True"
     Background="Transparent"
+    FontFamily="{DynamicResource AppFontFamily}"
+    FontSize="13"
     Loaded="Window_Loaded"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
     ResizeMode="NoResize"
@@ -29,13 +31,186 @@
             GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <!--  Außenrahmen  -->
+    <Window.Resources>
+        <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Segoe UI</FontFamily>
+
+        <Color x:Key="AccentBlue">#289AFC</Color>
+        <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlue}" />
+
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2FFFFFF" />
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#C8FFFFFF" />
+
+        <SolidColorBrush x:Key="WindowStrokeBrush" Color="#22FFFFFF" />
+        <SolidColorBrush x:Key="PanelStrokeBrush" Color="#1EFFFFFF" />
+
+        <LinearGradientBrush x:Key="WindowBaseGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#FF0B0D10" />
+            <GradientStop Offset="0.55" Color="#FF0A0C10" />
+            <GradientStop Offset="1" Color="#FF090A0E" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="WindowColorWashGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0" Color="#2218232B" />
+            <GradientStop Offset="0.55" Color="#1A2B2A36" />
+            <GradientStop Offset="1" Color="#26211B18" />
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowVignetteBrush" Center="0.52,0.50" GradientOrigin="0.52,0.50" RadiusX="0.85" RadiusY="0.85">
+            <GradientStop Offset="0" Color="#00000000" />
+            <GradientStop Offset="0.60" Color="#00000000" />
+            <GradientStop Offset="1" Color="#CC000000" />
+        </RadialGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowSoftHighlightBrush" Center="0.82,0.28" GradientOrigin="0.82,0.28" RadiusX="0.75" RadiusY="0.75">
+            <GradientStop Offset="0" Color="#14289AFC" />
+            <GradientStop Offset="0.35" Color="#0B289AFC" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </RadialGradientBrush>
+
+        <DrawingBrush
+            x:Key="SoftNoiseBrush"
+            Opacity="0.045"
+            TileMode="Tile"
+            Viewport="0,0,160,160"
+            ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <RectangleGeometry Rect="12,18,1,1" />
+                                <RectangleGeometry Rect="28,62,1,1" />
+                                <RectangleGeometry Rect="64,20,1,1" />
+                                <RectangleGeometry Rect="88,78,1,1" />
+                                <RectangleGeometry Rect="104,44,1,1" />
+                                <RectangleGeometry Rect="140,28,1,1" />
+                                <RectangleGeometry Rect="18,132,1,1" />
+                                <RectangleGeometry Rect="46,112,1,1" />
+                                <RectangleGeometry Rect="118,120,1,1" />
+                                <RectangleGeometry Rect="150,96,1,1" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <DrawingBrush x:Key="WindowBackgroundBrush" Stretch="Fill">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource WindowBaseGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowColorWashGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowSoftHighlightBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource SoftNoiseBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowVignetteBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <LinearGradientBrush x:Key="PanelBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#900F1218" />
+            <GradientStop Offset="1" Color="#700B0D12" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PanelInnerSheenBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#10FFFFFF" />
+            <GradientStop Offset="0.35" Color="#06000000" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </LinearGradientBrush>
+
+        <Style x:Key="PaneFrameStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PanelStrokeBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+        </Style>
+
+        <sys:Double x:Key="CtlH">32</sys:Double>
+
+        <Style
+            x:Key="FormTextBox_Local"
+            BasedOn="{StaticResource FormTextBox}"
+            TargetType="TextBox">
+            <Setter Property="Height" Value="{StaticResource CtlH}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="SectionHeader" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+        </Style>
+
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="14" />
+            <Setter Property="BorderBrush" Value="{StaticResource PanelStrokeBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Margin" Value="12,10,12,0" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+        </Style>
+
+        <Style x:Key="CardHost" TargetType="Grid">
+            <Setter Property="ClipToBounds" Value="True" />
+        </Style>
+
+        <Style x:Key="DangerHint" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="#FFFF6B6B" />
+        </Style>
+
+        <Style x:Key="MutedHint" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        </Style>
+
+        <Style x:Key="FooterText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#88FFFFFF" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </Window.Resources>
+
     <Border
-        Background="#2F2F2F"
-        BorderBrush="{DynamicResource ButtonDefaultBrush}"
+        Padding="0"
+        Background="{StaticResource WindowBackgroundBrush}"
+        BorderBrush="{StaticResource WindowStrokeBrush}"
         BorderThickness="1"
         CornerRadius="12"
         SnapsToDevicePixels="True">
+
+        <Border.Effect>
+            <DropShadowEffect
+                BlurRadius="22"
+                ShadowDepth="0"
+                Color="#AA000000" />
+        </Border.Effect>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -43,18 +218,33 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--  Titlebar  -->
             <Border
                 Grid.Row="0"
-                Background="Black"
                 ClipToBounds="True"
+                CornerRadius="12,12,0,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#CC0A0C10" />
+                        <GradientStop Offset="1" Color="#7A0A0C10" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <Border
+                Grid.Row="0"
+                BorderBrush="#18FFFFFF"
+                BorderThickness="0,0,0,1"
                 CornerRadius="12,12,0,0" />
+
             <TextBlock
                 Grid.Row="0"
-                Margin="10,0,0,0"
+                Margin="12,0,0,0"
                 VerticalAlignment="Center"
-                Foreground="White"
+                FontSize="14"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource TextPrimaryBrush}"
                 Text="Settings" />
+
             <StackPanel
                 Grid.Row="0"
                 HorizontalAlignment="Right"
@@ -80,10 +270,10 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="Red" />
+                                    <Setter TargetName="bg" Property="Background" Value="#CCFF3B30" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="#CC0000" />
+                                    <Setter TargetName="bg" Property="Background" Value="#AAFF3B30" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -91,293 +281,268 @@
                 </Button>
             </StackPanel>
 
-            <!--  Inhalt  -->
             <Grid Grid.Row="1">
-                <!--  Lokale Maße/Styles  -->
-                <Grid.Resources>
-                    <sys:Double x:Key="CtlH">32</sys:Double>
-
-                    <Style
-                        x:Key="FormTextBox_Local"
-                        BasedOn="{StaticResource FormTextBox}"
-                        TargetType="TextBox">
-                        <Setter Property="Height" Value="{StaticResource CtlH}" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-
-                    <Style x:Key="SectionHeader" TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="White" />
-                        <Setter Property="FontWeight" Value="Bold" />
-                        <Setter Property="Margin" Value="0,0,0,10" />
-                    </Style>
-
-                    <Style x:Key="Card" TargetType="Border">
-                        <Setter Property="Background" Value="#333333" />
-                        <Setter Property="CornerRadius" Value="10" />
-                        <Setter Property="Padding" Value="14" />
-                        <Setter Property="BorderBrush" Value="#20FFFFFF" />
-                        <Setter Property="BorderThickness" Value="1" />
-                        <Setter Property="Margin" Value="12,10,12,0" />
-                    </Style>
-                </Grid.Resources>
-
-                <!--  Scrollbarer Inhalt mit einheitlichem Innenabstand  -->
                 <ScrollViewer
                     Padding="0,10,0,12"
                     HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
 
-                        <!--  GENERAL OPTIONS  -->
                         <Border Style="{StaticResource Card}">
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="General Options" />
-                                <CheckBox
-                                    x:Name="cbSessionGameTime"
-                                    Content="Show current game time session when monitoring"
-                                    Style="{StaticResource CheckBoxDefaultStyle}">
-                                    <CheckBox.ToolTip>
-                                        <ToolTip
-                                            Background="#333333"
-                                            BorderThickness="1"
-                                            Foreground="White">
-                                            <TextBlock TextWrapping="Wrap">
-                                                Shows the current session time below the Start/Stop button while monitoring.
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </CheckBox.ToolTip>
-                                </CheckBox>
+                            <Grid Style="{StaticResource CardHost}">
+                                <Rectangle Fill="{StaticResource PanelBackgroundBrush}" />
+                                <Rectangle Fill="{StaticResource PanelInnerSheenBrush}" />
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionHeader}" Text="General Options" />
 
-                                <CheckBox
-                                    x:Name="cbGameSwitcher"
-                                    Margin="0,8,0,0"
-                                    Content="Automatic switching between game profiles"
-                                    Style="{StaticResource CheckBoxDefaultStyle}">
-                                    <CheckBox.ToolTip>
-                                        <ToolTip
-                                            Background="#333333"
-                                            BorderThickness="1"
-                                            Foreground="White">
-                                            <TextBlock TextWrapping="Wrap">
-                                                Automatically switches to the matching profile when a game is launched
-                                                (requires the game's folder in the profile).
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </CheckBox.ToolTip>
-                                </CheckBox>
-
-                                <CheckBox
-                                    x:Name="cbBlackoutKeyActive"
-                                    Margin="0,8,0,0"
-                                    Click="cbBlackoutKeyActive_Click"
-                                    Content="Activate blackout key combination (OLED care)"
-                                    Style="{StaticResource CheckBoxDefaultStyle}">
-                                    <CheckBox.ToolTip>
-                                        <ToolTip
-                                            Background="#333333"
-                                            BorderThickness="1"
-                                            Foreground="White">
-                                            <TextBlock TextWrapping="Wrap">
-                                                Toggle a full-screen blackout on all displays with CTRL + B to protect OLEDs.
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </CheckBox.ToolTip>
-                                </CheckBox>
-
-                                <Button
-                                    x:Name="btnShowDataFolder"
-                                    Height="{StaticResource CtlH}"
-                                    MinWidth="160"
-                                    Margin="0,12,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="btnShowDataFolder_Click"
-                                    Content="Show data folder"
-                                    Style="{StaticResource PrimaryButton}" />
-                            </StackPanel>
-                        </Border>
-
-                        <!--  KEY FOR GAME MONITORING  -->
-                        <Border Style="{StaticResource Card}">
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="Key for game monitoring" />
-                                <StackPanel Orientation="Horizontal">
                                     <CheckBox
-                                        x:Name="cbMonitoringKeyActive"
-                                        Click="cbMonitoringKeyActive_Click"
-                                        Content="Key active"
-                                        Style="{StaticResource CheckBoxDefaultStyle}" />
+                                        x:Name="cbSessionGameTime"
+                                        Content="Show current game time session when monitoring"
+                                        Style="{StaticResource CheckBoxDefaultStyle}">
+                                        <CheckBox.ToolTip>
+                                            <ToolTip
+                                                Background="#333333"
+                                                BorderThickness="1"
+                                                Foreground="White">
+                                                <TextBlock TextWrapping="Wrap">
+                                                    Shows the current session time below the Start/Stop button while monitoring.
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
+
                                     <CheckBox
-                                        x:Name="cbShowToastNotification"
-                                        Margin="12,0,0,0"
-                                        Click="cbMonitoringKeyActive_Click"
-                                        Content="Show toast notification"
-                                        IsEnabled="False"
-                                        Style="{StaticResource CheckBoxDefaultStyle}" />
+                                        x:Name="cbGameSwitcher"
+                                        Margin="0,8,0,0"
+                                        Content="Automatic switching between game profiles"
+                                        Style="{StaticResource CheckBoxDefaultStyle}">
+                                        <CheckBox.ToolTip>
+                                            <ToolTip
+                                                Background="#333333"
+                                                BorderThickness="1"
+                                                Foreground="White">
+                                                <TextBlock TextWrapping="Wrap">
+                                                    Automatically switches to the matching profile when a game is launched
+                                                    (requires the game's folder in the profile).
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
+
                                     <CheckBox
-                                        x:Name="cbBlackoutSideMonitor"
-                                        Margin="12,0,0,0"
-                                        Click="cbBlackoutSideMonitor_Click"
-                                        Content="Blackout side monitors"
-                                        IsEnabled="False"
-                                        Style="{StaticResource CheckBoxDefaultStyle}" />
-                                </StackPanel>
+                                        x:Name="cbBlackoutKeyActive"
+                                        Margin="0,8,0,0"
+                                        Click="cbBlackoutKeyActive_Click"
+                                        Content="Activate blackout key combination (OLED care)"
+                                        Style="{StaticResource CheckBoxDefaultStyle}">
+                                        <CheckBox.ToolTip>
+                                            <ToolTip
+                                                Background="#333333"
+                                                BorderThickness="1"
+                                                Foreground="White">
+                                                <TextBlock TextWrapping="Wrap">
+                                                    Toggle a full-screen blackout on all displays with CTRL + B to protect OLEDs.
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
 
-                                <TextBlock
-                                    x:Name="lblCurrentKey"
-                                    Margin="0,8,0,0"
-                                    Foreground="White">
-                                    Current key: (no key)
-                                </TextBlock>
-
-                                <Button
-                                    x:Name="btnMonitoringKey"
-                                    Height="{StaticResource CtlH}"
-                                    MinWidth="160"
-                                    Margin="0,12,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="btnMonitoringKey_Click"
-                                    Content="Monitor key"
-                                    IsEnabled="False"
-                                    Style="{StaticResource PrimaryButton}" />
-                            </StackPanel>
-                        </Border>
-
-                        <!--  CREATE BACKUP  -->
-                        <Border Style="{StaticResource Card}">
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="Create Backup" />
-                                <TextBlock
-                                    FontSize="12"
-                                    Foreground="White"
-                                    Text="Create a backup of the saved profiles and the saved game time data" />
-                                <TextBlock
-                                    Margin="0,2,0,8"
-                                    FontSize="12"
-                                    Foreground="Red"
-                                    Text="GameTimeX will be restarted automatically to create the backup!" />
-
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="12" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBox
-                                        x:Name="txtBackupPath"
-                                        Grid.Column="0"
-                                        IsReadOnly="True"
-                                        Style="{StaticResource FormTextBox_Local}" />
                                     <Button
-                                        x:Name="btnChooseGameFolder"
-                                        Grid.Column="2"
-                                        Height="{StaticResource CtlH}"
-                                        MinWidth="190"
-                                        Click="btnChooseGameFolder_Click"
-                                        Content="Choose Backup Folder"
-                                        Style="{StaticResource PrimaryButton}" />
-                                </Grid>
-
-                                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                                    <Button
-                                        x:Name="btnCreateBackup"
+                                        x:Name="btnShowDataFolder"
                                         Height="{StaticResource CtlH}"
                                         MinWidth="160"
-                                        Click="btnCreateBackup_Click"
-                                        Content="Create Backup"
-                                        IsEnabled="False"
+                                        Margin="0,12,0,0"
+                                        HorizontalAlignment="Left"
+                                        Click="btnShowDataFolder_Click"
+                                        Content="Show data folder"
                                         Style="{StaticResource PrimaryButton}" />
-                                    <CheckBox
-                                        x:Name="cbAutoBackup"
-                                        Margin="12,6,0,0"
-                                        Click="cbAutoBackup_Click"
-                                        Content="Auto Backup"
-                                        IsEnabled="False"
-                                        Style="{StaticResource CheckBoxDefaultStyle}" />
                                 </StackPanel>
-                            </StackPanel>
+                            </Grid>
                         </Border>
 
-                        <!--  IMPORT BACKUP  -->
                         <Border Style="{StaticResource Card}">
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource SectionHeader}" Text="Import Backup" />
-                                <TextBlock
-                                    FontSize="12"
-                                    Foreground="White"
-                                    Text="Import a backup of the saved profiles and the saved game time data" />
-                                <TextBlock
-                                    Margin="0,2,0,8"
-                                    FontSize="12"
-                                    Foreground="Red"
-                                    Text="GameTimeX will be restarted automatically to import the backup!" />
+                            <Grid Style="{StaticResource CardHost}">
+                                <Rectangle Fill="{StaticResource PanelBackgroundBrush}" />
+                                <Rectangle Fill="{StaticResource PanelInnerSheenBrush}" />
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionHeader}" Text="Key for game monitoring" />
 
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="12" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox
+                                            x:Name="cbMonitoringKeyActive"
+                                            Click="cbMonitoringKeyActive_Click"
+                                            Content="Key active"
+                                            Style="{StaticResource CheckBoxDefaultStyle}" />
+                                        <CheckBox
+                                            x:Name="cbShowToastNotification"
+                                            Margin="12,0,0,0"
+                                            Click="cbMonitoringKeyActive_Click"
+                                            Content="Show toast notification"
+                                            IsEnabled="False"
+                                            Style="{StaticResource CheckBoxDefaultStyle}" />
+                                        <CheckBox
+                                            x:Name="cbBlackoutSideMonitor"
+                                            Margin="12,0,0,0"
+                                            Click="cbBlackoutSideMonitor_Click"
+                                            Content="Blackout side monitors"
+                                            IsEnabled="False"
+                                            Style="{StaticResource CheckBoxDefaultStyle}" />
+                                    </StackPanel>
 
-                                    <TextBox
-                                        x:Name="txtBackupPathImport"
-                                        Grid.Column="0"
-                                        IsReadOnly="True"
-                                        Style="{StaticResource FormTextBox_Local}" />
+                                    <TextBlock
+                                        x:Name="lblCurrentKey"
+                                        Margin="0,8,0,0"
+                                        Foreground="{StaticResource TextPrimaryBrush}">
+                                        Current key: (no key)
+                                    </TextBlock>
+
+
                                     <Button
-                                        x:Name="btnChooseBackUpFile"
-                                        Grid.Column="2"
+                                        x:Name="btnMonitoringKey"
                                         Height="{StaticResource CtlH}"
-                                        MinWidth="170"
-                                        Click="btnChooseBackUpFile_Click"
-                                        Content="Choose Backup File"
+                                        MinWidth="160"
+                                        Margin="0,12,0,0"
+                                        HorizontalAlignment="Left"
+                                        Click="btnMonitoringKey_Click"
+                                        Content="Monitor key"
+                                        IsEnabled="False"
                                         Style="{StaticResource PrimaryButton}" />
-                                </Grid>
-
-                                <TextBlock
-                                    x:Name="lblBackUpDate"
-                                    Margin="0,6,0,0"
-                                    FontSize="12"
-                                    Foreground="White"
-                                    Text="Backup date of file: -" />
-
-                                <Button
-                                    x:Name="btnImportBackup"
-                                    Height="{StaticResource CtlH}"
-                                    MinWidth="160"
-                                    Margin="0,10,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="btnImportBackup_Click"
-                                    Content="Import Backup"
-                                    IsEnabled="False"
-                                    Style="{StaticResource PrimaryButton}" />
-                            </StackPanel>
+                                </StackPanel>
+                            </Grid>
                         </Border>
 
-                        <!--  Footer  -->
-                        <Grid Margin="12,8,12,0">
+                        <Border Style="{StaticResource Card}">
+                            <Grid Style="{StaticResource CardHost}">
+                                <Rectangle Fill="{StaticResource PanelBackgroundBrush}" />
+                                <Rectangle Fill="{StaticResource PanelInnerSheenBrush}" />
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionHeader}" Text="Create Backup" />
+
+                                    <TextBlock Style="{StaticResource MutedHint}" Text="Create a backup of the saved profiles and the saved game time data" />
+                                    <TextBlock
+                                        Margin="0,2,0,8"
+                                        Style="{StaticResource DangerHint}"
+                                        Text="GameTimeX will be restarted automatically to create the backup!" />
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox
+                                            x:Name="txtBackupPath"
+                                            Grid.Column="0"
+                                            IsReadOnly="True"
+                                            Style="{StaticResource FormTextBox_Local}" />
+                                        <Button
+                                            x:Name="btnChooseGameFolder"
+                                            Grid.Column="2"
+                                            Height="{StaticResource CtlH}"
+                                            MinWidth="190"
+                                            Click="btnChooseGameFolder_Click"
+                                            Content="Choose Backup Folder"
+                                            Style="{StaticResource PrimaryButton}" />
+                                    </Grid>
+
+                                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                        <Button
+                                            x:Name="btnCreateBackup"
+                                            Height="{StaticResource CtlH}"
+                                            MinWidth="160"
+                                            Click="btnCreateBackup_Click"
+                                            Content="Create Backup"
+                                            IsEnabled="False"
+                                            Style="{StaticResource PrimaryButton}" />
+                                        <CheckBox
+                                            x:Name="cbAutoBackup"
+                                            Margin="12,6,0,0"
+                                            Click="cbAutoBackup_Click"
+                                            Content="Auto Backup"
+                                            IsEnabled="False"
+                                            Style="{StaticResource CheckBoxDefaultStyle}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}">
+                            <Grid Style="{StaticResource CardHost}">
+                                <Rectangle Fill="{StaticResource PanelBackgroundBrush}" />
+                                <Rectangle Fill="{StaticResource PanelInnerSheenBrush}" />
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionHeader}" Text="Import Backup" />
+
+                                    <TextBlock Style="{StaticResource MutedHint}" Text="Import a backup of the saved profiles and the saved game time data" />
+                                    <TextBlock
+                                        Margin="0,2,0,8"
+                                        Style="{StaticResource DangerHint}"
+                                        Text="GameTimeX will be restarted automatically to import the backup!" />
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox
+                                            x:Name="txtBackupPathImport"
+                                            Grid.Column="0"
+                                            IsReadOnly="True"
+                                            Style="{StaticResource FormTextBox_Local}" />
+                                        <Button
+                                            x:Name="btnChooseBackUpFile"
+                                            Grid.Column="2"
+                                            Height="{StaticResource CtlH}"
+                                            MinWidth="170"
+                                            Click="btnChooseBackUpFile_Click"
+                                            Content="Choose Backup File"
+                                            Style="{StaticResource PrimaryButton}" />
+                                    </Grid>
+
+                                    <TextBlock
+                                        x:Name="lblBackUpDate"
+                                        Margin="0,6,0,0"
+                                        FontSize="12"
+                                        Foreground="{StaticResource TextSecondaryBrush}"
+                                        Text="Backup date of file: -" />
+
+                                    <Button
+                                        x:Name="btnImportBackup"
+                                        Height="{StaticResource CtlH}"
+                                        MinWidth="160"
+                                        Margin="0,10,0,0"
+                                        HorizontalAlignment="Left"
+                                        Click="btnImportBackup_Click"
+                                        Content="Import Backup"
+                                        IsEnabled="False"
+                                        Style="{StaticResource PrimaryButton}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Grid Margin="12,10,12,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <!--  Links  -->
                             <TextBlock
                                 Grid.Column="0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Foreground="Gray"
+                                Style="{StaticResource FooterText}"
                                 Text="Icons by icons8" />
 
-                            <!--  Rechts  -->
                             <TextBlock
                                 Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Foreground="Gray"
-                                Text="Version 2.1.0" />
+                                Style="{StaticResource FooterText}"
+                                Text="Version 3.0.0" />
                         </Grid>
-
 
                     </StackPanel>
                 </ScrollViewer>

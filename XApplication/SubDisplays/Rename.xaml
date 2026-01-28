@@ -1,101 +1,260 @@
-﻿<Window x:Class="GameTimeX.Rename"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d"
-        Title="Rename Profile"
-        Width="360" Height="190"
-        WindowStyle="None"
-        WindowStartupLocation="CenterOwner"
-        AllowsTransparency="True"
-        Background="Transparent"
-        Style="{StaticResource DefaultWindowStyle}"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        Loaded="Window_Loaded">
+﻿<Window
+    x:Class="GameTimeX.Rename"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    Title="Rename Profile"
+    Width="360"
+    Height="190"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="{DynamicResource AppFontFamily}"
+    FontSize="13"
+    Loaded="Window_Loaded"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    Style="{StaticResource DefaultWindowStyle}"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
         <sys:Double x:Key="FormControlHeight">32</sys:Double>
         <Thickness x:Key="FormRowSpacing">0,3,0,3</Thickness>
 
-        <!-- lokaler TextBox-Style wie in den anderen Fenstern -->
-        <Style x:Key="FormTextBox_Local" TargetType="TextBox" BasedOn="{StaticResource FormTextBox}">
-            <Setter Property="Height" Value="{StaticResource FormControlHeight}"/>
-            <Setter Property="Margin" Value="{StaticResource FormRowSpacing}"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+        <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Segoe UI</FontFamily>
+
+        <Color x:Key="AccentBlue">#289AFC</Color>
+        <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlue}" />
+
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2FFFFFF" />
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#C8FFFFFF" />
+
+        <SolidColorBrush x:Key="WindowStrokeBrush" Color="#22FFFFFF" />
+
+        <LinearGradientBrush x:Key="WindowBaseGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#FF0B0D10" />
+            <GradientStop Offset="0.55" Color="#FF0A0C10" />
+            <GradientStop Offset="1" Color="#FF090A0E" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="WindowColorWashGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0" Color="#2218232B" />
+            <GradientStop Offset="0.55" Color="#1A2B2A36" />
+            <GradientStop Offset="1" Color="#26211B18" />
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowVignetteBrush" Center="0.52,0.50" GradientOrigin="0.52,0.50" RadiusX="0.85" RadiusY="0.85">
+            <GradientStop Offset="0" Color="#00000000" />
+            <GradientStop Offset="0.60" Color="#00000000" />
+            <GradientStop Offset="1" Color="#CC000000" />
+        </RadialGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowSoftHighlightBrush" Center="0.82,0.28" GradientOrigin="0.82,0.28" RadiusX="0.75" RadiusY="0.75">
+            <GradientStop Offset="0" Color="#14289AFC" />
+            <GradientStop Offset="0.35" Color="#0B289AFC" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </RadialGradientBrush>
+
+        <DrawingBrush
+            x:Key="SoftNoiseBrush"
+            Opacity="0.045"
+            TileMode="Tile"
+            Viewport="0,0,160,160"
+            ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <RectangleGeometry Rect="12,18,1,1" />
+                                <RectangleGeometry Rect="28,62,1,1" />
+                                <RectangleGeometry Rect="64,20,1,1" />
+                                <RectangleGeometry Rect="88,78,1,1" />
+                                <RectangleGeometry Rect="104,44,1,1" />
+                                <RectangleGeometry Rect="140,28,1,1" />
+                                <RectangleGeometry Rect="18,132,1,1" />
+                                <RectangleGeometry Rect="46,112,1,1" />
+                                <RectangleGeometry Rect="118,120,1,1" />
+                                <RectangleGeometry Rect="150,96,1,1" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <DrawingBrush x:Key="WindowBackgroundBrush" Stretch="Fill">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource WindowBaseGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowColorWashGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowSoftHighlightBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource SoftNoiseBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowVignetteBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+
+        <Style
+            x:Key="FormTextBox_Local"
+            BasedOn="{StaticResource FormTextBox}"
+            TargetType="TextBox">
+            <Setter Property="Height" Value="{StaticResource FormControlHeight}" />
+            <Setter Property="Margin" Value="{StaticResource FormRowSpacing}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </Window.Resources>
 
-    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
+    <Grid SnapsToDevicePixels="True">
+        <Rectangle
+            Margin="6"
+            Fill="#00000000"
+            IsHitTestVisible="False"
+            RadiusX="12"
+            RadiusY="12">
+            <Rectangle.Effect>
+                <DropShadowEffect
+                    BlurRadius="22"
+                    ShadowDepth="0"
+                    Color="#AA000000" />
+            </Rectangle.Effect>
+        </Rectangle>
+
+        <Border
+            Margin="6"
+            Background="{StaticResource WindowBackgroundBrush}"
+            BorderBrush="{StaticResource WindowStrokeBrush}"
             BorderThickness="1"
-            Background="#2F2F2F"
+            ClipToBounds="True"
             CornerRadius="12"
             SnapsToDevicePixels="True">
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Titlebar -->
-            <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
-            <TextBlock Grid.Row="0" Text="Rename profile" Margin="10,0,0,0"
-                       VerticalAlignment="Center" Foreground="White"/>
-
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btnClose" Content="X" Width="40" Height="28"
-                        Foreground="White" Background="Transparent" BorderBrush="Transparent"
-                        Click="btnClose_Click" Style="{StaticResource NoMouseOverButtonStyle}">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="0,12,0,0">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="Red"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="bg" Property="Background" Value="#CC0000"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
-
-            <!-- Inhalt -->
-            <Grid Grid.Row="1" Margin="18">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <!-- TextBox -->
-                    <RowDefinition Height="*"/>
-                    <!-- Füller -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Save -->
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!-- Profile name -->
-                <TextBox Grid.Row="0"
-                         x:Name="txtProfileName"
-                         Style="{StaticResource FormTextBox_Local}"
-                         Tag="Profile name"/>
+                <Border
+                    Grid.Row="0"
+                    ClipToBounds="True"
+                    CornerRadius="12,12,0,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#CC0A0C10" />
+                            <GradientStop Offset="1" Color="#7A0A0C10" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
 
-                <!-- Save-Button volle Breite -->
-                <Button Grid.Row="2"
+                <Border
+                    Grid.Row="0"
+                    BorderBrush="#18FFFFFF"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="12,12,0,0" />
+
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource TextPrimaryBrush}"
+                    Text="Rename profile" />
+
+                <StackPanel
+                    Grid.Row="0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="btnClose"
+                        Width="40"
+                        Height="28"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Click="btnClose_Click"
+                        Content="X"
+                        Foreground="White"
+                        Style="{StaticResource NoMouseOverButtonStyle}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border
+                                    x:Name="bg"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="0,12,0,0"
+                                    SnapsToDevicePixels="True">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bg" Property="Background" Value="#CCFF3B30" />
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bg" Property="Background" Value="#AAFF3B30" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Margin="18">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBox
+                        x:Name="txtProfileName"
+                        Grid.Row="0"
+                        Style="{StaticResource FormTextBox_Local}"
+                        Tag="Profile name" />
+
+                    <Button
                         x:Name="btnRename"
-                        Content="Save"
-                        HorizontalAlignment="Stretch"
+                        Grid.Row="2"
                         Margin="0,8,0,2"
+                        HorizontalAlignment="Stretch"
                         Click="btnRenameProfile_Click"
-                        Style="{StaticResource NormalGuiButton}"/>
+                        Content="Save"
+                        Style="{StaticResource NormalGuiButton}" />
+                </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+    </Grid>
 </Window>

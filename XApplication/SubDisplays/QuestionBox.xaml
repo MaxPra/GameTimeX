@@ -1,97 +1,233 @@
-﻿<Window x:Class="GameTimeX.QuestionBox"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="Question"
-        Width="440" Height="230"
-        MinWidth="420" MinHeight="210"
-        Background="Transparent"
-        AllowsTransparency="True"
-        WindowStyle="None"
-        WindowStartupLocation="CenterOwner"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        Style="{StaticResource DefaultWindowStyle}"
-        Loaded="Window_Loaded"
-        UseLayoutRounding="True">
+﻿<Window
+    x:Class="GameTimeX.QuestionBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Question"
+    Width="440"
+    Height="230"
+    MinWidth="420"
+    MinHeight="210"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="{DynamicResource AppFontFamily}"
+    FontSize="13"
+    Loaded="Window_Loaded"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    Style="{StaticResource DefaultWindowStyle}"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <Border BorderBrush="{DynamicResource ButtonDefaultBrush}"
+    <Window.Resources>
+        <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Segoe UI</FontFamily>
+
+        <Color x:Key="AccentBlue">#289AFC</Color>
+        <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlue}" />
+
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2FFFFFF" />
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#C8FFFFFF" />
+
+        <SolidColorBrush x:Key="WindowStrokeBrush" Color="#22FFFFFF" />
+
+        <LinearGradientBrush x:Key="WindowBaseGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#FF0B0D10" />
+            <GradientStop Offset="0.55" Color="#FF0A0C10" />
+            <GradientStop Offset="1" Color="#FF090A0E" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="WindowColorWashGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0" Color="#2218232B" />
+            <GradientStop Offset="0.55" Color="#1A2B2A36" />
+            <GradientStop Offset="1" Color="#26211B18" />
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowVignetteBrush" Center="0.52,0.50" GradientOrigin="0.52,0.50" RadiusX="0.85" RadiusY="0.85">
+            <GradientStop Offset="0" Color="#00000000" />
+            <GradientStop Offset="0.60" Color="#00000000" />
+            <GradientStop Offset="1" Color="#CC000000" />
+        </RadialGradientBrush>
+
+        <RadialGradientBrush x:Key="WindowSoftHighlightBrush" Center="0.82,0.28" GradientOrigin="0.82,0.28" RadiusX="0.75" RadiusY="0.75">
+            <GradientStop Offset="0" Color="#14289AFC" />
+            <GradientStop Offset="0.35" Color="#0B289AFC" />
+            <GradientStop Offset="1" Color="#00000000" />
+        </RadialGradientBrush>
+
+        <DrawingBrush
+            x:Key="SoftNoiseBrush"
+            Opacity="0.045"
+            TileMode="Tile"
+            Viewport="0,0,160,160"
+            ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <RectangleGeometry Rect="12,18,1,1" />
+                                <RectangleGeometry Rect="28,62,1,1" />
+                                <RectangleGeometry Rect="64,20,1,1" />
+                                <RectangleGeometry Rect="88,78,1,1" />
+                                <RectangleGeometry Rect="104,44,1,1" />
+                                <RectangleGeometry Rect="140,28,1,1" />
+                                <RectangleGeometry Rect="18,132,1,1" />
+                                <RectangleGeometry Rect="46,112,1,1" />
+                                <RectangleGeometry Rect="118,120,1,1" />
+                                <RectangleGeometry Rect="150,96,1,1" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <DrawingBrush x:Key="WindowBackgroundBrush" Stretch="Fill">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource WindowBaseGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowColorWashGradient}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowSoftHighlightBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource SoftNoiseBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource WindowVignetteBrush}">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,1,1" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </Window.Resources>
+
+    <Grid SnapsToDevicePixels="True">
+        <Rectangle
+            Margin="6"
+            Fill="#00000000"
+            IsHitTestVisible="False"
+            RadiusX="12"
+            RadiusY="12">
+            <Rectangle.Effect>
+                <DropShadowEffect
+                    BlurRadius="22"
+                    ShadowDepth="0"
+                    Color="#AA000000" />
+            </Rectangle.Effect>
+        </Rectangle>
+
+        <Border
+            Margin="6"
+            Background="{StaticResource WindowBackgroundBrush}"
+            BorderBrush="{StaticResource WindowStrokeBrush}"
             BorderThickness="1"
+            ClipToBounds="True"
             CornerRadius="12"
-            Background="#2F2F2F"
             SnapsToDevicePixels="True">
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Titlebar -->
-            <Border Grid.Row="0" Background="Black" CornerRadius="12,12,0,0" ClipToBounds="True"/>
-            <TextBlock Grid.Row="0"
-                       Text="Question"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
-                       Margin="10,0,0,0"
-                       Foreground="White"/>
-
-            <!-- Inhalt -->
-            <Grid Grid.Row="1" Margin="22">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!-- Center-Layout -->
-                <StackPanel VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Width="360">
+                <Border
+                    Grid.Row="0"
+                    ClipToBounds="True"
+                    CornerRadius="12,12,0,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#CC0A0C10" />
+                            <GradientStop Offset="1" Color="#7A0A0C10" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
 
-                    <!-- Nachricht -->
-                    <TextBlock x:Name="lblInfoText"
-                               Text="Text"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"
-                               Foreground="White"
-                               FontSize="18"
-                               Margin="0,0,0,16"/>
+                <Border
+                    Grid.Row="0"
+                    BorderBrush="#18FFFFFF"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="12,12,0,0" />
 
-                    <!-- Actions -->
-                    <Grid Cursor="">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="12"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource TextPrimaryBrush}"
+                    Text="Question" />
 
-                        <Button Grid.Column="0"
+                <Grid Grid.Row="1" Margin="22">
+                    <StackPanel
+                        Width="360"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            x:Name="lblInfoText"
+                            Margin="0,0,0,16"
+                            FontSize="18"
+                            Foreground="{StaticResource TextPrimaryBrush}"
+                            Text="Text"
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button
                                 x:Name="btnYes"
-                                Content="Yes"
-                                Height="36"
-                                Background="{StaticResource ButtonCancelBrush}"
-                                BorderBrush="Black"
-                                Foreground="White"
+                                Grid.Column="0"
+                                Height="38"
                                 Click="btnYes_Click"
-                                Style="{StaticResource CancelButton}"/>
+                                Content="Yes"
+                                Style="{StaticResource CancelButton}" />
 
-                        <Button Grid.Column="2"
+                            <Button
                                 x:Name="btnNo"
-                                Content="No"
-                                Height="36"
-                                Background="{StaticResource ButtonDefaultBrush}"
-                                BorderBrush="Black"
-                                Foreground="White"
+                                Grid.Column="2"
+                                Height="38"
                                 Click="btnNo_Click"
+                                Content="No"
                                 IsCancel="True"
-                                Style="{StaticResource NormalGuiButton}"/>
-                    </Grid>
-                </StackPanel>
+                                Style="{StaticResource NormalGuiButton}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+    </Grid>
 </Window>

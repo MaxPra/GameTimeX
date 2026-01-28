@@ -319,6 +319,12 @@ namespace GameTimeX
         {
             if (e.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
+
+                if (this.txtGameFolderPath.IsFocused || this.txtSteamParams.IsFocused || this.txtProfileName.IsFocused)
+                {
+                    return;
+                }
+
                 string imagePath = ClipBoardManager.SaveClipboardImageToDisk();
 
                 if (imagePath == null)

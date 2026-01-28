@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GameTimeX
 {
@@ -24,13 +14,25 @@ namespace GameTimeX
 
         public int Pid { get; set; }
 
-        private string infoText =""; 
+        private string infoText = "";
 
         public InfoBox(string infoText)
         {
             InitializeComponent();
 
-            this.infoText = infoText;  
+            this.infoText = infoText;
+        }
+
+        public InfoBox(string infoText, bool showButton)
+        {
+            InitializeComponent();
+
+            this.infoText = infoText;
+
+            if (!showButton)
+            {
+                this.btnOK.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace GameTimeX
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            lblInfoText.Text = infoText;  
+            lblInfoText.Text = infoText;
         }
     }
 }

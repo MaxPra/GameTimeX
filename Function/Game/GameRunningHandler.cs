@@ -43,6 +43,13 @@ namespace GameTimeX.Function.Game
                             // Prüfen, ob in Suchleiste nichts eingegeben und ob die derzeitige Executable noch nicht aufgenommen wurde
                             if (SysProps.mainWindow.txtSearchBar.Text == string.Empty && !currentProfileRunning.executables.Contains(executable))
                             {
+
+                                if (SysProps.infoBoxGameStarting != null)
+                                {
+                                    SysProps.infoBoxGameStarting.Close();
+                                    SysProps.infoBoxGameStarting = null;
+                                }
+
                                 SwitchToGame(profile);
 
                                 currentProfileRunning.pid = profile.ProfileID;
@@ -97,6 +104,8 @@ namespace GameTimeX.Function.Game
                                     });
                                 }
 
+                                // Start Game Button aktivieren
+                                VisualHandler.EnableStartGameButtons();
 
                                 // Profilsettings deaktivieren (z.B. HDR)
                                 GameStarterHandler.DeactivateProfileSettings(currentProfileRunning.pid);

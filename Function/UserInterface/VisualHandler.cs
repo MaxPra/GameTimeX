@@ -217,5 +217,25 @@ namespace GameTimeX.Function.UserInterface
             info.Owner = SysProps.mainWindow;
             info.ShowDialog();
         }
+
+        public static void DisableStartGameButtons()
+        {
+            SysProps.mainWindow.Dispatcher.Invoke((Action)(async () =>
+            {
+                // Steam Button
+                SysProps.mainWindow.btnLaunchSteamGame.IsEnabled = false;
+                SysProps.mainWindow.txtLaunchSteamGameButtonText.Text = "Running...";
+            }));
+        }
+
+        public static void EnableStartGameButtons()
+        {
+            SysProps.mainWindow.Dispatcher.Invoke((Action)(async () =>
+            {
+                // Steam Button
+                SysProps.mainWindow.btnLaunchSteamGame.IsEnabled = true;
+                SysProps.mainWindow.txtLaunchSteamGameButtonText.Text = "Launch game";
+            }));
+        }
     }
 }
