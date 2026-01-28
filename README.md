@@ -54,7 +54,7 @@ GameTimeX is designed for reliability and clarity, with an emphasis on clean int
 ### Main Window
 
 Initial application view:  
-<img width="1218" height="814" alt="image" src="https://github.com/user-attachments/assets/fe5d1687-a3ec-428a-9501-d4cb20dca6b1" />
+<img width="1191" height="786" alt="image" src="https://github.com/user-attachments/assets/79ce0126-9752-4b1f-a071-052e46dfc2bf" />
 
 **Key areas:**
 
@@ -75,7 +75,7 @@ Initial application view:
 6. **Rename Profile** – click the pencil icon next to the profile name.
 
 Example with profiles:  
-<img width="1220" height="820" alt="image" src="https://github.com/user-attachments/assets/fbb43f6a-3d25-46f3-906a-4e8979a26190" />
+<img width="1188" height="787" alt="image" src="https://github.com/user-attachments/assets/ff8e56e5-81e5-4298-bbd0-1bfe558742dd" />
 
 Profile names and images are editable at any time. Hover over the “i” icon next to *Game Time* to view the tracked minutes, as well as the first and last play sessions.  
 ➡️ The tooltip now also shows **how many hours you played today**.  
@@ -92,7 +92,7 @@ If a new playthrough begins after time has already been recorded, use **New Play
 
 The **Properties window** provides central configuration for each profile:  
 
-<img width="573" height="434" alt="image" src="https://github.com/user-attachments/assets/d81642ce-315e-4cf5-a76b-9487e4aec0c4" />
+<img width="544" height="398" alt="image" src="https://github.com/user-attachments/assets/bd1e4c1b-1184-4611-b7f5-ab5ad2e170c8" />
 
 - Define the **installation folder** for installed game detection  
 - Assign profile image, rename profile, and manage monitored executables  
@@ -109,8 +109,8 @@ The **Properties window** provides central configuration for each profile:
 ## Settings
 
 The settings dialog provides granular control:  
-<img width="529" height="730" alt="image" src="https://github.com/user-attachments/assets/f4e36339-03aa-4b14-a7a9-5d5bbab2a9c9" />
-<img width="533" height="729" alt="image" src="https://github.com/user-attachments/assets/a99536a0-5d8a-4dd9-996d-a1e753bba252" />
+<img width="524" height="722" alt="image" src="https://github.com/user-attachments/assets/79e8355a-8bc2-476d-b8be-bc6981896653" />
+<img width="524" height="720" alt="image" src="https://github.com/user-attachments/assets/3b4331bd-781e-4a6e-9db2-34b4e7597b49" />
 
 **Options include:**
 
@@ -130,7 +130,7 @@ The settings dialog provides granular control:
 When Automatic Profile Switching is enabled, GameTimeX allows precise control over which executables are monitored.  
 This prevents launchers, helpers, and engine processes from causing false detections.
 
-<img width="554" height="494" alt="image" src="https://github.com/user-attachments/assets/920efc3b-2073-4004-bc3e-d52988125172" />
+<img width="549" height="492" alt="image" src="https://github.com/user-attachments/assets/df729e02-8336-47e9-ae6b-cfe9cc786643" />
 
 **Capabilities:**
 
@@ -145,7 +145,7 @@ This prevents launchers, helpers, and engine processes from causing false detect
 ## Profile Image Cropping
 
 When adding a profile image, a cropping dialog enables quick framing:  
-<img width="1220" height="813" alt="image" src="https://github.com/user-attachments/assets/5c0a23a5-8b2b-44ff-a4c9-8ba0debfd7d2" />
+<img width="788" height="491" alt="image" src="https://github.com/user-attachments/assets/b1b1ac7e-77e5-421c-b940-37a9cfab78a5" />
 
 **Controls:**
 
