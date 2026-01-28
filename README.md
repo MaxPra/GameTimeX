@@ -7,7 +7,7 @@ Unlike platform counters that may continue running while a title is idle, GameTi
 Same reliable core, new refinements and yearly playtime statistics in December.
 
 Download the latest installer:  
-[GameTimeXSetup_Latest.msi](https://github.com/MaxPra/GameTimeX/releases/download/Version2.1.0/GameTimeXSetup_Latest.msi)
+[GameTimeXSetup_Latest.msi](https://github.com/MaxPra/GameTimeX/releases/download/Version3.0.0/GameTimeXSetup_Latest.msi)
 
 ---
 
