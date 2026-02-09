@@ -102,7 +102,12 @@ The **Properties window** provides central configuration for each profile:
   - A dedicated **Steam button with link icon** allows importing and linking Steam games directly  
   - When linked, Steam games can be launched straight from GameTimeX  
   - Optional: enable **HDR activation before launch**  
-  - **Steam Start Parameters:** specify custom Steam launch arguments per game profile
+  - **Steam Start Parameters:** specify custom Steam launch arguments per game profile  
+  - **SteamGridDB Shortcut:**  
+    - Via the **SteamGridDB button** (available during profile creation or in the Properties window), SteamGridDB is opened directly in your browser with the **correct game already selected**.  
+    - Simply copy the desired artwork from SteamGridDB, paste it into the image textbox, and you’re done.
+
+<img width="998" height="518" alt="image" src="https://github.com/user-attachments/assets/5199bb9d-323a-49f8-a6ea-ef795690ac08" />
 
 ---
 
