@@ -156,9 +156,11 @@
             x:Key="FormTextBox_Local"
             BasedOn="{StaticResource FormTextBox}"
             TargetType="TextBox">
-            <Setter Property="Height" Value="{StaticResource CtlH}" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Margin" Value="{StaticResource FormRowSpacing}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+
 
         <Style x:Key="SectionHeader" TargetType="TextBlock">
             <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
@@ -365,14 +367,15 @@
                                 <Rectangle Fill="{StaticResource PanelBackgroundBrush}" />
                                 <Rectangle Fill="{StaticResource PanelInnerSheenBrush}" />
                                 <StackPanel>
-                                    <TextBlock Style="{StaticResource SectionHeader}" Text="Key for game monitoring" />
+                                    <TextBlock Style="{StaticResource SectionHeader}" Text="Game monitoring" />
 
-                                    <StackPanel Orientation="Horizontal">
+                                    <WrapPanel Orientation="Horizontal">
                                         <CheckBox
                                             x:Name="cbMonitoringKeyActive"
                                             Click="cbMonitoringKeyActive_Click"
                                             Content="Key active"
                                             Style="{StaticResource CheckBoxDefaultStyle}" />
+
                                         <CheckBox
                                             x:Name="cbShowToastNotification"
                                             Margin="12,0,0,0"
@@ -380,14 +383,24 @@
                                             Content="Show toast notification"
                                             IsEnabled="False"
                                             Style="{StaticResource CheckBoxDefaultStyle}" />
+
+                                        <CheckBox
+                                            x:Name="cbShowMonitoringIndicator"
+                                            Margin="12,0,0,0"
+                                            Click="cbMonitoringKeyActive_Click"
+                                            Content="Show monitoring indicator"
+                                            IsEnabled="True"
+                                            Style="{StaticResource CheckBoxDefaultStyle}" />
+
                                         <CheckBox
                                             x:Name="cbBlackoutSideMonitor"
-                                            Margin="12,0,0,0"
+                                            Margin="0,12,0,0"
                                             Click="cbBlackoutSideMonitor_Click"
                                             Content="Blackout side monitors"
                                             IsEnabled="False"
                                             Style="{StaticResource CheckBoxDefaultStyle}" />
-                                    </StackPanel>
+                                    </WrapPanel>
+
 
                                     <TextBlock
                                         x:Name="lblCurrentKey"

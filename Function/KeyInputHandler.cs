@@ -115,6 +115,8 @@ namespace GameTimeX.Function
                                         VisualHandler.ShowToastNotification(title, "Monitoring startet!", 3000);
                                     if (SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring)
                                         BlackoutHandler.ToggleSecondaryBlackout((MainWindow)wnd);
+                                    if (SysProps.startUpParms.ShowMonitoringIndicator)
+                                        VisualHandler.ShowMonitoringIndicator();
                                 }
 
                                 else
@@ -125,6 +127,9 @@ namespace GameTimeX.Function
 
                                     if (SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring)
                                         BlackoutHandler.ToggleSecondaryBlackout((MainWindow)wnd);
+
+                                    if (SysProps.startUpParms.ShowMonitoringIndicator)
+                                        VisualHandler.HideMonitoringIndicator();
                                 }
 
 

@@ -43,6 +43,8 @@
 
         public string HalloweenEvent { get; set; } = string.Empty;
 
+        public bool ShowMonitoringIndicator { get; set; } = false;
+
 
     }
 }

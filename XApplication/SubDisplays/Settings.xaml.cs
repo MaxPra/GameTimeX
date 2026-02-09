@@ -51,6 +51,7 @@ namespace GameTimeX
             SysProps.startUpParms.AutoProfileSwitching = (bool)cbGameSwitcher.IsChecked;
             SysProps.startUpParms.ShowToastNotification = (bool)cbShowToastNotification.IsChecked;
             SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring = (bool)cbBlackoutSideMonitor.IsChecked;
+            SysProps.startUpParms.ShowMonitoringIndicator = (bool)cbShowMonitoringIndicator.IsChecked;
 
             FileHandler.SaveStartParms(SysProps.startUpParmsPath, SysProps.startUpParms);
 
@@ -161,6 +162,7 @@ namespace GameTimeX
             cbGameSwitcher.IsChecked = SysProps.startUpParms.AutoProfileSwitching;
             cbShowToastNotification.IsChecked = SysProps.startUpParms.ShowToastNotification;
             cbBlackoutSideMonitor.IsChecked = SysProps.startUpParms.BlackOutSideMonitorsWhileMonitoring;
+            cbShowMonitoringIndicator.IsChecked = SysProps.startUpParms.ShowMonitoringIndicator;
 
             if ((bool)cbMonitoringKeyActive.IsChecked)
             {

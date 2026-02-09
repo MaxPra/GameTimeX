@@ -26,6 +26,7 @@
     <BitmapImage x:Key="steamImage" UriSource="pack://application:,,,/../images/steam.png" />
     <BitmapImage x:Key="happyNewYear" UriSource="pack://application:,,,/../images/happy_new_year.png" />
     <BitmapImage x:Key="halloween" UriSource="pack://application:,,,/../images/halloween.png" />
+    <BitmapImage x:Key="steamgriddb" UriSource="pack://application:,,,/../images/steamgriddb.png" />
 
 
     <!--  Colors  -->

@@ -22,6 +22,9 @@
     <Compile Update="XApplication\SubDisplays\ManageExecutables.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="XApplication\SubDisplays\MonitoringIndicator.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="XApplication\SubDisplays\Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -60,6 +63,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="XApplication\SubDisplays\ManageExecutables.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="XApplication\SubDisplays\MonitoringIndicator.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="XApplication\SubDisplays\Properties.xaml">

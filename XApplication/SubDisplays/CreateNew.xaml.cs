@@ -6,6 +6,7 @@ using System.Windows.Media;
 using GameTimeX.DataBase.DataManager;
 using GameTimeX.DataBase.Objects;
 using GameTimeX.Function.AppEnvironment;
+using GameTimeX.Function.Game;
 using GameTimeX.Function.Steam;
 using GameTimeX.Function.UserInterface;
 using GameTimeX.Function.Utils;
@@ -240,6 +241,31 @@ namespace GameTimeX
                 filePath = imagePath;
                 txtPicPath.Text = imagePath;
             }
+        }
+
+        private void btnOpenSteamGridDB_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnClearPic_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnShowSteamGridDB_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (this.txtProfileName.Text == string.Empty)
+            {
+                InfoBox infoBox = new InfoBox("Please enter a profile name first!");
+                infoBox.Owner = this;
+                infoBox.ShowDialog();
+
+                return;
+            }
+
+            SteamGridDBHandler.OpenSteamGridDbSearch(this.txtProfileName.Text);
         }
     }
 }

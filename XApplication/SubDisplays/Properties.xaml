@@ -210,23 +210,26 @@
             x:Key="IconOnlyButton"
             BasedOn="{StaticResource NormalGuiButton}"
             TargetType="Button">
-            <Setter Property="Width" Value="56" />
+            <Setter Property="MinWidth" Value="56" />
             <Setter Property="Height" Value="{StaticResource FormControlHeight}" />
             <Setter Property="Margin" Value="{StaticResource FormRowSpacing}" />
             <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
+
         <Style
             x:Key="FormTextBox_Local"
             BasedOn="{StaticResource FormTextBox}"
             TargetType="TextBox">
-            <Setter Property="Height" Value="{StaticResource FormControlHeight}" />
+            <Setter Property="Height" Value="35" />
             <Setter Property="Margin" Value="{StaticResource FormRowSpacing}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+
     </Window.Resources>
 
     <Grid SnapsToDevicePixels="True">
@@ -332,6 +335,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="12" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
@@ -348,7 +352,7 @@
                         x:Name="bSteamProfileLinked"
                         Grid.Row="0"
                         Grid.Column="0"
-                        Grid.ColumnSpan="3"
+                        Grid.ColumnSpan="4"
                         Margin="0,0,0,8"
                         Style="{StaticResource LinkedBarStyle}">
                         <Grid>
@@ -392,6 +396,7 @@
                         x:Name="btnImportFromSteam"
                         Grid.Row="1"
                         Grid.Column="2"
+                        Grid.ColumnSpan="2"
                         Click="btnImportFromSteam_Click"
                         Style="{StaticResource IconOnlyButton}"
                         ToolTip="Import game from steam">
@@ -406,21 +411,37 @@
                         x:Name="txtPicPath"
                         Grid.Row="2"
                         Grid.Column="0"
+                        Cursor=""
                         IsReadOnly="True"
                         Style="{StaticResource FormTextBox_Local}"
-                        Tag="Picture path" />
+                        Tag="Picture path: Select a folder or drop it here" />
 
                     <Button
                         x:Name="btnShowFileDialog"
                         Grid.Row="2"
                         Grid.Column="2"
                         Click="btnShowFileDialog_Click"
+                        Cursor="Hand"
                         Style="{StaticResource IconOnlyButton}"
                         ToolTip="Choose pic">
                         <Image
                             Width="18"
                             Height="18"
                             Source="{StaticResource picture}"
+                            Stretch="Uniform" />
+                    </Button>
+
+                    <Button
+                        x:Name="btnShowSteamGridDB"
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Click="btnShowSteamGridDB_Click"
+                        Style="{StaticResource IconOnlyButton}"
+                        ToolTip="Choose from SteamGridDB">
+                        <Image
+                            Width="18"
+                            Height="18"
+                            Source="{StaticResource steamgriddb}"
                             Stretch="Uniform" />
                     </Button>
 
@@ -446,6 +467,7 @@
                         x:Name="btnShowFileDialogExe"
                         Grid.Row="3"
                         Grid.Column="2"
+                        Grid.ColumnSpan="2"
                         Click="btnShowFileDialogExe_Click"
                         Style="{StaticResource IconOnlyButton}"
                         ToolTip="Choose folder">
@@ -460,7 +482,7 @@
                         x:Name="gbProfileSettings"
                         Grid.Row="4"
                         Grid.Column="0"
-                        Grid.ColumnSpan="3"
+                        Grid.ColumnSpan="4"
                         Margin="0,12,0,0"
                         Header="Profile settings"
                         Style="{StaticResource CardGroupBox}">
@@ -507,7 +529,7 @@
                         x:Name="btnSave"
                         Grid.Row="6"
                         Grid.Column="0"
-                        Grid.ColumnSpan="3"
+                        Grid.ColumnSpan="4"
                         Margin="0,8,0,2"
                         HorizontalAlignment="Stretch"
                         Click="btnSave_Click"

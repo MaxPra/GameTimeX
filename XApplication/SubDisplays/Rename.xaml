@@ -133,10 +133,11 @@
             x:Key="FormTextBox_Local"
             BasedOn="{StaticResource FormTextBox}"
             TargetType="TextBox">
-            <Setter Property="Height" Value="{StaticResource FormControlHeight}" />
+            <Setter Property="Height" Value="35" />
             <Setter Property="Margin" Value="{StaticResource FormRowSpacing}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+
     </Window.Resources>
 
     <Grid SnapsToDevicePixels="True">

@@ -47,16 +47,23 @@
     <SolidColorBrush x:Key="TextBoxFocusBorderBrush" Color="{StaticResource ButtonDefaultColor}" />
 
     <Style x:Key="FormTextBox" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="{StaticResource TextBoxBgBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="MinHeight" Value="30" />
-        <Setter Property="Padding" Value="10,4" />
+        <Setter Property="MinHeight" Value="34" />
+        <Setter Property="Padding" Value="10,3,10,3" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="SelectionBrush" Value="{StaticResource ButtonDefaultBrush}" />
         <Setter Property="CaretBrush" Value="White" />
+        <Setter Property="AcceptsReturn" Value="False" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="IsManipulationEnabled" Value="False" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -68,7 +75,13 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="8">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" />
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                CanContentScroll="False"
+                                Focusable="False"
+                                HorizontalScrollBarVisibility="Hidden"
+                                PanningMode="None"
+                                VerticalScrollBarVisibility="Hidden" />
                         </Border>
 
                         <Border
@@ -83,6 +96,7 @@
                             x:Name="Watermark"
                             Margin="{TemplateBinding Padding}"
                             VerticalAlignment="Center"
+                            FontFamily="Segoe UI"
                             Foreground="#A0FFFFFF"
                             IsHitTestVisible="False"
                             Text="{TemplateBinding Tag}"
@@ -120,6 +134,12 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+
+
+
+
 
     <Style
         x:Key="SearchTextBox"

@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GameTimeX.Function.AppEnvironment;
 using GameTimeX.Objects;
+using GameTimeX.XApplication.SubDisplays;
 
 namespace GameTimeX.Function.UserInterface
 {
@@ -237,5 +238,32 @@ namespace GameTimeX.Function.UserInterface
                 SysProps.mainWindow.txtLaunchSteamGameButtonText.Text = "Launch game";
             }));
         }
+
+        private static MonitoringIndicator _indicator;
+
+        public static void ShowMonitoringIndicator()
+        {
+            if (_indicator != null)
+                return;
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _indicator = new MonitoringIndicator();
+                _indicator.Show();
+            });
+        }
+
+        public static void HideMonitoringIndicator()
+        {
+            if (_indicator == null)
+                return;
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _indicator.Close();
+                _indicator = null;
+            });
+        }
+
     }
 }
