@@ -1,5 +1,19 @@
 # GameTimeX
 
+![Status](https://img.shields.io/badge/status-deprecated-red)
+
+> ⚠️ **Project Status**  
+> GameTimeX is no longer actively developed and is considered **deprecated**.  
+>  
+> It has been succeeded by **GameTimeNext**, a modern reimplementation with improved architecture, new features, and ongoing development.  
+> 👉 https://github.com/MaxPra/GameTimeNext  
+>
+> 🔄 **Migration Recommended**  
+> If you are using GameTimeX, it is strongly recommended to switch to GameTimeNext.  
+> The new application includes a **built-in migration system** that allows you to import your existing data on first launch.
+
+---
+
 GameTimeX is a desktop application for precise tracking of actual gameplay time.  
 Unlike platform counters that may continue running while a title is idle, GameTimeX records playtime only when the game is truly active.
 
